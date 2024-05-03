@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://delweph0cdo54"]
+
+[ext_resource type="Texture2D" uid="uid://cmxwp4k3aquc5" path="res://스크린샷 2024-04-29 130806.png" id="1_ly3nn"]
+[ext_resource type="Script" path="res://Script/CameraManager.cs" id="1_yr0qn"]
+[ext_resource type="PackedScene" uid="uid://t2dqgo2v3lp5" path="res://Character/player.tscn" id="2_f10sb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kjlch"]
+size = Vector2(871.418, 466.359)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(571, 76)
+script = ExtResource("1_yr0qn")
+
+[node name="Wall" type="Sprite2D" parent="."]
+position = Vector2(913, 501)
+rotation = -3.14159
+scale = Vector2(0.603615, -0.385967)
+texture = ExtResource("1_ly3nn")
+offset = Vector2(315.412, -15.1326)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall/StaticBody2D"]
+position = Vector2(309.8, -10.3628)
+shape = SubResource("RectangleShape2D_kjlch")
+
+[node name="Player" parent="." instance=ExtResource("2_f10sb")]
+position = Vector2(571, 146)
+
+[node name="Wall2" type="Sprite2D" parent="."]
+position = Vector2(285, 328)
+rotation = -3.14159
+scale = Vector2(0.603615, -0.385967)
+texture = ExtResource("1_ly3nn")
+offset = Vector2(315.412, -15.1326)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2/StaticBody2D"]
+position = Vector2(309.8, -10.3628)
+shape = SubResource("RectangleShape2D_kjlch")
+
+[node name="Wall3" type="Sprite2D" parent="."]
+position = Vector2(1431, 218)
+rotation = -3.14159
+scale = Vector2(0.603615, -0.385967)
+texture = ExtResource("1_ly3nn")
+offset = Vector2(315.412, -15.1326)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3/StaticBody2D"]
+position = Vector2(309.8, -10.3628)
+shape = SubResource("RectangleShape2D_kjlch")
