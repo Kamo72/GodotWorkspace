@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhmgak21bkfo8"]
+[gd_scene load_steps=6 format=3 uid="uid://bhmgak21bkfo8"]
 
 [ext_resource type="Script" path="res://ManagerScript/DebugManager.cs" id="1_34xk2"]
 [ext_resource type="Script" path="res://ManagerScript/CameraManager.cs" id="2_w2tjp"]
 [ext_resource type="Texture2D" uid="uid://ta6gcyjnggdb" path="res://icon.svg" id="3_03mpu"]
 [ext_resource type="PackedScene" uid="uid://c8v5gaowfugpp" path="res://Prefab/player.tscn" id="4_00bmr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3nfjg"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_34xk2")
@@ -15,11 +17,15 @@ script = ExtResource("2_w2tjp")
 position = Vector2(507, 260)
 texture = ExtResource("3_03mpu")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Icon"]
+shape = SubResource("RectangleShape2D_3nfjg")
+
 [node name="Icon2" type="Sprite2D" parent="."]
 position = Vector2(34, -68)
 texture = ExtResource("3_03mpu")
 
 [node name="Player" parent="." instance=ExtResource("4_00bmr")]
+position = Vector2(293, 114)
 scale = Vector2(1.01468, 1.00613)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

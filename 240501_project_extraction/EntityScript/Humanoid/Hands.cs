@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using ItemLib;
 
 public partial class Hands : Node2D
 {
@@ -10,15 +11,15 @@ public partial class Hands : Node2D
 		set => direction = value / 180f * (float)Math.PI;
 	}
 
+	Node2D weapon = null;
+
 	public override void _Ready()
 	{
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 		Rotation = direction;
-		GD.Print(directionDegree);
 		Scale = new Vector2(1f, Math.Abs(directionDegree) < 90f? 1f : -1f);
 	}
 
@@ -28,4 +29,9 @@ public partial class Hands : Node2D
     }
 
 
+	public bool GetHandable(Handable handable)
+	{
+		return false;
+
+	}
 }

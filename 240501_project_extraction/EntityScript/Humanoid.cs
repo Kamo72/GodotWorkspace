@@ -12,10 +12,10 @@ public partial class Humanoid : CharacterBody2D
 	public float direction => (Position - aimNow).AngleToPoint(Vector2.Zero);
 	public float directionDegree => direction / (float)Math.PI * 180f;
 
-	public Vector2 moveValue = Vector2.Zero;
+	Vector2 moveValue = Vector2.Zero;
 
-	AnimationPlayer animPlayer;
-	Sprite2D sprite;
+	// AnimationPlayer animPlayer;
+	// Sprite2D sprite;
 	Hands hands;
 
 	public override void _Ready()
@@ -34,7 +34,6 @@ public partial class Humanoid : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-		
         base._PhysicsProcess(delta);
 		MoveAndSlide();
 	}
