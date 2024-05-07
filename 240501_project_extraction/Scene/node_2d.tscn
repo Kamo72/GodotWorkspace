@@ -20,6 +20,7 @@ position = Vector2(34, -68)
 texture = ExtResource("3_03mpu")
 
 [node name="Player" parent="." instance=ExtResource("4_00bmr")]
+scale = Vector2(1.01468, 1.00613)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -16,13 +16,13 @@ public partial class Humanoid : CharacterBody2D
 
 	AnimationPlayer animPlayer;
 	Sprite2D sprite;
-	Node2D hands;
+	Hands hands;
 
 	public override void _Ready()
 	{
 		// animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		// sprite = GetNode<Sprite2D>("Sprite");
-		hands = GetNode<Node2D>("Hands");
+		hands = GetNode<Node2D>("Hands") as Hands;
 	}
 
 	public override void _Process(double delta)
@@ -71,17 +71,12 @@ public partial class Humanoid : CharacterBody2D
         Vector2 globalMousePos = GetGlobalMousePosition();
         Camera2D camera = GetViewport().GetCamera2D();
 		
-		if (camera != null){
-            //aimTo = camera.Position + (globalMousePos - Position) / camera.Zoom;
-			aimTo = globalMousePos; 
-			
-		}
-		GD.Print("aimTo : " + aimTo);
-		aimNow  = (aimNow + aimTo * aimSpeed) / (1f + aimSpeed);
+		if (camera != null) aimTo = globalMousePos; 
 		
-		hands.Position = Vector2.FromAngle(direction) * 100f;
+		aimNow  = (aimNow + aimTo * aimSpeed) / (1f + aimSpeed);
+		hands.Position = Vector2.FromAngle(direction) * 10f;
 
-		GD.Print("direction : " + direction / Math.PI * 180f);
+		hands.direction = direction;
 	}
 
 }

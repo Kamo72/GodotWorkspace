@@ -26,4 +26,20 @@ public partial class CameraManager : Camera2D
 			Position = target.Position;
 		else GD.Print("CameraManager : target == null!");
     }
+
+	
+	void ShakeProcess(float delta)
+	{
+
+
+	}
+	public void GetShake(float power)
+	{
+
+
+	}
+
+
+
+
 }

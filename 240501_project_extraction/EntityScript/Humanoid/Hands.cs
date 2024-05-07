@@ -8,9 +8,8 @@ public partial class Hands : Node2D
 	{
 		get => direction / (float)Math.PI * 180f;
 		set => direction = value / 180f * (float)Math.PI;
-	};
+	}
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 	}
@@ -18,5 +17,15 @@ public partial class Hands : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		Rotation = direction;
+		GD.Print(directionDegree);
+		Scale = new Vector2(1f, Math.Abs(directionDegree) < 90f? 1f : -1f);
 	}
+
+    public override void _PhysicsProcess(double delta)
+    {
+        base._PhysicsProcess(delta);
+    }
+
+
 }
