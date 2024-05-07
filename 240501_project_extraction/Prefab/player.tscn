@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8v5gaowfugpp"]
+
+[ext_resource type="Script" path="res://EntityScript/Humanoid.cs" id="1_yolpr"]
+[ext_resource type="Texture2D" uid="uid://ta6gcyjnggdb" path="res://icon.svg" id="2_2kce7"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_yolpr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_2kce7")
+
+[node name="Hands" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Hands"]
+position = Vector2(2, -0.999996)
+scale = Vector2(0.476563, 0.5)
+texture = ExtResource("2_2kce7")

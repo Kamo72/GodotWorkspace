@@ -3,11 +3,12 @@ using System;
 
 public partial class CameraManager : Camera2D
 {
+	Node2D target;
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		//DisplayServer.WindowSetMode(DisplayServer.WindowMode.Fullscreen);
-		//GetTree().Root.Size = new Vector2I(10, 10);
+		target = GetTree().Root.FindByName("Player") as Node2D;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -16,4 +17,13 @@ public partial class CameraManager : Camera2D
 		// GD.Print("MAX FPS : " + Godot.Engine.MaxFps);
 		// GD.Print("NOW FPS : " + Godot.Engine.GetFramesPerSecond());
 	}
+
+    public override void _PhysicsProcess(double delta)
+    {
+        base._PhysicsProcess(delta);
+
+		if(target != null)
+			Position = target.Position;
+		else GD.Print("CameraManager : target == null!");
+    }
 }

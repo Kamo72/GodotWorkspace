@@ -1,14 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://bhmgak21bkfo8"]
+[gd_scene load_steps=5 format=3 uid="uid://bhmgak21bkfo8"]
 
-[ext_resource type="Script" path="res://Script/DebugManager.cs" id="1_34xk2"]
-[ext_resource type="Script" path="res://Script/CameraManager.cs" id="2_w2tjp"]
+[ext_resource type="Script" path="res://ManagerScript/DebugManager.cs" id="1_34xk2"]
+[ext_resource type="Script" path="res://ManagerScript/CameraManager.cs" id="2_w2tjp"]
 [ext_resource type="Texture2D" uid="uid://ta6gcyjnggdb" path="res://icon.svg" id="3_03mpu"]
+[ext_resource type="PackedScene" uid="uid://c8v5gaowfugpp" path="res://Prefab/player.tscn" id="4_00bmr"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_34xk2")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(22, 1)
 script = ExtResource("2_w2tjp")
 
 [node name="Icon" type="Sprite2D" parent="."]
@@ -19,9 +19,11 @@ texture = ExtResource("3_03mpu")
 position = Vector2(34, -68)
 texture = ExtResource("3_03mpu")
 
+[node name="Player" parent="." instance=ExtResource("4_00bmr")]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="ControlDebugBorder" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,14 +32,14 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="CanvasLayer/Control"]
+[node name="Label" type="Label" parent="CanvasLayer/ControlDebugBorder"]
 layout_mode = 1
 offset_right = 91.0
 offset_bottom = 23.0
 text = "asdasdasda"
 metadata/_edit_use_anchors_ = true
 
-[node name="Label2" type="Label" parent="CanvasLayer/Control"]
+[node name="Label2" type="Label" parent="CanvasLayer/ControlDebugBorder"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -51,7 +53,7 @@ grow_vertical = 0
 text = "asdasdasda"
 metadata/_edit_use_anchors_ = true
 
-[node name="Label3" type="Label" parent="CanvasLayer/Control"]
+[node name="Label3" type="Label" parent="CanvasLayer/ControlDebugBorder"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -62,7 +64,7 @@ grow_vertical = 0
 text = "asdasdasda"
 metadata/_edit_use_anchors_ = true
 
-[node name="Label4" type="Label" parent="CanvasLayer/Control"]
+[node name="Label4" type="Label" parent="CanvasLayer/ControlDebugBorder"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -72,3 +74,11 @@ offset_bottom = 23.0
 grow_horizontal = 0
 text = "asdasdasda"
 metadata/_edit_use_anchors_ = true
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
