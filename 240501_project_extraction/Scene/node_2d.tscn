@@ -1,11 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://bhmgak21bkfo8"]
+[gd_scene load_steps=8 format=3 uid="uid://bhmgak21bkfo8"]
 
 [ext_resource type="Script" path="res://ManagerScript/DebugManager.cs" id="1_34xk2"]
 [ext_resource type="Script" path="res://ManagerScript/CameraManager.cs" id="2_w2tjp"]
 [ext_resource type="Texture2D" uid="uid://ta6gcyjnggdb" path="res://icon.svg" id="3_03mpu"]
 [ext_resource type="PackedScene" uid="uid://c8v5gaowfugpp" path="res://Prefab/player.tscn" id="4_00bmr"]
+[ext_resource type="PackedScene" uid="uid://hivip7d7e2lj" path="res://Prefab/weapon.tscn" id="6_2bxye"]
+[ext_resource type="PackedScene" uid="uid://c83yqfupb7ytn" path="res://Prefab/projectile.tscn" id="6_7p4cp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3nfjg"]
+size = Vector2(125, 126)
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_34xk2")
@@ -13,20 +16,9 @@ script = ExtResource("1_34xk2")
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("2_w2tjp")
 
-[node name="Icon" type="Sprite2D" parent="."]
-position = Vector2(507, 260)
-texture = ExtResource("3_03mpu")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Icon"]
-shape = SubResource("RectangleShape2D_3nfjg")
-
-[node name="Icon2" type="Sprite2D" parent="."]
-position = Vector2(34, -68)
-texture = ExtResource("3_03mpu")
-
 [node name="Player" parent="." instance=ExtResource("4_00bmr")]
 position = Vector2(293, 114)
-scale = Vector2(1.01468, 1.00613)
+scale = Vector2(1.02031, 0.894157)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -89,3 +81,54 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Wall" type="Sprite2D" parent="."]
+position = Vector2(507, 260)
+texture = ExtResource("3_03mpu")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall/StaticBody2D"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_3nfjg")
+
+[node name="Wall2" type="Sprite2D" parent="."]
+position = Vector2(-248, 218)
+scale = Vector2(3.65021, 0.882645)
+texture = ExtResource("3_03mpu")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2/StaticBody2D"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_3nfjg")
+
+[node name="Wall3" type="Sprite2D" parent="."]
+position = Vector2(299, -165)
+scale = Vector2(0.311948, 2.71789)
+texture = ExtResource("3_03mpu")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3/StaticBody2D"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_3nfjg")
+
+[node name="Projectile" parent="." instance=ExtResource("6_7p4cp")]
+position = Vector2(-182, -45)
+gravity_scale = 0.0
+
+[node name="Wall4" type="Sprite2D" parent="."]
+position = Vector2(-645, -329)
+scale = Vector2(-4.1205, 1.78924)
+texture = ExtResource("3_03mpu")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Wall4"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall4/StaticBody2D"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_3nfjg")
+
+[node name="Weapon" parent="." instance=ExtResource("6_2bxye")]
+position = Vector2(-170, -347)
+metadata/BarrelLength = 180.0

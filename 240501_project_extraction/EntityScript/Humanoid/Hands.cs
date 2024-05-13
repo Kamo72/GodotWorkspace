@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using ItemLib;
 
 public partial class Hands : Node2D
 {
@@ -29,9 +28,4 @@ public partial class Hands : Node2D
     }
 
 
-	public bool GetHandable(Handable handable)
-	{
-		return false;
-
-	}
 }

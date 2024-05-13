@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://hivip7d7e2lj"]
+
+[ext_resource type="Script" path="res://ItemScript/Weapon.cs" id="1_3vm6j"]
+[ext_resource type="Texture2D" uid="uid://ta6gcyjnggdb" path="res://icon.svg" id="2_8mj0i"]
+
+[node name="Weapon" type="Node2D"]
+script = ExtResource("1_3vm6j")
+metadata/BarrelLength = 160.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(49, 2)
+scale = Vector2(1.64844, 0.429688)
+texture = ExtResource("2_8mj0i")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(52.7773, 4.76837e-06)
+scale = Vector2(1.64844, 0.429688)
+texture = ExtResource("2_8mj0i")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
+position = Vector2(27.2986, 116.364)
+scale = Vector2(0.271403, 1.60141)
+texture = ExtResource("2_8mj0i")
+metadata/barrelLength = 160.0

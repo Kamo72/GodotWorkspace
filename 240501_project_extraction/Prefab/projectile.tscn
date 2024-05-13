@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://c83yqfupb7ytn"]
+
+[ext_resource type="Script" path="res://EntityScript/Projectile.cs" id="1_2kr3k"]
+[ext_resource type="Texture2D" uid="uid://ta6gcyjnggdb" path="res://icon.svg" id="2_noft1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fjipr"]
+
+[node name="Projectile" type="RigidBody2D"]
+script = ExtResource("1_2kr3k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_fjipr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.48, 0.48)
+texture = ExtResource("2_noft1")
