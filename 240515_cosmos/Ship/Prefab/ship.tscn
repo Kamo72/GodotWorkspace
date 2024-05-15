@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdntc07lhghyn"]
+
+[ext_resource type="Texture2D" uid="uid://bt6y7wmw1a7pa" path="res://icon.svg" id="1_2euef"]
+[ext_resource type="Script" path="res://Ship/Script/Ship.cs" id="1_dxnnm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iafh3"]
+size = Vector2(291, 94)
+
+[node name="Ship" type="RigidBody2D"]
+script = ExtResource("1_dxnnm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(65.5, -3)
+shape = SubResource("RectangleShape2D_iafh3")
+
+[node name="View" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="View"]
+position = Vector2(65, -2)
+scale = Vector2(2.3125, 0.71875)
+texture = ExtResource("1_2euef")

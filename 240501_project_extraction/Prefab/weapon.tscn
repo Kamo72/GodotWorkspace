@@ -8,17 +8,17 @@ script = ExtResource("1_3vm6j")
 metadata/BarrelLength = 160.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(49, 2)
-scale = Vector2(1.64844, 0.429688)
+position = Vector2(5, 0)
+scale = Vector2(0.535158, 0.105469)
 texture = ExtResource("2_8mj0i")
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
-position = Vector2(52.7773, 4.76837e-06)
+position = Vector2(99.0363, 1.52588e-05)
 scale = Vector2(1.64844, 0.429688)
 texture = ExtResource("2_8mj0i")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
-position = Vector2(27.2986, 116.364)
-scale = Vector2(0.271403, 1.60141)
+position = Vector2(9.34304, 104.296)
+scale = Vector2(0.456869, 1.097)
 texture = ExtResource("2_8mj0i")
 metadata/barrelLength = 160.0
