@@ -17,13 +17,28 @@ public partial class Weapon : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		Fire();
+		base._Process(delta);
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+		GD.Print("processed!");
+		if(Input.IsMouseButtonPressed(MouseButton.Left)){
+			Fire();
+			GD.Print("fired!");
+		}
+		if(Input.IsMouseButtonPressed(MouseButton.Right)){
+			Fire();
+			GD.Print("fired!");
+		}
+
+        base._PhysicsProcess(delta);
     }
 
 
 
 
-	public void Fire()
+    public void Fire()
     {
         Projectile proj = ResourceLoader.Load<PackedScene>("res://Prefab/projectile.tscn").Instantiate() as Projectile;
         GetTree().Root.AddChild(proj);

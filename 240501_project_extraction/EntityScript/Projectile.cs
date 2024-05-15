@@ -3,6 +3,7 @@ using System;
 
 public partial class Projectile : RigidBody2D
 {
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -19,5 +20,8 @@ public partial class Projectile : RigidBody2D
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
+		MoveAndCollide(LinearVelocity);
     }
+
+
 }

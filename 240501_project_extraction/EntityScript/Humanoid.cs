@@ -16,7 +16,7 @@ public partial class Humanoid : CharacterBody2D
 
 	// AnimationPlayer animPlayer;
 	// Sprite2D sprite;
-	Hands hands;
+	protected Hands hands;
 
     public override void _EnterTree()
     {
@@ -28,6 +28,8 @@ public partial class Humanoid : CharacterBody2D
 
 	public override void _Process(double delta)
 	{
+		base._Process(delta);
+
 		AimProcess(delta);
 		InputProcess(this, delta);
 		PhysicsProcess(delta);
@@ -46,13 +48,13 @@ public partial class Humanoid : CharacterBody2D
 		//Get Input
 		thisObj.moveValue = Vector2.Zero;
 
-		if (Input.IsKeyPressed(Key.Left))
+		if (Input.IsKeyPressed(Key.A))
 			thisObj.moveValue += new Vector2(-1f, +0f);
-		if (Input.IsKeyPressed(Key.Right))
+		if (Input.IsKeyPressed(Key.D))
 			thisObj.moveValue += new Vector2(+1f, +0f);
-		if (Input.IsKeyPressed(Key.Up))
+		if (Input.IsKeyPressed(Key.W))
 			thisObj.moveValue += new Vector2(+0f, -1f);
-		if (Input.IsKeyPressed(Key.Down))
+		if (Input.IsKeyPressed(Key.S))
 			thisObj.moveValue += new Vector2(+0f, +1f);
 	};
 	//Apply Accel and Friction

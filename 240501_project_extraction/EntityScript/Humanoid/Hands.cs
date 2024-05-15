@@ -10,7 +10,6 @@ public partial class Hands : Node2D
 		set => direction = value / 180f * (float)Math.PI;
 	}
 
-	Node2D weapon = null;
 
 	public override void _Ready()
 	{
@@ -27,5 +26,30 @@ public partial class Hands : Node2D
         base._PhysicsProcess(delta);
     }
 
+
+	public Weapon equiped 
+	{ 
+		get{
+			foreach (var item in GetChildren(false))
+			{
+				if(item.Name != "Right" || item.Name != "Left") continue;
+				if(item is Weapon Weapon) return Weapon;
+			}
+			return null;
+		}
+	}
+
+	public bool GrabWeapon(Weapon weapon)
+	{
+		if(equiped != null) {GD.Print("이미 무기 이썽"); return false;}
+
+		weapon.GetParent().RemoveChild(weapon);
+		AddChild(weapon);
+		
+		weapon.Position = new Vector2(0, 0);
+		weapon.Rotation = 0f;
+
+		return true;
+	}
 
 }
