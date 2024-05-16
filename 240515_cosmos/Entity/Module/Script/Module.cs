@@ -72,7 +72,7 @@ public partial class Module : StaticBody2D
 				else if(peneLevel > -2f){
 					//75 ~ 25%
 					health.inner.value -= damage.value  * (peneLevel + 4f) / 8f; 
-					master.health.value -= damage.value  * (peneLevel + 4f) / 8f
+					master.health.value -= damage.value  * (peneLevel + 4f) / 8f;
 				}
 				else
 					//0%

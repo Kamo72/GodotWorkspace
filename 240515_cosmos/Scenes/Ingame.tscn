@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://ch84tie2wsbi8"]
+[gd_scene load_steps=6 format=3 uid="uid://ch84tie2wsbi8"]
 
 [ext_resource type="Script" path="res://Managers/DebugManager.cs" id="1_5bprj"]
 [ext_resource type="PackedScene" uid="uid://bdntc07lhghyn" path="res://Entity/Ship/Prefab/ship.tscn" id="1_ou6qy"]
 [ext_resource type="Script" path="res://Managers/CameraManager.cs" id="2_1n3eh"]
 [ext_resource type="PackedScene" uid="uid://bfyh8kxgluwb6" path="res://Entity/Projectile/Prefab/projectile.tscn" id="2_77q7q"]
-[ext_resource type="Script" path="res://Entity/Projectile/Script/Projectile.cs" id="3_6otk3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qnfqh"]
 friction = 0.14
@@ -46,16 +45,12 @@ inertia = 0.01
 
 [node name="Projectile" parent="." instance=ExtResource("2_77q7q")]
 position = Vector2(-252, 21)
-script = ExtResource("3_6otk3")
 
 [node name="Projectile2" parent="." instance=ExtResource("2_77q7q")]
 position = Vector2(-300, -18)
-script = ExtResource("3_6otk3")
 
 [node name="Projectile3" parent="." instance=ExtResource("2_77q7q")]
 position = Vector2(-248, -67)
-script = ExtResource("3_6otk3")
 
 [node name="Projectile4" parent="." instance=ExtResource("2_77q7q")]
 position = Vector2(-252, -26)
-script = ExtResource("3_6otk3")
