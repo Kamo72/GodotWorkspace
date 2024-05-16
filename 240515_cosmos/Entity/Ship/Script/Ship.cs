@@ -4,6 +4,9 @@ using System;
 public partial class Ship : RigidBody2D
 {
 
+	public (float value, float max) health = (0, 0);
+
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -12,14 +15,28 @@ public partial class Ship : RigidBody2D
 		posTarget = Position + new Vector2(300f, 200f);
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+    public override void _EnterTree()
+    {
+		foreach (Node node in GetChildren(false))
+			if(node is Module module)
+			{
+				health.max += module.health.inner.max;
+				health.value += module.health.inner.value;
+			}
+
+
+
+        base._EnterTree();
+    }
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(double delta)
 	{
+		MovementProcess(delta);
 	}
 
     public override void _PhysicsProcess(double delta)
     {
-		MovementProcess(delta);
 		MoveAndCollide(LinearVelocity);
         base._PhysicsProcess(delta);
     }
@@ -45,18 +62,16 @@ public partial class Ship : RigidBody2D
 			Mathf.DegToRad(differVec.Angle())
 			);
 
-
 		if(differVec.Length() > 100f && Mathf.Abs(toAngle) > 0.005f)
 		{
 			float side = Mathf.Sign(toAngle);
 			AngularVelocity += side * (float)delta * movementStat.angularPower;
 		}
 		AngularVelocity *= 1f - angularFriction * (float)delta;
-		 
-
+		
 	}
 
-
+	//modular
 
 
 	

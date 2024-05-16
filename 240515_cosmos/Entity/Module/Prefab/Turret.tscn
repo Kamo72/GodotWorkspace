@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://ct6rvlvtjw0lf"]
+
+[ext_resource type="PackedScene" uid="uid://c4whsf31his3s" path="res://Entity/Module/Prefab/module.tscn" id="1_bscoa"]
+[ext_resource type="Script" path="res://Entity/Module/Script/Turret.cs" id="2_ty6xi"]
+[ext_resource type="Texture2D" uid="uid://bt6y7wmw1a7pa" path="res://icon.svg" id="3_x7ctc"]
+
+[node name="Module" instance=ExtResource("1_bscoa")]
+script = ExtResource("2_ty6xi")
+
+[node name="Turret" type="Node2D" parent="." index="2"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Turret" index="0"]
+position = Vector2(73, 0)
+scale = Vector2(1.36364, 0.224806)
+texture = ExtResource("3_x7ctc")
+
+[node name="FirePoint" type="Node2D" parent="Turret" index="1"]
+position = Vector2(155, 0)

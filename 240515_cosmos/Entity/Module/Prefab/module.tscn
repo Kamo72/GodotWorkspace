@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4whsf31his3s"]
+
+[ext_resource type="Script" path="res://Entity/Module/Script/Module.cs" id="1_v48d7"]
+[ext_resource type="Texture2D" uid="uid://bt6y7wmw1a7pa" path="res://icon.svg" id="2_207bc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5iofy"]
+
+[node name="Module" type="StaticBody2D"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_v48d7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(7.965, 6.31)
+shape = SubResource("CircleShape2D_5iofy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.03523, 0.845185)
+texture = ExtResource("2_207bc")

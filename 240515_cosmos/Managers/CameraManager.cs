@@ -24,7 +24,7 @@ public partial class CameraManager : Camera2D
 
 		if(target != null)
 			Position = target.Position;
-		else GD.Print("CameraManager : target == null!");
+		//else GD.Print("CameraManager : target == null!");
     }
 
 	

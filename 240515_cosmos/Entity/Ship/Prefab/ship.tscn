@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdntc07lhghyn"]
+[gd_scene load_steps=5 format=3 uid="uid://bdntc07lhghyn"]
 
 [ext_resource type="Texture2D" uid="uid://bt6y7wmw1a7pa" path="res://icon.svg" id="1_2euef"]
-[ext_resource type="Script" path="res://Ship/Script/Ship.cs" id="1_dxnnm"]
+[ext_resource type="Script" path="res://Entity/Ship/Script/Ship.cs" id="1_dxnnm"]
+[ext_resource type="PackedScene" uid="uid://ct6rvlvtjw0lf" path="res://Entity/Module/Prefab/Turret.tscn" id="4_m8jws"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iafh3"]
 size = Vector2(291, 94)
@@ -19,3 +20,9 @@ shape = SubResource("RectangleShape2D_iafh3")
 position = Vector2(65, -2)
 scale = Vector2(2.3125, 0.71875)
 texture = ExtResource("1_2euef")
+
+[node name="Module3" parent="." instance=ExtResource("4_m8jws")]
+position = Vector2(221, -5)
+
+[node name="Module4" parent="." instance=ExtResource("4_m8jws")]
+position = Vector2(84, -4)
