@@ -22,12 +22,15 @@ public partial class Weapon : Node2D
     }
 
 
+    float cooldown = 0;
     public override void _PhysicsProcess(double delta)
     {
 		GD.Print("processed!");
 		if(Input.IsMouseButtonPressed(MouseButton.Left)){
+			if()
 			Fire();
 			GD.Print("fired!");
+			
 		}
 		if(Input.IsMouseButtonPressed(MouseButton.Right)){
 			Fire();
@@ -43,6 +46,9 @@ public partial class Weapon : Node2D
     public void Fire()
     {
         Projectile proj = ResourceLoader.Load<PackedScene>("res://Prefab/projectile.tscn").Instantiate() as Projectile;
+		proj.GlobalPosition = GlobalPosition + barrelLength * Vector2.FromAngle(GlobalRotation);
+		proj.GlobalRotation = GlobalRotation;
+		proj.LinearVelocity = Vector2.FromAngle(GlobalRotation) * 20f;
         GetTree().Root.AddChild(proj);
     }
 }
