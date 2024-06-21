@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhmgak21bkfo8"]
+[gd_scene load_steps=7 format=3 uid="uid://bhmgak21bkfo8"]
 
 [ext_resource type="Script" path="res://ManagerScript/DebugManager.cs" id="1_34xk2"]
 [ext_resource type="Script" path="res://ManagerScript/CameraManager.cs" id="2_w2tjp"]
 [ext_resource type="Texture2D" uid="uid://ta6gcyjnggdb" path="res://icon.svg" id="3_03mpu"]
 [ext_resource type="PackedScene" uid="uid://c8v5gaowfugpp" path="res://Prefab/player.tscn" id="4_00bmr"]
-[ext_resource type="PackedScene" uid="uid://hivip7d7e2lj" path="res://Prefab/weapon.tscn" id="6_2bxye"]
-[ext_resource type="PackedScene" uid="uid://c83yqfupb7ytn" path="res://Prefab/projectile.tscn" id="6_7p4cp"]
+[ext_resource type="PackedScene" uid="uid://2covg0ovk53g" path="res://Prefab/interactable.tscn" id="5_tiyf1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3nfjg"]
 size = Vector2(125, 126)
@@ -114,10 +113,6 @@ texture = ExtResource("3_03mpu")
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_3nfjg")
 
-[node name="Projectile" parent="." instance=ExtResource("6_7p4cp")]
-position = Vector2(-182, -45)
-gravity_scale = 0.0
-
 [node name="Wall4" type="Sprite2D" parent="."]
 position = Vector2(-645, -329)
 scale = Vector2(-4.1205, 1.78924)
@@ -129,6 +124,8 @@ texture = ExtResource("3_03mpu")
 position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_3nfjg")
 
-[node name="Weapon" parent="." instance=ExtResource("6_2bxye")]
-position = Vector2(-170, -347)
-metadata/BarrelLength = 180.0
+[node name="Interactable" parent="." instance=ExtResource("5_tiyf1")]
+position = Vector2(132, -134)
+
+[node name="Interactable2" parent="." instance=ExtResource("5_tiyf1")]
+position = Vector2(-257, 37)

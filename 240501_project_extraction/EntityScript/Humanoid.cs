@@ -1,10 +1,14 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 
 public partial class Humanoid : CharacterBody2D
 {
-	public readonly float moveSpeed = 500f, friction = 0.98f;
+	public readonly float moveSpeed = 1500f, friction = 0.965f;
+
+	public Health health;
+
 
 	//angleValue
 	public float aimSpeed = 0.02f;
@@ -18,12 +22,18 @@ public partial class Humanoid : CharacterBody2D
 	// Sprite2D sprite;
 	protected Hands hands;
 
+	// public StanceType stanceType = StanceType.WALK; 
+	// public float stanceValue = 1f;
+
+	public Dictionary<string, Func<bool>> inputMap;
+
     public override void _EnterTree()
     {
         base._EnterTree();
 		// animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		// sprite = GetNode<Sprite2D>("Sprite");
 		hands = FindChild("Hands") as Hands;
+		health = new Health(() => GetParent().RemoveChild(this) , 300f);
 	}
 
 	public override void _Process(double delta)
@@ -31,19 +41,24 @@ public partial class Humanoid : CharacterBody2D
 		base._Process(delta);
 
 		AimProcess(delta);
-		InputProcess(this, delta);
+		MovementInputProcess(this, delta);
 		PhysicsProcess(delta);
+		InteractionProcess();
 	}
 
     public override void _PhysicsProcess(double delta)
     {
+		Vector2 forePostion = GlobalPosition;
+
         base._PhysicsProcess(delta);
 		MoveAndSlide();
+
+		aimNow += GlobalPosition - forePostion;
 	}
 
 
     //Get User Input
-    public Action<Humanoid, double> InputProcess = (thisObj, delta) =>
+    public Action<Humanoid, double> MovementInputProcess = (thisObj, delta) =>
 	{
 		//Get Input
 		thisObj.moveValue = Vector2.Zero;
@@ -81,4 +96,34 @@ public partial class Humanoid : CharacterBody2D
 		hands.direction = direction;
 	}
 
+	List<Interactable> interactables = new List<Interactable>();
+	void InteractionProcess()
+	{
+		interactables = new List<Interactable>();
+		Godot.Collections.Array<Node> nodes = this.GetTree().Root.GetChild(0).GetChildren();
+
+		foreach(Node node in nodes)
+			if(node is Interactable interactable)
+			{
+				float dist = (GlobalPosition - interactable.GlobalPosition).Length();
+				if(dist < interactable.interactableRange)
+					interactables.Add(interactable);
+			}
+	
+		if(inputMap["Interact"]() && interactables.Count > 0)
+			interactables[0].Interacted(this);
+			
+		
+	}
+}
+
+
+public partial class Humanoid
+{
+	public enum StanceType
+	{
+		CROUNCH,
+		WALK,
+		SPRINT,
+	}
 }

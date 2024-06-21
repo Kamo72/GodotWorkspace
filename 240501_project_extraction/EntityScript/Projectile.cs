@@ -4,24 +4,39 @@ using System;
 public partial class Projectile : RigidBody2D
 {
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
+	public float damage = 10f;
+	public float direction => Rotation; 
+	public float speed {
+		set{
+			this.LinearVelocity = Vector2.FromAngle(GlobalRotation) * value;
+		}
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
-
+	public override void _Ready(){}
+	public override void _Process(double delta){}
 
 
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
-		MoveAndCollide(LinearVelocity);
+		var collision = MoveAndCollide(LinearVelocity);
+
+		if(collision == null) return;
+		
+		Node2D node = (Node2D)collision.GetCollider();
+		
+		if(node is Humanoid humanoid)
+			CollisionHumanoid(humanoid);
+
+		GetParent().RemoveChild(this);
     }
+
+	void CollisionHumanoid(Humanoid humanoid)
+	{
+		humanoid.health.GetDamage(damage);
+	}
+
+
 
 
 }

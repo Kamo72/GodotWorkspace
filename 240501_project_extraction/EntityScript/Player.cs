@@ -1,14 +1,16 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Player : Humanoid
 {
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
         base._Ready();
 
-        InputProcess = (thisObj, delta) =>
+        Interactable.player = this;
+        
+        MovementInputProcess = (thisObj, delta) =>
         {
             //Get Input
             thisObj.moveValue = Vector2.Zero;
@@ -23,12 +25,25 @@ public partial class Player : Humanoid
                 thisObj.moveValue += new Vector2(+0f, +1f);
         };
 
+        InputMap.AddAction
+        
+        inputMap = new Dictionary<string, Func<bool>>{
+            {"Fire", ()=> Input.IsMouseButtonPressed(MouseButton.Left) },
+            {"Aim", ()=> Input.IsMouseButtonPressed(MouseButton.Right) },
+            {"Reload", ()=> Input.IsKeyPressed(Key.R) },
+            {"Interact", ()=> Input.IsKeyPressed(Key.F) },
+        };
+
+
+        Weapon weapon = LevelDesign.CreateWeapon("weapon");
+        GD.Print("name : " + weapon.Name);
+        hands.GrabWeapon(weapon);
+
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
         base._Process(delta);
-        hands.GrabWeapon(GetTree().FindByName("Weapon") as Weapon );
+        //hands.GrabWeapon(GetTree().FindByName("Weapon") as Weapon );
 	}
 }

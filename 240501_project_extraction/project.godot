@@ -29,6 +29,10 @@ project/assembly_name="240501_project_extraction"
 [layer_names]
 
 2d_physics/layer_1="Wall"
-2d_physics/layer_2="Entity"
-2d_physics/layer_3="Dropped"
-2d_physics/layer_4="Projectile"
+2d_physics/layer_2="BulletProofGlass"
+2d_physics/layer_3="Glass"
+2d_physics/layer_4="Bush"
+2d_physics/layer_5="Entity"
+2d_physics/layer_6="Container"
+2d_physics/layer_7="Items"
+2d_physics/layer_8="Projectile"

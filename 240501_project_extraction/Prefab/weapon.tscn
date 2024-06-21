@@ -4,21 +4,45 @@
 [ext_resource type="Texture2D" uid="uid://ta6gcyjnggdb" path="res://icon.svg" id="2_8mj0i"]
 
 [node name="Weapon" type="Node2D"]
+position = Vector2(11, 1)
 script = ExtResource("1_3vm6j")
 metadata/BarrelLength = 160.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(5, 0)
-scale = Vector2(0.535158, 0.105469)
+[node name="Model" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Model"]
+position = Vector2(57, -1)
+scale = Vector2(0.882176, 0.0453188)
 texture = ExtResource("2_8mj0i")
 
-[node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
-position = Vector2(99.0363, 1.52588e-05)
-scale = Vector2(1.64844, 0.429688)
-texture = ExtResource("2_8mj0i")
+[node name="Muzzle" type="Node2D" parent="Model/Sprite2D"]
+position = Vector2(60.27, 0)
 
-[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D"]
-position = Vector2(9.34304, 104.296)
-scale = Vector2(0.456869, 1.097)
+[node name="Sprite2D2" type="Sprite2D" parent="Model"]
+position = Vector2(-49, 5)
+rotation = -0.139626
+scale = Vector2(0.38, 0.14)
 texture = ExtResource("2_8mj0i")
 metadata/barrelLength = 160.0
+
+[node name="MagInsert" type="Node2D" parent="Model"]
+position = Vector2(19, 7)
+rotation = -0.285404
+scale = Vector2(0.535158, 0.105469)
+
+[node name="Chamber" type="Node2D" parent="Model"]
+position = Vector2(19, 0)
+
+[node name="Mag" type="Node2D" parent="Model"]
+position = Vector2(19, 7)
+rotation = -0.461025
+
+[node name="Sprite2D" type="Sprite2D" parent="Model/Mag"]
+position = Vector2(3, 11)
+scale = Vector2(0.126531, 0.247191)
+texture = ExtResource("2_8mj0i")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Model"]
+position = Vector2(5, -9.53674e-07)
+scale = Vector2(0.535158, 0.105469)
+texture = ExtResource("2_8mj0i")

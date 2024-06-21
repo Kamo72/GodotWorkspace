@@ -6,11 +6,16 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_fjipr"]
 
 [node name="Projectile" type="RigidBody2D"]
+rotation = 0.000290846
+collision_layer = 128
+collision_mask = 19
+gravity_scale = 0.0
 script = ExtResource("1_2kr3k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.2, 0.2)
 shape = SubResource("CircleShape2D_fjipr")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.48, 0.48)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_noft1")

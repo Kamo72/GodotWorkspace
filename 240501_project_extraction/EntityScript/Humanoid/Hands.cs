@@ -10,6 +10,7 @@ public partial class Hands : Node2D
 		set => direction = value / 180f * (float)Math.PI;
 	}
 
+	public Humanoid master => GetParent() as Humanoid;
 
 	public override void _Ready()
 	{
@@ -43,13 +44,32 @@ public partial class Hands : Node2D
 	{
 		if(equiped != null) {GD.Print("이미 무기 이썽"); return false;}
 
-		weapon.GetParent().RemoveChild(weapon);
+		if(weapon.GetParent() != null)
+			weapon.GetParent().RemoveChild(weapon);
+			
 		AddChild(weapon);
+		weapon.inputMap = master.inputMap;
 		
 		weapon.Position = new Vector2(0, 0);
 		weapon.Rotation = 0f;
 
 		return true;
+	}
+
+	void WeaponProcess(double delta)
+	{
+		if(equiped == null) return;
+		//TODO
+
+	}
+}
+
+public partial class Hands
+{
+	public enum ActionType
+	{
+		IDLE,
+		RELOADING,
 	}
 
 }
