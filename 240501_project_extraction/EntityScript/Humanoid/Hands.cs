@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Data.Common;
 
 public partial class Hands : Node2D
 {
@@ -12,16 +13,12 @@ public partial class Hands : Node2D
 
 	public Humanoid master => GetParent() as Humanoid;
 
-	public override void _Ready()
-	{
-	}
-
+	public override void _Ready(){}
 	public override void _Process(double delta)
 	{
 		Rotation = direction;
 		Scale = new Vector2(1f, Math.Abs(directionDegree) < 90f? 1f : -1f);
 	}
-
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
@@ -39,10 +36,10 @@ public partial class Hands : Node2D
 			return null;
 		}
 	}
-
-	public bool GrabWeapon(Weapon weapon)
+	public void EquipWeapon()
 	{
-		if(equiped != null) {GD.Print("이미 무기 이썽"); return false;}
+		Weapon weapon = equipTarget;
+		if(equiped != null) RemoveChild(equiped);
 
 		if(weapon.GetParent() != null)
 			weapon.GetParent().RemoveChild(weapon);
@@ -53,9 +50,13 @@ public partial class Hands : Node2D
 		weapon.Position = new Vector2(0, 0);
 		weapon.Rotation = 0f;
 
-		return true;
+		return;
 	}
+	public void InitEquipWeapon(Weapon weapon)
+	{
+		equipTarget = weapon;
 
+	}
 	void WeaponProcess(double delta)
 	{
 		if(equiped == null) return;
@@ -66,10 +67,40 @@ public partial class Hands : Node2D
 
 public partial class Hands
 {
+    public ActionType actType = ActionType.IDLE;
+	public float actTime = 0f;
+	public Weapon equipTarget = null;
 	public enum ActionType
 	{
 		IDLE,
 		RELOADING,
+		SWAP_IN,
+		SWAP_OUT,
 	}
+
+public void ActionProcess(double delta)
+{
+	switch(actType)
+	{
+		case ActionType.IDLE : {
+			if(equiped != equipTarget)
+			{
+				actType = ActionType.SWAP_IN;
+				actTime = equiped.weaponStatus.swapTime;
+			}
+		}break;
+		case ActionType.SWAP_IN : {
+
+		}break;
+		case ActionType.SWAP_OUT : {
+
+		}break;
+		case ActionType.RELOADING : {
+
+		}break;
+	}
+
+}
+
 
 }

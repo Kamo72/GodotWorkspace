@@ -23,3 +23,20 @@ public static partial class Extension
         return root.FindByName(name);
     }
 }
+
+
+    public class TypeEx 
+    {
+        public static bool IsChildByParent(Type childClass, Type parentClass)
+        {
+            while (childClass != null && childClass != typeof(object))
+            {
+                var currentType = childClass.IsGenericType ? childClass.GetGenericTypeDefinition() : childClass;
+                if (parentClass == currentType)
+                    return true;
+
+                childClass = childClass.BaseType;
+            }
+            return false;
+        }
+    }

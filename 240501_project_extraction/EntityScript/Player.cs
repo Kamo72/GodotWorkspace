@@ -25,7 +25,6 @@ public partial class Player : Humanoid
                 thisObj.moveValue += new Vector2(+0f, +1f);
         };
 
-        InputMap.AddAction
         
         inputMap = new Dictionary<string, Func<bool>>{
             {"Fire", ()=> Input.IsMouseButtonPressed(MouseButton.Left) },
@@ -37,7 +36,7 @@ public partial class Player : Humanoid
 
         Weapon weapon = LevelDesign.CreateWeapon("weapon");
         GD.Print("name : " + weapon.Name);
-        hands.GrabWeapon(weapon);
+        hands.EquipWeapon(weapon);
 
     }
 
