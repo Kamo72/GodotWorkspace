@@ -22,31 +22,28 @@ public partial class Hands : Node2D
     public override void _PhysicsProcess(double delta)
     {
         base._PhysicsProcess(delta);
+		ActionProcess(delta);
+		WeaponProcess(delta);
     }
 
 
-	public Weapon equiped 
-	{ 
-		get{
-			foreach (var item in GetChildren(false))
-			{
-				if(item.Name != "Right" || item.Name != "Left") continue;
-				if(item is Weapon Weapon) return Weapon;
-			}
-			return null;
-		}
-	}
+	public Weapon equiped = null;
 	public void EquipWeapon()
 	{
 		Weapon weapon = equipTarget;
 		if(equiped != null) RemoveChild(equiped);
 
+		if(weapon == null) return;
+
+
 		if(weapon.GetParent() != null)
 			weapon.GetParent().RemoveChild(weapon);
 			
+		equiped = weapon;
 		AddChild(weapon);
+
 		weapon.inputMap = master.inputMap;
-		
+	
 		weapon.Position = new Vector2(0, 0);
 		weapon.Rotation = 0f;
 
@@ -55,12 +52,13 @@ public partial class Hands : Node2D
 	public void InitEquipWeapon(Weapon weapon)
 	{
 		equipTarget = weapon;
-
 	}
 	void WeaponProcess(double delta)
 	{
 		if(equiped == null) return;
-		//TODO
+		
+		if(actType == ActionType.IDLE && master.inputMap["Reload"]())
+			ActionInit(ActionType.RELOADING, equiped.weaponStatus.reloadTime);
 
 	}
 }
@@ -68,39 +66,70 @@ public partial class Hands : Node2D
 public partial class Hands
 {
     public ActionType actType = ActionType.IDLE;
-	public float actTime = 0f;
+	public float actTime = 0f, actTimeMax = 0f;
 	public Weapon equipTarget = null;
 	public enum ActionType
 	{
-		IDLE,
+		IDLE, 
 		RELOADING,
 		SWAP_IN,
 		SWAP_OUT,
 	}
 
-public void ActionProcess(double delta)
-{
-	switch(actType)
+	public void ActionProcess(double delta)
 	{
-		case ActionType.IDLE : {
-			if(equiped != equipTarget)
-			{
-				actType = ActionType.SWAP_IN;
-				actTime = equiped.weaponStatus.swapTime;
-			}
-		}break;
-		case ActionType.SWAP_IN : {
+		switch(actType)
+		{
+			case ActionType.IDLE : {
+				
+				if(equiped != equipTarget)
+					ActionInit( ActionType.SWAP_IN, equiped == null? 0.4f : equiped.weaponStatus.swapTime);
 
-		}break;
-		case ActionType.SWAP_OUT : {
+			}break;
+			case ActionType.SWAP_IN : {
+				
+				if(equiped == equipTarget)
+					ActionInit( ActionType.SWAP_OUT, actTimeMax, actTimeMax - actTime);
+				
 
-		}break;
-		case ActionType.RELOADING : {
+				if(actTime > actTimeMax)
+				{
+					EquipWeapon();
+					ActionInit( ActionType.SWAP_OUT, actTimeMax);
+				}
 
-		}break;
+			}break;
+			case ActionType.SWAP_OUT : {
+
+				if(actTime > actTimeMax)
+					ActionInit( ActionType.IDLE, 0f);
+				
+				if(equiped != equipTarget)
+					ActionInit( ActionType.SWAP_IN, actTimeMax, actTimeMax - actTime);
+				
+
+			}break;
+			case ActionType.RELOADING : {
+
+				if(actTime > actTimeMax)
+				{
+					equiped.magNow = equiped.magMax;
+					ActionInit( ActionType.IDLE, 0f);
+				}
+			}break;
+		}
+		actTime += (float)delta;
+
+		GD.Print("equiped : " + equiped + " / to : " + equipTarget);
+		GD.Print("ActionType : " + actType);
+		GD.Print("Time : " + actTime + " / " + actTimeMax);
 	}
 
-}
-
+	public void ActionInit(ActionType actType, float actTimeMax, float actTime = 0f)
+	{
+		this.actType = actType;
+		this.actTimeMax = actTimeMax;
+		this.actTime = actTime;
+	}
 
 }

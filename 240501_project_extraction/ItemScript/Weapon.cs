@@ -13,13 +13,6 @@ public partial class Weapon : Node2D
 	public Node2D magInsertNode => this.FindByName("MagInsert") as Node2D;
 	public Node2D chamber => this.FindByName("Chamber") as Node2D;
 
-	public enum ActionType
-	{
-		IDLE,
-		RELOADING,
-	}
-	public ActionType actType;
-	public float actValue = 0f, actMax = 0f;
 
 	public Dictionary<string, Func<bool>> inputMap; 
 	public bool isEquiped => GetParent() is Hands;
@@ -47,30 +40,11 @@ public partial class Weapon : Node2D
 	{
 		if(!isEquiped) return; 
 
-		switch(actType){
-			case ActionType.IDLE : {
-
-				if(inputMap["Fire"]())
-					if (cooldown < 0 && magNow > 0)
-						Fire();
-
-				
-				if(inputMap["Reload"]())
-					if (magNow != magMax)
-						Reload();
-			
-			} break;
-			case ActionType.RELOADING : {
-				
-				if(actValue > actMax){
-					actType = ActionType.IDLE;
-					magNow = magMax;
-				}
-
-			} break;
-		}
+        if(inputMap["Fire"]())
+            if (cooldown < 0 && magNow > 0)
+                Fire();
 		
-		actValue += (float)delta;
+		
 		cooldown -= (float)delta;
 		if(cooldown < 0) cooldown = -0.01f;
 	}
@@ -91,14 +65,6 @@ public partial class Weapon : Node2D
 
         GetTree().Root.AddChild(proj);
     }
-
-	void Reload()
-	{
-		actValue = 0;
-		actMax = weaponStatus.reloadTime;
-		actType = ActionType.RELOADING;
-	}
-
 }
 
 

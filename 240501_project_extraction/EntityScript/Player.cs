@@ -25,24 +25,57 @@ public partial class Player : Humanoid
                 thisObj.moveValue += new Vector2(+0f, +1f);
         };
 
-        
         inputMap = new Dictionary<string, Func<bool>>{
-            {"Fire", ()=> Input.IsMouseButtonPressed(MouseButton.Left) },
-            {"Aim", ()=> Input.IsMouseButtonPressed(MouseButton.Right) },
-            {"Reload", ()=> Input.IsKeyPressed(Key.R) },
-            {"Interact", ()=> Input.IsKeyPressed(Key.F) },
+            {"Fire", ()=> Input.IsActionPressed("Fire") },
+            {"Aim", ()=> Input.IsActionPressed("Aim") },
+            {"Reload", ()=> Input.IsActionJustPressed("Reload") },
+            {"Interact", ()=> Input.IsActionJustPressed("Interact") },
+            {"Inventory", ()=> Input.IsActionJustPressed("Inventory") },
         };
-
 
         Weapon weapon = LevelDesign.CreateWeapon("weapon");
         GD.Print("name : " + weapon.Name);
-        hands.EquipWeapon(weapon);
+        hands.InitEquipWeapon(weapon);
 
     }
 
-	public override void _Process(double delta)
-	{
-        base._Process(delta);
-        //hands.GrabWeapon(GetTree().FindByName("Weapon") as Weapon );
-	}
+    static Player()
+    {
+        List<(string actionName, Key keycode, bool alt, bool ctrl, bool shift)> keyList
+        = new List<(string actionName, Key keycode, bool alt, bool ctrl, bool shift)>
+        {
+            ("Reload", Key.R, false, false, false),
+            ("Interact", Key.F, false, false, false),
+            ("Inventory", Key.Tab, false, false, false),
+        };
+
+        List<(string actionName, MouseButton mbcode, bool alt, bool ctrl, bool shift)> mbList
+        = new List<(string actionName, MouseButton mbcode, bool alt, bool ctrl, bool shift)>
+        {
+            ("Fire", MouseButton.Left, false, false, false),
+            ("Aim", MouseButton.Right, false, false, false),
+        };
+
+
+        foreach(var data in keyList){
+            InputEventKey evt = new Godot.InputEventKey();
+            evt.Keycode = data.keycode;
+            evt.AltPressed = data.alt;
+            evt.CtrlPressed = data.ctrl;
+            evt.ShiftPressed = data.shift;
+            InputMap.AddAction(data.actionName);
+            InputMap.ActionAddEvent(data.actionName, evt);
+        }
+
+        foreach(var data in mbList){
+            InputEventMouseButton evt = new Godot.InputEventMouseButton();
+            evt.ButtonIndex = data.mbcode;
+            evt.AltPressed = data.alt;
+            evt.CtrlPressed = data.ctrl;
+            evt.ShiftPressed = data.shift;
+            InputMap.AddAction(data.actionName);
+            InputMap.ActionAddEvent(data.actionName, evt);
+        }
+    }
+
 }

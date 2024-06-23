@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bhmgak21bkfo8"]
+[gd_scene load_steps=8 format=3 uid="uid://bhmgak21bkfo8"]
 
 [ext_resource type="Script" path="res://ManagerScript/DebugManager.cs" id="1_34xk2"]
 [ext_resource type="Script" path="res://ManagerScript/CameraManager.cs" id="2_w2tjp"]
 [ext_resource type="Texture2D" uid="uid://ta6gcyjnggdb" path="res://icon.svg" id="3_03mpu"]
 [ext_resource type="PackedScene" uid="uid://c8v5gaowfugpp" path="res://Prefab/player.tscn" id="4_00bmr"]
+[ext_resource type="PackedScene" uid="uid://cxrn863chouys" path="res://Prefab/UI/MainUI.tscn" id="4_4u55p"]
 [ext_resource type="PackedScene" uid="uid://2covg0ovk53g" path="res://Prefab/interactable.tscn" id="5_tiyf1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3nfjg"]
@@ -73,13 +74,7 @@ grow_horizontal = 0
 text = "asdasdasda"
 metadata/_edit_use_anchors_ = true
 
-[node name="Control" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="MainUi" parent="CanvasLayer" instance=ExtResource("4_4u55p")]
 
 [node name="Wall" type="Sprite2D" parent="."]
 position = Vector2(507, 260)
