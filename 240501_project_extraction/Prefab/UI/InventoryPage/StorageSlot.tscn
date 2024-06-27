@@ -1,0 +1,295 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqnmkshn01n2f"]
+
+[ext_resource type="Script" path="res://UiScript/InventoryPage/StorageSlot.cs" id="1_735t1"]
+
+[node name="StorageSlot" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1280.0
+offset_bottom = -880.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+script = ExtResource("1_735t1")
+
+[node name="SlotContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 130.0
+offset_bottom = 130.0
+
+[node name="StorageContainer" type="GridContainer" parent="."]
+layout_mode = 1
+offset_left = 140.0
+offset_top = 10.0
+offset_right = 620.0
+offset_bottom = 68.0
+columns = 8
+
+[node name="Panel" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel3" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel4" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel5" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel6" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel7" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel8" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel9" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel10" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel11" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel12" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel13" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel14" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel15" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel16" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel17" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel18" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel19" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel20" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel21" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel22" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel23" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel24" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel25" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel26" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel27" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel28" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel29" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel30" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel31" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel32" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel33" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel34" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel35" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel36" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel37" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel38" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel39" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel40" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel41" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel42" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel43" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel44" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel45" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel46" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel47" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel48" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel49" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel50" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel51" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel52" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel53" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel54" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel55" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel56" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel57" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel58" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel59" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel60" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel61" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel62" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel63" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="Panel64" type="Panel" parent="StorageContainer"]
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 2
+
+[node name="SlotTypeText" type="Label" parent="."]
+modulate = Color(0.74558, 0.74558, 0.74558, 1)
+offset_right = 139.0
+offset_bottom = 30.0
+text = "SlotType"
+horizontal_alignment = 1
+vertical_alignment = 1

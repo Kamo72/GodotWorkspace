@@ -29,6 +29,8 @@ public partial class DebugManager : Node
 
     public override void _Process(double delta)
     {
+        if(ENABLE_DEBUG == false) return;
+        
         if (Input.IsActionJustPressed("KillProcess"))
             GetTree().Quit(0);
         // if (Input.IsActionJustPressed("TestAction"))

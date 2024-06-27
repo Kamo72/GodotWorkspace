@@ -39,6 +39,17 @@ public partial class Player : Humanoid
 
     }
 
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+
+        if(Input.IsActionJustPressed("Inventory")){
+            Control mainUI = GetTree().Root.FindByName("MainUi") as Control;
+            mainUI.Visible = !mainUI.Visible;
+        }
+
+    }
+
     static Player()
     {
         List<(string actionName, Key keycode, bool alt, bool ctrl, bool shift)> keyList
