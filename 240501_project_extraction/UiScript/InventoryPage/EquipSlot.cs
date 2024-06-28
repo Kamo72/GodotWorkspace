@@ -4,7 +4,7 @@ using System;
 public partial class EquipSlot : Control
 {
 
-    Label slotName => this.FindByName("SlotTypeText") as Label;
+    public Label slotName => this.FindByName("SlotTypeText") as Label;
 
 	public override void _Ready()
 	{
