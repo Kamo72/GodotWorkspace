@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqnmkshn01n2f"]
+[gd_scene load_steps=3 format=3 uid="uid://bqnmkshn01n2f"]
 
 [ext_resource type="Script" path="res://UiScript/InventoryPage/StorageSlot.cs" id="1_735t1"]
+[ext_resource type="Texture2D" uid="uid://ta6gcyjnggdb" path="res://icon.svg" id="2_wyylh"]
 
 [node name="StorageSlot" type="Control"]
 layout_mode = 3
@@ -21,6 +22,12 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 130.0
 offset_bottom = 130.0
+
+[node name="ItemTexture" type="TextureRect" parent="SlotContainer"]
+layout_mode = 2
+texture = ExtResource("2_wyylh")
+expand_mode = 3
+stretch_mode = 5
 
 [node name="StorageContainer" type="GridContainer" parent="."]
 layout_mode = 1
@@ -288,6 +295,7 @@ layout_mode = 2
 
 [node name="SlotTypeText" type="Label" parent="."]
 modulate = Color(0.74558, 0.74558, 0.74558, 1)
+layout_mode = 0
 offset_right = 139.0
 offset_bottom = 30.0
 text = "SlotType"

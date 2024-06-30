@@ -5,14 +5,14 @@ public partial class InventoryPage : Page
 {
 
 
-    Container myStatus => this.FindByName("MyStatus") as VBoxContainer;
+    Panel myStatus => this.FindByName("MyStatus") as Panel;
 
-    EquipSlot helmetSlot => myStatus.FindByName("HelmetSlot") as EquipSlot;
-    EquipSlot headgearSlot => myStatus.FindByName("HeadgearSlot") as EquipSlot;
-    EquipSlot plateSlot => myStatus.FindByName("PlateSlot") as EquipSlot;
-    EquipSlot firstWeaponSlot => myStatus.FindByName("FirstWeaponSlot") as EquipSlot;
-    EquipSlot secondWeaponSlot => myStatus.FindByName("SecondWeaponSlot") as EquipSlot;
-    EquipSlot subWeaponSlot => myStatus.FindByName("SubWeaponSlot") as EquipSlot;
+    EquipSlot helmetSlot => this.FindByName("HelmetSlot") as EquipSlot;
+    EquipSlot headgearSlot => this.FindByName("HeadgearSlot") as EquipSlot;
+    EquipSlot plateSlot => this.FindByName("PlateSlot") as EquipSlot;
+    EquipSlot firstWeaponSlot => this.FindByName("FirstWeaponSlot") as EquipSlot;
+    EquipSlot secondWeaponSlot => this.FindByName("SecondWeaponSlot") as EquipSlot;
+    EquipSlot subWeaponSlot => this.FindByName("SubWeaponSlot") as EquipSlot;
 
 
     VBoxContainer myInventory => this.FindByName("MyInventory") as VBoxContainer;
@@ -22,6 +22,7 @@ public partial class InventoryPage : Page
     public override void _Ready()
     {
         base._Ready();
+
         helmetSlot.slotName.Text = "헬멧";
         headgearSlot.slotName.Text = "헤드기어";
         plateSlot.slotName.Text = "방탄판";

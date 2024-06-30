@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1u5y8et2sbck"]
+[gd_scene load_steps=3 format=3 uid="uid://b1u5y8et2sbck"]
 
 [ext_resource type="Script" path="res://UiScript/InventoryPage/EquipSlot.cs" id="1_cvx05"]
+[ext_resource type="Texture2D" uid="uid://ta6gcyjnggdb" path="res://icon.svg" id="2_50a14"]
 
 [node name="WeaponSlot" type="Control"]
 custom_minimum_size = Vector2(140, 140)
@@ -12,7 +13,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -960.0
 offset_top = -540.0
-offset_right = -690.0
+offset_right = -680.0
 offset_bottom = -400.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -34,11 +35,19 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1, 1.01316)
 
+[node name="ItemTexture" type="TextureRect" parent="SlotContainer"]
+layout_mode = 2
+texture = ExtResource("2_50a14")
+expand_mode = 3
+stretch_mode = 5
+
 [node name="SlotTypeText" type="Label" parent="."]
 modulate = Color(0.74558, 0.74558, 0.74558, 1)
-layout_mode = 0
-offset_right = 270.0
-offset_bottom = 30.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.214
+offset_bottom = 0.0399971
 text = "SlotType"
 horizontal_alignment = 1
 vertical_alignment = 1

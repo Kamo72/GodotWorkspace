@@ -64,7 +64,7 @@ public partial class StorageSlot : Control
                 Rect2 childRect = controlChild.GetGlobalRect();
                 //maxWidth = Math.Max(maxWidth, childRect.Size.X + childRect.Position.X);
                 maxHeight = Math.Max(maxHeight, child.Size.Y + child.Position.Y);
-                GD.PrintErr("child : " + child + "child.Size.Y : " + child.Size.Y + " / child.Position.Y : " + child.Position.Y);
+                //GD.PrintErr("child : " + child + "child.Size.Y : " + child.Size.Y + " / child.Position.Y : " + child.Position.Y);
             }
         }
 
@@ -96,8 +96,8 @@ public partial class StorageSlot : Control
             scon.RemoveChild(node);
 
         
-        GD.PrintErr("scon.Size : " + scon.Size);
-        GD.PrintErr("margin : " + margin + " / width : " + width + " / nodeSize : " + nodeSize);
+        // GD.PrintErr("scon.Size : " + scon.Size);
+        // GD.PrintErr("margin : " + margin + " / width : " + width + " / nodeSize : " + nodeSize);
         
         for(int x = 0; x < size.X; x++)
         for(int y = 0; y < size.Y; y++)
@@ -114,7 +114,6 @@ public partial class StorageSlot : Control
             scon.AddChild(p);
            //GD.PrintErr("p : " + p.Position + " / s : " + p.Size);
         }
-
 
         scon.Columns = size.X;
         scon.Size = new Vector2(

@@ -27,48 +27,82 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="HeadgearSlot" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.173
+anchor_top = 0.093
+anchor_right = 0.392
+anchor_bottom = 0.222
+offset_left = -0.201004
+offset_top = -0.440002
+offset_right = 0.29599
+offset_bottom = 0.239975
+
 [node name="HelmetSlot" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
-layout_mode = 2
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 250.0
-offset_top = 100.0
-offset_right = 390.0
-offset_bottom = 240.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.392
+anchor_top = 0.093
+anchor_right = 0.612
+anchor_bottom = 0.222
+offset_left = 0.29599
+offset_top = -0.440002
+offset_right = 0.155975
+offset_bottom = 0.239975
 
 [node name="PlateSlot" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 250.0
-offset_top = 240.0
-offset_right = 390.0
-offset_bottom = 380.0
-grow_horizontal = 1
-grow_vertical = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.392
+anchor_top = 0.222
+anchor_right = 0.612
+anchor_bottom = 0.352
+offset_left = 0.29599
+offset_top = 0.239975
+offset_right = 0.155975
+offset_bottom = -0.160034
 
 [node name="FirstWeaponSlot" parent="HBoxContainer/MyStatus" instance=ExtResource("3_dt2mp")]
 layout_mode = 1
-offset_left = -208.5
-offset_top = -160.0
-offset_right = 61.5
-offset_bottom = -20.0
+anchors_preset = -1
+anchor_left = 0.173
+anchor_top = 0.352
+anchor_right = 0.597
+anchor_bottom = 0.481
+offset_left = -0.201004
+offset_top = -0.160034
+offset_right = -0.289001
+offset_bottom = 0.519958
 
 [node name="SecondWeaponSlot" parent="HBoxContainer/MyStatus" instance=ExtResource("3_dt2mp")]
 layout_mode = 1
-offset_left = -208.5
-offset_top = -20.0
-offset_right = 61.5
-offset_bottom = 120.0
+anchors_preset = -1
+anchor_left = 0.173
+anchor_top = 0.481
+anchor_right = 0.597
+anchor_bottom = 0.611
+offset_left = -0.201004
+offset_top = 0.519958
+offset_right = -0.289001
+offset_bottom = 0.119995
+
+[node name="SubWeaponSlot" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.612
+anchor_top = 0.352
+anchor_right = 0.832
+anchor_bottom = 0.481
+offset_left = 0.155975
+offset_top = -0.160034
+offset_right = 0.0159912
+offset_bottom = 0.519958
 
 [node name="EquipSlot3" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
 visible = false
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -82,7 +116,8 @@ grow_vertical = 1
 
 [node name="PlateSlot1" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
 visible = false
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -94,22 +129,10 @@ offset_bottom = 380.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="SubWeaponSlot" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 390.0
-offset_top = 380.0
-offset_right = 530.0
-offset_bottom = 520.0
-grow_horizontal = 1
-grow_vertical = 1
-
 [node name="EquipSlot6" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
 visible = false
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -121,22 +144,10 @@ offset_bottom = 660.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="HeadgearSlot" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 110.0
-offset_top = 100.0
-offset_right = 250.0
-offset_bottom = 240.0
-grow_horizontal = 1
-grow_vertical = 1
-
 [node name="EquipSlot8" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
 visible = false
-anchors_preset = 0
+layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
