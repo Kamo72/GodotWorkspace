@@ -13,7 +13,7 @@ public partial class Humanoid : CharacterBody2D
 	//angleValue
 	public float aimSpeed = 0.02f;
 	public Vector2 aimNow = Vector2.Zero, aimTo = Vector2.Zero;
-	public float direction => (Position - aimNow).AngleToPoint(Vector2.Zero);
+	public float direction  = 0f;
 	public float directionDegree => direction / (float)Math.PI * 180f;
 
 	public Vector2 moveValue = Vector2.Zero;

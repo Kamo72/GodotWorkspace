@@ -41,6 +41,7 @@ public partial class Player : Humanoid
 
     public override void _Process(double delta)
     {
+        direction = (Position - aimNow).AngleToPoint(Vector2.Zero);
         base._Process(delta);
 
         if(Input.IsActionJustPressed("Inventory")){
