@@ -2,13 +2,10 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class StorageSlot : Control
+public partial class PocketSlot : Control
 {
 
     GridContainer storageCon => this.FindByName("StorageContainer") as GridContainer;
-    PanelContainer slotContainer => this.FindByName("SlotContainer") as PanelContainer;
-    public Label slotName => this.FindByName("SlotTypeText") as Label;
-
     List<Panel> SlotList = new List<Panel>();
     Storage storage => null;
 
@@ -79,8 +76,8 @@ public partial class StorageSlot : Control
 
     public override void _Draw()
     {
-        // Rect2 rect = new Rect2(Vector2.Zero, Size);
-        // DrawRect(rect, new Color(0.5f,0.5f,0.5f), false, 1f);
+        Rect2 rect = new Rect2(Vector2.Zero, Size);
+        DrawRect(rect, new Color(0.5f,0.5f,0.5f), false, 1f);
     }
 
     public void DeclareStorageGrid(Vector2I size){
@@ -164,13 +161,6 @@ public partial class StorageSlot : Control
         
         if(onMouse.HasValue)
             GetNodeByPos(onMouse.Value).Modulate = new Color(1f,0f,0f);
-
-
-        Rect2 rectt = slotContainer.GetRect();
-        rectt.Position = slotContainer.GlobalPosition;
-        slotContainer.Modulate = rectt.HasPoint(GetGlobalMousePosition())?
-            new Color(1f,0f,0f) : new Color(1f,1f,1f);
-
     }
 
     Control GetNodeByPos(Vector2I pos)

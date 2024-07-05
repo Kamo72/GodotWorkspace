@@ -4,6 +4,7 @@ using System;
 public partial class EquipSlot : Control
 {
 
+    PanelContainer slotContainer => this.FindByName("SlotContainer") as PanelContainer;
     public Label slotName => this.FindByName("SlotTypeText") as Label;
     public Item item = null;
 
@@ -41,5 +42,15 @@ public partial class EquipSlot : Control
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+        OnMouseProcess();
 	}
+
+
+    void OnMouseProcess()
+    {
+        Rect2 rectt = slotContainer.GetRect();
+        rectt.Position = slotContainer.GlobalPosition;
+        slotContainer.Modulate = rectt.HasPoint(GetGlobalMousePosition())?
+            new Color(1f,0f,0f) : new Color(1f,1f,1f);
+    }
 }

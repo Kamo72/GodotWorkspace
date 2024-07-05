@@ -33,7 +33,7 @@ public partial class Humanoid : CharacterBody2D
 		// animPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		// sprite = GetNode<Sprite2D>("Sprite");
 		hands = FindChild("Hands") as Hands;
-		health = new Health(() => GetParent().RemoveChild(this) , 300f);
+		health = new Health(300f, () => GetParent().RemoveChild(this));
 	}
 
 	public override void _Process(double delta)

@@ -13,7 +13,6 @@ public partial class Weapon {
         public int rpm = 750;   //round per min
         public int mag = 30;    //round per mag
 
-
         public float swapTime = 1.0f;   //duration of swapping weapon
         public float reloadTime = 2.0f; //duration of reloading mag 
 

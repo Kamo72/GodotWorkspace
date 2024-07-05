@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-public class Item 
+public abstract class Item 
 {   
     public string prefab;
     
@@ -19,6 +19,7 @@ public class Item
         public Vector2I size;
         public Rarerity rarerity;
         public Category category;
+        public string sceneName;
     }
     public bool Store(Storage storage)
     {
@@ -49,35 +50,48 @@ public class Item
 
     public enum Category{
         WEAPON,
+
+        HEADGEAR,
+
+        HELMET,
+        PLATE,
+
+        RIG,
+        BACKPACK,
+        S_CONTAINER,
+
+        MAGAZINE,
+        AMMUNITION,
+
         QUEST,
         ETC,
     }
 }
 
 
-    #region [아이템 인터페이스]
-    public interface IStackable
-    {
-        int stackNow { get; set; }
-        int stackMax { get; set; }
-    }
+#region [아이템 인터페이스]
+public interface IStackable
+{
+    int stackNow { get; set; }
+    int stackMax { get; set; }
+}
 
-    public interface IDurable
-    {
-        float durableNow { get; set; }
-        float durableMax { get; set; }
-        bool zeroToDestruct { get; set; }
-    }
+public interface IDurable
+{
+    float durableNow { get; set; }
+    float durableMax { get; set; }
+    bool zeroToDestruct { get; set; }
+}
 
-    public interface IHandable
-    {
-        float equipTime { get; }
-        float equipValue { get; }
+public interface IHandable
+{
+    float equipTime { get; }
+    float equipValue { get; }
 
-        Dictionary<string, Action<Hands, bool>> commandsReact { get; set; }
-    }
+    Dictionary<string, Action<Hands, bool>> commandsReact { get; set; }
+}
 
 
-    public interface IClickable { }
+public interface IClickable { }
 
-    #endregion
+#endregion

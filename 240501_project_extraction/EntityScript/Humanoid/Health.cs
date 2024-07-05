@@ -8,7 +8,7 @@ public partial class Humanoid
 
     public struct Health
     {
-        public Health(Action whenDead, float hp = 100)
+        public Health(float hp, Action whenDead)
         {
             nowHp = hp;
             maxHp = hp;

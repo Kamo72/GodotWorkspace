@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://b1u5y8et2sbck"]
+[gd_scene load_steps=2 format=3 uid="uid://b1u5y8et2sbck"]
 
 [ext_resource type="Script" path="res://UiScript/InventoryPage/EquipSlot.cs" id="1_cvx05"]
-[ext_resource type="Texture2D" uid="uid://ta6gcyjnggdb" path="res://icon.svg" id="2_50a14"]
 
 [node name="WeaponSlot" type="Control"]
 custom_minimum_size = Vector2(140, 140)
@@ -37,7 +36,6 @@ scale = Vector2(1, 1.01316)
 
 [node name="ItemTexture" type="TextureRect" parent="SlotContainer"]
 layout_mode = 2
-texture = ExtResource("2_50a14")
 expand_mode = 3
 stretch_mode = 5
 

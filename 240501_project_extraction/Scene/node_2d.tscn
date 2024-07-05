@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhmgak21bkfo8"]
+[gd_scene load_steps=9 format=3 uid="uid://bhmgak21bkfo8"]
 
 [ext_resource type="Script" path="res://ManagerScript/DebugManager.cs" id="1_34xk2"]
 [ext_resource type="Script" path="res://ManagerScript/CameraManager.cs" id="2_w2tjp"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c8v5gaowfugpp" path="res://Prefab/player.tscn" id="4_00bmr"]
 [ext_resource type="PackedScene" uid="uid://cxrn863chouys" path="res://Prefab/UI/MainUI.tscn" id="4_4u55p"]
 [ext_resource type="PackedScene" uid="uid://2covg0ovk53g" path="res://Prefab/interactable.tscn" id="5_tiyf1"]
+[ext_resource type="PackedScene" uid="uid://ftgh6l6m5wj1" path="res://Prefab/Enemy.tscn" id="7_jeei5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3nfjg"]
 size = Vector2(125, 126)
@@ -125,3 +126,12 @@ position = Vector2(132, -134)
 
 [node name="Interactable2" parent="." instance=ExtResource("5_tiyf1")]
 position = Vector2(-257, 37)
+
+[node name="Enemy" parent="." instance=ExtResource("7_jeei5")]
+position = Vector2(-137, -166)
+
+[node name="Enemy2" parent="." instance=ExtResource("7_jeei5")]
+position = Vector2(30, -192)
+
+[node name="Enemy3" parent="." instance=ExtResource("7_jeei5")]
+position = Vector2(-246, -113)

@@ -16,12 +16,20 @@ public partial class InventoryPage : Page
 
 
     VBoxContainer myInventory => this.FindByName("MyInventory") as VBoxContainer;
+    
+    StorageSlot rigSlot => this.FindByName("RigSlot") as StorageSlot;
+    StorageSlot backpackSlot => this.FindByName("BackpackSlot") as StorageSlot;
+    PocketSlot pocketSlot => this.FindByName("PocketSlot") as PocketSlot;
+    StorageSlot containerSlot => this.FindByName("ContainerSlot") as StorageSlot;
+    
+    
     VBoxContainer otherInventory => this.FindByName("OtherInventory") as VBoxContainer;
 
+    Control cursor => this.FindByName("Cursor") as Control;
 
-    public override void _Ready()
+    public override void _EnterTree()
     {
-        base._Ready();
+        base._EnterTree();
 
         helmetSlot.slotName.Text = "헬멧";
         headgearSlot.slotName.Text = "헤드기어";
@@ -29,7 +37,24 @@ public partial class InventoryPage : Page
         firstWeaponSlot.slotName.Text = "주무장";
         secondWeaponSlot.slotName.Text = "부무장";
         subWeaponSlot.slotName.Text = "보조무장";
+
+        rigSlot.slotName.Text = "조끼";
+        rigSlot.DeclareStorageGrid(new Vector2I(4,2));
+        pocketSlot.DeclareStorageGrid(new Vector2I(4,1));
+        backpackSlot.slotName.Text = "가방";
+        backpackSlot.DeclareStorageGrid(new Vector2I(4,5));
+        containerSlot.slotName.Text = "컨테이너";
+        containerSlot.DeclareStorageGrid(new Vector2I(2,2));
+
+        //myInventory.
     }
+
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+        cursor.GlobalPosition = GetGlobalMousePosition();
+    }
+
 
 
 

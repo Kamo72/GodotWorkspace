@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://ftgh6l6m5wj1"]
+
+[ext_resource type="Script" path="res://EntityScript/Enemy.cs" id="1_erstu"]
+[ext_resource type="Texture2D" uid="uid://ta6gcyjnggdb" path="res://icon.svg" id="2_3ueou"]
+[ext_resource type="Script" path="res://EntityScript/Humanoid/Hands.cs" id="3_sj5ji"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p10n1"]
+
+[node name="Enemy" type="CharacterBody2D"]
+scale = Vector2(1.01265, 1.03142)
+collision_layer = 16
+collision_mask = 55
+script = ExtResource("1_erstu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 0.0065165
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_3ueou")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(3.2, 3.2)
+shape = SubResource("CircleShape2D_p10n1")
+
+[node name="Hands" type="Node2D" parent="."]
+position = Vector2(0, 1.93907)
+script = ExtResource("3_sj5ji")
+
+[node name="Right" type="Sprite2D" parent="Hands"]
+position = Vector2(-20, 10)
+scale = Vector2(0.2, 0.199003)
+texture = ExtResource("2_3ueou")
+
+[node name="Left" type="Sprite2D" parent="Hands"]
+position = Vector2(20, 10)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_3ueou")

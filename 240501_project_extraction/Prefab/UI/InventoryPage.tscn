@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcharhfjp5863"]
+[gd_scene load_steps=7 format=3 uid="uid://dcharhfjp5863"]
 
 [ext_resource type="Script" path="res://UiScript/InventoryPage.cs" id="1_32op5"]
 [ext_resource type="PackedScene" uid="uid://cretamyyae6ml" path="res://Prefab/UI/InventoryPage/EquipSlot.tscn" id="2_jn84s"]
 [ext_resource type="PackedScene" uid="uid://bqnmkshn01n2f" path="res://Prefab/UI/InventoryPage/StorageSlot.tscn" id="2_lseg4"]
 [ext_resource type="PackedScene" uid="uid://b1u5y8et2sbck" path="res://Prefab/UI/InventoryPage/WeaponSlot.tscn" id="3_dt2mp"]
+[ext_resource type="Texture2D" uid="uid://ta6gcyjnggdb" path="res://icon.svg" id="5_6ndbv"]
+[ext_resource type="PackedScene" uid="uid://cov0e5qsp7n52" path="res://Prefab/UI/InventoryPage/PocketSlot.tscn" id="5_kaopl"]
 
 [node name="InventoryPage" type="Panel"]
 anchors_preset = 15
@@ -166,12 +168,18 @@ size_flags_horizontal = 3
 [node name="MyInventory" type="VBoxContainer" parent="HBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 0
+size_flags_vertical = 2
 
 [node name="RigSlot" parent="HBoxContainer/ScrollContainer/MyInventory" instance=ExtResource("2_lseg4")]
 layout_mode = 2
 
+[node name="PocketSlot" parent="HBoxContainer/ScrollContainer/MyInventory" instance=ExtResource("5_kaopl")]
+layout_mode = 2
+
 [node name="BackpackSlot" parent="HBoxContainer/ScrollContainer/MyInventory" instance=ExtResource("2_lseg4")]
+layout_mode = 2
+
+[node name="ContainerSlot" parent="HBoxContainer/ScrollContainer/MyInventory" instance=ExtResource("2_lseg4")]
 layout_mode = 2
 
 [node name="ScrollContainer2" type="ScrollContainer" parent="HBoxContainer"]
@@ -182,3 +190,28 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="Cursor" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Inspector" type="PanelContainer" parent="Cursor"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ItemImage" type="TextureRect" parent="Cursor"]
+layout_mode = 1
+anchors_preset = -1
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+
+[node name="CursorImage" type="TextureRect" parent="Cursor"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_6ndbv")
+expand_mode = 1
