@@ -1,0 +1,126 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqr8e577vdb8c"]
+
+[ext_resource type="Script" path="res://controls/SignupInterface.cs" id="1_6syxi"]
+
+[node name="SignupInterface" type="Control" node_paths=PackedStringArray("txtId", "txtName", "txtPw", "btnGoBack", "btnSignup", "richCondition")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6syxi")
+txtId = NodePath("CanvasLayer/PanelSignup/txtId")
+txtName = NodePath("CanvasLayer/PanelSignup/txtNickname")
+txtPw = NodePath("CanvasLayer/PanelSignup/txtPw")
+btnGoBack = NodePath("CanvasLayer/PanelSignup/btnGoback")
+btnSignup = NodePath("CanvasLayer/PanelSignup/btnSignup")
+richCondition = NodePath("CanvasLayer/PanelSignup/richCondition")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelSignup" type="Panel" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -171.0
+offset_top = -149.0
+offset_right = 175.0
+offset_bottom = 156.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="txtId" type="TextEdit" parent="CanvasLayer/PanelSignup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -49.0
+offset_right = 75.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "아이디"
+
+[node name="txtNickname" type="TextEdit" parent="CanvasLayer/PanelSignup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -164.0
+offset_top = -4.5
+offset_right = 76.0
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "닉네임"
+
+[node name="txtPw" type="TextEdit" parent="CanvasLayer/PanelSignup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -164.0
+offset_top = 39.5
+offset_right = 76.0
+offset_bottom = 79.5
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "패스워드
+"
+
+[node name="btnSignup" type="Button" parent="CanvasLayer/PanelSignup"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = -48.5
+offset_right = 164.0
+offset_bottom = 84.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "회원가입"
+
+[node name="btnGoback" type="Button" parent="CanvasLayer/PanelSignup"]
+layout_mode = 0
+offset_left = 254.0
+offset_top = 7.0
+offset_right = 338.0
+offset_bottom = 49.0
+text = "돌아가기"
+
+[node name="LabelDes" type="Label" parent="CanvasLayer/PanelSignup"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -163.0
+offset_top = 15.0
+offset_right = 71.0
+offset_bottom = 38.0
+grow_horizontal = 2
+text = "회원가입을 정보를 입력하세요."
+
+[node name="richCondition" type="RichTextLabel" parent="CanvasLayer/PanelSignup"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 262.0
+offset_right = 221.0
+offset_bottom = 302.0
+bbcode_enabled = true
+text = "현재 서버 상태 : [color=gray] 연결중..."
+scroll_active = false

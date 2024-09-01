@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=3 uid="uid://biqj8bk1abu85"]
+
+[ext_resource type="Script" path="res://controls/Inroom/InroomUserPanel.cs" id="1_t842p"]
+
+[node name="InroomUserPanel" type="Control" node_paths=PackedStringArray("nameRich", "readyRich")]
+layout_mode = 3
+anchor_right = 0.208
+anchor_bottom = 0.741
+offset_right = 0.639984
+offset_bottom = -100.28
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_t842p")
+nameRich = NodePath("Panel/nameRich")
+readyRich = NodePath("Panel/readyRich")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.002
+anchor_bottom = 0.875
+offset_right = -0.800049
+offset_bottom = 87.4999
+
+[node name="nameRich" type="RichTextLabel" parent="Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 40.0
+offset_top = 13.0
+offset_right = -47.5333
+offset_bottom = 82.0
+grow_horizontal = 2
+bbcode_enabled = true
+text = "[font_size=25][center][color=gray]Empty"
+
+[node name="readyRich" type="RichTextLabel" parent="Panel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -93.2801
+offset_right = -47.5333
+offset_bottom = -28.2801
+grow_horizontal = 2
+grow_vertical = 0
+bbcode_enabled = true
+text = "[font_size=40][center][color=darkgray]준비 중"

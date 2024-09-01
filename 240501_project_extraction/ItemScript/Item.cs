@@ -1,16 +1,23 @@
-
 using System;
 using System.Collections.Generic;
 using Godot;
 
-public abstract class Item 
-{   
-    public string prefab;
-    
-    public Storage onStorage = null;
+public abstract class Item
+{
+    public Item()
+    {
+        status = new Status()
+        {
+            textureRoot = "res://icon.svg",
+        };
+    }
 
+    public string prefab;
+    public Storage onStorage = null;
     public Status status;
-    public struct Status{
+
+    public struct Status
+    {
         public string name;
         public string shortName;
         public string description;
@@ -19,8 +26,9 @@ public abstract class Item
         public Vector2I size;
         public Rarerity rarerity;
         public Category category;
-        public string sceneName;
+        public string textureRoot;
     }
+
     public bool Store(Storage storage)
     {
         if (storage.IsAbleToInsert(this))
@@ -30,6 +38,7 @@ public abstract class Item
         }
         return false;
     }
+
     public bool Store(Storage storage, Vector2I pos, bool isRotated)
     {
         if (storage.IsAbleToInsert(this))
@@ -40,7 +49,25 @@ public abstract class Item
         return false;
     }
 
-    public enum Rarerity{
+    public DroppedItem GetDroppedItem(Vector2 pos)
+    {
+        if (droppedItem != null)
+        {
+            droppedItem.GlobalPosition = pos;
+            return droppedItem;
+        }
+
+        droppedItem = ResourceLoader.Load<PackedScene>("res://Prefab/droppedItem.tscn").Instantiate() as DroppedItem;
+        droppedItem.GlobalPosition = pos;
+        droppedItem.SetItem(this);
+
+        return null;
+    }
+
+    public DroppedItem droppedItem = null;
+
+    public enum Rarerity
+    {
         COMMON,
         UNCOMMON,
         RARE,
@@ -48,28 +75,22 @@ public abstract class Item
         QUEST,
     }
 
-    public enum Category{
+    public enum Category
+    {
         WEAPON,
-
         HEADGEAR,
-
         HELMET,
         PLATE,
-
         RIG,
         BACKPACK,
         S_CONTAINER,
-
         MAGAZINE,
         AMMUNITION,
-
         QUEST,
         ETC,
     }
 }
 
-
-#region [아이템 인터페이스]
 public interface IStackable
 {
     int stackNow { get; set; }
@@ -91,7 +112,5 @@ public interface IHandable
     Dictionary<string, Action<Hands, bool>> commandsReact { get; set; }
 }
 
-
 public interface IClickable { }
 
-#endregion

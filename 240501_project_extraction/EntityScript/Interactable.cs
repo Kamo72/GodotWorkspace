@@ -29,5 +29,6 @@ public partial class Interactable : RigidBody2D
 	
 	public virtual void Interacted(Humanoid humanoid) {
 		GD.Print("I'm interacted!");
+		GetParent().RemoveChild(this);
 	}
 }

@@ -30,7 +30,6 @@ public class Equipable : Item
     }
 }
 
-
 public abstract class Headgear : Equipable
 {
     public Headgear()
@@ -81,6 +80,7 @@ public abstract class SecContainer : Equipable
         status.category = Category.S_CONTAINER;
     }
 }
+
 public abstract class WeaponItem : Equipable
 {
     public WeaponItem()
@@ -88,7 +88,18 @@ public abstract class WeaponItem : Equipable
         status.category = Category.WEAPON;
     }
 
-    public abstract Weapon InitiateNode();
-    public abstract bool IsShortWeapon();
+    protected string prefabRoot = "weapon"; 
+    public virtual Weapon GetWeapon() 
+    {
+        Weapon weapon = LevelDesign.CreateWeapon(prefabRoot);
+        weapon.weaponStatus = weaponStatus; 
+        Sprite2D spr2D = weapon.FindByName("SprMain") as Sprite2D;
+        spr2D.Texture = ResourceLoader.Load<Texture2D>(status.textureRoot);
+        return weapon;
+    }
+
+    public virtual WeaponStatus weaponStatus => new WeaponStatus();
+    public bool AbleSub() => true;
+    public bool AbleMain() => true;
 }
 

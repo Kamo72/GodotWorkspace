@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqwh7mhwqaiip"]
+
+[ext_resource type="Texture2D" uid="uid://dhk2ybpo5h6qy" path="res://icon.svg" id="1_166id"]
+[ext_resource type="Script" path="res://Script/SceneManager.cs" id="1_pep7v"]
+[ext_resource type="PackedScene" uid="uid://dxphy8n8ebmrs" path="res://Prefab/Player.tscn" id="2_150d8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qmt1n"]
+
+[node name="Ingame" type="Node2D"]
+
+[node name="World" type="Node2D" parent="."]
+script = ExtResource("1_pep7v")
+playerScene = ExtResource("2_150d8")
+
+[node name="Wall" type="StaticBody2D" parent="World"]
+position = Vector2(608, 440)
+rotation = 3.14159
+scale = Vector2(1.33551, -10.996)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall"]
+shape = SubResource("RectangleShape2D_qmt1n")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Wall"]
+scale = Vector2(0.155, 0.155)
+texture = ExtResource("1_166id")
+
+[node name="Wall2" type="StaticBody2D" parent="World"]
+position = Vector2(568, 576)
+scale = Vector2(25.845, 3.47)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall2"]
+shape = SubResource("RectangleShape2D_qmt1n")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Wall2"]
+scale = Vector2(0.155, 0.155)
+texture = ExtResource("1_166id")
+
+[node name="PlayerSpawnPoints" type="Node2D" parent="World"]
+position = Vector2(568, 448)
+
+[node name="0" type="Node2D" parent="World/PlayerSpawnPoints" groups=["PlayerSpawnPoints"]]
+position = Vector2(-208, 32)
+
+[node name="1" type="Node2D" parent="World/PlayerSpawnPoints" groups=["PlayerSpawnPoints"]]
+position = Vector2(216, 64)

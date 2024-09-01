@@ -1,0 +1,96 @@
+[gd_scene load_steps=5 format=3 uid="uid://bts8uyxbr47ms"]
+
+[ext_resource type="Script" path="res://controls/Ingame/IngameSkillPanel.cs" id="1_avc7u"]
+[ext_resource type="Texture2D" uid="uid://7i73d3n3ceas" path="res://icon.svg" id="1_tb87b"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bqg5d"]
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_nisbj"]
+
+[node name="IngameSkillPanel" type="Control" node_paths=PackedStringArray("keyTxt", "cooldownTxt", "cooldownPanel")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_avc7u")
+keyTxt = NodePath("SkillPanel/SkillTex/KeyPanel/KeyTxt")
+cooldownTxt = NodePath("SkillPanel/SkillTex/CooldownTxt")
+cooldownPanel = NodePath("SkillPanel/SkillTex/CooldownPanel")
+
+[node name="SkillPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.95
+offset_right = -1.52588e-05
+offset_bottom = -1.52588e-05
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SkillTex" type="TextureRect" parent="SkillPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.056
+anchor_top = 0.056
+anchor_right = 0.944
+anchor_bottom = 0.944
+offset_left = -0.0799999
+offset_top = -0.0799999
+offset_right = 0.0799866
+offset_bottom = 0.0799866
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_tb87b")
+expand_mode = 2
+
+[node name="CooldownPanel" type="Panel" parent="SkillPanel/SkillTex"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CooldownTxt" type="Label" parent="SkillPanel/SkillTex"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.184
+anchor_top = 0.264
+anchor_right = 0.835
+anchor_bottom = 0.773
+offset_left = -29.44
+offset_top = -42.24
+offset_right = 26.4
+offset_bottom = 36.32
+grow_horizontal = 2
+grow_vertical = 2
+text = "12"
+label_settings = SubResource("LabelSettings_bqg5d")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyPanel" type="Panel" parent="SkillPanel/SkillTex"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.75
+anchor_right = 0.25
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="KeyTxt" type="Label" parent="SkillPanel/SkillTex/KeyPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Q"
+label_settings = SubResource("LabelSettings_nisbj")
+horizontal_alignment = 1
+vertical_alignment = 1

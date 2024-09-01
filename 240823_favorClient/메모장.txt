@@ -1,0 +1,36 @@
+PING 클서
+ACCOUNT_SIGNUP 클서
+ACCOUNT_SIGNIN 클서
+ACCOUNT_SIGNOUT 클서
+
+ROOM_LIST 클서
+ROOM_HOST 클서
+ROOM_JOIN 클서
+ROOM_EXIT 클서
+
+ROOM_USERS 서
+ROOM_READY_SEND 서
+ROOM_CHAT_SEND 서
+ROOM_STATUS_SEND X
+
+
+
+1	testid	testname	
+InterNetwork [RECV] : 메세지 수령 : 
+예외 발생: 'System.Exception'(240823_favorServer.dll)
+Exception on ThreadWork : System.Exception: IsSocketConnected is false
+   at _231018_WBNET.Server.ThreadWork(Object obj) in E:\GodotWorkspace\240823_favorServer\240823_favorServer\Library\WBNet\Server.cs:line 106
+InterNetwork [RECV] : 메세지 수령 : 
+예외 발생: 'System.Exception'(240823_favorServer.dll)
+Exception on ThreadWork : System.Exception: IsSocketConnected is false
+   at _231018_WBNET.Server.ThreadWork(Object obj) in E:\GodotWorkspace\240823_favorServer\240823_favorServer\Library\WBNet\Server.cs:line 106
+예외 발생: 'System.ObjectDisposedException'(System.Private.CoreLib.dll)
+예외 발생: 'System.ObjectDisposedException'(System.Private.CoreLib.dll)
+예외 발생: 'System.ObjectDisposedException'(System.Private.CoreLib.dll)
+InterNetwork [CONNECT] : 상대 주소! : 127.0.0.1 : 8125
+InterNetwork [CONNECT] : 상대 주소! : 127.0.0.1 : 8125
+InterNetwork [CONNECT] : 상대 주소! : 127.0.0.1 : 8125
+InterNetwork [RECV] : 메세지 수령 : 7
+testidtestpw
+InterNetwork [SEND] : 메세지 전송됨 8
+True로그인에 성공했습니다. 환영합니다. testname

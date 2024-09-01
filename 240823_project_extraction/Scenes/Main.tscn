@@ -1,0 +1,86 @@
+[gd_scene load_steps=2 format=3 uid="uid://dn0o02mghfue0"]
+
+[ext_resource type="Script" path="res://Script/MultiplayerController.cs" id="1_w5o8i"]
+
+[node name="Root" type="Node2D"]
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="GUI" type="Control" parent="." node_paths=PackedStringArray("hostButton", "joinButton", "startButton", "nameInsert", "sendButton", "textInsert", "chatBox", "userBox")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 624.0
+script = ExtResource("1_w5o8i")
+hostButton = NodePath("hostBtn")
+joinButton = NodePath("joinBtn")
+startButton = NodePath("startBtn")
+nameInsert = NodePath("nameInsert")
+sendButton = NodePath("sendBtn")
+textInsert = NodePath("textInsert")
+chatBox = NodePath("chatBox")
+userBox = NodePath("chatBox2")
+
+[node name="nameInsert" type="LineEdit" parent="GUI"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 40.0
+offset_right = 488.0
+offset_bottom = 96.0
+
+[node name="hostBtn" type="Button" parent="GUI"]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 112.0
+offset_right = 288.0
+offset_bottom = 168.0
+text = "호스트
+"
+
+[node name="joinBtn" type="Button" parent="GUI"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 112.0
+offset_right = 176.0
+offset_bottom = 168.0
+text = "참가"
+
+[node name="sendBtn" type="Button" parent="GUI"]
+layout_mode = 0
+offset_left = 536.0
+offset_top = 184.0
+offset_right = 640.0
+offset_bottom = 240.0
+text = "전송"
+
+[node name="textInsert" type="LineEdit" parent="GUI"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 184.0
+offset_right = 528.0
+offset_bottom = 240.0
+
+[node name="chatBox" type="ItemList" parent="GUI"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 256.0
+offset_right = 640.0
+offset_bottom = 536.0
+
+[node name="chatBox2" type="ItemList" parent="GUI"]
+layout_mode = 0
+offset_left = 504.0
+offset_top = 24.0
+offset_right = 640.0
+offset_bottom = 168.0
+
+[node name="startBtn" type="Button" parent="GUI"]
+layout_mode = 0
+offset_left = 304.0
+offset_top = 112.0
+offset_right = 488.0
+offset_bottom = 168.0
+text = "게임시작 
+"
+
+[node name="Network" type="Node" parent="."]

@@ -31,22 +31,85 @@ public partial class Player : Humanoid
             {"Reload", ()=> Input.IsActionJustPressed("Reload") },
             {"Interact", ()=> Input.IsActionJustPressed("Interact") },
             {"Inventory", ()=> Input.IsActionJustPressed("Inventory") },
+
+            {"FirstWeapon", ()=> Input.IsActionJustPressed("FirstWeapon") },
+            {"SecondWeapon", ()=> Input.IsActionJustPressed("SecondWeapon") },
+            {"SubWeapon", ()=> Input.IsActionJustPressed("SubWeapon") },
         };
 
-        Weapon weapon = LevelDesign.CreateWeapon("weapon");
-        GD.Print("name : " + weapon.Name);
-        hands.InitEquipWeapon(weapon);
-
     }
+    
+	public override void _EnterTree()
+	{
+        base._EnterTree();
+        
+        bool res;
+        
+        res = inventory.firstWeapon.DoEquipItem(new TestSG());
+        GD.PrintErr("firstWeapon.DoEquipItem : " + res);
+        res = inventory.secondWeapon.DoEquipItem(new TestSMG());
+        GD.PrintErr("firstWeapon.DoEquipItem : " + res);
+        res = inventory.subWeapon.DoEquipItem(new TestHG());
+        GD.PrintErr("firstWeapon.DoEquipItem : " + res);
+        
+        hands.InitEquipWeapon((inventory.firstWeapon.item as WeaponItem).GetWeapon());
+    }
+
 
     public override void _Process(double delta)
     {
-        direction = (Position - aimNow).AngleToPoint(Vector2.Zero);
+        direction = (GlobalPosition - aimNow).AngleToPoint(Vector2.Zero);
         base._Process(delta);
 
-        if(Input.IsActionJustPressed("Inventory")){
+        if(inputMap["Inventory"]()){
             Control mainUI = GetTree().Root.FindByName("MainUi") as Control;
             mainUI.Visible = !mainUI.Visible;
+        }
+
+        
+        if(inputMap["FirstWeapon"]())
+        if(inventory.firstWeapon.item != null){
+            WeaponItem wpItem = inventory.firstWeapon.item as WeaponItem;
+            if(hands.equiped == null)
+            {
+                Weapon wp = wpItem.GetWeapon();
+                hands.InitEquipWeapon(wp);
+            }
+            else if(hands.equiped.weaponStatus.Equals(wpItem.weaponStatus) == false)
+            {
+                Weapon wp = wpItem.GetWeapon();
+                hands.InitEquipWeapon(wp);
+            }
+        }
+
+        if(inputMap["SecondWeapon"]())
+        if(inventory.secondWeapon.item != null){
+            WeaponItem wpItem = inventory.secondWeapon.item as WeaponItem;
+            if(hands.equiped == null)
+            {
+                Weapon wp = wpItem.GetWeapon();
+                hands.InitEquipWeapon(wp);
+            }
+            else if(hands.equiped.weaponStatus.Equals(wpItem.weaponStatus) == false)
+            {
+                Weapon wp = wpItem.GetWeapon();
+                hands.InitEquipWeapon(wp);
+            }
+        }
+        
+        if(inputMap["SubWeapon"]())
+        if(inventory.subWeapon.item != null){
+            WeaponItem wpItem = inventory.subWeapon.item as WeaponItem;
+            if(hands.equiped == null)
+            {
+                Weapon wp = wpItem.GetWeapon();
+                hands.InitEquipWeapon(wp);
+            }
+            else if(hands.equiped.weaponStatus.Equals(wpItem.weaponStatus) == false)
+            {
+                Weapon wp = wpItem.GetWeapon();
+                hands.InitEquipWeapon(wp);
+            }
         }
 
     }
@@ -59,6 +122,9 @@ public partial class Player : Humanoid
             ("Reload", Key.R, false, false, false),
             ("Interact", Key.F, false, false, false),
             ("Inventory", Key.Tab, false, false, false),
+            ("FirstWeapon", Key.Key1, false, false, false),
+            ("SecondWeapon", Key.Key2, false, false, false),
+            ("SubWeapon", Key.Key3, false, false, false),
         };
 
         List<(string actionName, MouseButton mbcode, bool alt, bool ctrl, bool shift)> mbList

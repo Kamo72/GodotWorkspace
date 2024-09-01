@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public partial class Humanoid
 {
-
+	public Health health;
     public struct Health
     {
         public Health(float hp, Action whenDead)

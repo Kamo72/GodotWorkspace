@@ -13,7 +13,6 @@ public partial class Hands : Node2D
 
 	public Humanoid master => GetParent() as Humanoid;
 
-	public override void _Ready(){}
 	public override void _Process(double delta)
 	{
 		Rotation = direction;
@@ -58,7 +57,11 @@ public partial class Hands : Node2D
 		if(equiped == null) return;
 		
 		if(actType == ActionType.IDLE && master.inputMap["Reload"]())
-			ActionInit(ActionType.RELOADING, equiped.weaponStatus.reloadTime);
+		{
+			(float, float, float) timeSet = equiped.weaponStatus.timeDt.reloadTime;
+			float reloadTime = timeSet.Item1 + timeSet.Item2 + timeSet.Item3;
+			ActionInit(ActionType.RELOADING, reloadTime);
+		}
 
 	}
 }
@@ -83,7 +86,7 @@ public partial class Hands
 			case ActionType.IDLE : {
 				
 				if(equiped != equipTarget)
-					ActionInit( ActionType.SWAP_IN, equiped == null? 0.4f : equiped.weaponStatus.swapTime);
+					ActionInit( ActionType.SWAP_IN, equiped == null? 0.4f : equiped.weaponStatus.timeDt.swapTime);
 
 			}break;
 			case ActionType.SWAP_IN : {

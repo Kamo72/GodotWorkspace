@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://dxphy8n8ebmrs"]
+
+[ext_resource type="Script" path="res://Script/Player.cs" id="1_plwj6"]
+[ext_resource type="PackedScene" uid="uid://f2o04xix6ryy" path="res://Prefab/Bullet.tscn" id="2_5uu8n"]
+[ext_resource type="Texture2D" uid="uid://dhk2ybpo5h6qy" path="res://icon.svg" id="2_pxvn3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hsouw"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_r305i"]
+properties/0/path = NodePath(".:syncRotation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:syncPos")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+scale = Vector2(0.99685, 1)
+script = ExtResource("1_plwj6")
+bullet = ExtResource("2_5uu8n")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_hsouw")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_pxvn3")
+
+[node name="GunRotation" type="Node2D" parent="."]
+position = Vector2(0, 8)
+
+[node name="BulletSpawn" type="Node2D" parent="GunRotation"]
+position = Vector2(56.177, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="GunRotation"]
+position = Vector2(24.0758, 0)
+scale = Vector2(0.5, 0.1)
+texture = ExtResource("2_pxvn3")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_interval = 0.1
+delta_interval = 0.1
+replication_config = SubResource("SceneReplicationConfig_r305i")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -32.1011
+offset_top = -48.0
+offset_right = 31.8989
+offset_bottom = -25.0
+text = "Test"
+horizontal_alignment = 1
+vertical_alignment = 1

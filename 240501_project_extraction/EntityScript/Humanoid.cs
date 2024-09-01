@@ -7,9 +7,6 @@ public partial class Humanoid : CharacterBody2D
 {
 	public readonly float moveSpeed = 1500f, friction = 0.965f;
 
-	public Health health;
-
-
 	//angleValue
 	public float aimSpeed = 0.02f;
 	public Vector2 aimNow = Vector2.Zero, aimTo = Vector2.Zero;
@@ -34,12 +31,12 @@ public partial class Humanoid : CharacterBody2D
 		// sprite = GetNode<Sprite2D>("Sprite");
 		hands = FindChild("Hands") as Hands;
 		health = new Health(300f, () => GetParent().RemoveChild(this));
+		inventory = new Inventory(this);
 	}
 
 	public override void _Process(double delta)
 	{
 		base._Process(delta);
-
 		AimProcess(delta);
 		MovementInputProcess(this, delta);
 		PhysicsProcess(delta);
@@ -56,7 +53,12 @@ public partial class Humanoid : CharacterBody2D
 		aimNow += GlobalPosition - forePostion;
 	}
 
-
+    public override void _Draw()
+    {
+        base._Draw();
+        DrawCircle(aimTo, 400f, Colors.Yellow);
+        DrawCircle(aimNow, 400f, Colors.Red);
+    }
     //Get User Input
     public Action<Humanoid, double> MovementInputProcess = (thisObj, delta) =>
 	{
@@ -72,6 +74,7 @@ public partial class Humanoid : CharacterBody2D
 		if (Input.IsKeyPressed(Key.S))
 			thisObj.moveValue += new Vector2(+0f, +1f);
 	};
+
 	//Apply Accel and Friction
 	void PhysicsProcess(double delta)
 	{
@@ -92,7 +95,6 @@ public partial class Humanoid : CharacterBody2D
 		
 		aimNow  = (aimNow + aimTo * aimSpeed) / (1f + aimSpeed);
 		hands.Position = Vector2.FromAngle(direction) * 10f;
-
 		hands.direction = direction;
 	}
 
@@ -112,8 +114,6 @@ public partial class Humanoid : CharacterBody2D
 	
 		if(inputMap["Interact"]() && interactables.Count > 0)
 			interactables[0].Interacted(this);
-			
-		
 	}
 }
 

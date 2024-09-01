@@ -1,0 +1,15 @@
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\bin\Debug\net8.0\linux-x64\240823_favorServer
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\bin\Debug\net8.0\linux-x64\240823_favorServer.deps.json
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\bin\Debug\net8.0\linux-x64\240823_favorServer.runtimeconfig.json
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\bin\Debug\net8.0\linux-x64\240823_favorServer.dll
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\bin\Debug\net8.0\linux-x64\240823_favorServer.pdb
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\obj\Debug\net8.0\linux-x64\240823_favorServer.GeneratedMSBuildEditorConfig.editorconfig
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\obj\Debug\net8.0\linux-x64\240823_favorServer.AssemblyInfoInputs.cache
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\obj\Debug\net8.0\linux-x64\240823_favorServer.AssemblyInfo.cs
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\obj\Debug\net8.0\linux-x64\240823_favorServer.csproj.CoreCompileInputs.cache
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\obj\Debug\net8.0\linux-x64\240823_favorServer.sourcelink.json
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\obj\Debug\net8.0\linux-x64\240823_favorServer.dll
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\obj\Debug\net8.0\linux-x64\refint\240823_favorServer.dll
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\obj\Debug\net8.0\linux-x64\240823_favorServer.pdb
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\obj\Debug\net8.0\linux-x64\240823_favorServer.genruntimeconfig.cache
+E:\GodotWorkspace\240823_favorServer\240823_favorServer\obj\Debug\net8.0\linux-x64\ref\240823_favorServer.dll
