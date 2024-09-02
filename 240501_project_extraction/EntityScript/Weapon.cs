@@ -8,11 +8,21 @@ public partial class Weapon : Node2D
 
 	public WeaponStatus weaponStatus = new WeaponStatus();
 
+
+    #region [물리 노드] 
 	public Node2D muzzleNode => this.FindByName("Muzzle") as Node2D;
 	public Node2D magNode => this.FindByName("Mag") as Node2D;
-	public Node2D magInsertNode => this.FindByName("MagInsert") as Node2D;
-	public Node2D chamber => this.FindByName("Chamber") as Node2D;
 
+    #endregion
+
+    #region [위상 노드] 
+	public Node2D magInsertNode => this.FindByName("MagPart") as Node2D;
+	public Node2D chamber => this.FindByName("Chamber") as Node2D;
+	public Node2D leftHand => this.FindByName("LeftHand") as Node2D;
+	public Node2D rightHand => this.FindByName("RightHand") as Node2D;
+	public Node2D pistolGrip => this.FindByName("PistolGripPart") as Node2D;
+
+    #endregion
 
 	public Dictionary<string, Func<bool>> inputMap; 
 	public bool isEquiped => GetParent() is Hands;

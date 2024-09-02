@@ -76,8 +76,8 @@ public partial class PocketSlot : Control
 
     public override void _Draw()
     {
-        Rect2 rect = new Rect2(Vector2.Zero, Size);
-        DrawRect(rect, new Color(0.5f,0.5f,0.5f), false, 1f);
+        // Rect2 rect = new Rect2(Vector2.Zero, Size);
+        // DrawRect(rect, new Color(0.5f,0.5f,0.5f), false, 1f);
     }
 
     public void DeclareStorageGrid(Vector2I size){

@@ -46,3 +46,7 @@ texture = ExtResource("2_8mj0i")
 position = Vector2(8, 14)
 scale = Vector2(0.585, 0.585)
 texture = ExtResource("2_8mj0i")
+
+[node name="LeftHand" type="Node2D" parent="."]
+
+[node name="RightHand" type="Node2D" parent="."]
