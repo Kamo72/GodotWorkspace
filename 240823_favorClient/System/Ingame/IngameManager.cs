@@ -25,6 +25,8 @@ namespace _favorClient.System.Ingame
 
         public IngameInterface igUI;
 
+
+
         public override void _EnterTree()
         {
             instance = this;

@@ -1,5 +1,6 @@
 ﻿using _231018_WBNET;
 using _240823_favorServer.Data;
+using _240823_favorServer.Library.DataType;
 using _240823_favorServer.Library.DB;
 using System;
 using System.Collections.Generic;
@@ -319,6 +320,69 @@ namespace _240823_favorServer.System
                         }
 
                     } break;
+                    case Packet.Flag.ROOM_STATUS_SEND:
+                        {
+                            Packet sendPacket;
+
+                            User user = UserManager.GetInstance().FindBySocket(socket);
+                            UserStatus status = (UserStatus)gotPacket.value[0];
+
+                            if (user == null)
+                            {
+                                Console.WriteLine("ROOM_STATUS_SEND ERROR : 해당 소켓에 연결된 계정이 존재하지 않습니다.");
+                                return;
+                            }
+
+                            Room room = RoomManager.GetInstance().GetRoomByUser(user);
+
+                            if (room == null)
+                            {
+                                Console.WriteLine("ROOM_STATUS_SEND ERROR : 해당 방을 찾지 못했습니다.");
+                                return;
+                            }
+
+                            bool res = room.BroadcastStatus(user, status);
+
+                            if (res == false)
+                            {
+                                Console.WriteLine("ROOM_STATUS_SEND ERROR : 메세지 전달에 실패했습니다.");
+                                return;
+                            }
+
+
+                        } break;
+                    case Packet.Flag.ROOM_RPC_SEND: {
+
+                            Packet sendPacket;
+
+                            User user = UserManager.GetInstance().FindBySocket(socket);
+                            string ip = gotPacket.value[0].ToString();
+                            int port = (int)gotPacket.value[1];
+
+                            if (user == null)
+                            {
+                                Console.WriteLine("ROOM_RPC_SEND ERROR : 해당 소켓에 연결된 계정이 존재하지 않습니다.");
+                                return;
+                            }
+
+                            Room room = RoomManager.GetInstance().GetRoomByUser(user);
+
+                            if (room == null)
+                            {
+                                Console.WriteLine("ROOM_RPC_SEND ERROR : 해당 방을 찾지 못했습니다.");
+                                return;
+                            }
+
+                            bool res = room.BroadcastRpcRecv(user, ip, port);
+
+                            if (res == false)
+                            {
+                                Console.WriteLine("ROOM_RPC_SEND ERROR : 메세지 전달에 실패했습니다.");
+                                return;
+                            }
+
+                        }
+                        break;
                 }
 
             }

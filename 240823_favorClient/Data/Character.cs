@@ -1,4 +1,4 @@
-﻿using _favorClient.Data;
+﻿using _favorClient.library.DataType;
 using Godot;
 using System;
 using System.Collections.Generic;

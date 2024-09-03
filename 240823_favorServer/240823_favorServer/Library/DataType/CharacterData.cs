@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _favorClient.Data
+namespace _240823_favorServer.Library.DataType
 {
     public class CharacterData
     {

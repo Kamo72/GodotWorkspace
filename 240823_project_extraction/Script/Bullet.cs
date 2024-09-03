@@ -19,8 +19,6 @@ public partial class Bullet : Node2D
         Node2D tObj = rayCast2D.GetCollider() as Node2D;
         if(tObj is Player player)
 			GetParent().RemoveChild(this);
-
-
     }
 	private void _on_timer_timeout() 
 	{

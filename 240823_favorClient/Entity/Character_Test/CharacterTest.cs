@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _favorClient.Entity.Characters
+namespace _favorClient.Entity.Character_Test
 {
-    internal class CharacterTest
+    public class CharacterTest
     {
     }
 }

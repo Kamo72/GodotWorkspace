@@ -1,7 +1,9 @@
-﻿using _240823_favorServer.System;
+﻿using _240823_favorServer.Library.DataType;
+using _240823_favorServer.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Timers;
@@ -19,7 +21,7 @@ namespace _240823_favorServer.Data
             this.pw = pw;
 
             Refreshtimer = new Timer(1000);
-            Refreshtimer.Elapsed += RefreshFunc;
+            Refreshtimer.Elapsed += BroadcastUsers;
             Refreshtimer.Start();
         }
 
@@ -27,7 +29,7 @@ namespace _240823_favorServer.Data
         public string name;
         public bool isPw;
         public string pw;
-        public PlayState playState = PlayState.NONE;
+        public State playState = State.NONE;
 
         public Timer Refreshtimer;
 
@@ -55,6 +57,7 @@ namespace _240823_favorServer.Data
                     users[i] = user;
                     user.room = this;
                     user.room = this;
+                    user.isReady = true;
                     return true;
                 }
             
@@ -74,13 +77,20 @@ namespace _240823_favorServer.Data
                 {
                     users[i] = null;
                     user.room = null;
-
+                    user.isReady = false;
+    
+                    //더이상 사람이 없을 경우 방 파괴
                     if (userCount == 0)
                         Dispose();
-                    else if (i == host) 
-                    {
-                        //TODO
-                    }
+
+                    //호스트 이전 코드
+                    else if (i == host)
+                        for (int t = 0; t < userMax; t++)
+                            if (users[t] != null)
+                            {
+                                host = t;
+                                break;
+                            }
 
                     return true;
                 }
@@ -148,16 +158,30 @@ namespace _240823_favorServer.Data
             for (int i = 0; i < userMax; i++)
                 if (users[i] != null) users[i].Send(packet);
 
+            user.isReady = isReady;
+            SetCountdown(IsEveryoneReady());
+
             return true;
         }
 
-        public bool BroadcastStatus(User user, object status)
+        public bool BroadcastStatus(User user, UserStatus status)
         {
-            //TODO
-            return false;
+            if (user.isInRoom == false) return false;
+            if (userCount == 0) return false;
+            if (!users.Contains(user)) return false;
+
+            int userIdx = GetUserIdx(user);
+
+            Packet packet = new Packet(Packet.Flag.ROOM_STATUS_SEND, userIdx, status);
+
+            for (int i = 0; i < userMax; i++)
+                if (users[i] != null)
+                    users[i].Send(packet);
+
+            return true;
         }
 
-        void RefreshFunc(object sender, ElapsedEventArgs args) 
+        void BroadcastUsers(object sender, ElapsedEventArgs args) 
         {
             List<(int, string, string)> userDatas = new List<(int, string, string)> ();
 
@@ -172,6 +196,87 @@ namespace _240823_favorServer.Data
                 if (users[i] != null) users[i].Send(packet);
         }
 
+        public bool BroadcastRpcRecv(User user, string ip, int port)
+        {
+            if (user.isInRoom == false) return false;
+            if (userCount == 0) return false;
+            if (!users.Contains(user)) return false;
+
+            int userIdx = GetUserIdx(user);
+
+            Packet packet = new Packet(Packet.Flag.ROOM_RPC_RECV, ip, port);
+
+            for (int i = 0; i < userMax; i++)
+                if (users[i] != null && users[i] != user)
+                    users[i].Send(packet);
+
+            return true;
+
+        }
+
+        int countdownSec = -1;
+        Timer countdownTimer;
+
+        void SetCountdown(bool isTrue)
+        {
+            if (isTrue && countdownTimer == null)
+            {
+                countdownSec = 10;
+                countdownTimer = new Timer(1000);
+                countdownTimer.Elapsed += (s, e) =>
+                {
+                    if (countdownSec == 0)
+                    {
+                        RpcConnect();
+                        return;
+                    }
+
+                    Packet packet = new Packet(Packet.Flag.ROOM_COUNTDOWN, countdownSec--);
+
+                    for (int i = 0; i < userMax; i++)
+                        if (users[i] != null)
+                            users[i].Send(packet);
+                        
+                };
+                countdownTimer.Start();
+
+            }
+            else if (!isTrue && countdownTimer != null)
+            {
+                Packet packet = new Packet(Packet.Flag.ROOM_COUNTDOWN, -1);
+
+                for (int i = 0; i < userMax; i++)
+                    if (users[i] != null)
+                        users[i].Send(packet);
+
+                countdownTimer.Stop();
+                countdownTimer.Dispose();
+                countdownTimer = null;
+            }
+        }
+
+        bool IsEveryoneReady() 
+        {
+            foreach (var user in users)
+                if (user != null)
+                    if (user.isReady == false)
+                        return false;
+            
+            return true;
+        }
+
+        void RpcConnect()
+        {
+            Packet packet = new Packet(Packet.Flag.ROOM_START, host);
+
+            for (int i = 0; i < userMax; i++)
+                if (users[i] != null)
+                    users[i].Send(packet);
+
+            countdownTimer.Stop();
+            countdownTimer.Dispose();
+            countdownTimer = null;
+        }
 
         public void Dispose()
         {
@@ -184,15 +289,13 @@ namespace _240823_favorServer.Data
             RoomManager.GetInstance().Remove(this);
         }
 
-        public enum PlayState
+        public enum State
         {
             NONE,
             READY,
             INITIATE,
             INGAME,
         }
-
-
 
     }
 }

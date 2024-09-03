@@ -19,6 +19,7 @@ namespace _240823_favorServer.Data
         public Socket socket;
         public string id;
         public string name;
+        public bool isReady = false;
 
         public void Send(Packet packet) 
         {

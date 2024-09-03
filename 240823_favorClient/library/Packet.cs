@@ -1,4 +1,6 @@
 ﻿
+
+using _favorClient.library.DataType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -162,10 +164,13 @@ public struct Packet
 
             case Flag.ROOM_STATUS_SEND:
                 {
+                    str += value[0].ToString() + "\f";
                 }
                 break;
             case Flag.ROOM_STATUS_RECV:
                 {
+                    str += value[0].ToString() + "\f";
+                    str += value[1].ToString() + "\f";
                 }
                 break;
 
@@ -176,6 +181,20 @@ public struct Packet
                 break;
             case Flag.ROOM_START:
                 {
+                    str += value[0].ToString() + "\f";
+                }
+                break;
+
+            case Flag.ROOM_RPC_SEND:
+                {
+                    str += value[0].ToString() + "\f";
+                    str += value[1].ToString() + "\f";
+                }
+                break;
+            case Flag.ROOM_RPC_RECV:
+                {
+                    str += value[0].ToString() + "\f";
+                    str += value[1].ToString() + "\f";
                 }
                 break;
         }
@@ -405,16 +424,6 @@ public struct Packet
                 }
                 break;
 
-            case Flag.ROOM_STATUS_SEND:
-                {
-                    packet = new Packet(flag);
-                }
-                break;
-            case Flag.ROOM_STATUS_RECV:
-                {
-                    packet = new Packet(flag);
-                }
-                break;
 
             case Flag.ROOM_COUNTDOWN:
                 {
@@ -425,9 +434,45 @@ public struct Packet
                 break;
             case Flag.ROOM_START:
                 {
-                    packet = new Packet(flag);
+                    int hostIdx = int.Parse(sp[0]);
+                    packet = new Packet(flag, hostIdx);
                 }
                 break;
+
+            case Flag.ROOM_STATUS_RECV:
+                {
+                    UserStatus status = UserStatus.Parse(sp[0]);
+
+                    packet = new Packet(flag, status);
+                }
+                break;
+            case Flag.ROOM_STATUS_SEND:
+                {
+
+                    int idx = int.Parse(sp[0]);
+                    UserStatus status = UserStatus.Parse(sp[1]);
+
+                    packet = new Packet(flag, idx, status);
+                }
+                break;
+            case Flag.ROOM_RPC_SEND:
+                {
+                    string ip = sp[0];
+                    int port = int.Parse(sp[1]);
+
+                    packet = new Packet(flag, ip, port);
+                }
+                break;
+            case Flag.ROOM_RPC_RECV:
+                {
+                    string ip = sp[0];
+                    int port = int.Parse(sp[1]);
+
+                    packet = new Packet(flag, ip, port);
+                }
+                break;
+
+
         }
 
         return packet;
@@ -577,9 +622,20 @@ public struct Packet
         /// </summary>
         ROOM_COUNTDOWN,
         /// <summary>
-        /// 게임의 시작을 알립니다. 모든 참가자들을 인게임으로 인도합니다.
+        /// 게임의 시작을 알립니다. 모든 참가자들을 인게임으로 유도합니다. 호스트 유저의 인덱스를 포함하며,
+        /// 해당 호스트의 RPC 연결을 시작한 뒤 ROOM_RPC_SEND를 유발합니다.
         /// </summary>
         ROOM_START,
+        /// <summary>
+        /// ROOM_START를 받은 호스트 유저가 RPC 호스팅을 시작함을 알립니다. IP문자열과 port 정수값을 반환합니다.
+        /// 해당 정보는 ROOM_RPC_RECV을 통해 다른 참가자들에게 전달됩니다.
+        /// </summary>
+        ROOM_RPC_SEND,
+        /// <summary>
+        /// 호스트 유저의 RPC 호스팅이 시작됐음을 다른 참여자들에게 알립니다. IP문자열과 port 정수값을 반환합니다.
+        /// 이 이후로는 RPC 연결을 통해 정보교환이 진행됩니다.
+        /// </summary>
+        ROOM_RPC_RECV,
     }
 }
 
