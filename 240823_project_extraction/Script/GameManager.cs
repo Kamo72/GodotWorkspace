@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public partial class GameManager : Node
 {
-	public static List<PlayerInfo> players = new List<PlayerInfo>();
+    public static List<PlayerInfo> players = new List<PlayerInfo>();
 
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
 	{
 	}
 

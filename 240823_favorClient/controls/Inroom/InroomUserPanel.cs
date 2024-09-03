@@ -1,4 +1,5 @@
 ﻿using _favorClient.library;
+using _favorClient.library.DataType;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace _favorClient.controls.Inroom
             readyRich.Text = "[font_size=40][center]" + (isReady? "[color=red]준비 완료" : "[color=darkgray]준비 중");
         }
 
-        public void GetStatus(UserRoomData data)
+        public void SetStatus(UserStatus? data)
         {
         
         }

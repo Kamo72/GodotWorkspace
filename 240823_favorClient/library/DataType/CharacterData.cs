@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace _favorClient.library.DataType
 {
-    public class CharacterData
+    public struct CharacterData
     {
         public CharacterData(string name, Status status, Dictionary<Skill.KeyType, Skill> skillInfos)
         {
@@ -17,9 +18,10 @@ namespace _favorClient.library.DataType
 
         public string name;
         public Status status;
+        //얘가 딕셔너리면 안되는데 씨발
         public Dictionary<Skill.KeyType, Skill> skillInfos = new Dictionary<Skill.KeyType, Skill>();
 
-
+        //기본 스텟
         public struct Status
         {
             public Status(float hpMax, float speed, float resistance)
@@ -33,6 +35,8 @@ namespace _favorClient.library.DataType
             public float speed;     //기본 이동속도
             public float resistance; //넉백저항
         }
+        
+        //스킬
         public struct Skill
         {
 
@@ -62,6 +66,34 @@ namespace _favorClient.library.DataType
             public Description diffDes;
 
         }
+
+        //특성
+        public struct Trait 
+        {
+            public string name;
+            public Description diffDes;
+            public int cost;
+        }
+
+        //특성 트리
+        public TraitTreeData traitTree = new ();
+        public struct TraitTreeData
+        {
+            public TraitTreeData() 
+            {
+                AddTrait(Root, new Vector2());
+            }
+
+            public Trait Root = new Trait() { 
+                name = "기본 노드"
+            };
+
+            public List<(Trait trait, Vector2 pos, string[] dependencies)> traits = new();
+
+            public void AddTrait(Trait newTrait, Vector2 pos, params string[] dependencies) => traits.Add((newTrait, pos, dependencies));
+        }
+
+
 
         public enum Type
         {
@@ -135,6 +167,62 @@ namespace _favorClient.library.DataType
         };
 
         public static CharacterData GetByType(Type type) => dataLib[type];
+
+
+    }
+
+
+    public struct TraitTree 
+    {
+        public TraitTree(CharacterData.Type type) 
+        {
+            this.type = type;
+        }
+
+        public CharacterData.Type type;
+        public CharacterData.TraitTreeData traitTreeData => CharacterData.GetByType(type).traitTree;
+        public int spentPoint = 0;
+
+        public List<string> traitsList = new() { "기본 노드" };
+
+        public bool IsTraitTaken(string name) => traitsList.Contains(name);
+        public bool TakeTraitByName(string name, int hasPoint = 99)
+        {
+            bool addedAlready = traitsList.Contains(name);
+
+            if (addedAlready) 
+                throw new Exception("AddTraitByName - the trait of given name is in traitsList already");
+
+            CharacterData.Trait trait = GetTraitByName(name);
+
+            if (hasPoint < trait.cost)
+                throw new Exception("AddTraitByName - you need more points to take this trait");
+
+            traitsList.Add(trait.name);
+            spentPoint += trait.cost;
+            return true;
+        }
+        public bool ReleaseTraitByName(string name)
+        {
+            if (name == "기본 노드")
+                throw new Exception("ReleaseTraitByName - root node is not able to realease");
+
+            bool releasedAlready = !traitsList.Contains(name);
+
+            if (releasedAlready)
+                throw new Exception("ReleaseTraitByName - the trait of given name is not in traitsList already");
+
+            CharacterData.Trait trait = GetTraitByName(name);
+
+            traitsList.Remove(name);
+            spentPoint -= trait.cost;
+            return true;
+
+        }
+
+
+        public CharacterData.Trait GetTraitByName(string traitName) => traitTreeData.traits.Find(i => i.trait.name == traitName).trait;
+
 
     }
 

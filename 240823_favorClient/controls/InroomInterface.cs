@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
+using _favorClient.library.DataType;
 
 namespace _favorClient.controls
 {
@@ -33,12 +34,15 @@ namespace _favorClient.controls
         bool isReady = false;
         public static string roomName = "";
         public static string userId = "";
-        public (string name, string id, UserRoomData urd)?[] userArray
-            = new (string name, string id, UserRoomData urd)?[4] { null, null, null, null };
+        public (string name, string id, UserStatus? urd)?[] userArray
+            = new (string name, string id, UserStatus? urd)?[4] { null, null, null, null };
 
         Action requestDisposer;
+
+        List<Action> disposerCollecter = new();
         public override void _Ready()
         {
+            Action tAct;
             nameTxt.Text = roomName;
 
             //ROOM_EXIT 전송 및 ROOM_EXIT_CALLBACK 처리
@@ -82,16 +86,17 @@ namespace _favorClient.controls
             };
 
             //ROOM_READY_RECV에 대한 처리
-            MainClient.instance.AddPacketListener(Packet.Flag.ROOM_READY_RECV, packet =>
+            tAct = MainClient.instance.AddPacketListener(Packet.Flag.ROOM_READY_RECV, packet =>
             {
                 int tIdx = int.Parse(packet.value[0].ToString());
                 bool isReady = bool.Parse(packet.value[1].ToString());
 
                 CallDeferred("AsyncUserReady", tIdx - 1, isReady);
             });
+            disposerCollecter.Add(tAct);
 
             //ROOM_USERS에 대한 처리
-            MainClient.instance.AddPacketListener(Packet.Flag.ROOM_USERS, packet =>
+            tAct = MainClient.instance.AddPacketListener(Packet.Flag.ROOM_USERS, packet =>
             {
                 List<(int idx, string id, string name)> newDataList =
                     (List<(int idx, string id, string name)>)packet.value[0];
@@ -116,18 +121,20 @@ namespace _favorClient.controls
 
                 CallDeferred("AsyncUserDelList", toDelList);
             });
+            disposerCollecter.Add(tAct);
 
 
             chatList.Draw += () => chatList.GetVScrollBar().Value = 9999;
 
             //ROOM_CHAT_RECV 대한 처리
-            MainClient.instance.AddPacketListener(Packet.Flag.ROOM_CHAT_RECV, packet =>
+            tAct = MainClient.instance.AddPacketListener(Packet.Flag.ROOM_CHAT_RECV, packet =>
             {
                 string sender = packet.value[0].ToString();
                 string message = packet.value[1].ToString();
 
-                CallDeferred("AsyncAddList", $"[{sender}] {message}");
+                CallDeferred("AsyncAddChat", $"[{sender}] {message}");
             });
+            disposerCollecter.Add(tAct);
 
             //ROOM_CHAT_SEND 전송
             chatBtn.Pressed += () => {
@@ -137,29 +144,39 @@ namespace _favorClient.controls
                     chatTxt.Text = "";
                     MainClient.instance.Send(packet);
                 }
-
             };
 
 
             //ROOM_STATUS_RECV 대한 처리
-            MainClient.instance.AddPacketListener(Packet.Flag.ROOM_STATUS_RECV, packet =>
+            tAct = MainClient.instance.AddPacketListener(Packet.Flag.ROOM_STATUS_RECV, packet =>
             {
                 //TODO
             });
+            disposerCollecter.Add(tAct);
 
             //ROOM_STATUS_RECV 대한 처리
-            MainClient.instance.AddPacketListener(Packet.Flag.ROOM_COUNTDOWN, packet =>
+            tAct = MainClient.instance.AddPacketListener(Packet.Flag.ROOM_COUNTDOWN, packet =>
             {
                 int countdown = int.Parse(packet.value[0].ToString());
 
+                if (countdown < 0)
+                {
+                    AsyncAddChat($"곧 게임이 시작됩니다! ");
+                    return;
+                }
+
+                AsyncAddChat($"게임 시작까지 {countdown}초... ");
+
                 //TODO
             });
+            disposerCollecter.Add(tAct);
 
             //ROOM_STATUS_RECV 대한 처리
-            MainClient.instance.AddPacketListener(Packet.Flag.ROOM_START, packet =>
+            tAct = MainClient.instance.AddPacketListener(Packet.Flag.ROOM_START, packet =>
             {
                 //TODO
             });
+            disposerCollecter.Add(tAct);
         }
 
         public string GetMyName()
@@ -174,7 +191,7 @@ namespace _favorClient.controls
             return userName;
         }
 
-        public void AsyncAddList(string str)
+        public void AsyncAddChat(string str)
         {
 
             chatList.AddItem(str);
@@ -200,40 +217,5 @@ namespace _favorClient.controls
 
         }
 
-
-
-
-
-
-
-
-
     }
-}
-
-
-public class UserRoomData
-{
-    public enum CharCode {
-        NONE
-    }
-    public CharCode charCode = CharCode.NONE;
-
-
-    public static UserRoomData Parse(string str)
-    {
-        //TODO
-
-        return new();
-    }
-
-    public override string ToString()
-    {
-        string str = base.ToString();
-
-        //TODO
-
-        return str;
-    }
-
 }
