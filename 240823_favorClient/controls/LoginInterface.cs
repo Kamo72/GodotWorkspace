@@ -25,6 +25,26 @@ public partial class LoginInterface : UserInterface
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+
+#if DEBUG
+        GD.PushWarning("디버깅용 코드가 작동 중입니다! 조심하세요...");
+
+        requestDisposer = MainClient.instance.AddPacketListener(Packet.Flag.DEBUG_FAST_LOGIN_CALLBACK, packet => {
+            string id = packet.value[0].ToString();
+            string name = packet.value[1].ToString();
+
+            InroomInterface.userId = id;
+            CallDeferred("ControlExchange", "RoomInterface", "res://controls/RoomInterface.tscn");
+            requestDisposer();
+        });
+        MainClient.instance.Send(new Packet(Packet.Flag.DEBUG_FAST_LOGIN));
+
+        return;
+#endif
+
+
+
+
         btnSignin.Disabled = MainClient.instance.state == 1 ? false : true;
 
         MainClient.instance.onConnect += () =>

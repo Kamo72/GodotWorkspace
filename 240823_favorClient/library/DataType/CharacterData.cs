@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _favorClient.library.DataType
 {
-    public struct CharacterData
+    public partial struct CharacterData
     {
         public CharacterData(string name, Status status, Dictionary<Skill.KeyType, Skill> skillInfos)
         {
@@ -18,7 +18,7 @@ namespace _favorClient.library.DataType
 
         public string name;
         public Status status;
-        //얘가 딕셔너리면 안되는데 씨발
+
         public Dictionary<Skill.KeyType, Skill> skillInfos = new Dictionary<Skill.KeyType, Skill>();
 
         //기본 스텟
@@ -94,7 +94,7 @@ namespace _favorClient.library.DataType
         }
 
 
-
+        //캐릭터 유형
         public enum Type
         {
             NONE,
@@ -167,8 +167,7 @@ namespace _favorClient.library.DataType
         };
 
         public static CharacterData GetByType(Type type) => dataLib[type];
-
-
+        public static int typeCount => dataLib.Count;
     }
 
 
@@ -185,6 +184,8 @@ namespace _favorClient.library.DataType
 
         public List<string> traitsList = new() { "기본 노드" };
 
+        //string으로 하는게 맞을려나...
+        public readonly bool this[string name] => traitsList.Contains(name);
         public bool IsTraitTaken(string name) => traitsList.Contains(name);
         public bool TakeTraitByName(string name, int hasPoint = 99)
         {
@@ -219,11 +220,14 @@ namespace _favorClient.library.DataType
             return true;
 
         }
-
-
+        public bool ReleaseAll() 
+        {
+            traitsList.Clear();
+            traitsList.Add("기본 노드");
+            spentPoint = 0;
+            return true;
+        }
         public CharacterData.Trait GetTraitByName(string traitName) => traitTreeData.traits.Find(i => i.trait.name == traitName).trait;
-
-
     }
 
     public struct Description

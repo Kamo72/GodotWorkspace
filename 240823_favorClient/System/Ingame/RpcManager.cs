@@ -1,4 +1,5 @@
-﻿using _favorClient.library.DataType;
+﻿using _favorClient.controls;
+using _favorClient.library.DataType;
 using Godot;
 using Godot.Collections;
 using System;
@@ -6,39 +7,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http;
+using HttpClient = System.Net.Http.HttpClient;
 
 namespace _favorClient.System.Ingame
 {
 
-    public partial class RpcManager : Control
+    public partial class RpcManager : Node
     {
-        [Export]
-        private Button hostButton;
-        [Export]
-        private Button joinButton;
-        [Export]
-        private Button startButton;
-        [Export]
-        private LineEdit nameInsert;
+        static RpcManager() 
+        {
+            _ = GetIp();
+        }
+
+        public static async Task GetIp() 
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    string externalIp = await client.GetStringAsync("https://api.ipify.org");
+                    _ip = externalIp;
+                    GD.Print($"External IP: {externalIp}");
+                }
+                catch (Exception ex)
+                {
+                    GD.PrintErr($"Error fetching external IP: {ex.Message}");
+                }
+            }
+
+        }
 
 
-        [Export]
-        private Button sendButton;
-        [Export]
-        private LineEdit textInsert;
-
-        [Export]
-        private ItemList chatBox;
-        [Export]
-        private ItemList userBox;
-
-        [Export]
-        private int _port = 8910;
-        [Export]
-        private string _ip = "209.38.25.83";
+        static int _port = 8910;
+        static string _ip;
 
         private ENetMultiplayerPeer _peer;
         private int _playerId;
+        public bool isHost = false;
+        public Func<UserStatus?> userStatus = () => null;
 
         public override void _Ready()
         {
@@ -48,152 +55,103 @@ namespace _favorClient.System.Ingame
             Multiplayer.ConnectedToServer += ConnectionSuccessful;
             Multiplayer.ConnectionFailed += ConnectionFailed;
 
-            //Set As Server 
-            if (OS.GetCmdlineArgs().Contains("--server"))
-            {
-                HostGame();
-            }
-
-            //Set UI Listeners
-            joinButton.Pressed += OnJoinPressed;
-            hostButton.Pressed += OnHostPressed;
-            sendButton.Pressed += OnSendPressed;
-            startButton.Pressed += OnStartPressed;
-            chatBox.Draw += () => chatBox.GetVScrollBar().Value = 200000;
         }
 
         //Connection Failed Event
-        private void ConnectionFailed()
+        void ConnectionFailed()
         {
-            chatBox.AddItem("Connection FAILED.");
-            chatBox.AddItem("Could not connect to server.");
+            GD.Print("Connection FAILED.");
+            GD.Print("Could not connect to server.");
         }
 
         //Connection Succeed Event
-        private void ConnectionSuccessful()
+        void ConnectionSuccessful()
         {
-            chatBox.AddItem("Connection SUCCESSFULL.");
+            GD.Print("Connection SUCCESSFULL.");
 
-            chatBox.AddItem($"{_playerId} : Sending player information to server.");
-            chatBox.AddItem($"{_playerId} : Id: {_playerId}");
+            GD.Print($"{_playerId} : Sending player information to server.");
+            GD.Print($"{_playerId} : Id: {_playerId}");
 
-            userBox.AddItem(Multiplayer.GetUniqueId().ToString());
+            //userBox.AddItem(Multiplayer.GetUniqueId().ToString());
 
             //Send PlayerInfo to Host(1)
-            RpcId(1, "SendPlayerInformation", nameInsert.Text, Multiplayer.GetUniqueId());
+            UserStatus uStat = userStatus().Value;
+            uStat.rpcId = Multiplayer.GetUniqueId();
+            
+            RpcId(1, "SendPlayerInformation", uStat.ToString());
         }
 
         //Connection Player Event
-        private void PlayerConnected(long id)
+        void PlayerConnected(long id)
         {
-            chatBox.AddItem($"{_playerId} : Player <{id}> connected.");
-            userBox.AddItem(id.ToString());
+            GD.Print($"{_playerId} : Player <{id}> connected.");
+            //userBox.AddItem(id.ToString());
         }
 
         //Disconnection Player Event
-        private void PlayerDisconnected(long id)
+        void PlayerDisconnected(long id)
         {
-            chatBox.AddItem($"{_playerId} : Player <{id}> disconnected.");
-            //Fix needed
-            //IngameManager.players.Remove(IngameManager.players.Where(i => i.id == id).First<UserStatus>()); 
-            var players = GetTree().GetNodesInGroup("Player");
+            GD.Print($"{_playerId} : Player <{id}> disconnected.");
 
-            //Delete Disconnected Player's Object
-            foreach (var item in players)
-                if (item.Name == id.ToString())
-                    item.QueueFree();
-
-            //nothing
-            for (int i = 0; i < userBox.ItemCount; i++)
-            {
-                string rawText = userBox.GetItemText(i);
-                int idIn = int.Parse(rawText);
-                if (id == idIn)
-                {
-                    userBox.RemoveItem(i);
-                    break;
-                }
-            }
-
+            for (int i = 0; i < 4; i++)
+                if (IngameManager.players[i].HasValue)
+                    if (IngameManager.players[i].Value.rpcId == id)
+                    {
+                        IngameManager.instance.DespawnChar(i);
+                        IngameManager.players[i] = null;
+                    }
         }
 
-
-        public void OnHostPressed()
-        {
-            CreateServer();
-        }
-
-        public void OnJoinPressed()
-        {
-            ConnectToServer();
-        }
-
-        public void OnSendPressed()
-        {
-
-            if (textInsert.Text == "") return;
-
-            chatBox.AddItem(textInsert.Text);
-            Rpc("SendChat", textInsert.Text);
-            textInsert.Text = "";
-
-        }
-
-        public void OnStartPressed()
+        //Extract Ip and Port
+        public (string ip, int port) GetIpAddress() => (_ip, _port);
+        
+        //BroadCast StartGame
+        public void DoStart()
         {
             Rpc("StartGame");
         }
 
 
-        //Set Mutiplayer as Host
-        private void HostGame()
-        {
-            _peer = new ENetMultiplayerPeer();
-            var status = _peer.CreateServer(_port, 2);
-            if (status != Error.Ok)
-            {
-                chatBox.AddItem("Creating server FAILED : " + status);
-                return;
-            }
-
-            _peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
-            Multiplayer.MultiplayerPeer = _peer;
-        }
-
-        ///DoHost
-        public void CreateServer()
-        {
-            HostGame();
-            SendPlayerInformation(nameInsert.Text, 1);
-            chatBox.AddItem("Creating server SUCCEED.");
-            userBox.AddItem(Multiplayer.GetUniqueId().ToString());
-        }
-
         //Set Mutiplayer as Client
-        public void ConnectToServer()
+        public bool DoJoin(string ip, int port)
         {
             _peer = new ENetMultiplayerPeer();
-            var status = _peer.CreateClient(_ip, _port);
+            var status = _peer.CreateClient(ip, port);
             if (status != Error.Ok)
             {
-                chatBox.AddItem("Creating client FAILED.");
-                return;
+                GD.Print("Creating client FAILED.");
+                return false;
             }
 
             _peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
             Multiplayer.MultiplayerPeer = _peer;
+            return true;
         }
 
-        public override void _Process(double delta)
+        //Set Mutiplayer as Host
+        public bool DoHost()
         {
-            base._Process(delta);
+            _peer = new ENetMultiplayerPeer();
+            var status = _peer.CreateServer(_port, 3);
+            if (status != Error.Ok)
+            {
+                GD.Print("Creating server FAILED : " + status);
+                return false;
+            }
+
+            _peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
+            Multiplayer.MultiplayerPeer = _peer;
+
+            SendPlayerInformation(new UserStatus().ToString());
+            return true;
         }
+
 
         //RPC Send Message
         [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
         private void SendChat(string msg)
         {
-            chatBox.AddItem(msg);
+            GD.Print(msg);
         }
 
         //RPC Initiate Play Game
@@ -208,26 +166,29 @@ namespace _favorClient.System.Ingame
             var packedScene = ResourceLoader.Load<PackedScene>("res://Scenes/Ingame.tscn");
             var scene = packedScene.Instantiate<Node2D>();
             GetTree().Root.AddChild(scene);
-            this.Hide();
+            // this.Hide();
         }
 
         //RPC Send Players Info
         [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-        private void SendPlayerInformation(string name, int id)
+        private void SendPlayerInformation(string packet)
         {
             //Create PlayerInfo
-            UserStatus? playerInfo = new UserStatus()
-            {
-            };
+            UserStatus? playerInfo = UserStatus.Parse(packet);
 
             //Add PlayerInfo to Collection
             if (!IngameManager.players.Contains(playerInfo))
-                IngameManager.players.Add(playerInfo);
+                IngameManager.players[playerInfo.Value.idx] = playerInfo;
 
             //If Server, BroadCast PlayerInfo
             if (Multiplayer.IsServer())
                 foreach (var player in IngameManager.players)
-                    Rpc("SendPlayerInformation", (int)player.Value.type);
+                    Rpc("SendPlayerInformation", player.ToString());
+
+            foreach (var player in IngameManager.players)
+                if (player.HasValue)
+                    GD.Print($"[{player.Value.idx}] NAME : \t{player.Value.name}\tRPC : {player.Value.rpcId}\tTYPE : {player.Value.type}");
+
 
         }
     }

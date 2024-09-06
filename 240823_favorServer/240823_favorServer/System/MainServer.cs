@@ -383,6 +383,71 @@ namespace _240823_favorServer.System
 
                         }
                         break;
+                    
+                    case Packet.Flag.DEBUG_FAST_LOGIN: {
+                            Packet sendPacket;
+                            (string id, string name, string pw)? foundUser;
+
+                            foundUser = SQLiteManager.GetUserByIdAndPw("testid", "testpw");
+                            if (foundUser.HasValue)
+                                if (UserManager.GetInstance().SignIn(socket, foundUser.Value.id, foundUser.Value.name))
+                                {
+                                    sendPacket = new Packet(Packet.Flag.DEBUG_FAST_LOGIN_CALLBACK, foundUser.Value.id, foundUser.Value.name);
+                                    Send(socket, sendPacket);
+                                    return;
+                                }
+
+                            foundUser = SQLiteManager.GetUserByIdAndPw("testid2", "testpw");
+                            if (foundUser.HasValue)
+                                if (UserManager.GetInstance().SignIn(socket, foundUser.Value.id, foundUser.Value.name))
+                                {
+                                    sendPacket = new Packet(Packet.Flag.DEBUG_FAST_LOGIN_CALLBACK, foundUser.Value.id, foundUser.Value.name);
+                                    Send(socket, sendPacket);
+                                    return;
+                                }
+
+                            foundUser = SQLiteManager.GetUserByIdAndPw("testid3", "testpw");
+                            if (foundUser.HasValue)
+                                if (UserManager.GetInstance().SignIn(socket, foundUser.Value.id, foundUser.Value.name))
+                                {
+                                    sendPacket = new Packet(Packet.Flag.DEBUG_FAST_LOGIN_CALLBACK, foundUser.Value.id, foundUser.Value.name);
+                                    Send(socket, sendPacket);
+                                    return;
+                                }
+
+                            //foundUser = SQLiteManager.GetUserByIdAndPw("testid4", "testpw");
+                            //if (foundUser.HasValue)
+                            //    if (UserManager.GetInstance().SignIn(socket, foundUser.Value.id, foundUser.Value.name))
+                            //    {
+                            //        sendPacket = new Packet(Packet.Flag.DEBUG_FAST_LOGIN_CALLBACK, foundUser.Value.id, foundUser.Value.name);
+                            //        Send(socket, sendPacket);x
+                            //        return;
+                            //    }
+
+
+                            sendPacket = new Packet(Packet.Flag.NET_CRASH);
+                            Send(socket, sendPacket);
+                        } break;
+
+                    case Packet.Flag.DEBUG_FAST_JOIN:
+                        {
+                            Packet sendPacket;
+
+                            int roomIdx = 0;
+                            Room? room = RoomManager.GetInstance().GetRoomByIdx(roomIdx);
+
+                            if (room == null)
+                            {
+                                RoomManager.GetInstance().Host(UserManager.GetInstance().FindBySocket(socket), "testRoom", false, "");
+                            }
+                            else {
+                                room.UserEnter(UserManager.GetInstance().FindBySocket(socket));
+                            }
+                            sendPacket = new Packet(Flag.DEBUG_FAST_JOIN_CALLBACK, "testRoom");
+                            Send(socket, sendPacket);
+
+
+                        } break;
                 }
 
             }

@@ -32,11 +32,26 @@ public partial class RoomInterface : UserInterface
     List<(int idx, int userCount)> toRefreshList = new();
     List<int> toDelList = new();
 
-
-
     Action requestDisposer;
     public override void _Ready()
     {
+
+#if DEBUG
+        GD.PushWarning("디버깅용 코드가 작동 중입니다! 조심하세요...");
+
+
+        requestDisposer = MainClient.instance.AddPacketListener(Packet.Flag.DEBUG_FAST_JOIN_CALLBACK, packet => {
+            string roomName = packet.value[0].ToString();
+
+            InroomInterface.roomName = roomName;
+            CallDeferred("ControlExchange", "InroomInterface", "res://controls/InroomInterface.tscn");
+            requestDisposer();
+        });
+        MainClient.instance.Send(new Packet(Packet.Flag.DEBUG_FAST_JOIN));
+
+        return;
+#endif
+
 
         roomList.ItemSelected += e => {
             RefreshRoomList((int)e);
@@ -74,7 +89,6 @@ public partial class RoomInterface : UserInterface
         };
 
         hostBtn.Pressed += () => {
-
             ControlExchange("HostInterface", "res://controls/HostInterface.tscn");
         };
 
@@ -167,7 +181,6 @@ public partial class RoomInterface : UserInterface
         }
         toAddList.Clear();
 
-
         foreach (var item in toRefreshList)
         {
             //roomDataList.ForEach(e =>
@@ -176,7 +189,7 @@ public partial class RoomInterface : UserInterface
             //GD.Print($"item is {item.idx}/{item.userCount}");
 
             var tItem = roomDataList.Find(i => {
-                GD.Print("i.idx == item.idx : " + (i.idx == item.idx) + " /i.idx : " + i.idx + " - item.idx : " + item.idx);
+                //GD.Print("i.idx == item.idx : " + (i.idx == item.idx) + " /i.idx : " + i.idx + " - item.idx : " + item.idx);
                 return i.idx == item.idx; });
 
             //GD.Print("roomDataList.IndexOf(tItem) : " + roomDataList.IndexOf(tItem));
@@ -191,8 +204,6 @@ public partial class RoomInterface : UserInterface
             RefreshRoomList(oriIdx);
         }
         toRefreshList.Clear();
-
-
     }
 
     void RefreshRoomList(int e)

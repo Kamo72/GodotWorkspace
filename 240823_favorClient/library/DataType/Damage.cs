@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _favorClient.Entity.Character_Test
+namespace _favorClient.library.DataType
 {
-    public partial class CharacterTest : Character
+    public struct Damage
     {
-
+        public float damage;
+        public float stagger;
 
     }
 }

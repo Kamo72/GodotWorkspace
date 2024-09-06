@@ -8,5 +8,6 @@ namespace _favorClient.Entity.Boss_Test
 {
     public partial class BossTest : Boss
     {
+
     }
 }

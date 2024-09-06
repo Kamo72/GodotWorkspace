@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using _favorClient.library.DataType;
+using _favorClient.System.Ingame;
 
 namespace _favorClient.controls
 {
@@ -31,19 +32,41 @@ namespace _favorClient.controls
         [Export]
         private Button chatBtn;
 
-        bool isReady = false;
         public static string roomName = "";
         public static string userId = "";
+        public string userName
+        {
+            get
+            {
+                for (int i = 0; i < 4; i++)
+                    if (userArray[i].HasValue)
+                        if (userId == userArray[i].Value.id)
+                            return userArray[i].Value.name;
+                return "";
+            }
+        }
+        public int userIdx { get {
+
+                for (int i = 0; i < userArray.Length; i++)
+                    if (userArray[i].HasValue)
+                        if (userArray[i].Value.id == userId)
+                            return i;
+                        
+                return -1;
+            } }
+
         public (string name, string id, UserStatus? urd)?[] userArray
             = new (string name, string id, UserStatus? urd)?[4] { null, null, null, null };
+        UserStatus userStatus;
+        bool isReady = false;
 
         Action requestDisposer;
-
         List<Action> disposerCollecter = new();
         public override void _Ready()
         {
             Action tAct;
             nameTxt.Text = roomName;
+            userStatus = new UserStatus(userId, userName, userIdx, -1, CharacterData.Type.NONE);
 
             //ROOM_EXIT 전송 및 ROOM_EXIT_CALLBACK 처리
             exitBtn.Pressed += () => {
@@ -98,6 +121,12 @@ namespace _favorClient.controls
             //ROOM_USERS에 대한 처리
             tAct = MainClient.instance.AddPacketListener(Packet.Flag.ROOM_USERS, packet =>
             {
+                //GD.Print($"[userId : {userId}]");
+                //for (int i = 0; i < 4; i++) 
+                //{
+                //    GD.Print($"[{i}] : {(userArray[i].HasValue? userArray[i].Value : null)}");
+                //}
+
                 List<(int idx, string id, string name)> newDataList =
                     (List<(int idx, string id, string name)>)packet.value[0];
 
@@ -123,7 +152,6 @@ namespace _favorClient.controls
             });
             disposerCollecter.Add(tAct);
 
-
             chatList.Draw += () => chatList.GetVScrollBar().Value = 9999;
 
             //ROOM_CHAT_RECV 대한 처리
@@ -140,68 +168,140 @@ namespace _favorClient.controls
             chatBtn.Pressed += () => {
                 if (chatTxt.Text != "")
                 {
-                    Packet packet = new Packet(Packet.Flag.ROOM_CHAT_SEND, GetMyName(), chatTxt.Text);
+                    Packet packet = new Packet(Packet.Flag.ROOM_CHAT_SEND, userName, chatTxt.Text);
                     chatTxt.Text = "";
                     MainClient.instance.Send(packet);
                 }
             };
 
-
             //ROOM_STATUS_RECV 대한 처리
             tAct = MainClient.instance.AddPacketListener(Packet.Flag.ROOM_STATUS_RECV, packet =>
             {
-                //TODO
+                int idx = int.Parse(packet.value[0].ToString());
+                UserStatus uStat = UserStatus.Parse(packet.value[1].ToString());
+
+                var panel = userPanels[idx];
+                panel.SetUserStatus(uStat);
             });
             disposerCollecter.Add(tAct);
 
-            //ROOM_STATUS_RECV 대한 처리
+            //ROOM_COUNTDOWN 대한 처리
             tAct = MainClient.instance.AddPacketListener(Packet.Flag.ROOM_COUNTDOWN, packet =>
             {
                 int countdown = int.Parse(packet.value[0].ToString());
 
-                if (countdown < 0)
+                if (countdown == 0)
                 {
-                    AsyncAddChat($"곧 게임이 시작됩니다! ");
+                    CallDeferred("AsyncAddChat", $"곧 게임이 시작됩니다!");
                     return;
                 }
+                else if (countdown == -1)
+                {
+                    CallDeferred("AsyncAddChat", $"게임 시작이 취소되었습니다.");
+                    return;
 
-                AsyncAddChat($"게임 시작까지 {countdown}초... ");
+                }
 
-                //TODO
+                CallDeferred("AsyncAddChat", $"게임 시작까지 {countdown}초...");
             });
             disposerCollecter.Add(tAct);
 
-            //ROOM_STATUS_RECV 대한 처리
+            //ROOM_START 대한 처리
             tAct = MainClient.instance.AddPacketListener(Packet.Flag.ROOM_START, packet =>
             {
-                //TODO
+                chatBtn.SetDeferred(Button.PropertyName.Disabled, true);
+                exitBtn.SetDeferred(Button.PropertyName.Disabled, true);
+                readyBtn.SetDeferred(Button.PropertyName.Disabled, true);
+
+                int hostIdx = int.Parse(packet.value[0].ToString());
+
+                if (userIdx == -1) throw new Exception("myIdx가 -1...????????");
+
+                bool isHost = hostIdx == userIdx;
+                
+                //RPC 연결 시작
+                if (isHost) CallDeferred("AsyncRpcHost");
+
             });
             disposerCollecter.Add(tAct);
+
+            chatBtn.Disabled = false;
+            exitBtn.Disabled = false;
+            readyBtn.Disabled = false;
+
+            //ROOM_START 대한 처리
+            tAct = MainClient.instance.AddPacketListener(Packet.Flag.ROOM_RPC_RECV, packet =>
+            {
+
+                string ip = packet.value[0].ToString();
+                int port = int.Parse(packet.value[1].ToString());
+
+                //RPC 연결 시작
+                CallDeferred("AsyncRpcJoin", ip, port);
+
+            });
+            disposerCollecter.Add(tAct);
+
+
+            //userPanels의 isMy를 세팅
+            for (int i = 0; i < 4; i++)
+            {
+                userPanels[i].isChangable = () => i == userIdx && !isReady;
+                userPanels[i].prevCharBtn.Pressed += OnPressPrevChar;
+                userPanels[i].nextCharBtn.Pressed += OnPressNextChar;
+            }
         }
 
-        public string GetMyName()
+
+        void BroadcastUserStatus()
         {
-            string userName = "";
+            Packet packet = new Packet(Packet.Flag.ROOM_STATUS_SEND, userStatus);
+            MainClient.instance.Send(packet);
+        }
+        void OnUserStatusChanged() 
+        {
+            userPanels[userIdx].SetUserStatus(userStatus);
+            BroadcastUserStatus();
+        }
 
-            for (int i = 0; i < 4; i++)
-                if (userArray[i].HasValue)
-                    if (userId == userArray[i].Value.id)
-                        userName = userArray[i].Value.name;
+        void OnPressNextChar()
+        {
+            int nowIdx = (int)userStatus.type;
+            int maxIdx = CharacterData.typeCount;
+            int newIdx = (nowIdx + 1) >= maxIdx ? 0 : (nowIdx + 1);
 
-            return userName;
+            userStatus.type = (CharacterData.Type)newIdx;
+            userStatus.traitTree = new TraitTree((CharacterData.Type)newIdx);
+
+            OnUserStatusChanged();
+        }
+        void OnPressPrevChar()
+        {
+            int nowIdx = (int)userStatus.type;
+            int maxIdx = CharacterData.typeCount;
+            int newIdx = (nowIdx - 1) <= -1 ? maxIdx-1 : (nowIdx - 1);
+
+            userStatus.type = (CharacterData.Type)newIdx;
+            userStatus.traitTree = new TraitTree((CharacterData.Type)newIdx);
+
+            OnUserStatusChanged();
         }
 
         public void AsyncAddChat(string str)
         {
-
             chatList.AddItem(str);
+            chatList.GetVScrollBar().Value = 9999;
         }
-
+        public void AsyncUserReady(int idx, bool isReady)
+        {
+            userPanels[idx].SetReady(isReady);
+        }
+        
         public void AsyncUserGet(int idx, string name)
         {
             userPanels[idx].SetUser(name);
+            BroadcastUserStatus();
         }
-
         public void AsyncUserDelList(Godot.Collections.Array<int> toDelList)
         {
             foreach (var i in toDelList)
@@ -211,11 +311,33 @@ namespace _favorClient.controls
             }
         }
 
-        public void AsyncUserReady(int idx, bool isReady)
+        public void AsyncRpcHost()
         {
-            userPanels[idx].SetReady(isReady);
+            RpcManager rpcM = GetNode("../RpcManager") as RpcManager;
+
+            if (rpcM == null) throw new Exception("Rpc Manager를 찾지 못했습니다.");
+
+            rpcM.userStatus = () => userStatus;
+            bool res = rpcM.DoHost();
+
+            if (res == false) throw new Exception("Rpc Host 중 문제가 발생했습니다.");
+
+            var address = rpcM.GetIpAddress();
+
+            Packet sPacket = new Packet(Packet.Flag.ROOM_RPC_SEND, address.ip, address.port);
+            MainClient.instance.Send(sPacket);
+        }
+        public void AsyncRpcJoin(string ip, int port)
+        {
+            RpcManager rpcM = GetNode("../RpcManager") as RpcManager;
+
+            if (rpcM == null) throw new Exception("Rpc Manager를 찾지 못했습니다.");
+
+            rpcM.userStatus = () => userStatus;
+            bool res = rpcM.DoJoin(ip, port);
+
+            if (res == false) throw new Exception("Rpc Join 중 문제가 발생했습니다.");
 
         }
-
     }
 }

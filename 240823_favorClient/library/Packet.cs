@@ -1,6 +1,4 @@
-﻿
-
-using _favorClient.library.DataType;
+﻿using _favorClient.library.DataType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 public struct Packet
 {
@@ -195,6 +194,26 @@ public struct Packet
                 {
                     str += value[0].ToString() + "\f";
                     str += value[1].ToString() + "\f";
+                }
+                break;
+
+            case Flag.DEBUG_FAST_LOGIN:
+                {
+                }
+                break;
+            case Flag.DEBUG_FAST_LOGIN_CALLBACK:
+                {
+                    str += value[0].ToString() + "\f";
+                    str += value[1].ToString() + "\f";
+                }
+                break;
+            case Flag.DEBUG_FAST_JOIN:
+                {
+                }
+                break;
+            case Flag.DEBUG_FAST_JOIN_CALLBACK:
+                {
+                    str += value[0].ToString() + "\f";
                 }
                 break;
         }
@@ -472,15 +491,37 @@ public struct Packet
                 }
                 break;
 
+            case Flag.DEBUG_FAST_LOGIN:
+                {
+                    packet = new Packet(flag);
+                }
+                break;
+            case Flag.DEBUG_FAST_LOGIN_CALLBACK:
+                {
 
+                    string id = sp[0];
+                    string name = sp[1];
+
+                    packet = new Packet(flag, id, name);
+                }
+                break;
+
+            case Flag.DEBUG_FAST_JOIN:
+                {
+                    packet = new Packet(flag);
+                }
+                break;
+            case Flag.DEBUG_FAST_JOIN_CALLBACK:
+                {
+                    string roomName = sp[0];
+
+                    packet = new Packet(flag, roomName);
+                }
+                break;
         }
 
         return packet;
     }
-
-
-
-
 
     public enum Flag
     {
@@ -636,6 +677,23 @@ public struct Packet
         /// 이 이후로는 RPC 연결을 통해 정보교환이 진행됩니다.
         /// </summary>
         ROOM_RPC_RECV,
+
+        /// <summary>
+        /// 클라측 디버그용 패킷입니다. 어떤 값도 저장하지 않으며 DEBUG_FAST_LOGIN_CALLBACK을 유발합니다.
+        /// </summary>
+        DEBUG_FAST_LOGIN,
+        /// <summary>
+        /// 서버측 디버그용 패킷입니다. DEBUG_FAST_LOGIN 요청에 대해 임의의 디버그용 계정의 아이디와 닉네임을 반환합니다.
+        /// </summary>
+        DEBUG_FAST_LOGIN_CALLBACK,
+        /// <summary>
+        /// 클라측 디버그용 패킷입니다. 어떤 값도 저장하지 않으며 DEBUG_FAST_JOIN_CALLBACK 유발합니다.
+        /// </summary>
+        DEBUG_FAST_JOIN,
+        /// <summary>
+        /// 서버측 디버그용 패킷입니다. DEBUG_FAST_JOIN 요청에 대해 임의의 디버그용 방의 이름을 반환합니다.
+        /// </summary>
+        DEBUG_FAST_JOIN_CALLBACK,
     }
 }
 

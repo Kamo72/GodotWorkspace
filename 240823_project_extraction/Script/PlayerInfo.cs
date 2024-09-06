@@ -4,4 +4,3 @@
     public int Id;
     public int Score;
 }
-

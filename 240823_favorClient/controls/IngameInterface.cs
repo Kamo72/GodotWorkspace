@@ -25,6 +25,22 @@ namespace _favorClient.controls
         [Export]//R 궁극기
         public IngameSkillPanel skillR;
 
+        [ExportCategory("Dynamic")]
+        [Export]
+        public int a;
+
+        [ExportCategory("MyInfo")]
+        [Export]
+        public int aa;
+
+        [ExportCategory("TeamInfo")]
+        [Export]
+        public int aaa;
+
+        [ExportCategory("BossInfo")]
+        [Export]
+        public int aaaa;
+
 
         public List<IngameSkillPanel> skillPanels;
         public override void _Ready()
@@ -38,11 +54,8 @@ namespace _favorClient.controls
         }
 
 
-
-
-
-
-
-
     }
 }
+
+
+
