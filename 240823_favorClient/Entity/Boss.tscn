@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjyadumedxl50"]
+
+[ext_resource type="Script" path="res://Entity/Boss.cs" id="1_yjunj"]
+[ext_resource type="Texture2D" uid="uid://7i73d3n3ceas" path="res://icon.svg" id="2_qv1t7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ps8y1"]
+radius = 200.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_tri5a"]
+properties/0/path = NodePath(".:health")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Boss" type="CharacterBody2D"]
+script = ExtResource("1_yjunj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ps8y1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2.91, 2.91)
+texture = ExtResource("2_qv1t7")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_tri5a")

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,15 +9,16 @@ namespace _favorClient.library.DataType
 {
     public partial struct CharacterData
     {
-        public CharacterData(string name, Status status, Dictionary<Skill.KeyType, Skill> skillInfos)
+        public CharacterData(string name, Status status, string path)
         {
             this.name = name;
             this.status = status;
-            this.skillInfos = skillInfos;
+            getScene = () => ResourceLoader.Load<PackedScene>(path);
         }
 
         public string name;
         public Status status;
+        public Func<PackedScene> getScene;
 
         public Dictionary<Skill.KeyType, Skill> skillInfos = new Dictionary<Skill.KeyType, Skill>();
 
@@ -98,76 +99,20 @@ namespace _favorClient.library.DataType
         public enum Type
         {
             NONE,
-            WARRIOR,
+            FUHRER,
+            HORNET,
+            AGITATOR,
+            
         }
         static Dictionary<Type, CharacterData> dataLib = new Dictionary<Type, CharacterData>()
         {
-            {Type.NONE,
-                new CharacterData("None", new(100, 10, 10),
-                    new(){
-                        { Skill.KeyType.PAS, new Skill(Skill.KeyType.PAS,
-                            "정의되지 않은 스킬", null,
-                            "아직 스킬에 대한 설명이 정의되지 않았습니다.",
-                            new Description(
-                                "아직 스킬에 대한 설명이 정의되지 않았습니다."
-                                ),
-                            0f)},
-
-                        { Skill.KeyType.LM, new Skill(Skill.KeyType.LM,
-                            "정의되지 않은 스킬", null,
-                            "아직 스킬에 대한 설명이 정의되지 않았습니다.",
-                            new Description(
-                                "아직 스킬에 대한 설명이 정의되지 않았습니다."
-                                ),
-                            0f)},
-
-                        { Skill.KeyType.RM, new Skill(Skill.KeyType.RM,
-                            "정의되지 않은 스킬", null,
-                            "아직 스킬에 대한 설명이 정의되지 않았습니다.",
-                            new Description(
-                                "아직 스킬에 대한 설명이 정의되지 않았습니다."
-                                ),
-                            0f)},
-
-                        { Skill.KeyType.SPACE, new Skill(Skill.KeyType.SPACE,
-                            "정의되지 않은 스킬", null,
-                            "아직 스킬에 대한 설명이 정의되지 않았습니다.",
-                            new Description(
-                                "아직 스킬에 대한 설명이 정의되지 않았습니다."
-                                ),
-                            0f)},
-
-                        { Skill.KeyType.Q, new Skill(Skill.KeyType.Q,
-                            "정의되지 않은 스킬", null,
-                            "아직 스킬에 대한 설명이 정의되지 않았습니다.",
-                            new Description(
-                                "아직 스킬에 대한 설명이 정의되지 않았습니다."
-                                ),
-                            0f)},
-
-                        { Skill.KeyType.E, new Skill(Skill.KeyType.E,
-                            "정의되지 않은 스킬", null,
-                            "아직 스킬에 대한 설명이 정의되지 않았습니다.",
-                            new Description(
-                                "아직 스킬에 대한 설명이 정의되지 않았습니다."
-                                ),
-                            0f)},
-
-                        { Skill.KeyType.R, new Skill(Skill.KeyType.R,
-                            "정의되지 않은 스킬", null,
-                            "아직 스킬에 대한 설명이 정의되지 않았습니다.",
-                            new Description(
-                                "아직 스킬에 대한 설명이 정의되지 않았습니다."
-                                ),
-                            0f)},
-                    }
-                )
-            },
-            //TODO
         };
 
         public static CharacterData GetByType(Type type) => dataLib[type];
         public static int typeCount => dataLib.Count;
+
+        public void AddSkill(Skill skill) => skillInfos.Add(skill.type, skill);
+        
     }
 
 

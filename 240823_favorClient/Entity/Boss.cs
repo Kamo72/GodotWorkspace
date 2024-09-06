@@ -17,7 +17,10 @@ namespace _favorClient.Entity
         public float stunDuration = -1f;
         public bool isStunned = false, isInvincible = false, isHittable = true;
 
-        public void GetDamage(Damage damage)
+        private Vector2 syncPos = Vector2.Zero;
+        private float syncRotation = 0f;
+
+        public void GetDamage(BDamage damage)
         {
             if(isHittable == false) return;
 
@@ -46,6 +49,11 @@ namespace _favorClient.Entity
             stunDuration = 5;
         }
 
+
+        public override void _Ready()
+        {
+            GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(1);
+        }
         public override void _Process(double delta)
         {
             stunDuration -= (float)delta;
@@ -53,6 +61,29 @@ namespace _favorClient.Entity
                 if (stunDuration < 0)
                     isStunned = false;
         }
+        public override void _PhysicsProcess(double delta)
+        {
+            if (GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
+            {
+                Vector2 velocity = Velocity;
+
+                ProcessOnAuthority();
+
+                Velocity = velocity;
+                MoveAndSlide();
+                syncPos = GlobalPosition;
+                //syncRotation = GetNode<Node2D>("GunRotation").RotationDegrees;
+            }
+            else
+            {
+                ProcessOutOfAuthority();
+                GlobalPosition = GlobalPosition.Lerp(syncPos, .1f);
+                //GetNode<Node2D>("GunRotation").RotationDegrees = Mathf.Lerp(GetNode<Node2D>("GunRotation").RotationDegrees, syncRotation, .1f);
+            }
+        }
+
+        protected virtual void ProcessOnAuthority() { }
+        protected virtual void ProcessOutOfAuthority() { }
 
 
         public virtual void LoadRoom()

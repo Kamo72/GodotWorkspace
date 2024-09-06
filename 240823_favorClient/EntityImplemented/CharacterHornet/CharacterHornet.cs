@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _favorClient.Entity.Character_Test
 {
-    public partial class CharacterTest : Character
+    public partial class CharacterHornet : Character
     {
 
 

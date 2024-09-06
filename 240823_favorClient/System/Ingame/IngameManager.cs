@@ -54,6 +54,21 @@ namespace _favorClient.System.Ingame
             SpawnAllChar();
         }
 
+        bool SpawnBoss(BossData.Type type)
+        {
+            PackedScene bossScene = GetPackedSceneByBossType(type);
+            
+            if(bossScene == null) return false;
+
+            Boss currentBoss = bossScene.Instantiate<Boss>();
+
+            AddChild(currentBoss);
+
+            Node2D spawnPoint  = GetTree().GetFirstNodeInGroup("BossSpawnPoints") as Node2D;
+            currentBoss.GlobalPosition = spawnPoint.GlobalPosition;
+
+            return true;
+        }
 
         bool SpawnChar(int idx) 
         {
@@ -66,27 +81,22 @@ namespace _favorClient.System.Ingame
                 if (item.Name == players[idx].Value.id)
                     return false;
 
+            UserStatus uStat = players[idx].Value;
+            CharacterData.Type type = uStat.type;
+            PackedScene playerScene = GetPackedSceneByCharType(type);
 
+            if (playerScene == null) return false;
 
-            PackedScene playerScene = null;
-            //GameManager.players에 따라 캐릭터를 각각 생성
             Character currentPlayer = playerScene.Instantiate<Character>();
 
-            //fix needed
-            //currentPlayer.Name = item.Id.ToString();
-            //currentPlayer.SetupPlayer(item.Name);
+            currentPlayer.Name = uStat.rpcId.ToString();
+            currentPlayer.SetupPlayer(uStat.name);
 
             AddChild(currentPlayer);
 
-            //in GODOT, PlayerSpawnPoints group needed
-            //PlayerSpawnPoints에 포함된 애들 중 0부터 자리를 채워넣음
             foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("PlayerSpawnPoints"))
                 if (int.Parse(spawnPoint.Name) == idx)
                     currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
-                
-            
-
-
 
             return true;
         }
@@ -111,14 +121,35 @@ namespace _favorClient.System.Ingame
 
         [ExportGroup("CharacterScene")]
         [Export]
-        PackedScene prefabTest;
+        PackedScene prefabFuhrer;
+        [Export]
+        PackedScene prefabHornet;
+        [Export]
+        PackedScene prefabAgitator;
 
+
+        [ExportGroup("BossScene")]
+        [Export]
+        PackedScene bossSchadenfreude;
+
+
+        PackedScene GetPackedSceneByBossType(BossData.Type type)
+        {
+            switch (type)
+            {
+                case BossData.Type.NONE: return null;
+                case BossData.Type.SCHADENFREUDE: return bossSchadenfreude;
+            }
+            return null;
+        }
         PackedScene GetPackedSceneByCharType(CharacterData.Type type) 
         {
             switch (type) 
             {
                 case CharacterData.Type.NONE: return null;
-                case CharacterData.Type.WARRIOR: return prefabTest;
+                case CharacterData.Type.FUHRER: return prefabFuhrer;
+                case CharacterData.Type.HORNET: return prefabHornet;
+                case CharacterData.Type.AGITATOR: return prefabAgitator;
             }
             return null;
         }
