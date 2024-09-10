@@ -42,7 +42,7 @@ namespace _240823_favorServer.Data
 
             foreach (var item in userList)
             {
-                bool isFine = true;
+                bool isFine;
 
                  try
                 {
@@ -61,7 +61,9 @@ namespace _240823_favorServer.Data
             var dataList = RoomManager.GetInstance().GetRoomDataList();
             Packet packet = new Packet(Packet.Flag.ROOM_LIST, dataList);
 
-            foreach (var item in userList) item.Send(packet);
+            foreach (var item in userList)
+                if(!item.isInRoom)
+                    item.Send(packet);
             
         }
 

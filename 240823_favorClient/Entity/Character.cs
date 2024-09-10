@@ -78,7 +78,7 @@ namespace _favorClient.Entity
                         }
                     }
                     action.time += (float)delta;
-                    ActionProcess();
+                    ActionProcess((float)delta);
 
                     //Node2D gun = GetNode<Node2D>("GunRotation");
                     //float rotation = (GetGlobalMousePosition() - gun.GlobalPosition).Angle();
@@ -105,9 +105,6 @@ namespace _favorClient.Entity
                 if (isCastable == false && isCasting)
                     CancelCasting();
 
-                //캐스팅이 불가능하다면 캐스팅 중단
-                if (isCastable == false && isCasting)
-                    CancelCasting();
 
 
                 Velocity = velocity;
@@ -217,7 +214,11 @@ namespace _favorClient.Entity
         }
 
         protected (string state, int idx, float time) action = ("idle", 0, 0);
-        protected virtual void ActionProcess() { }
+        protected virtual void ActionProcess(float delta) {
+            action.time += delta;
+
+
+        }
 
         [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
         protected virtual void DoAttackMain(Vector2 from, Vector2 to) { }

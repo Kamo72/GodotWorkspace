@@ -58,7 +58,8 @@ namespace _240823_favorServer.Data
             Room? room = roomList.Find(r => r.UserExist(user));
             return room;
         }
-
+        public Room? GetAnyRoom() => roomList.Count == 0? null : roomList[0];
+        
 
         public bool Join(User user, Room room, string pw = "") 
         {

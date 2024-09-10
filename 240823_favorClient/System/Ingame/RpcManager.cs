@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using HttpClient = System.Net.Http.HttpClient;
+using System.Runtime.InteropServices;
 
 namespace _favorClient.System.Ingame
 {
@@ -38,12 +39,15 @@ namespace _favorClient.System.Ingame
 
         }
 
+        //[DllImport("kernel32")]
+        //public static extern Int32 GetCurrentProcessId();
+
 
         static int _port = 8910;
         static string _ip;
 
         private ENetMultiplayerPeer _peer;
-        private int _playerId;
+
         public bool isHost = false;
         public Func<UserStatus?> userStatus = () => null;
 
@@ -60,38 +64,36 @@ namespace _favorClient.System.Ingame
         //Connection Failed Event
         void ConnectionFailed()
         {
-            GD.Print("Connection FAILED.");
-            GD.Print("Could not connect to server.");
+            GD.PushWarning("Connection FAILED.");
+            GD.PushWarning("Could not connect to server longer.");
         }
 
         //Connection Succeed Event
         void ConnectionSuccessful()
         {
-            GD.Print("Connection SUCCESSFULL.");
-
-            GD.Print($"{_playerId} : Sending player information to server.");
-            GD.Print($"{_playerId} : Id: {_playerId}");
-
-            //userBox.AddItem(Multiplayer.GetUniqueId().ToString());
+            GD.PushWarning("Connection SUCCESSFULL.");
+            GD.PushWarning($"Sending player information to server.");
 
             //Send PlayerInfo to Host(1)
             UserStatus uStat = userStatus().Value;
             uStat.rpcId = Multiplayer.GetUniqueId();
-            
+
+            //setUserStatus(uStat);
+
             RpcId(1, "SendPlayerInformation", uStat.ToString());
         }
 
         //Connection Player Event
         void PlayerConnected(long id)
         {
-            GD.Print($"{_playerId} : Player <{id}> connected.");
+            GD.PushWarning($"{Multiplayer.GetUniqueId()} : Player <{id}> connected.");
             //userBox.AddItem(id.ToString());
         }
 
         //Disconnection Player Event
         void PlayerDisconnected(long id)
         {
-            GD.Print($"{_playerId} : Player <{id}> disconnected.");
+            GD.PushWarning($"{Multiplayer.GetUniqueId()} : Player <{id}> disconnected.");
 
             for (int i = 0; i < 4; i++)
                 if (IngameManager.players[i].HasValue)
@@ -115,11 +117,13 @@ namespace _favorClient.System.Ingame
         //Set Mutiplayer as Client
         public bool DoJoin(string ip, int port)
         {
+            GD.PushWarning($"[JOIN]\tIP : {ip}\t PORT : {port}");
+
             _peer = new ENetMultiplayerPeer();
             var status = _peer.CreateClient(ip, port);
             if (status != Error.Ok)
             {
-                GD.Print("Creating client FAILED.");
+                GD.PushWarning("Creating client FAILED.");
                 return false;
             }
 
@@ -131,18 +135,22 @@ namespace _favorClient.System.Ingame
         //Set Mutiplayer as Host
         public bool DoHost()
         {
+            GD.PushWarning($"[HOST]\tIP : {_ip}\t PORT : {_port}");
+
             _peer = new ENetMultiplayerPeer();
             var status = _peer.CreateServer(_port, 3);
             if (status != Error.Ok)
             {
-                GD.Print("Creating server FAILED : " + status);
+                GD.PushWarning("Creating server FAILED : " + status);
                 return false;
             }
 
             _peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
             Multiplayer.MultiplayerPeer = _peer;
 
-            SendPlayerInformation(new UserStatus().ToString());
+            UserStatus ustat = userStatus().Value;
+            ustat.rpcId = Multiplayer.GetUniqueId();
+            SendPlayerInformation(ustat.ToString());
             return true;
         }
 
@@ -158,15 +166,10 @@ namespace _favorClient.System.Ingame
         [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
         private void StartGame()
         {
-            //foreach (var player in IngameManager.players)
-            //{
-            //    GD.Print($"{player.Name}({player.Id}) is Playing");
-            //}
-
-            var packedScene = ResourceLoader.Load<PackedScene>("res://Scenes/Ingame.tscn");
+            GD.PushWarning($"START GAME called!");
+            var packedScene = ResourceLoader.Load<PackedScene>("res://Scene/Ingame.tscn");
             var scene = packedScene.Instantiate<Node2D>();
             GetTree().Root.AddChild(scene);
-            // this.Hide();
         }
 
         //RPC Send Players Info
@@ -176,20 +179,26 @@ namespace _favorClient.System.Ingame
             //Create PlayerInfo
             UserStatus? playerInfo = UserStatus.Parse(packet);
 
+            GD.PushWarning($"[SendPlayerInformation] [{playerInfo.Value.idx}]NAME : \t{playerInfo.Value.name}\tRPC : {playerInfo.Value.rpcId}\tTYPE : {playerInfo.Value.type}");
             //Add PlayerInfo to Collection
             if (!IngameManager.players.Contains(playerInfo))
                 IngameManager.players[playerInfo.Value.idx] = playerInfo;
 
-            //If Server, BroadCast PlayerInfo
-            if (Multiplayer.IsServer())
-                foreach (var player in IngameManager.players)
-                    Rpc("SendPlayerInformation", player.ToString());
 
+            //CMD info
             foreach (var player in IngameManager.players)
                 if (player.HasValue)
                     GD.Print($"[{player.Value.idx}] NAME : \t{player.Value.name}\tRPC : {player.Value.rpcId}\tTYPE : {player.Value.type}");
 
+            //If Server, BroadCast PlayerInfo
+            if (Multiplayer.IsServer())
+            {
+                foreach (var player in IngameManager.players)
+                    Rpc("SendPlayerInformation", player.ToString());
 
+                if (IngameManager.playersCount == InroomInterface.instance.usersCount)
+                    Rpc("StartGame");
+            }
         }
     }
 

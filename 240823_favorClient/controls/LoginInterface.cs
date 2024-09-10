@@ -4,6 +4,8 @@ using System.Net.Sockets;
 using _favorClient.library;
 using _favorClient.controls;
 using System.Threading;
+using System.Runtime.InteropServices;
+using _favorClient.library.DataType;
 
 public partial class LoginInterface : UserInterface
 {
@@ -20,15 +22,21 @@ public partial class LoginInterface : UserInterface
     [Export]
     private RichTextLabel richCondition;
 
+    [DllImport("kernel32")]
+    public static extern Int32 GetCurrentProcessId();
 
     Action requestDisposer;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        //UserStatus status = new UserStatus("asdasd", "asdsadsad", 1, 214124, CharacterData.Type.FUHRER);
+        //GD.PushWarning(status.ToString());
+        //GD.PushWarning(UserStatus.Parse(status.ToString()));
 
-#if DEBUG
+        //return;
+
         GD.PushWarning("디버깅용 코드가 작동 중입니다! 조심하세요...");
-
+        Thread.Sleep(GetCurrentProcessId()/10);
         requestDisposer = MainClient.instance.AddPacketListener(Packet.Flag.DEBUG_FAST_LOGIN_CALLBACK, packet => {
             string id = packet.value[0].ToString();
             string name = packet.value[1].ToString();
@@ -40,7 +48,6 @@ public partial class LoginInterface : UserInterface
         MainClient.instance.Send(new Packet(Packet.Flag.DEBUG_FAST_LOGIN));
 
         return;
-#endif
 
 
 

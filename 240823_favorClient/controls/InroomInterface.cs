@@ -9,11 +9,15 @@ using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using _favorClient.library.DataType;
 using _favorClient.System.Ingame;
+using static Godot.Projection;
 
 namespace _favorClient.controls
 {
     public partial class InroomInterface : UserInterface
     {
+        public static InroomInterface instance = null;
+
+
         [Export]
         private Godot.Collections.Array<InroomUserPanel> userPanels = new();
 
@@ -57,6 +61,16 @@ namespace _favorClient.controls
 
         public (string name, string id, UserStatus? urd)?[] userArray
             = new (string name, string id, UserStatus? urd)?[4] { null, null, null, null };
+        public int usersCount
+        {
+            get
+            {
+                int count = 0;
+                foreach (var item in userArray)
+                    if (item.HasValue) count++;
+                return count;
+            }
+        }
         UserStatus userStatus;
         bool isReady = false;
 
@@ -64,6 +78,8 @@ namespace _favorClient.controls
         List<Action> disposerCollecter = new();
         public override void _Ready()
         {
+            instance = this;
+
             Action tAct;
             nameTxt.Text = roomName;
             userStatus = new UserStatus(userId, userName, userIdx, -1, CharacterData.Type.NONE);
@@ -229,7 +245,7 @@ namespace _favorClient.controls
             exitBtn.Disabled = false;
             readyBtn.Disabled = false;
 
-            //ROOM_START 대한 처리
+            //ROOM_RPC_RECV 대한 처리
             tAct = MainClient.instance.AddPacketListener(Packet.Flag.ROOM_RPC_RECV, packet =>
             {
 
@@ -299,7 +315,13 @@ namespace _favorClient.controls
         
         public void AsyncUserGet(int idx, string name)
         {
-            userPanels[idx].SetUser(name);
+            if (idx == userIdx)
+            {
+                userStatus.idx = idx;
+                userArray[idx] = (userName, userId, userStatus);
+            }
+
+            userPanels[idx-1].SetUser(name);
             BroadcastUserStatus();
         }
         public void AsyncUserDelList(Godot.Collections.Array<int> toDelList)
@@ -326,6 +348,7 @@ namespace _favorClient.controls
 
             Packet sPacket = new Packet(Packet.Flag.ROOM_RPC_SEND, address.ip, address.port);
             MainClient.instance.Send(sPacket);
+            GD.PushWarning("Rpc Host에 성공했습니다.");
         }
         public void AsyncRpcJoin(string ip, int port)
         {
@@ -337,6 +360,9 @@ namespace _favorClient.controls
             bool res = rpcM.DoJoin(ip, port);
 
             if (res == false) throw new Exception("Rpc Join 중 문제가 발생했습니다.");
+
+
+            GD.PushWarning("Rpc Join에 성공했습니다.");
 
         }
     }

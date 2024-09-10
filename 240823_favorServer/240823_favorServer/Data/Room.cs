@@ -1,5 +1,5 @@
-﻿using _240823_favorServer.Library.DataType;
-using _240823_favorServer.System;
+﻿
+using _240823_favorServer.library.DataType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +41,7 @@ namespace _240823_favorServer.Data
             (users[2] != null ? 1 : 0) +
             (users[3] != null ? 1 : 0);
 
-        User[] users = new User[userMax];
+        User?[] users = new User?[userMax] { null, null, null, null};
         
 
         public bool UserEnter(User user, string pw = "")
@@ -58,6 +58,7 @@ namespace _240823_favorServer.Data
                     user.room = this;
                     user.room = this;
                     user.isReady = true;
+
                     return true;
                 }
             
@@ -156,10 +157,14 @@ namespace _240823_favorServer.Data
             Packet packet = new Packet(Packet.Flag.ROOM_READY_RECV, GetUserIdx(user), isReady);
 
             for (int i = 0; i < userMax; i++)
-                if (users[i] != null) users[i].Send(packet);
+                users[i]?.Send(packet);
 
             user.isReady = isReady;
             SetCountdown(IsEveryoneReady());
+
+            playState =
+                (new State[] { State.READY, State.NONE }).Contains(playState) && IsEveryoneReady() ?
+                State.READY : State.NONE;
 
             return true;
         }
@@ -183,6 +188,8 @@ namespace _240823_favorServer.Data
 
         void BroadcastUsers(object sender, ElapsedEventArgs args) 
         {
+            if (playState == State.INGAME) return;
+
             List<(int, string, string)> userDatas = new List<(int, string, string)> ();
 
             for (int i = 0; i < userMax; i++)
@@ -202,7 +209,7 @@ namespace _240823_favorServer.Data
             if (userCount == 0) return false;
             if (!users.Contains(user)) return false;
 
-            int userIdx = GetUserIdx(user);
+            //int userIdx = GetUserIdx(user);
 
             Packet packet = new Packet(Packet.Flag.ROOM_RPC_RECV, ip, port);
 
@@ -211,7 +218,6 @@ namespace _240823_favorServer.Data
                     users[i].Send(packet);
 
             return true;
-
         }
 
         int countdownSec = -1;
@@ -270,12 +276,13 @@ namespace _240823_favorServer.Data
             Packet packet = new Packet(Packet.Flag.ROOM_START, host);
 
             for (int i = 0; i < userMax; i++)
-                if (users[i] != null)
-                    users[i].Send(packet);
+                users[i]?.Send(packet);
 
             countdownTimer.Stop();
             countdownTimer.Dispose();
             countdownTimer = null;
+
+            playState = State.INITIATE;
         }
 
         public void Dispose()

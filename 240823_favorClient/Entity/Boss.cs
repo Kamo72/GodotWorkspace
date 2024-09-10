@@ -1,4 +1,5 @@
 ﻿using _favorClient.library.DataType;
+using _favorClient.System.Ingame;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace _favorClient.Entity
 {
     public partial class Boss : CharacterBody2D
     {
+        public BossData.Type type = BossData.Type.NONE;
+
         public int phase = 0; //0번은 준비, 1페이즈, 2페이즈 등등
         public float nowHealth = 10000, nowStagger = 10000;
         public float maxHealth = 10000, maxStagger = 10000;
@@ -18,6 +21,7 @@ namespace _favorClient.Entity
         public bool isStunned = false, isInvincible = false, isHittable = true;
 
         private Vector2 syncPos = Vector2.Zero;
+        public float rotation = 0f; 
         private float syncRotation = 0f;
 
         public void GetDamage(BDamage damage)
@@ -56,10 +60,15 @@ namespace _favorClient.Entity
         }
         public override void _Process(double delta)
         {
-            stunDuration -= (float)delta;
             if (isStunned)
-                if (stunDuration < 0)
+                if (stunDuration - (float)delta < 0 && 0 < stunDuration)
+                {
                     isStunned = false;
+                    nowStagger = maxStagger;
+                }
+
+
+            stunDuration -= (float)delta;
         }
         public override void _PhysicsProcess(double delta)
         {
@@ -72,13 +81,13 @@ namespace _favorClient.Entity
                 Velocity = velocity;
                 MoveAndSlide();
                 syncPos = GlobalPosition;
-                //syncRotation = GetNode<Node2D>("GunRotation").RotationDegrees;
+                //syncRotation = rotation;
             }
             else
             {
                 ProcessOutOfAuthority();
                 GlobalPosition = GlobalPosition.Lerp(syncPos, .1f);
-                //GetNode<Node2D>("GunRotation").RotationDegrees = Mathf.Lerp(GetNode<Node2D>("GunRotation").RotationDegrees, syncRotation, .1f);
+                //rotation = Mathf.Lerp(rotation, syncRotation, .1f);
             }
         }
 
@@ -91,5 +100,14 @@ namespace _favorClient.Entity
             GD.Print();
         }
         public virtual void Finished() { }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+                if(IngameManager.boss != this)
+                    IngameManager.boss = null;
+
+            base.Dispose(disposing);
+        }
     }
 }

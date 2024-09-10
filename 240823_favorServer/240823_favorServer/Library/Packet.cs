@@ -1,6 +1,6 @@
 ﻿
 
-using _240823_favorServer.Library.DataType;
+using _240823_favorServer.library.DataType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -469,7 +469,6 @@ public struct Packet
                 break;
             case Flag.ROOM_STATUS_SEND:
                 {
-
                     int idx = int.Parse(sp[0]);
                     UserStatus status = UserStatus.Parse(sp[1]);
 

@@ -39,7 +39,7 @@ namespace _favorClient.library.DataType
             ustat.id = pbt[0];
             ustat.name = pbt[1];
             ustat.idx = int.Parse(pbt[2]);
-            ustat.rpcId = int.Parse(pbt[2]);
+            ustat.rpcId = int.Parse(pbt[3]);
 
             pbt = pbv[1].SplitWithSpan('\t');
             ustat.type = (CharacterData.Type)int.Parse(pbt[0]);
@@ -65,8 +65,9 @@ namespace _favorClient.library.DataType
             str += ((int)type).ToString();
             str += "\v";
 
-            foreach(var trait in traitTree.traitsList)
-                str += trait + "\t";
+            if(traitTree.traitsList != null)
+                foreach(var trait in traitTree.traitsList)
+                    str += trait + "\t";
 
             return str;
         }

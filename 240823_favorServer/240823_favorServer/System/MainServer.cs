@@ -1,6 +1,6 @@
 ﻿using _231018_WBNET;
 using _240823_favorServer.Data;
-using _240823_favorServer.Library.DataType;
+using _240823_favorServer.library.DataType;
 using _240823_favorServer.Library.DB;
 using System;
 using System.Collections.Generic;
@@ -392,6 +392,8 @@ namespace _240823_favorServer.System
                             if (foundUser.HasValue)
                                 if (UserManager.GetInstance().SignIn(socket, foundUser.Value.id, foundUser.Value.name))
                                 {
+                                    Console.WriteLine("디버그용 로그인 성공. testid");
+                                    Thread.Sleep(1000);
                                     sendPacket = new Packet(Packet.Flag.DEBUG_FAST_LOGIN_CALLBACK, foundUser.Value.id, foundUser.Value.name);
                                     Send(socket, sendPacket);
                                     return;
@@ -401,6 +403,8 @@ namespace _240823_favorServer.System
                             if (foundUser.HasValue)
                                 if (UserManager.GetInstance().SignIn(socket, foundUser.Value.id, foundUser.Value.name))
                                 {
+                                    Console.WriteLine("디버그용 로그인 성공. testid2");
+                                    Thread.Sleep(1000);
                                     sendPacket = new Packet(Packet.Flag.DEBUG_FAST_LOGIN_CALLBACK, foundUser.Value.id, foundUser.Value.name);
                                     Send(socket, sendPacket);
                                     return;
@@ -410,6 +414,8 @@ namespace _240823_favorServer.System
                             if (foundUser.HasValue)
                                 if (UserManager.GetInstance().SignIn(socket, foundUser.Value.id, foundUser.Value.name))
                                 {
+                                    Console.WriteLine("디버그용 로그인 성공. testid3");
+                                    Thread.Sleep(1000);
                                     sendPacket = new Packet(Packet.Flag.DEBUG_FAST_LOGIN_CALLBACK, foundUser.Value.id, foundUser.Value.name);
                                     Send(socket, sendPacket);
                                     return;
@@ -424,23 +430,24 @@ namespace _240823_favorServer.System
                             //        return;
                             //    }
 
+                            Console.WriteLine("디버그용 로그인 실패.");
 
                             sendPacket = new Packet(Packet.Flag.NET_CRASH);
                             Send(socket, sendPacket);
                         } break;
-
                     case Packet.Flag.DEBUG_FAST_JOIN:
                         {
                             Packet sendPacket;
 
-                            int roomIdx = 0;
-                            Room? room = RoomManager.GetInstance().GetRoomByIdx(roomIdx);
+                            Room? room = RoomManager.GetInstance().GetAnyRoom();
 
                             if (room == null)
                             {
+                                Thread.Sleep(1000);
                                 RoomManager.GetInstance().Host(UserManager.GetInstance().FindBySocket(socket), "testRoom", false, "");
                             }
                             else {
+                                Thread.Sleep(1000);
                                 room.UserEnter(UserManager.GetInstance().FindBySocket(socket));
                             }
                             sendPacket = new Packet(Flag.DEBUG_FAST_JOIN_CALLBACK, "testRoom");

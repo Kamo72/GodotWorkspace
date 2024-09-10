@@ -27,40 +27,34 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="IngameSkillPanel" parent="CanvasLayer/Control" instance=ExtResource("1_gpux6")]
-anchors_preset = 0
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="IngameSkillPanel2" parent="CanvasLayer/Control" instance=ExtResource("1_gpux6")]
-anchors_preset = 0
 offset_left = 100.0
 offset_right = 200.0
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="IngameSkillPanel3" parent="CanvasLayer/Control" instance=ExtResource("1_gpux6")]
-anchors_preset = 0
 offset_left = 200.0
 offset_right = 300.0
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="IngameSkillPanel4" parent="CanvasLayer/Control" instance=ExtResource("1_gpux6")]
-anchors_preset = 0
 offset_left = 300.0
 offset_right = 400.0
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="IngameSkillPanel5" parent="CanvasLayer/Control" instance=ExtResource("1_gpux6")]
-anchors_preset = 0
 offset_left = 400.0
 offset_right = 500.0
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="IngameSkillPanel6" parent="CanvasLayer/Control" instance=ExtResource("1_gpux6")]
-anchors_preset = 0
 offset_left = 500.0
 offset_right = 600.0
 grow_horizontal = 1

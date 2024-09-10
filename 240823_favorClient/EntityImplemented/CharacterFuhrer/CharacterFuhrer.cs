@@ -37,7 +37,7 @@ namespace _favorClient.Entity.Character_Test
         {
         }
 
-        protected override void ActionProcess()
+        protected virtual void ActionProcess()
         {
             switch (action.state)
             {

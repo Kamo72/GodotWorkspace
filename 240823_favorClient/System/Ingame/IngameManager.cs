@@ -29,6 +29,7 @@ namespace _favorClient.System.Ingame
 
         public static UserStatus?[] players = new UserStatus?[4] { null, null, null, null };
         public static Character[] characters = new Character[4] { null, null, null, null };
+        public static Boss boss = null;
         public static int playersCount { get {
                 int count = 0;
                 foreach (var item in players)
@@ -52,21 +53,24 @@ namespace _favorClient.System.Ingame
                 GD.PrintErr("저기요 인게임 인터페이스가 없어요! 미친 이를 어떠케");
 
             SpawnAllChar();
+            SpawnBoss(BossData.Type.SCHADENFREUDE);
         }
 
         bool SpawnBoss(BossData.Type type)
         {
+            if (boss != null) throw new("보스가 이미 있어요!");
+
             PackedScene bossScene = GetPackedSceneByBossType(type);
             
             if(bossScene == null) return false;
 
-            Boss currentBoss = bossScene.Instantiate<Boss>();
+            boss = bossScene.Instantiate<Boss>();
 
-            AddChild(currentBoss);
+            AddChild(boss);
 
             Node2D spawnPoint  = GetTree().GetFirstNodeInGroup("BossSpawnPoints") as Node2D;
-            currentBoss.GlobalPosition = spawnPoint.GlobalPosition;
-
+            boss.GlobalPosition = spawnPoint.GlobalPosition;
+            
             return true;
         }
 

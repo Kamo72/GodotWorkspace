@@ -1,28 +1,33 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _240823_favorServer.Library.DataType
+namespace _240823_favorServer.library.DataType
 {
-    public class CharacterData
+    public partial struct CharacterData
     {
-        public CharacterData(string name, Status status, Dictionary<Skill.KeyType, Skill> skillInfos) 
+        public CharacterData(string name, Status status, string path)
         {
             this.name = name;
             this.status = status;
-            this.skillInfos = skillInfos;
+            //getScene = () => ResourceLoader.Load<PackedScene>(path);
         }
 
         public string name;
         public Status status;
+        //public Func<PackedScene> getScene;
+
         public Dictionary<Skill.KeyType, Skill> skillInfos = new Dictionary<Skill.KeyType, Skill>();
 
-
+        //기본 스텟
         public struct Status
         {
-            public Status(float hpMax, float speed, float resistance) 
+            public Status(float hpMax, float speed, float resistance)
             {
                 this.hpMax = hpMax;
                 this.speed = speed;
@@ -33,6 +38,8 @@ namespace _240823_favorServer.Library.DataType
             public float speed;     //기본 이동속도
             public float resistance; //넉백저항
         }
+
+        //스킬
         public struct Skill
         {
 
@@ -63,79 +70,112 @@ namespace _240823_favorServer.Library.DataType
 
         }
 
+        //특성
+        public struct Trait
+        {
+            public string name;
+            public Description diffDes;
+            public int cost;
+        }
+
+        //특성 트리
+        public TraitTreeData traitTree = new();
+        public struct TraitTreeData
+        {
+            public TraitTreeData()
+            {
+                AddTrait(Root, new Vector2());
+            }
+
+            public Trait Root = new Trait()
+            {
+                name = "기본 노드"
+            };
+
+            public List<(Trait trait, Vector2 pos, string[] dependencies)> traits = new();
+
+            public void AddTrait(Trait newTrait, Vector2 pos, params string[] dependencies) => traits.Add((newTrait, pos, dependencies));
+        }
+
+
+        //캐릭터 유형
         public enum Type
         {
             NONE,
-            WARRIOR,
+            FUHRER,
+            HORNET,
+            AGITATOR,
+
         }
         static Dictionary<Type, CharacterData> dataLib = new Dictionary<Type, CharacterData>()
         {
-            {Type.NONE,
-                new CharacterData("None", new(100, 10, 10),
-                    new(){
-                        { Skill.KeyType.PAS, new Skill(Skill.KeyType.PAS,
-                            "정의되지 않은 스킬", null,
-                            "아직 스킬에 대한 설명이 정의되지 않았습니다.",
-                            new Description(
-                                "아직 스킬에 대한 설명이 정의되지 않았습니다."
-                                ),
-                            0f)},
-
-                        { Skill.KeyType.LM, new Skill(Skill.KeyType.LM,
-                            "정의되지 않은 스킬", null,
-                            "아직 스킬에 대한 설명이 정의되지 않았습니다.",
-                            new Description(
-                                "아직 스킬에 대한 설명이 정의되지 않았습니다."
-                                ),
-                            0f)},
-
-                        { Skill.KeyType.RM, new Skill(Skill.KeyType.RM,
-                            "정의되지 않은 스킬", null,
-                            "아직 스킬에 대한 설명이 정의되지 않았습니다.",
-                            new Description(
-                                "아직 스킬에 대한 설명이 정의되지 않았습니다."
-                                ),
-                            0f)},
-
-                        { Skill.KeyType.SPACE, new Skill(Skill.KeyType.SPACE,
-                            "정의되지 않은 스킬", null,
-                            "아직 스킬에 대한 설명이 정의되지 않았습니다.",
-                            new Description(
-                                "아직 스킬에 대한 설명이 정의되지 않았습니다."
-                                ),
-                            0f)},
-
-                        { Skill.KeyType.Q, new Skill(Skill.KeyType.Q,
-                            "정의되지 않은 스킬", null,
-                            "아직 스킬에 대한 설명이 정의되지 않았습니다.",
-                            new Description(
-                                "아직 스킬에 대한 설명이 정의되지 않았습니다."
-                                ),
-                            0f)},
-
-                        { Skill.KeyType.E, new Skill(Skill.KeyType.E,
-                            "정의되지 않은 스킬", null,
-                            "아직 스킬에 대한 설명이 정의되지 않았습니다.",
-                            new Description(
-                                "아직 스킬에 대한 설명이 정의되지 않았습니다."
-                                ),
-                            0f)},
-
-                        { Skill.KeyType.R, new Skill(Skill.KeyType.R,
-                            "정의되지 않은 스킬", null,
-                            "아직 스킬에 대한 설명이 정의되지 않았습니다.",
-                            new Description(
-                                "아직 스킬에 대한 설명이 정의되지 않았습니다."
-                                ),
-                            0f)},
-                    }
-                )
-            },
-            //TODO
         };
 
         public static CharacterData GetByType(Type type) => dataLib[type];
+        public static int typeCount => dataLib.Count;
 
+        public void AddSkill(Skill skill) => skillInfos.Add(skill.type, skill);
+
+    }
+
+
+    public struct TraitTree
+    {
+        public TraitTree(CharacterData.Type type)
+        {
+            this.type = type;
+        }
+
+        public CharacterData.Type type;
+        public CharacterData.TraitTreeData traitTreeData => CharacterData.GetByType(type).traitTree;
+        public int spentPoint = 0;
+
+        public List<string> traitsList = new() { "기본 노드" };
+
+        //string으로 하는게 맞을려나...
+        public readonly bool this[string name] => traitsList.Contains(name);
+        public bool IsTraitTaken(string name) => traitsList.Contains(name);
+        public bool TakeTraitByName(string name, int hasPoint = 99)
+        {
+            bool addedAlready = traitsList.Contains(name);
+
+            if (addedAlready)
+                throw new Exception("AddTraitByName - the trait of given name is in traitsList already");
+
+            CharacterData.Trait trait = GetTraitByName(name);
+
+            if (hasPoint < trait.cost)
+                throw new Exception("AddTraitByName - you need more points to take this trait");
+
+            traitsList.Add(trait.name);
+            spentPoint += trait.cost;
+            return true;
+        }
+        public bool ReleaseTraitByName(string name)
+        {
+            if (name == "기본 노드")
+                throw new Exception("ReleaseTraitByName - root node is not able to realease");
+
+            bool releasedAlready = !traitsList.Contains(name);
+
+            if (releasedAlready)
+                throw new Exception("ReleaseTraitByName - the trait of given name is not in traitsList already");
+
+            CharacterData.Trait trait = GetTraitByName(name);
+
+            traitsList.Remove(name);
+            spentPoint -= trait.cost;
+            return true;
+
+        }
+        public bool ReleaseAll()
+        {
+            traitsList.Clear();
+            traitsList.Add("기본 노드");
+            spentPoint = 0;
+            return true;
+        }
+        public CharacterData.Trait GetTraitByName(string traitName) => traitTreeData.traits.Find(i => i.trait.name == traitName).trait;
     }
 
     public struct Description
