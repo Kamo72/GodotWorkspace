@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace _favorClient.System.Ingame
 {
-    public partial class IngameManager : Node
+    public partial class IngameManager : Node2D
     {
         public static IngameManager instance = null;
 
@@ -46,7 +46,7 @@ namespace _favorClient.System.Ingame
 
         public override void _Ready()
         {
-            Node n = GetNode("../IngameInterface");
+            Node n = GetNode("./IngameInterface");
             if (n is IngameInterface igUI)
                 this.igUI = igUI;
             else
@@ -68,7 +68,8 @@ namespace _favorClient.System.Ingame
 
             AddChild(boss);
 
-            Node2D spawnPoint  = GetTree().GetFirstNodeInGroup("BossSpawnPoints") as Node2D;
+            Node2D spawnPoint = GetTree().GetFirstNodeInGroup("bossSpawnPoints") as Node2D;
+            if (spawnPoint == null) GD.PushWarning("SpawnBoss SpawnBosspawnPoint == null");
             boss.GlobalPosition = spawnPoint.GlobalPosition;
             
             return true;
@@ -76,6 +77,7 @@ namespace _favorClient.System.Ingame
 
         bool SpawnChar(int idx) 
         {
+
             if (characters[idx] != null) return false;
             if (players[idx].HasValue == false) return false;
 
@@ -89,7 +91,7 @@ namespace _favorClient.System.Ingame
             CharacterData.Type type = uStat.type;
             PackedScene playerScene = GetPackedSceneByCharType(type);
 
-            if (playerScene == null) return false;
+            if (playerScene == null) throw new Exception($"SpawnChar [{type.ToString()}]playerScene == null");
 
             Character currentPlayer = playerScene.Instantiate<Character>();
 
@@ -98,10 +100,14 @@ namespace _favorClient.System.Ingame
 
             AddChild(currentPlayer);
 
-            foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("PlayerSpawnPoints"))
-                if (int.Parse(spawnPoint.Name) == idx)
-                    currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
+            //foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("playerSpawnPoints"))
+            //    if (spawnPoint.Name == idx.ToString())
+            //        currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
 
+            if (idx == InroomInterface.instance.userIdx)
+                igUI.SetCharacter(currentPlayer);
+
+            GD.Print("Spawn Char of " + idx);
             return true;
         }
 

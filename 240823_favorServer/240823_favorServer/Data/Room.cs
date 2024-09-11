@@ -220,14 +220,14 @@ namespace _240823_favorServer.Data
             return true;
         }
 
+        const int countdownMax = 2;
         int countdownSec = -1;
         Timer countdownTimer;
-
         void SetCountdown(bool isTrue)
         {
             if (isTrue && countdownTimer == null)
             {
-                countdownSec = 10;
+                countdownSec = countdownMax;
                 countdownTimer = new Timer(1000);
                 countdownTimer.Elapsed += (s, e) =>
                 {

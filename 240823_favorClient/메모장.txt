@@ -1,19 +1,8 @@
-PING & PONG Ŭ��
-ACCOUNT_SIGNUP Ŭ��
-ACCOUNT_SIGNIN Ŭ��
-ACCOUNT_SIGNOUT Ŭ��
+방 안에서 캐릭터 변경 시, Status_SEND가 발생하지 않음
 
-ROOM_LIST Ŭ��
-ROOM_HOST Ŭ��
-ROOM_JOIN Ŭ��
-ROOM_EXIT Ŭ��
+방 안에서 한명만 레디해도 서버에서 카운트다운을 시작함
 
-ROOM_USERS Ŭ��
-ROOM_READY_SEND Ŭ��
-ROOM_CHAT_SEND Ŭ��
-ROOM_STATUS_SEND X
-ROOM_COUNTDOWN X
-ROOM_READY X
-
-
-
+싱크로나이저가 내부 변수를 찾지 못하는 문제
+E 0:01:34:0314   get_state: Property '.:health' not found.
+  <C++ 오류>       Condition "!valid" is true. Returning: ERR_INVALID_DATA
+  <C++ 소스>       modules/multiplayer/multiplayer_synchronizer.cpp:167 @ get_state()

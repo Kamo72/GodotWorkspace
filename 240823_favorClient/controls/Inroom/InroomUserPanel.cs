@@ -21,7 +21,6 @@ namespace _favorClient.controls.Inroom
         public Label typeTxt;
 
         UserStatus? uStat = new();
-        public Func<bool> isChangable = () => false;
 
         public void SetUser(string nickname)
         {
@@ -50,8 +49,10 @@ namespace _favorClient.controls.Inroom
 
         public override void _Process(double delta)
         {
-            prevCharBtn.Visible = isChangable();
-            nextCharBtn.Visible = isChangable();
+            bool isChangable = InroomInterface.instance.userPanels.ToList().FindIndex(panel => panel == this) == InroomInterface.instance.userIdx;
+
+            prevCharBtn.Visible = isChangable;
+            nextCharBtn.Visible = isChangable;
         }
     }
 }

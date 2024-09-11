@@ -27,7 +27,7 @@ namespace _favorClient.Entity
             undyingDur = -1f, silenceDur = -1f;
 
         public bool isAlive => health.now > 0;
-        public bool isRooted => isAlive && (rootDur< 0 || isUnstoppable);
+        public bool isRooted => isAlive && (rootDur > 0 && !isUnstoppable);
         public bool isConcious => isAlive && (stunDur < 0 || isUnstoppable);
         public bool isCastable => isAlive && (isConcious && silenceDur < 0f) || isUnstoppable;
         public bool isUnstoppable => isAlive && unstoppableDur> 0f;
@@ -37,10 +37,12 @@ namespace _favorClient.Entity
 
         private Vector2 syncPos = Vector2.Zero;
         private float syncRotation = 0f;
+        private float healthSync = 800f;
 
         public override void _Ready()
         {
             GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse(Name));
+            Velocity = Vector2.Zero;
         }
 
         public override void _PhysicsProcess(double delta)
@@ -89,14 +91,20 @@ namespace _favorClient.Entity
                     {
                         //Move 
                         Vector2 direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+
+                        GD.Print("direction : " + direction);
+
+
                         if (direction != Vector2.Zero)
                         {
                             velocity = direction * speed.now;
+                            GD.Print("velocity! : " + velocity);
                         }
                         else
                         {
-                            velocity.X = Mathf.MoveToward(velocity.X, 0, speed.now);
-                            velocity.Y = Mathf.MoveToward(velocity.Y, 0, speed.now);
+                            //velocity.X = Mathf.MoveToward(velocity.X, 0, speed.now);
+                            //velocity.Y = Mathf.MoveToward(velocity.Y, 0, speed.now);
+                            GD.Print("velocity : " + velocity);
                         }
                     }
                 }
@@ -105,25 +113,21 @@ namespace _favorClient.Entity
                 if (isCastable == false && isCasting)
                     CancelCasting();
 
-
-
-                Velocity = velocity;
-
                 shield.dur -= (float)delta;
                 if (shield.dur < 0f)
                     shield.now = 0f;
 
                 //이동불가 상태가 아님
-                if (!isRooted)
-                    MoveAndSlide();
+                Velocity = velocity;
+                MoveAndSlide();
 
                 syncPos = GlobalPosition;
-                syncRotation = GetNode<Node2D>("GunRotation").RotationDegrees;
+                //syncRotation = GetNode<Node2D>("GunRotation").RotationDegrees;
             }
             else
             {
                 GlobalPosition = GlobalPosition.Lerp(syncPos, .1f);
-                GetNode<Node2D>("GunRotation").RotationDegrees = Mathf.Lerp(GetNode<Node2D>("GunRotation").RotationDegrees, syncRotation, .1f);
+                //GetNode<Node2D>("GunRotation").RotationDegrees = Mathf.Lerp(GetNode<Node2D>("GunRotation").RotationDegrees, syncRotation, .1f);
             }
         }
 

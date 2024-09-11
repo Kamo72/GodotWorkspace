@@ -18,7 +18,21 @@ namespace _favorClient.System.Ingame
     {
         static RpcManager() 
         {
-            _ = GetIp();
+
+            #pragma warning disable CS0162 // 접근할 수 없는 코드가 있습니다.
+            if (true)
+            {
+                GD.PushWarning("Connection mode is LOCAL, aware if you trying to connect public");
+                _ip = "127.0.0.1";
+            }
+            else
+            {
+                GD.PushWarning("Connection mode is PUBLIC, aware if you trying to debug program");
+                _ = GetIp();
+            }
+            #pragma warning restore CS0162 // 접근할 수 없는 코드가 있습니다.
+
+
         }
 
         public static async Task GetIp() 
@@ -77,9 +91,11 @@ namespace _favorClient.System.Ingame
             //Send PlayerInfo to Host(1)
             UserStatus uStat = userStatus().Value;
             uStat.rpcId = Multiplayer.GetUniqueId();
+            uStat.idx = InroomInterface.instance.userIdx;
+            uStat.name = InroomInterface.instance.userName;
 
-            //setUserStatus(uStat);
-
+            GD.PushWarning("userIdx : " + uStat.idx);
+            GD.PushWarning("SendPlayerInformation : " + uStat.ToString());
             RpcId(1, "SendPlayerInformation", uStat.ToString());
         }
 
@@ -148,9 +164,14 @@ namespace _favorClient.System.Ingame
             _peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
             Multiplayer.MultiplayerPeer = _peer;
 
-            UserStatus ustat = userStatus().Value;
-            ustat.rpcId = Multiplayer.GetUniqueId();
-            SendPlayerInformation(ustat.ToString());
+            UserStatus uStat = userStatus().Value;
+            uStat.rpcId = Multiplayer.GetUniqueId();
+            uStat.name = InroomInterface.instance.userName;
+
+
+            GD.PushWarning("userIdx : " + uStat.idx);
+            GD.PushWarning("SendPlayerInformation : " + uStat.ToString());
+            SendPlayerInformation(uStat.ToString());
             return true;
         }
 
@@ -170,22 +191,27 @@ namespace _favorClient.System.Ingame
             var packedScene = ResourceLoader.Load<PackedScene>("res://Scene/Ingame.tscn");
             var scene = packedScene.Instantiate<Node2D>();
             GetTree().Root.AddChild(scene);
+
+            InroomInterface.instance.SetVisible(false);
         }
 
         //RPC Send Players Info
         [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
         private void SendPlayerInformation(string packet)
         {
+            if (packet == "") return;
+
             //Create PlayerInfo
             UserStatus? playerInfo = UserStatus.Parse(packet);
 
-            GD.PushWarning($"[SendPlayerInformation] [{playerInfo.Value.idx}]NAME : \t{playerInfo.Value.name}\tRPC : {playerInfo.Value.rpcId}\tTYPE : {playerInfo.Value.type}");
+            GD.PushWarning($"[SendPlayerInformation] [{playerInfo.Value.idx}] NAME : \t{playerInfo.Value.name}\tRPC : {playerInfo.Value.rpcId}\tTYPE : {playerInfo.Value.type}");
+            
             //Add PlayerInfo to Collection
             if (!IngameManager.players.Contains(playerInfo))
                 IngameManager.players[playerInfo.Value.idx] = playerInfo;
 
 
-            //CMD info
+            //view info
             foreach (var player in IngameManager.players)
                 if (player.HasValue)
                     GD.Print($"[{player.Value.idx}] NAME : \t{player.Value.name}\tRPC : {player.Value.rpcId}\tTYPE : {player.Value.type}");

@@ -19,7 +19,7 @@ namespace _favorClient.controls
 
 
         [Export]
-        private Godot.Collections.Array<InroomUserPanel> userPanels = new();
+        public Godot.Collections.Array<InroomUserPanel> userPanels = new();
 
         [Export]
         private TextEdit nameTxt;
@@ -262,7 +262,7 @@ namespace _favorClient.controls
             //userPanels의 isMy를 세팅
             for (int i = 0; i < 4; i++)
             {
-                userPanels[i].isChangable = () => i == userIdx && !isReady;
+                //userPanels[i].isChangable = () => i == userIdx && !isReady;
                 userPanels[i].prevCharBtn.Pressed += OnPressPrevChar;
                 userPanels[i].nextCharBtn.Pressed += OnPressNextChar;
             }

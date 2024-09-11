@@ -1,4 +1,5 @@
 ﻿using _favorClient.Entity;
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,21 +34,32 @@ namespace _favorClient.library.DataType
         {
             UserStatus ustat = new UserStatus();
 
-            List<string> pbv = str.SplitWithSpan('\v'), pbt;
+            try
+            {
+                List<string> pbv = str.SplitWithSpan('^'), pbt;
+                if (pbv.Count != 3) throw new Exception("UserStatus Parse pbv.Count != 3 : " + str);
 
-            pbt = pbv[0].SplitWithSpan('\t');
-            ustat.id = pbt[0];
-            ustat.name = pbt[1];
-            ustat.idx = int.Parse(pbt[2]);
-            ustat.rpcId = int.Parse(pbt[3]);
+                pbt = pbv[0].SplitWithSpan('~');
+                if (pbt.Count != 5) throw new Exception("UserStatus Parse [0]pbt.Count != 5 : " + str);
 
-            pbt = pbv[1].SplitWithSpan('\t');
-            ustat.type = (CharacterData.Type)int.Parse(pbt[0]);
+                ustat.id = pbt[0];
+                ustat.name = pbt[1];
+                ustat.idx = int.Parse(pbt[2]);
+                ustat.rpcId = int.Parse(pbt[3]);
 
-            pbt = pbv[2].SplitWithSpan('\t');
-            foreach (string sp in pbt)
-                if(sp != "" && sp != "기본 노드")
-                    ustat.traitTree.TakeTraitByName(sp);
+                pbt = pbv[1].SplitWithSpan('~');
+                ustat.type = (CharacterData.Type)int.Parse(pbt[0]);
+
+                pbt = pbv[2].SplitWithSpan('~');
+                foreach (string sp in pbt)
+                    if (sp != "" && sp != "기본 노드")
+                        ustat.traitTree.TakeTraitByName(sp);
+            }
+            catch(Exception ex)
+            {
+                GD.PushError(ex);
+            }
+
 
             return ustat;
         }
@@ -56,18 +68,18 @@ namespace _favorClient.library.DataType
         {
             string str = "";
 
-            str += id + "\t";
-            str += name + "\t";
-            str += idx + "\t";
-            str += rpcId + "\t";
-            str += "\v";
+            str += id + "~";
+            str += name + "~";
+            str += idx + "~";
+            str += rpcId + "~";
+            str += "^";
 
             str += ((int)type).ToString();
-            str += "\v";
+            str += "^";
 
             if(traitTree.traitsList != null)
                 foreach(var trait in traitTree.traitsList)
-                    str += trait + "\t";
+                    str += trait + "~";
 
             return str;
         }

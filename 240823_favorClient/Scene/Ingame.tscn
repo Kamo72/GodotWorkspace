@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://System/Ingame/CameraManager.cs" id="3_uescd"]
 
 [node name="Ingame" type="Node2D"]
+position = Vector2(5, 0)
 script = ExtResource("1_ryv8l")
 prefabFuhrer = ExtResource("2_g0xh1")
 prefabHornet = ExtResource("2_g0xh1")
@@ -16,7 +17,7 @@ bossSchadenfreude = ExtResource("3_do1rh")
 [node name="IngameInterface" parent="." instance=ExtResource("2_ywj5l")]
 
 [node name="spawnPoints" type="Node2D" parent="."]
-position = Vector2(0, 1000)
+position = Vector2(47, 399)
 
 [node name="0" type="Node2D" parent="spawnPoints" groups=["charSpawnPoint"]]
 position = Vector2(750, 0)
@@ -30,8 +31,8 @@ position = Vector2(250, 0)
 [node name="3" type="Node2D" parent="spawnPoints" groups=["charSpawnPoint"]]
 position = Vector2(-250, 0)
 
-[node name="boss" type="Node2D" parent="spawnPoints" groups=["bossSpawnPoint"]]
-position = Vector2(0, -2000)
+[node name="boss" type="Node2D" parent="spawnPoints" groups=["bossSpawnPoints"]]
+position = Vector2(-43, -781)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("3_uescd")

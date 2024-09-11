@@ -1,4 +1,5 @@
 ﻿using _favorClient.controls.Ingame;
+using _favorClient.Entity;
 using _favorClient.library;
 using Godot;
 using System;
@@ -51,8 +52,22 @@ namespace _favorClient.controls
 
             foreach (var skillPanel in skillPanels)
                 skillPanel.SetVisible(false);
+
+            skillPassive.keyTxt.Text = "Pas";
+            skillLM.keyTxt.Text = "LM";
+            skillRM.keyTxt.Text = "RM";
+            skillQ.keyTxt.Text = "Q";
+            skillE.keyTxt.Text = "E";
+            skillR.keyTxt.Text = "R";
         }
 
+        public void SetCharacter(Character character)
+        {
+            foreach (var skillPanel in skillPanels)
+                skillPanel.SetVisible(true);
+
+            //TODO;
+        }
 
     }
 }
