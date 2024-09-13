@@ -6,9 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://cjyadumedxl50" path="res://Entity/Boss.tscn" id="3_do1rh"]
 [ext_resource type="Script" path="res://System/Ingame/CameraManager.cs" id="3_uescd"]
 
-[node name="Ingame" type="Node2D"]
+[node name="Ingame" type="Node2D" node_paths=PackedStringArray("cmr")]
 position = Vector2(5, 0)
 script = ExtResource("1_ryv8l")
+cmr = NodePath("Camera2D")
 prefabFuhrer = ExtResource("2_g0xh1")
 prefabHornet = ExtResource("2_g0xh1")
 prefabAgitator = ExtResource("2_g0xh1")

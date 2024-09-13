@@ -14,5 +14,23 @@ namespace _favorClient.System.Ingame
 
 
         public CameraManager() { }
+
+        public void SetTarget(Character character) {
+            target = character;
+
+        }
+
+        public override void _Process(double delta)
+        {
+
+            Vector2 tPos = (target.Position + GetGlobalMousePosition() * 0.4f) / 1.4f;
+
+            GlobalPosition = (GlobalPosition + tPos * 0.1f) / 1.1f;
+
+
+            base._Process(delta);
+        }
+
+
     }
 }

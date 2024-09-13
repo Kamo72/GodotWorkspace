@@ -229,7 +229,7 @@ namespace _favorClient.controls
                 exitBtn.SetDeferred(Button.PropertyName.Disabled, true);
                 readyBtn.SetDeferred(Button.PropertyName.Disabled, true);
 
-                int hostIdx = int.Parse(packet.value[0].ToString());
+                int hostIdx = int.Parse(packet.value[0].ToString()) - 1;
 
                 if (userIdx == -1) throw new Exception("myIdx가 -1...????????");
 
@@ -349,6 +349,8 @@ namespace _favorClient.controls
             Packet sPacket = new Packet(Packet.Flag.ROOM_RPC_SEND, address.ip, address.port);
             MainClient.instance.Send(sPacket);
             GD.PushWarning("Rpc Host에 성공했습니다.");
+
+
         }
         public void AsyncRpcJoin(string ip, int port)
         {

@@ -26,6 +26,9 @@ namespace _favorClient.System.Ingame
         public State state = State.INITIATING;
 
         public IngameInterface igUI;
+        
+        [Export]
+        public CameraManager cmr;
 
         public static UserStatus?[] players = new UserStatus?[4] { null, null, null, null };
         public static Character[] characters = new Character[4] { null, null, null, null };
@@ -58,7 +61,7 @@ namespace _favorClient.System.Ingame
 
         bool SpawnBoss(BossData.Type type)
         {
-            if (boss != null) throw new("보스가 이미 있어요!");
+            //if (boss != null) throw new("보스가 이미 있어요! : " + boss.Name);
 
             PackedScene bossScene = GetPackedSceneByBossType(type);
             
@@ -100,12 +103,15 @@ namespace _favorClient.System.Ingame
 
             AddChild(currentPlayer);
 
-            //foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("playerSpawnPoints"))
-            //    if (spawnPoint.Name == idx.ToString())
-            //        currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
+            foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("playerSpawnPoints"))
+                if (spawnPoint.Name == idx.ToString())
+                    currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
 
             if (idx == InroomInterface.instance.userIdx)
+            {
                 igUI.SetCharacter(currentPlayer);
+                cmr.SetTarget(currentPlayer);
+            }
 
             GD.Print("Spawn Char of " + idx);
             return true;

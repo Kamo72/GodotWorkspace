@@ -1,4 +1,4 @@
-﻿using _favorClient.library.DataType;
+using _favorClient.library.DataType;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -39,11 +39,14 @@ namespace _favorClient.Entity
         private float syncRotation = 0f;
         private float healthSync = 800f;
 
-        public override void _Ready()
+
+        public override void _EnterTree()
         {
+            base._EnterTree();
             GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse(Name));
             Velocity = Vector2.Zero;
         }
+
 
         public override void _PhysicsProcess(double delta)
         {
@@ -97,18 +100,20 @@ namespace _favorClient.Entity
 
                         if (direction != Vector2.Zero)
                         {
-                            velocity = direction * speed.now;
+                            velocity += direction * speed.now;
                             GD.Print("velocity! : " + velocity);
                         }
                         else
                         {
-                            //velocity.X = Mathf.MoveToward(velocity.X, 0, speed.now);
-                            //velocity.Y = Mathf.MoveToward(velocity.Y, 0, speed.now);
+                            velocity.X = Mathf.MoveToward(velocity.X, 0, speed.now);
+                            velocity.Y = Mathf.MoveToward(velocity.Y, 0, speed.now);
                             GD.Print("velocity : " + velocity);
                         }
+
+                        velocity *= 0.95f;
                     }
                 }
-                
+
                 //캐스팅이 불가능하다면 캐스팅 중단
                 if (isCastable == false && isCasting)
                     CancelCasting();
@@ -119,7 +124,7 @@ namespace _favorClient.Entity
 
                 //이동불가 상태가 아님
                 Velocity = velocity;
-                MoveAndSlide();
+                MoveAndCollide(Velocity);
 
                 syncPos = GlobalPosition;
                 //syncRotation = GetNode<Node2D>("GunRotation").RotationDegrees;
@@ -218,11 +223,7 @@ namespace _favorClient.Entity
         }
 
         protected (string state, int idx, float time) action = ("idle", 0, 0);
-        protected virtual void ActionProcess(float delta) {
-            action.time += delta;
-
-
-        }
+        protected virtual void ActionProcess(float delta) { }
 
         [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
         protected virtual void DoAttackMain(Vector2 from, Vector2 to) { }

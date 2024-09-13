@@ -167,6 +167,7 @@ namespace _favorClient.System.Ingame
             UserStatus uStat = userStatus().Value;
             uStat.rpcId = Multiplayer.GetUniqueId();
             uStat.name = InroomInterface.instance.userName;
+            uStat.idx = InroomInterface.instance.userIdx;
 
 
             GD.PushWarning("userIdx : " + uStat.idx);

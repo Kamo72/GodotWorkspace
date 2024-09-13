@@ -15,7 +15,7 @@ namespace _240823_favorServer.library.DataType
         {
             this.name = name;
             this.status = status;
-            //getScene = () => ResourceLoader.Load<PackedScene>(path);
+            //getScene = () => ResourceLoader.Load<PackedScene>(patha;
         }
 
         public string name;

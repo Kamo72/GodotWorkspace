@@ -28,7 +28,7 @@ public partial class MultiplayerController : Control
     [Export]
     private int _port = 8910;
     [Export]
-    private string _ip = "209.38.25.83";
+    private string _ip = "127.0.0.1";
 
     private ENetMultiplayerPeer _peer;
     private int _playerId;
