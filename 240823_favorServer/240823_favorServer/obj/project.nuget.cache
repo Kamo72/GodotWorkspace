@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "svGFkg5bHgdABcYwOZQXo+CHTqlsdM6/n6jevlhknbsUzxW5SeVo/2Wt5ErQDwcxN2xIMrWTCqR1zxE4CkaRFg==",
+  "dgSpecHash": "WssRduwlfXA=",
   "success": true,
-  "projectFilePath": "S:\\GodotWorkspace\\240823_favorServer\\240823_favorServer\\240823_favorServer.csproj",
+  "projectFilePath": "E:\\GodotWorkspace\\240823_favorServer\\240823_favorServer\\240823_favorServer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\skyma\\.nuget\\packages\\microsoft.data.sqlite\\8.0.8\\microsoft.data.sqlite.8.0.8.nupkg.sha512",
     "C:\\Users\\skyma\\.nuget\\packages\\microsoft.data.sqlite.core\\8.0.8\\microsoft.data.sqlite.core.8.0.8.nupkg.sha512",

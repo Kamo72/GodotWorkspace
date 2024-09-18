@@ -325,7 +325,8 @@ namespace _240823_favorServer.System
                             Packet sendPacket;
 
                             User user = UserManager.GetInstance().FindBySocket(socket);
-                            UserStatus status = (UserStatus)gotPacket.value[0];
+                            int userIdx = int.Parse(gotPacket.value[0].ToString());
+                            UserStatus status = UserStatus.Parse(gotPacket.value[1].ToString());
 
                             if (user == null)
                             {

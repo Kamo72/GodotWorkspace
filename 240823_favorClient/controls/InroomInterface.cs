@@ -271,7 +271,7 @@ namespace _favorClient.controls
 
         void BroadcastUserStatus()
         {
-            Packet packet = new Packet(Packet.Flag.ROOM_STATUS_SEND, userStatus);
+            Packet packet = new Packet(Packet.Flag.ROOM_STATUS_SEND, userIdx, userStatus);
             MainClient.instance.Send(packet);
         }
         void OnUserStatusChanged() 

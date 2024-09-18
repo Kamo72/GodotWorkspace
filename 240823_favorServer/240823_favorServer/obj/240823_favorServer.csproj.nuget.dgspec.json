@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "S:\\GodotWorkspace\\240823_favorServer\\240823_favorServer\\240823_favorServer.csproj": {}
+    "E:\\GodotWorkspace\\240823_favorServer\\240823_favorServer\\240823_favorServer.csproj": {}
   },
   "projects": {
-    "S:\\GodotWorkspace\\240823_favorServer\\240823_favorServer\\240823_favorServer.csproj": {
+    "E:\\GodotWorkspace\\240823_favorServer\\240823_favorServer\\240823_favorServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "S:\\GodotWorkspace\\240823_favorServer\\240823_favorServer\\240823_favorServer.csproj",
+        "projectUniqueName": "E:\\GodotWorkspace\\240823_favorServer\\240823_favorServer\\240823_favorServer.csproj",
         "projectName": "240823_favorServer",
-        "projectPath": "S:\\GodotWorkspace\\240823_favorServer\\240823_favorServer\\240823_favorServer.csproj",
+        "projectPath": "E:\\GodotWorkspace\\240823_favorServer\\240823_favorServer\\240823_favorServer.csproj",
         "packagesPath": "C:\\Users\\skyma\\.nuget\\packages\\",
-        "outputPath": "S:\\GodotWorkspace\\240823_favorServer\\240823_favorServer\\obj\\",
+        "outputPath": "E:\\GodotWorkspace\\240823_favorServer\\240823_favorServer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
           "C:\\Users\\skyma\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -39,6 +41,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -66,7 +73,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

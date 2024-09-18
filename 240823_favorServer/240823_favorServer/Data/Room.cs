@@ -177,7 +177,7 @@ namespace _240823_favorServer.Data
 
             int userIdx = GetUserIdx(user);
 
-            Packet packet = new Packet(Packet.Flag.ROOM_STATUS_SEND, userIdx, status);
+            Packet packet = new Packet(Packet.Flag.ROOM_STATUS_RECV, userIdx, status);
 
             for (int i = 0; i < userMax; i++)
                 if (users[i] != null)

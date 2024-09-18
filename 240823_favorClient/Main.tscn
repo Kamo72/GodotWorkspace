@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://dw83p23kujsoa"]
 
-[ext_resource type="Script" path="res://script/MainClient.cs" id="1_buhyd"]
+[ext_resource type="Script" path="res://System/MainClient.cs" id="1_1cqaq"]
 [ext_resource type="PackedScene" uid="uid://c4xbr5tlc3p85" path="res://controls/LoginInterface.tscn" id="2_7on51"]
 
 [node name="Root" type="Node2D"]
 
 [node name="Client" type="Node2D" parent="."]
-script = ExtResource("1_buhyd")
+script = ExtResource("1_1cqaq")
 
 [node name="LoginInterface" parent="." instance=ExtResource("2_7on51")]

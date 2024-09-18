@@ -164,6 +164,7 @@ public struct Packet
             case Flag.ROOM_STATUS_SEND:
                 {
                     str += value[0].ToString() + "\f";
+                    str += value[1].ToString() + "\f";
                 }
                 break;
             case Flag.ROOM_STATUS_RECV:
