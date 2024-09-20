@@ -22,6 +22,7 @@ namespace _favorClient.library.DataType
         {
             NONE,
             SCHADENFREUDE,
+            KNIGHT,
         }
         public Type type;
     }

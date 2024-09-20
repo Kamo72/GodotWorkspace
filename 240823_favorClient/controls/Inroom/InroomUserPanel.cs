@@ -26,13 +26,13 @@ namespace _favorClient.controls.Inroom
         {
             nameRich.Text = "[font_size=25][center][color=white]" + nickname;
             readyRich.Text = "[font_size=40][center][color=darkgray]준비 중";
-            SetUserStatus(null);
+            SetUserStatus((UserStatus?)null);
         }
         public void LostUser()
         {
             nameRich.Text = "[font_size=25][center][color=gray]Empty";
             readyRich.Text = "[font_size=40][center][color=darkgray]준비 중";
-            SetUserStatus(null);
+            SetUserStatus((UserStatus?)null);
         }
 
         public void SetReady(bool isReady)
@@ -46,6 +46,13 @@ namespace _favorClient.controls.Inroom
             typeTxt.Text = uStat.HasValue ? uStat.Value.type.ToString() : "X";
         }
 
+        public void SetUserStatus(string uStatStr)
+        {
+            UserStatus? uStat = UserStatus.Parse(uStatStr);
+
+            this.uStat = uStat;
+            typeTxt.Text = uStat.HasValue ? uStat.Value.type.ToString() : "X";
+        }
 
         public override void _Process(double delta)
         {

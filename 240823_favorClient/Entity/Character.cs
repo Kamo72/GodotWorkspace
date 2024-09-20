@@ -35,10 +35,10 @@ namespace _favorClient.Entity
         public bool isKillable => isAlive && undyingDur > 0f;
         public bool isCasting => isAlive && casting != null;
 
-        private Vector2 syncPos = Vector2.Zero;
-        private float syncRotation = 0f;
-        private float healthSync = 800f;
+        protected Vector2 syncPos = Vector2.Zero;
+        protected float healthSync = 800f, shieldSync = 0f, syncRot;
 
+        public Node2D hands => GetNode("./Hands") as Node2D;
 
         public override void _EnterTree()
         {
@@ -46,7 +46,6 @@ namespace _favorClient.Entity
             GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(int.Parse(Name));
             Velocity = Vector2.Zero;
         }
-
 
         public override void _PhysicsProcess(double delta)
         {
@@ -85,9 +84,8 @@ namespace _favorClient.Entity
                     action.time += (float)delta;
                     ActionProcess((float)delta);
 
-                    //Node2D gun = GetNode<Node2D>("GunRotation");
-                    //float rotation = (GetGlobalMousePosition() - gun.GlobalPosition).Angle();
-                    //gun.GlobalRotation = rotation;
+                    float rotation = (GetGlobalMousePosition() - hands.GlobalPosition).Angle();
+                    hands.GlobalRotation = rotation;
 
                     //이동불가 상태가 아님
                     if (!isRooted)
@@ -95,20 +93,12 @@ namespace _favorClient.Entity
                         //Move 
                         Vector2 direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 
-                        GD.Print("direction : " + direction);
-
-
                         if (direction != Vector2.Zero)
-                        {
                             velocity += direction * speed.now;
-                            GD.Print("velocity! : " + velocity);
-                        }
+                        
                         else
-                        {
-                            velocity.X = Mathf.MoveToward(velocity.X, 0, speed.now);
-                            velocity.Y = Mathf.MoveToward(velocity.Y, 0, speed.now);
-                            GD.Print("velocity : " + velocity);
-                        }
+                            velocity = new(Mathf.MoveToward(velocity.X, 0, speed.now), Mathf.MoveToward(velocity.Y, 0, speed.now));
+                        
 
                         velocity *= 0.95f;
                     }
@@ -124,15 +114,29 @@ namespace _favorClient.Entity
 
                 //이동불가 상태가 아님
                 Velocity = velocity;
-                MoveAndCollide(Velocity);
+                var collision = MoveAndCollide(Velocity);
+                if(collision != null)
+                    if (collision.GetCollider() != null)
+                    {
+                        var collider = collision.GetCollider();
+                        if (collider is Boss boss || collider is Character character)
+                        {
+                            Velocity += -(((Node2D)collider).GlobalPosition - this.GlobalPosition).Normalized() * 10f;
+                            GlobalPosition += -(((Node2D)collider).GlobalPosition - this.GlobalPosition).Normalized() * 1f;
+                        }
+                    }
 
                 syncPos = GlobalPosition;
-                //syncRotation = GetNode<Node2D>("GunRotation").RotationDegrees;
+                syncRot = hands.GlobalRotation;
+                healthSync = health.now;
+                shieldSync = shield.now;
             }
             else
             {
                 GlobalPosition = GlobalPosition.Lerp(syncPos, .1f);
-                //GetNode<Node2D>("GunRotation").RotationDegrees = Mathf.Lerp(GetNode<Node2D>("GunRotation").RotationDegrees, syncRotation, .1f);
+                hands.GlobalRotation = Mathf.Lerp(hands.GlobalRotation, syncRot, .1f);
+                health.now = healthSync;
+                shield.now = shieldSync;
             }
         }
 

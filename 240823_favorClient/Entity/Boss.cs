@@ -20,20 +20,17 @@ namespace _favorClient.Entity
         public float stunDuration = -1f;
         public bool isStunned = false, isInvincible = false, isHittable = true;
 
-        private Vector2 syncPos = Vector2.Zero;
-        public float rotation = 0f; 
-        private float syncRotation = 0f;
 
         public void GetDamage(BDamage damage)
         {
-            if(isHittable == false) return;
+            if (isHittable == false) return;
 
             OnHit();
 
             if (isInvincible) return;
 
             nowHealth -= damage.damage;
-            nowStagger-= damage.stagger;
+            nowStagger -= damage.stagger;
 
             if (nowHealth < 0) OnDown();
             if (nowStagger < 0) OnStagger();
@@ -53,23 +50,18 @@ namespace _favorClient.Entity
             stunDuration = 5;
         }
 
+        protected Vector2 syncPos = Vector2.Zero;
+        protected float staggerSync = 10000, healthSync = 10000, syncRot;
+
+        public Node2D hands => GetNode("./Hands") as Node2D;
+
 
         public override void _Ready()
         {
             GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(1);
+            LoadRoom();
         }
-        public override void _Process(double delta)
-        {
-            if (isStunned)
-                if (stunDuration - (float)delta < 0 && 0 < stunDuration)
-                {
-                    isStunned = false;
-                    nowStagger = maxStagger;
-                }
 
-
-            stunDuration -= (float)delta;
-        }
         public override void _PhysicsProcess(double delta)
         {
             if (GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
@@ -80,25 +72,36 @@ namespace _favorClient.Entity
 
                 Velocity = velocity;
                 MoveAndSlide();
+
+
+                if (isStunned)
+                    if (stunDuration - (float)delta < 0 && 0 < stunDuration)
+                    {
+                        isStunned = false;
+                        nowStagger = maxStagger;
+                    }
+
+                stunDuration -= (float)delta;
+
+
                 syncPos = GlobalPosition;
-                //syncRotation = rotation;
+                syncRot = hands.GlobalRotation;
+                healthSync = nowHealth;
+                staggerSync = nowStagger;
             }
             else
             {
-                ProcessOutOfAuthority();
                 GlobalPosition = GlobalPosition.Lerp(syncPos, .1f);
-                //rotation = Mathf.Lerp(rotation, syncRotation, .1f);
+                hands.GlobalRotation = Mathf.Lerp(hands.GlobalRotation, syncRot, .1f);
+                nowHealth = healthSync;
+                nowStagger = staggerSync;
             }
         }
 
         protected virtual void ProcessOnAuthority() { }
-        protected virtual void ProcessOutOfAuthority() { }
 
 
-        public virtual void LoadRoom()
-        {
-            GD.Print();
-        }
+        public virtual void LoadRoom() { }
         public virtual void Finished() { }
 
         protected override void Dispose(bool disposing)

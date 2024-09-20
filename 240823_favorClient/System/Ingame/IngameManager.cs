@@ -56,7 +56,7 @@ namespace _favorClient.System.Ingame
                 GD.PrintErr("저기요 인게임 인터페이스가 없어요! 미친 이를 어떠케");
 
             SpawnAllChar();
-            SpawnBoss(BossData.Type.SCHADENFREUDE);
+            SpawnBoss(BossData.Type.KNIGHT);
         }
 
         bool SpawnBoss(BossData.Type type)
@@ -139,14 +139,18 @@ namespace _favorClient.System.Ingame
         [Export]
         PackedScene prefabFuhrer;
         [Export]
-        PackedScene prefabHornet;
+        PackedScene prefabSmoke;
         [Export]
-        PackedScene prefabAgitator;
+        PackedScene prefabSpotlight;
+        [Export]
+        PackedScene prefabStyx;
 
 
         [ExportGroup("BossScene")]
         [Export]
         PackedScene bossSchadenfreude;
+        [Export]
+        PackedScene bossKnight;
 
 
         PackedScene GetPackedSceneByBossType(BossData.Type type)
@@ -155,6 +159,7 @@ namespace _favorClient.System.Ingame
             {
                 case BossData.Type.NONE: return null;
                 case BossData.Type.SCHADENFREUDE: return bossSchadenfreude;
+                case BossData.Type.KNIGHT: return bossKnight;
             }
             return null;
         }
@@ -164,8 +169,9 @@ namespace _favorClient.System.Ingame
             {
                 case CharacterData.Type.NONE: return null;
                 case CharacterData.Type.FUHRER: return prefabFuhrer;
-                case CharacterData.Type.HORNET: return prefabHornet;
-                case CharacterData.Type.AGITATOR: return prefabAgitator;
+                case CharacterData.Type.STYX: return prefabStyx;
+                case CharacterData.Type.SMOKE: return prefabSmoke;
+                case CharacterData.Type.SPOTLIGHT: return prefabSpotlight;
             }
             return null;
         }

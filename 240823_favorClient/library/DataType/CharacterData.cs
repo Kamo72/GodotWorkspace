@@ -100,8 +100,9 @@ namespace _favorClient.library.DataType
         {
             NONE,
             FUHRER,
-            HORNET,
-            AGITATOR,
+            SPOTLIGHT,
+            STYX,
+            SMOKE,
             
         }
         static Dictionary<Type, CharacterData> dataLib = new Dictionary<Type, CharacterData>()

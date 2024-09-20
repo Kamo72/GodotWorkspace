@@ -196,8 +196,8 @@ namespace _favorClient.controls
                 int idx = int.Parse(packet.value[0].ToString());
                 UserStatus uStat = UserStatus.Parse(packet.value[1].ToString());
 
-                var panel = userPanels[idx];
-                panel.SetUserStatus(uStat);
+                var panel = userPanels[idx-1];
+                panel.CallDeferred("SetUserStatus", uStat.ToString());
             });
             disposerCollecter.Add(tAct);
 

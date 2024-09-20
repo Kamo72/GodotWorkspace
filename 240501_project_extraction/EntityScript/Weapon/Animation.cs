@@ -10,7 +10,7 @@ public partial class Weapon {
     {
 
 
-        public Node2D GetLeftHand();
+        public Node2D GetLeftHand() { return null; }
 
 
 

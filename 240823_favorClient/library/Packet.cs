@@ -461,14 +461,14 @@ public struct Packet
 
             case Flag.ROOM_STATUS_RECV:
                 {
-                    UserStatus status = UserStatus.Parse(sp[0]);
+                    int idx = int.Parse(sp[0]);
+                    UserStatus status = UserStatus.Parse(sp[1]);
 
-                    packet = new Packet(flag, status);
+                    packet = new Packet(flag, idx, status);
                 }
                 break;
             case Flag.ROOM_STATUS_SEND:
                 {
-
                     int idx = int.Parse(sp[0]);
                     UserStatus status = UserStatus.Parse(sp[1]);
 
@@ -523,6 +523,10 @@ public struct Packet
 
         return packet;
     }
+
+
+
+
 
     public enum Flag
     {

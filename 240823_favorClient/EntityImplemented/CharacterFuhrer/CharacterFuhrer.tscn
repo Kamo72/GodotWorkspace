@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvnw6sr46tch1"]
+[gd_scene load_steps=5 format=3 uid="uid://b342vqei7hacq"]
 
-[ext_resource type="Texture2D" uid="uid://7i73d3n3ceas" path="res://icon.svg" id="1_qehaj"]
-[ext_resource type="Script" path="res://Entity/Character.cs" id="1_y7h0n"]
+[ext_resource type="Script" path="res://EntityImplemented/CharacterFuhrer/CharacterFuhrer.cs" id="1_71nef"]
+[ext_resource type="Texture2D" uid="uid://7i73d3n3ceas" path="res://icon.svg" id="2_30pni"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d8kha"]
 radius = 35.0
@@ -21,7 +21,7 @@ properties/3/spawn = true
 properties/3/replication_mode = 1
 
 [node name="Character" type="CharacterBody2D" node_paths=PackedStringArray("nameTxt")]
-script = ExtResource("1_y7h0n")
+script = ExtResource("1_71nef")
 nameTxt = NodePath("Label")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -29,7 +29,7 @@ shape = SubResource("CircleShape2D_d8kha")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.6, 0.6)
-texture = ExtResource("1_qehaj")
+texture = ExtResource("2_30pni")
 
 [node name="Label" type="Label" parent="."]
 anchors_preset = 7
@@ -56,4 +56,4 @@ replication_config = SubResource("SceneReplicationConfig_6ljeb")
 [node name="Sprite2D" type="Sprite2D" parent="Hands"]
 position = Vector2(78, 1)
 scale = Vector2(1.22656, 0.144531)
-texture = ExtResource("1_qehaj")
+texture = ExtResource("2_30pni")

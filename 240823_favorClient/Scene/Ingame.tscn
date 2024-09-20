@@ -1,19 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://b1jg7q0op8kt5"]
+[gd_scene load_steps=7 format=3 uid="uid://b1jg7q0op8kt5"]
 
 [ext_resource type="Script" path="res://System/Ingame/IngameManager.cs" id="1_ryv8l"]
-[ext_resource type="PackedScene" uid="uid://bvnw6sr46tch1" path="res://Entity/Character.tscn" id="2_g0xh1"]
+[ext_resource type="PackedScene" uid="uid://b342vqei7hacq" path="res://EntityImplemented/CharacterFuhrer/CharacterFuhrer.tscn" id="2_40og6"]
 [ext_resource type="PackedScene" uid="uid://cy652umwqjei" path="res://controls/IngameInterface.tscn" id="2_ywj5l"]
 [ext_resource type="PackedScene" uid="uid://cjyadumedxl50" path="res://Entity/Boss.tscn" id="3_do1rh"]
 [ext_resource type="Script" path="res://System/Ingame/CameraManager.cs" id="3_uescd"]
+[ext_resource type="PackedScene" uid="uid://b25qspemdg1jb" path="res://EntityImplemented/BossKnight/BossKnight.tscn" id="4_6g7yv"]
 
 [node name="Ingame" type="Node2D" node_paths=PackedStringArray("cmr")]
 position = Vector2(5, 0)
 script = ExtResource("1_ryv8l")
 cmr = NodePath("Camera2D")
-prefabFuhrer = ExtResource("2_g0xh1")
-prefabHornet = ExtResource("2_g0xh1")
-prefabAgitator = ExtResource("2_g0xh1")
+prefabFuhrer = ExtResource("2_40og6")
 bossSchadenfreude = ExtResource("3_do1rh")
+bossKnight = ExtResource("4_6g7yv")
 
 [node name="IngameInterface" parent="." instance=ExtResource("2_ywj5l")]
 
