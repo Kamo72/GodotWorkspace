@@ -209,7 +209,8 @@ namespace _favorClient.System.Ingame
             
             //Add PlayerInfo to Collection
             if (!IngameManager.players.Contains(playerInfo))
-                IngameManager.players[playerInfo.Value.idx] = playerInfo;
+                if (IngameManager.players[playerInfo.Value.idx] == null)
+                    IngameManager.players[playerInfo.Value.idx] = playerInfo;
 
 
             //view info
