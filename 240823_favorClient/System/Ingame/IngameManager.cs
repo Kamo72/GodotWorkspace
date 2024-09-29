@@ -100,6 +100,7 @@ namespace _favorClient.System.Ingame
 
             currentPlayer.Name = uStat.rpcId.ToString();
             currentPlayer.SetupPlayer(uStat.name);
+            characters[idx] = currentPlayer;
 
             AddChild(currentPlayer);
 
@@ -115,6 +116,13 @@ namespace _favorClient.System.Ingame
 
             GD.Print("Spawn Char of " + idx);
             return true;
+        }
+
+        [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+        public bool SpawnEnemy(BossData.Type type, Vector2 position) 
+        {
+
+            return false;
         }
 
         public bool DespawnChar(int idx)

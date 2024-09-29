@@ -1,0 +1,304 @@
+[gd_scene load_steps=10 format=3 uid="uid://b25qspemdg1jb"]
+
+[ext_resource type="Script" path="res://ImplementBoss/BossKnight/BossKnight.cs" id="1_blvmu"]
+[ext_resource type="PackedScene" uid="uid://02yooh0iero8" path="res://ImplementBoss/BossKnight/BossKnightNormalSwift.tscn" id="2_r5evk"]
+[ext_resource type="Texture2D" uid="uid://7i73d3n3ceas" path="res://icon.svg" id="2_rq21v"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ps8y1"]
+radius = 100.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wftx8"]
+properties/0/path = NodePath(".:syncPos")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:syncRot")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:healthSync")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:staggerSync")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[sub_resource type="Animation" id="Animation_ltrxj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sword:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(127, 44)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.74334]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("leftHand:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(142, 25)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("leftHand:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.22582]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("rightHand:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(102, 48)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("rightHand:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.13904]
+}
+
+[sub_resource type="Animation" id="Animation_n2hki"]
+resource_name = "normalSwift"
+length = 1.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("rightHand:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 0.7, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(85.2412, 56.9362), Vector2(12, 86), Vector2(136, -28), Vector2(125, -147), Vector2(56, -185), Vector2(75.7072, -98.2928)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("rightHand:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 0.7, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [4.13904, 4.5903, 1.5767, 1.94498, 5.7522, 4.96261]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("leftHand:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 0.7, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(125.241, 33.9362), Vector2(75, 84), Vector2(78, -28), Vector2(91, -105), Vector2(87, -145), Vector2(122, -73)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("leftHand:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 0.7, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.22582, 1.59854, -1.67977, -1.15494, 2.49546, 1.86814]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("sword:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 0.7, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(104, 48), Vector2(47, 85), Vector2(102.5, -26.5), Vector2(104, -126), Vector2(76, -153), Vector2(95.7072, -85.2928)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("sword:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 0.7, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [2.74334, 3.15855, 0.00872665, -1.16204, -2.08829, -2.81971]
+}
+
+[sub_resource type="Animation" id="Animation_gcvw5"]
+resource_name = "idle"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sword:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(104, 48), Vector2(127, 44), Vector2(104, 48)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sword:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [2.74334, 2.86095, 2.74334]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("leftHand:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(125.241, 33.9362), Vector2(148.241, 29.9362), Vector2(125.241, 33.9362)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("leftHand:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.22582, 1.34344, 1.22582]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("rightHand:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(85.2412, 56.9362), Vector2(108.241, 52.9362), Vector2(85.2412, 56.9362)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("rightHand:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [4.13904, 4.25665, 4.13904]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_krs6d"]
+_data = {
+"RESET": SubResource("Animation_ltrxj"),
+"idle": SubResource("Animation_gcvw5"),
+"normalSwift": SubResource("Animation_n2hki")
+}
+
+[node name="BossKnight" type="CharacterBody2D"]
+collision_mask = 0
+script = ExtResource("1_blvmu")
+projNormalSwift = ExtResource("2_r5evk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ps8y1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_rq21v")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_interval = 0.1
+delta_interval = 0.1
+replication_config = SubResource("SceneReplicationConfig_wftx8")
+
+[node name="Hands" type="Node2D" parent="."]
+position = Vector2(0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hands"]
+libraries = {
+"": SubResource("AnimationLibrary_krs6d")
+}
+
+[node name="sword" type="Sprite2D" parent="Hands"]
+position = Vector2(127, 44)
+rotation = 2.74334
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_rq21v")
+
+[node name="sword" type="Sprite2D" parent="Hands/sword"]
+position = Vector2(398.501, 0)
+scale = Vector2(6.257, 0.365)
+texture = ExtResource("2_rq21v")
+
+[node name="leftHand" type="Sprite2D" parent="Hands"]
+position = Vector2(142, 25)
+rotation = 1.22582
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_rq21v")
+
+[node name="rightHand" type="Sprite2D" parent="Hands"]
+position = Vector2(102, 48)
+rotation = 4.13904
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_rq21v")

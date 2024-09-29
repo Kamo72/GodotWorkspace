@@ -3,25 +3,36 @@ using _favorClient.System.Ingame;
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace _favorClient.Entity
 {
+    public enum StunStrenth
+    {
+        NONE,
+        LIGHT,
+        HEAVY
+    }
+
     public partial class Enemy : CharacterBody2D
     {
-        public BossData.Type type = BossData.Type.NONE;
+        //종류 값
+        public EnemyData.Type type = EnemyData.Type.NONE;
 
-        public int phase = 0; //0번은 준비, 1페이즈, 2페이즈 등등
-        public float nowHealth = 10000, nowStagger = 10000;
-        public float maxHealth = 10000, maxStagger = 10000;
+        //체력, 스테커, 속도
+        public float nowHealth = 10000, maxHealth = 10000;
+        public float nowStagger = 10000, maxStagger = 10000;
+        public (float ori, float now) speed = (0.85f, 0.85f);
 
+        //경직
         public float stunDuration = -1f;
         public bool isStunned = false, isInvincible = false, isHittable = true;
+        public StunStrenth stunStr = StunStrenth.NONE;
 
-
-        public void GetDamage(BDamage damage)
+        public virtual void GetDamage(EDamage damage)
         {
             if (isHittable == false) return;
 
@@ -33,7 +44,6 @@ namespace _favorClient.Entity
             nowStagger -= damage.stagger;
 
             if (nowHealth < 0) OnDown();
-            if (nowStagger < 0) OnStagger();
         }
 
         protected virtual void OnHit()
@@ -50,16 +60,18 @@ namespace _favorClient.Entity
             stunDuration = 5;
         }
 
+        public Node2D hands => GetNode("./Hands") as Node2D;
+
+        //싱크 값들
         protected Vector2 syncPos = Vector2.Zero;
         protected float staggerSync = 10000, healthSync = 10000, syncRot;
 
-        public Node2D hands => GetNode("./Hands") as Node2D;
-
-
+        public static Noise noise = new FastNoiseLite();
         public override void _Ready()
         {
             GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(1);
-            LoadRoom();
+
+            seed = (float)Random.Shared.NextDouble() * 10000;
         }
 
         public override void _PhysicsProcess(double delta)
@@ -68,7 +80,7 @@ namespace _favorClient.Entity
             {
                 Vector2 velocity = Velocity;
 
-                ProcessOnAuthority();
+                ProcessOnAuthority((float)delta);
 
                 Velocity = velocity;
                 MoveAndSlide();
@@ -98,12 +110,23 @@ namespace _favorClient.Entity
             }
         }
 
-        protected virtual void ProcessOnAuthority() { }
+        //액션 값 및 최소한의 정보
+        protected float seed;
+        protected Character target = null;
+        protected float aggroRange = 2000f, attackRange = 300f;
+        protected float attackTimeMax = 2f, attackTimeNow = -1f;
+        protected (string type, float now, float max) action = ("idle", -1f, -1f);
+        protected Vector2 toMovePos = new Vector2();
+        protected float passedTime = 0f;
+        
+        //액션 관리 프로세스
+        protected virtual void ProcessOnAuthority(float delta) {}
 
-
-        public virtual void LoadRoom() { }
-        public virtual void Finished() { }
-
+        [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+        protected void SetAction(string type, float max = -1f, float now = -1f) =>
+            action = (type, max, max < 0f ? now : max);
+        
+        //해제
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

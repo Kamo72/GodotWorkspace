@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b342vqei7hacq"]
 
-[ext_resource type="Script" path="res://EntityImplemented/CharacterFuhrer/CharacterFuhrer.cs" id="1_71nef"]
+[ext_resource type="Script" path="res://ImplementChar/CharacterFuhrer/CharacterFuhrer.cs" id="1_71nef"]
 [ext_resource type="Texture2D" uid="uid://7i73d3n3ceas" path="res://icon.svg" id="2_30pni"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d8kha"]
@@ -21,6 +21,7 @@ properties/3/spawn = true
 properties/3/replication_mode = 1
 
 [node name="Character" type="CharacterBody2D" node_paths=PackedStringArray("nameTxt")]
+collision_layer = 3
 script = ExtResource("1_71nef")
 nameTxt = NodePath("Label")
 

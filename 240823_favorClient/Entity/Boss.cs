@@ -9,51 +9,31 @@ using System.Threading.Tasks;
 
 namespace _favorClient.Entity
 {
-    public partial class Boss : CharacterBody2D
+    public partial class Boss : Enemy
     {
-        public BossData.Type type = BossData.Type.NONE;
+        public new BossData.Type type = BossData.Type.NONE;
 
         public int phase = 0; //0번은 준비, 1페이즈, 2페이즈 등등
-        public float nowHealth = 10000, nowStagger = 10000;
-        public float maxHealth = 10000, maxStagger = 10000;
 
-        public float stunDuration = -1f;
-        public bool isStunned = false, isInvincible = false, isHittable = true;
-
-
-        public void GetDamage(BDamage damage)
+        public override void GetDamage(EDamage damage)
         {
-            if (isHittable == false) return;
-
-            OnHit();
-
-            if (isInvincible) return;
-
-            nowHealth -= damage.damage;
-            nowStagger -= damage.stagger;
-
-            if (nowHealth < 0) OnDown();
-            if (nowStagger < 0) OnStagger();
+            base.GetDamage(damage);
         }
 
-        protected virtual void OnHit()
+        protected override void OnHit()
         {
+            base.OnHit();
+        }
+        protected override void OnDown()
+        {
+            base.OnDown();
 
         }
-        protected virtual void OnDown()
+        protected override void OnStagger()
         {
+            base.OnStagger();
 
         }
-        protected virtual void OnStagger()
-        {
-            isStunned = true;
-            stunDuration = 5;
-        }
-
-        protected Vector2 syncPos = Vector2.Zero;
-        protected float staggerSync = 10000, healthSync = 10000, syncRot;
-
-        public Node2D hands => GetNode("./Hands") as Node2D;
 
 
         public override void _Ready()
@@ -66,11 +46,9 @@ namespace _favorClient.Entity
         {
             if (GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
             {
-                Vector2 velocity = Velocity;
+                ProcessOnAuthority((float)delta);
 
-                ProcessOnAuthority();
 
-                Velocity = velocity;
                 MoveAndSlide();
 
 
@@ -98,7 +76,7 @@ namespace _favorClient.Entity
             }
         }
 
-        protected virtual void ProcessOnAuthority() { }
+        protected override void ProcessOnAuthority(float delta) { }
 
 
         public virtual void LoadRoom() { }
