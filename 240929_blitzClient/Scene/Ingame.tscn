@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://b1jg7q0op8kt5"]
+
+[ext_resource type="Script" path="res://System/Ingame/IngameManager.cs" id="1_ryv8l"]
+[ext_resource type="PackedScene" uid="uid://b342vqei7hacq" path="res://ImplementChar/CharacterFuhrer/CharacterFuhrer.tscn" id="2_40og6"]
+[ext_resource type="PackedScene" uid="uid://cy652umwqjei" path="res://controls/IngameInterface.tscn" id="2_ywj5l"]
+[ext_resource type="PackedScene" uid="uid://cjyadumedxl50" path="res://Entity/Boss.tscn" id="3_do1rh"]
+[ext_resource type="Script" path="res://System/Ingame/CameraManager.cs" id="3_uescd"]
+[ext_resource type="PackedScene" uid="uid://b25qspemdg1jb" path="res://ImplementBoss/BossKnight/BossKnight.tscn" id="4_6g7yv"]
+
+[node name="Ingame" type="Node2D" node_paths=PackedStringArray("cmr")]
+position = Vector2(5, 0)
+script = ExtResource("1_ryv8l")
+cmr = NodePath("Camera2D")
+prefabFuhrer = ExtResource("2_40og6")
+bossSchadenfreude = ExtResource("3_do1rh")
+bossKnight = ExtResource("4_6g7yv")
+
+[node name="IngameInterface" parent="." instance=ExtResource("2_ywj5l")]
+
+[node name="spawnPoints" type="Node2D" parent="."]
+position = Vector2(47, 399)
+
+[node name="0" type="Node2D" parent="spawnPoints" groups=["charSpawnPoint"]]
+position = Vector2(750, 0)
+
+[node name="1" type="Node2D" parent="spawnPoints" groups=["charSpawnPoint"]]
+position = Vector2(-750, 0)
+
+[node name="2" type="Node2D" parent="spawnPoints" groups=["charSpawnPoint"]]
+position = Vector2(250, 0)
+
+[node name="3" type="Node2D" parent="spawnPoints" groups=["charSpawnPoint"]]
+position = Vector2(-250, 0)
+
+[node name="boss" type="Node2D" parent="spawnPoints" groups=["bossSpawnPoints"]]
+position = Vector2(-43, -781)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("3_uescd")

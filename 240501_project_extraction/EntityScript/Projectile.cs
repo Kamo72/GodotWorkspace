@@ -3,7 +3,6 @@ using System;
 
 public partial class Projectile : RigidBody2D
 {
-
 	public float damage = 10f;
 	public float direction => Rotation; 
 	public float speed {
@@ -35,8 +34,4 @@ public partial class Projectile : RigidBody2D
 	{
 		humanoid.health.GetDamage(damage);
 	}
-
-
-
-
 }

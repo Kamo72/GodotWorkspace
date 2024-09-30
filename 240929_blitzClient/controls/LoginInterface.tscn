@@ -1,0 +1,120 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4xbr5tlc3p85"]
+
+[ext_resource type="Script" path="res://controls/LoginInterface.cs" id="1_p1686"]
+
+[node name="LoginInterface" type="Control" node_paths=PackedStringArray("txtId", "txtPw", "btnSignin", "btnSignup", "richCondition")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p1686")
+txtId = NodePath("CanvasLayer/PanelLogin/txtId")
+txtPw = NodePath("CanvasLayer/PanelLogin/txtPw")
+btnSignin = NodePath("CanvasLayer/PanelLogin/btnSignin")
+btnSignup = NodePath("CanvasLayer/PanelLogin/btnSignup")
+richCondition = NodePath("CanvasLayer/PanelLogin/richCondition")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelLogin" type="Panel" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -96.0
+offset_right = 176.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="txtId" type="TextEdit" parent="CanvasLayer/PanelLogin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -49.0
+offset_right = 75.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "아이디"
+
+[node name="txtPw" type="TextEdit" parent="CanvasLayer/PanelLogin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -5.0
+offset_right = 75.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "패스워드
+"
+
+[node name="btnSignin" type="Button" parent="CanvasLayer/PanelLogin"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = -49.0
+offset_right = 164.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "로그인"
+
+[node name="btnSignup" type="Button" parent="CanvasLayer/PanelLogin"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -91.0
+offset_top = -50.0
+offset_right = -7.0
+offset_bottom = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "회원가입"
+
+[node name="LabelDes" type="Label" parent="CanvasLayer/PanelLogin"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -163.0
+offset_top = 12.0
+offset_right = 163.0
+offset_bottom = 35.0
+grow_horizontal = 2
+text = "아이디와 비밀번호를 입력해 로그인해 주세요."
+
+[node name="richCondition" type="RichTextLabel" parent="CanvasLayer/PanelLogin"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = -50.0
+offset_right = 225.0
+offset_bottom = -10.0
+grow_vertical = 0
+bbcode_enabled = true
+text = "현재 서버 상태 : [color=gray] 연결중..."
+scroll_active = false

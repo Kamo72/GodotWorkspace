@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6812s2vubo7c"]
+
+[ext_resource type="Script" path="res://System/Ingame/RpcManager.cs" id="1_am7pq"]
+[ext_resource type="Script" path="res://System/MainClient.cs" id="1_r854s"]
+[ext_resource type="PackedScene" uid="uid://c4xbr5tlc3p85" path="res://controls/LoginInterface.tscn" id="2_7on51"]
+
+[node name="Root" type="Node2D"]
+
+[node name="RpcManager" type="Node2D" parent="."]
+script = ExtResource("1_am7pq")
+
+[node name="Client" type="Node2D" parent="."]
+script = ExtResource("1_r854s")
+
+[node name="LoginInterface" parent="." instance=ExtResource("2_7on51")]

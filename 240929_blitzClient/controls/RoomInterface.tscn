@@ -1,0 +1,237 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvpre3etst834"]
+
+[ext_resource type="Script" path="res://controls/RoomInterface.cs" id="1_4hxja"]
+
+[node name="RoomInterface" type="Control" node_paths=PackedStringArray("roomList", "joinBtn", "hostBtn", "signoutBtn", "roomNameTxt", "roomPlayerCountTxt", "roomIsPublicTxt", "roomStateTxt")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4hxja")
+roomList = NodePath("CanvasLayer2/PanelLogin/roomList")
+joinBtn = NodePath("CanvasLayer2/PanelLogin/joinBtn")
+hostBtn = NodePath("CanvasLayer2/PanelLogin/hostBtn")
+signoutBtn = NodePath("CanvasLayer2/PanelLogin/signoutBtn")
+roomNameTxt = NodePath("CanvasLayer2/PanelLogin/Panel/nameTxt")
+roomPlayerCountTxt = NodePath("CanvasLayer2/PanelLogin/Panel/userCountTxt")
+roomIsPublicTxt = NodePath("CanvasLayer2/PanelLogin/Panel/isPublicTxt")
+roomStateTxt = NodePath("CanvasLayer2/PanelLogin/Panel/stateTxt")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="PanelLogin" type="Panel" parent="CanvasLayer2"]
+anchors_preset = -1
+anchor_left = 0.508
+anchor_top = 0.494
+anchor_right = 0.508
+anchor_bottom = 0.494
+offset_left = -915.36
+offset_top = -508.52
+offset_right = 897.64
+offset_bottom = 519.48
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelDes" type="Label" parent="CanvasLayer2/PanelLogin"]
+layout_mode = 1
+offset_left = 48.0
+offset_top = 33.0
+offset_right = 374.0
+offset_bottom = 56.0
+text = "방 리스트"
+
+[node name="Panel" type="Panel" parent="CanvasLayer2/PanelLogin"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.505
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.460022
+offset_top = 68.0
+offset_right = -18.0
+offset_bottom = -62.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer2/PanelLogin/Panel"]
+layout_mode = 1
+offset_left = 8.0
+offset_top = 18.0
+offset_right = 87.0
+offset_bottom = 41.0
+text = "방 이름"
+horizontal_alignment = 1
+
+[node name="nameTxt" type="TextEdit" parent="CanvasLayer2/PanelLogin/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 81.0
+offset_top = 13.0
+offset_right = -43.0
+offset_bottom = 48.0
+grow_horizontal = 2
+placeholder_text = "Select Room First."
+editable = false
+context_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+wrap_mode = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer2/PanelLogin/Panel"]
+layout_mode = 1
+offset_left = 8.0
+offset_top = 59.0
+offset_right = 87.0
+offset_bottom = 82.0
+text = "인원"
+horizontal_alignment = 1
+
+[node name="userCountTxt" type="TextEdit" parent="CanvasLayer2/PanelLogin/Panel"]
+layout_mode = 1
+offset_left = 90.0
+offset_top = 58.0
+offset_right = 119.0
+offset_bottom = 93.0
+placeholder_text = "0"
+editable = false
+context_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+wrap_mode = 1
+
+[node name="Label3" type="Label" parent="CanvasLayer2/PanelLogin/Panel"]
+layout_mode = 1
+offset_left = 118.0
+offset_top = 62.0
+offset_right = 160.0
+offset_bottom = 85.0
+text = "/ 4"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="CanvasLayer2/PanelLogin/Panel"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 291.0
+offset_top = 62.0
+offset_right = 370.0
+offset_bottom = 85.0
+grow_horizontal = 2
+text = "방 형태"
+horizontal_alignment = 1
+
+[node name="isPublicTxt" type="TextEdit" parent="CanvasLayer2/PanelLogin/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 363.0
+offset_top = 58.0
+offset_right = -48.0
+offset_bottom = 93.0
+grow_horizontal = 2
+placeholder_text = "알 수 없음"
+editable = false
+context_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+wrap_mode = 1
+
+[node name="Label5" type="Label" parent="CanvasLayer2/PanelLogin/Panel"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 293.0
+offset_top = 101.0
+offset_right = 372.0
+offset_bottom = 124.0
+grow_horizontal = 2
+text = "상태"
+horizontal_alignment = 1
+
+[node name="stateTxt" type="TextEdit" parent="CanvasLayer2/PanelLogin/Panel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 364.0
+offset_top = 97.0
+offset_right = -46.0
+offset_bottom = 132.0
+grow_horizontal = 2
+placeholder_text = "알 수 없음"
+editable = false
+context_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+wrap_mode = 1
+
+[node name="roomList" type="ItemList" parent="CanvasLayer2/PanelLogin"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 45.0
+offset_top = 65.0
+offset_right = -3.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="joinBtn" type="Button" parent="CanvasLayer2/PanelLogin"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -181.0
+offset_top = -50.0
+offset_right = -61.0
+offset_bottom = -13.0
+grow_horizontal = 0
+grow_vertical = 0
+disabled = true
+text = "참가"
+
+[node name="hostBtn" type="Button" parent="CanvasLayer2/PanelLogin"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -309.0
+offset_top = -50.0
+offset_right = -189.0
+offset_bottom = -13.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "방 생성"
+
+[node name="signoutBtn" type="Button" parent="CanvasLayer2/PanelLogin"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 55.0
+offset_top = -50.0
+offset_right = 175.0
+offset_bottom = -13.0
+grow_vertical = 0
+text = "로그아웃"
