@@ -10,8 +10,8 @@
     <Content Include="메모장.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ImplementBoss\" />
     <Folder Include="ImplementChar\" />
     <Folder Include="ImplementEnemy\" />
-    <Folder Include="ImplementBoss\" />
   </ItemGroup>
 </Project>

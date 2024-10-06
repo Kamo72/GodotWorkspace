@@ -22,7 +22,7 @@ public partial class MainClient : Node
     Client client;
 
     string ip = "127.0.0.1";//"209.38.25.83";
-    int port = 8125;
+    int port = 8457;
 
     DateTime pingSent = DateTime.UtcNow;
 
