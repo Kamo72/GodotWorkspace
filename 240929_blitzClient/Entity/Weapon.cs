@@ -10,21 +10,19 @@ namespace _favorClient.Entity
 {
     public partial class Weapon : Node2D
     {
-        [Export]
-        private Magazine magazine
-        {
-            get {
-                return GetNode("./Magazine") as Magazine;
-            }
-            set {
-                if (magazine != null)
-                {
-                    magazine.QueueFree();
-                    AddChild(value);
-                    value.Position = magPos.Position;
-                }
-            }
-        }   //탄창
+        //{
+        //    get {
+        //        return GetNode("./Magazine") as Magazine;
+        //    }
+        //    set {
+        //        if (magazine != null)
+        //        {
+        //            magazine.QueueFree();
+        //            AddChild(value);
+        //            value.Position = magPos.Position;
+        //        }
+        //    }
+        //}   //탄창
         [Export]
         private Node2D rightHand;   //오른쪽손
         [Export]
@@ -59,6 +57,7 @@ namespace _favorClient.Entity
 
         public string dataName = "M4A1";
         public WeaponStatus wStat => WeaponStatus.statLib[dataName];
+        public Magazine magazine = new(){ magCount = (30,30) };
 
         public (string type, float now, float max) action = ("idle", -1f, -1f);
         public float aimValue = 0f;
@@ -70,6 +69,7 @@ namespace _favorClient.Entity
         public override void _Process(double delta)
         {
             action.now -= (float)delta;
+            firePast += (float)delta;
 
             switch (action.type)
             {
@@ -79,6 +79,8 @@ namespace _favorClient.Entity
                         aimValue = Math.Clamp(aimValue, 0f, 1f);
 
                         if (input.justFire || (input.onFire && wStat.mechanism.isAuto))
+                            if(firePast > fireDelay)
+                                Fire();
 
                         if(input.reload)
                             action = ("reload", wStat.time.reload, wStat.time.reload);
@@ -87,21 +89,32 @@ namespace _favorClient.Entity
                 case "reload": {
                         aimValue = Math.Clamp(aimValue - (float)delta / wStat.time.aim, 0f, 1f);
 
-                        if (JustPassed(action, (float)delta, 1f))
-                        { }
-
                         if (JustPassed(action, (float)delta, 0.7f))
-                            DettachMag();
+                            magazine.magCount.now = 0;
 
-                        if (JustPassed(action, (float)delta, 0.3f))
-                            DettachMag();
 
+                        if (JustPassed(action, (float)delta, 0.1f))
+                            Reload();
+
+                        if (action.now <= 0)
+                            if(inChamber == true)
+                                action = ("idle", -1, -1);
+                            else
+                                action = ("charging", 0.4f, 0.4f);
+                    } break;
+                case "charging":
+                    {
+                        if (action.now <= 0)
+                        {
+                            inChamber = magazine.GetFeed();
+                            action = ("idle", -1, -1);
+                        }
                     } break;
             }
 
         }
 
-        public void Getinput((bool justFire, bool onFire, bool onAim, bool reload) input) 
+        public void Setinput((bool justFire, bool onFire, bool onAim, bool reload) input) 
         {
             this.input = input;
         }
@@ -110,6 +123,7 @@ namespace _favorClient.Entity
 
         public float rpm => wStat.projectile.rpm;
         public float fireDelay => 60f / rpm;
+        float firePast = 0f;
 
         protected bool inChamber = false;
         public float muzzleSpeed = 10.0f;
@@ -122,28 +136,36 @@ namespace _favorClient.Entity
             inChamber = false;
 
             //투사체 발사
-            RigidBody2D proj = projPrefab.Instantiate<RigidBody2D>();
+            Projectile proj = projPrefab.Instantiate<RigidBody2D>() as Projectile;
             proj.GlobalPosition = muzzle.GlobalPosition;
             proj.GlobalRotation = muzzle.GlobalRotation;
-            proj.LinearVelocity = Vector2.FromAngle(muzzle.GlobalRotation) * muzzleSpeed;
+            proj.speed = muzzleSpeed;
+
+            firePast = 0f;
 
             //피드
-            if (magazine != null)
-                inChamber = magazine.GetFeed();
+            inChamber = magazine.GetFeed();
         }
-        public void DettachMag() 
+
+
+        public void Reload() 
         {
-            magazine = null;
+            magazine.magCount.now = magazine.magCount.mag;
         }
-        public void AttachMag() 
-        {
-            magazine = GetMagazine();
-        }
-        protected Magazine GetMagazine() {
-            Magazine mag = magPrefab.Instantiate<Magazine>();
-            mag.magCount = (30, 30);
-            //mag.sprite2D.Texture = ResourceLoader.Load<Texture2D>("");
-            return mag;
-        }
+
+        //public void DettachMag() 
+        //{
+        //    magazine = null;
+        //}
+        //public void AttachMag() 
+        //{
+        //    magazine = GetMagazine();
+        //}
+        //protected Magazine GetMagazine() {
+        //    Magazine mag = magPrefab.Instantiate<Magazine>();
+        //    mag.magCount = (30, 30);
+        //    //mag.sprite2D.Texture = ResourceLoader.Load<Texture2D>("");
+        //    return mag;
+        //}
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Fjc6X3mdQkQ=",
+  "dgSpecHash": "jFodpkVSwDEvemIc3qN6t1u7ph2wQfAoekHH28Xs9/mRFZRcuyCcTpPvhoZGqqmvpEyd7/0h7HIxfRSV0nQOvQ==",
   "success": true,
-  "projectFilePath": "E:\\GodotWorkspace\\241003_blitzServer\\241003_blitzServer\\241003_blitzServer.csproj",
+  "projectFilePath": "S:\\GodotWorkspace\\241003_blitzServer\\241003_blitzServer\\241003_blitzServer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\skyma\\.nuget\\packages\\microsoft.data.sqlite\\8.0.8\\microsoft.data.sqlite.8.0.8.nupkg.sha512",
     "C:\\Users\\skyma\\.nuget\\packages\\microsoft.data.sqlite.core\\8.0.8\\microsoft.data.sqlite.core.8.0.8.nupkg.sha512",

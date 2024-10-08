@@ -17,6 +17,7 @@ namespace _favorClient.Entity
         public (float max, float now) health = (500, 500);
         public (float original, float now) speed = (0.85f, 0.85f);
         public bool isAlive => health.now > 0;
+        public bool isDodging = false;
 
         //싱크값
         protected Vector2 syncPos = Vector2.Zero;
@@ -30,6 +31,8 @@ namespace _favorClient.Entity
             GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").SetMultiplayerAuthority(rpcOwner);
         }
 
+        public (bool justFire, bool onFire, bool onAim, bool reload) input = (false, false, false, false);
+
         public override void _PhysicsProcess(double delta)
         {
             if (GetNode<MultiplayerSynchronizer>("MultiplayerSynchronizer").GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
@@ -39,20 +42,18 @@ namespace _favorClient.Entity
                 //살아있고 의식 있음
                 if (isAlive)
                 {
-                    if (Input.IsMouseButtonPressed(MouseButton.Left))
-                        Rpc("DoAttackMain", GlobalPosition, GetGlobalMousePosition());
-                    if (Input.IsMouseButtonPressed(MouseButton.Right))
-                        Rpc("DoAttackSub", GlobalPosition, GetGlobalMousePosition());
+                    input.justFire = Input.IsActionJustPressed("fire");
+                    input.onFire = Input.IsActionPressed("fire");
+                    input.onAim = Input.IsActionPressed("aim");
+                    input.reload = Input.IsActionJustPressed("reload");
 
-                    if (Input.IsKeyPressed(Key.Space))
-                        Rpc("DoDodge", GlobalPosition, GetGlobalMousePosition());
+                    if (Input.IsActionJustPressed("dodge"))
+                        if (action.state == "idle")
+                            action = ("dodge", 1f, 1f);
 
-                    if (Input.IsKeyPressed(Key.Q))
-                        Rpc("DoSkillMain", GlobalPosition, GetGlobalMousePosition());
-                    if (Input.IsKeyPressed(Key.E))
-                        Rpc("DoSkillSub", GlobalPosition, GetGlobalMousePosition());
-                    if (Input.IsKeyPressed(Key.R))
-                        Rpc("DoUltimate", GlobalPosition, GetGlobalMousePosition());
+                    if (Input.IsActionJustPressed("melee"))
+                        if (action.state == "melee")
+                            action = ("melee", 0.8f, 0.8f);
 
                     ActionProcess((float)delta);
 
@@ -104,6 +105,7 @@ namespace _favorClient.Entity
         public bool GetDamage(Damage damage)
         {
             if (isAlive == false) return false;
+            if (isDodging) return false;
             //if (shield.now > 0)
             //{
             //    if (damage.damage > shield.now)
@@ -158,15 +160,47 @@ namespace _favorClient.Entity
         }
 
         //액션 프로세스
+        Func<(string type, float now, float max), float, float, bool> JustPassed =
+            (action, delta, t) => action.now + delta >= action.max * t && action.max * t > action.now;
         protected (string state, float now, float max) action = ("idle", 0, 0);
         protected virtual void ActionProcess(float delta) {
             action.now -= delta;
+
+            switch (action.state)
+            {
+                case "idle":
+                    {
+                        if (isDodging) isDodging = false;
+                    }
+                    break;
+                case "melee":
+                    {
+                        if (JustPassed(action, (float)delta, 0.8f))
+                        {
+                            Velocity = Vector2.Zero;
+                            //피해 판정
+                        }
+
+                        if (action.now <= 0f)
+                            action = ("idle", -1, -1);
+                    }
+                    break;
+                case "dodge":
+                    {
+                        if (JustPassed(action, (float)delta, 1f))
+                            isDodging = true;
+
+                        if (JustPassed(action, (float)delta, 0.4f))
+                            isDodging = false;
+
+                        if (action.now <= 0f)
+                            action = ("idle", -1, -1);
+                    }
+                    break;
+
+            }
         }
 
-        protected virtual void OnLMB(bool justPressed, bool isPressing) { }
-        protected virtual void OnRMB(bool justPressed, bool isPressing) { }
-        protected virtual void OnInteract(bool justPressed, bool isPressing) { }
-        protected virtual void OnReload(bool justPressed, bool isPressing) { }
 
     }
 }

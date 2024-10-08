@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Godot.TextServer;
 
 namespace _favorClient.Entity
 {
@@ -15,6 +16,9 @@ namespace _favorClient.Entity
 
         public List<GodotObject> collidedList = new();
         public (float now, float max) life = (4.0f, 4.0f);
+        public float speed {
+            set { LinearVelocity = Vector2.FromAngle(GlobalRotation) * value; }
+        }
 
 
         [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]

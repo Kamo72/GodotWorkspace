@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = _241003_blitzServer
-build_property.ProjectDir = E:\GodotWorkspace\241003_blitzServer\241003_blitzServer\
+build_property.ProjectDir = S:\GodotWorkspace\241003_blitzServer\241003_blitzServer\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

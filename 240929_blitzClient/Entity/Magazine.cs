@@ -7,10 +7,15 @@ using System.Threading.Tasks;
 
 namespace _favorClient.Entity
 {
-    public partial class Magazine : Node2D
+    public struct Magazine
     {
+        public Magazine() 
+        {
+        
+        }
+
         public (int now, int mag) magCount = (30, 30);
-        public Sprite2D sprite2D => GetNode("./Sprite2D") as Sprite2D;
+        //public Sprite2D sprite2D => GetNode("./Sprite2D") as Sprite2D;
 
         public bool GetFeed() 
         {
