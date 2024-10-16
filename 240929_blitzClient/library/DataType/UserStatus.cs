@@ -10,14 +10,14 @@ namespace _favorClient.library.DataType
 {
     public struct UserStatus
     {
-        public UserStatus(string id, string name, int idx, int rpcId, CharacterData.Type type)
+        public UserStatus(string id, string name, int idx, int rpcId, CharacterData charData)
         {
             this.id = id;
             this.name = name;
             this.idx = idx;
             this.rpcId = rpcId;
-            this.type = type;
-            traitTree = new TraitTree();
+            this.charData = charData;
+            //traitTree = new TraitTree();
         }
 
         //기본 정보
@@ -27,9 +27,8 @@ namespace _favorClient.library.DataType
         public int rpcId;
 
         //실질적인 데이터
-        public CharacterData.Type type;
-        public TraitTree traitTree;
-
+        public CharacterData charData;
+        
         public static UserStatus Parse(string str)
         {
             UserStatus ustat = new UserStatus();
@@ -47,13 +46,9 @@ namespace _favorClient.library.DataType
                 ustat.idx = int.Parse(pbt[2]);
                 ustat.rpcId = int.Parse(pbt[3]);
 
-                pbt = pbv[1].SplitWithSpan('~');
-                ustat.type = (CharacterData.Type)int.Parse(pbt[0]);
+                //pbt = pbv[1].SplitWithSpan('~');
+                ustat.charData = CharacterData.Parse(pbv[1]);
 
-                pbt = pbv[2].SplitWithSpan('~');
-                foreach (string sp in pbt)
-                    if (sp != "" && sp != "기본 노드")
-                        ustat.traitTree.TakeTraitByName(sp);
             }
             catch(Exception ex)
             {
@@ -74,12 +69,8 @@ namespace _favorClient.library.DataType
             str += rpcId + "~";
             str += "^";
 
-            str += ((int)type).ToString();
+            str += charData.ToString();
             str += "^";
-
-            if(traitTree.traitsList != null)
-                foreach(var trait in traitTree.traitsList)
-                    str += trait + "~";
 
             return str;
         }

@@ -11,6 +11,5 @@ namespace _favorClient.library.DataType
     public struct Damage
     {
         public float damage;
-
     }
 }

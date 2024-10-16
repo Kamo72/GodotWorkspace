@@ -147,25 +147,10 @@ namespace _favorClient.Entity
             inChamber = magazine.GetFeed();
         }
 
-
         public void Reload() 
         {
             magazine.magCount.now = magazine.magCount.mag;
         }
 
-        //public void DettachMag() 
-        //{
-        //    magazine = null;
-        //}
-        //public void AttachMag() 
-        //{
-        //    magazine = GetMagazine();
-        //}
-        //protected Magazine GetMagazine() {
-        //    Magazine mag = magPrefab.Instantiate<Magazine>();
-        //    mag.magCount = (30, 30);
-        //    //mag.sprite2D.Texture = ResourceLoader.Load<Texture2D>("");
-        //    return mag;
-        //}
     }
 }

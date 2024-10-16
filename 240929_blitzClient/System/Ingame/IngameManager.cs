@@ -56,74 +56,74 @@ namespace _favorClient.System.Ingame
                 GD.PrintErr("저기요 인게임 인터페이스가 없어요! 미친 이를 어떠케");
 
             SpawnAllChar();
-            SpawnBoss(BossData.Type.KNIGHT);
+            //SpawnBoss(BossData.Type.KNIGHT);
         }
 
-        bool SpawnBoss(BossData.Type type)
-        {
-            //if (boss != null) throw new("보스가 이미 있어요! : " + boss.Name);
+        //bool SpawnBoss(BossData.Type type)
+        //{
+        //    //if (boss != null) throw new("보스가 이미 있어요! : " + boss.Name);
 
-            PackedScene bossScene = GetPackedSceneByBossType(type);
+        //    PackedScene bossScene = GetPackedSceneByBossType(type);
             
-            if(bossScene == null) return false;
+        //    if(bossScene == null) return false;
 
-            boss = bossScene.Instantiate<Boss>();
+        //    boss = bossScene.Instantiate<Boss>();
 
-            AddChild(boss);
+        //    AddChild(boss);
 
-            Node2D spawnPoint = GetTree().GetFirstNodeInGroup("bossSpawnPoints") as Node2D;
-            if (spawnPoint == null) GD.PushWarning("SpawnBoss SpawnBosspawnPoint == null");
-            boss.GlobalPosition = spawnPoint.GlobalPosition;
+        //    Node2D spawnPoint = GetTree().GetFirstNodeInGroup("bossSpawnPoints") as Node2D;
+        //    if (spawnPoint == null) GD.PushWarning("SpawnBoss SpawnBosspawnPoint == null");
+        //    boss.GlobalPosition = spawnPoint.GlobalPosition;
             
-            return true;
-        }
+        //    return true;
+        //}
 
         bool SpawnChar(int idx) 
         {
 
-            if (characters[idx] != null) return false;
-            if (players[idx].HasValue == false) return false;
+            //if (characters[idx] != null) return false;
+            //if (players[idx].HasValue == false) return false;
 
-            var ingameChars = GetTree().GetNodesInGroup("Player");
+            //var ingameChars = GetTree().GetNodesInGroup("Player");
 
-            foreach (var item in ingameChars)
-                if (item.Name == players[idx].Value.id)
-                    return false;
+            //foreach (var item in ingameChars)
+            //    if (item.Name == players[idx].Value.id)
+            //        return false;
 
-            UserStatus uStat = players[idx].Value;
-            CharacterData.Type type = uStat.type;
-            PackedScene playerScene = GetPackedSceneByCharType(type);
+            //UserStatus uStat = players[idx].Value;
+            //CharacterData.Type type = uStat.type;
+            //PackedScene playerScene = GetPackedSceneByCharType(type);
 
-            if (playerScene == null) throw new Exception($"SpawnChar [{type.ToString()}]playerScene == null");
+            //if (playerScene == null) throw new Exception($"SpawnChar [{type.ToString()}]playerScene == null");
 
-            Character currentPlayer = playerScene.Instantiate<Character>();
+            //Character currentPlayer = playerScene.Instantiate<Character>();
 
-            currentPlayer.Name = uStat.rpcId.ToString();
-            currentPlayer.SetupPlayer(uStat.name);
-            characters[idx] = currentPlayer;
+            //currentPlayer.Name = uStat.rpcId.ToString();
+            //currentPlayer.SetupPlayer(uStat.name);
+            //characters[idx] = currentPlayer;
 
-            AddChild(currentPlayer);
+            //AddChild(currentPlayer);
 
-            foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("playerSpawnPoints"))
-                if (spawnPoint.Name == idx.ToString())
-                    currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
+            //foreach (Node2D spawnPoint in GetTree().GetNodesInGroup("playerSpawnPoints"))
+            //    if (spawnPoint.Name == idx.ToString())
+            //        currentPlayer.GlobalPosition = spawnPoint.GlobalPosition;
 
-            if (idx == InroomInterface.instance.userIdx)
-            {
-                igUI.SetCharacter(currentPlayer);
-                cmr.SetTarget(currentPlayer);
-            }
+            //if (idx == InroomInterface.instance.userIdx)
+            //{
+            //    igUI.SetCharacter(currentPlayer);
+            //    cmr.SetTarget(currentPlayer);
+            //}
 
-            GD.Print("Spawn Char of " + idx);
+            //GD.Print("Spawn Char of " + idx);
             return true;
         }
 
-        [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-        public bool SpawnEnemy(BossData.Type type, Vector2 position) 
-        {
+        //[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+        //public bool SpawnEnemy(Enemy.Type type, Vector2 position) 
+        //{
 
-            return false;
-        }
+        //    return false;
+        //}
 
         public bool DespawnChar(int idx)
         {
@@ -143,46 +143,46 @@ namespace _favorClient.System.Ingame
         }
 
 
-        [ExportGroup("CharacterScene")]
-        [Export]
-        PackedScene prefabFuhrer;
-        [Export]
-        PackedScene prefabSmoke;
-        [Export]
-        PackedScene prefabSpotlight;
-        [Export]
-        PackedScene prefabStyx;
+        //[ExportGroup("CharacterScene")]
+        //[Export]
+        //PackedScene prefabFuhrer;
+        //[Export]
+        //PackedScene prefabSmoke;
+        //[Export]
+        //PackedScene prefabSpotlight;
+        //[Export]
+        //PackedScene prefabStyx;
 
 
-        [ExportGroup("BossScene")]
-        [Export]
-        PackedScene bossSchadenfreude;
-        [Export]
-        PackedScene bossKnight;
+        //[ExportGroup("BossScene")]
+        //[Export]
+        //PackedScene bossSchadenfreude;
+        //[Export]
+        //PackedScene bossKnight;
 
 
-        PackedScene GetPackedSceneByBossType(BossData.Type type)
-        {
-            switch (type)
-            {
-                case BossData.Type.NONE: return null;
-                case BossData.Type.SCHADENFREUDE: return bossSchadenfreude;
-                case BossData.Type.KNIGHT: return bossKnight;
-            }
-            return null;
-        }
-        PackedScene GetPackedSceneByCharType(CharacterData.Type type) 
-        {
-            switch (type) 
-            {
-                case CharacterData.Type.NONE: return null;
-                case CharacterData.Type.FUHRER: return prefabFuhrer;
-                case CharacterData.Type.STYX: return prefabStyx;
-                case CharacterData.Type.SMOKE: return prefabSmoke;
-                case CharacterData.Type.SPOTLIGHT: return prefabSpotlight;
-            }
-            return null;
-        }
+        //PackedScene GetPackedSceneByBossType(BossData.Type type)
+        //{
+        //    switch (type)
+        //    {
+        //        case BossData.Type.NONE: return null;
+        //        case BossData.Type.SCHADENFREUDE: return bossSchadenfreude;
+        //        case BossData.Type.KNIGHT: return bossKnight;
+        //    }
+        //    return null;
+        //}
+        //PackedScene GetPackedSceneByCharType(CharacterData.Type type) 
+        //{
+        //    switch (type) 
+        //    {
+        //        case CharacterData.Type.NONE: return null;
+        //        case CharacterData.Type.FUHRER: return prefabFuhrer;
+        //        case CharacterData.Type.STYX: return prefabStyx;
+        //        case CharacterData.Type.SMOKE: return prefabSmoke;
+        //        case CharacterData.Type.SPOTLIGHT: return prefabSpotlight;
+        //    }
+        //    return null;
+        //}
 
     }
 }
