@@ -1,0 +1,15 @@
+<Project Sdk="Godot.NET.Sdk/4.2.2">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net7.0</TargetFramework>
+    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'ios' ">net8.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>_project_blitz</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Scene\" />
+    <Folder Include="Ui\" />
+    <Folder Include="Resource\" />
+    <Folder Include="Manager\" />
+  </ItemGroup>
+</Project>

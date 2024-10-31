@@ -1,0 +1,13 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1730360229
+Humanoid.cs::CSharpScript::-1::1730359046::0::1::::<>RigidBody2D<>::
+icon.svg::CompressedTexture2D::5669283197920867606::1730356117::1730356124::1::::<><>::
+::res://Dataframe/::1730356882
+::res://EntityImplement/::1730356930
+::res://EntityParent/::1730360229
+Player.cs::CSharpScript::-1::1730358898::0::1::::<>RigidBody2D<>::
+::res://Manager/::1730356978
+::res://Resource/::1730356979
+::res://Scene/::1730359048
+node_2d.tscn::PackedScene::8531985900906556544::1730359048::0::1::::<><>::res://EntityParent/Player.cs
+::res://Ui/::1730357020
