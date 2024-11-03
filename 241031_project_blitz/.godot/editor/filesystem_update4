@@ -1,6 +1,6 @@
 res://Scene/node_2d.tscn
-res://EntityParent/Humanoid.cs
-res://EntityParent/Player.cs
-res://EntityImplement/Projectile.cs
 res://EntityImplement/Player.cs
 res://EntityParent/Weapon.cs
+res://EntityImplement/Projectile.cs
+res://EntityParent/Humanoid.cs
+res://EntityParent/Wall.cs

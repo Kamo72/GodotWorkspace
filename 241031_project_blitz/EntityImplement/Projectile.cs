@@ -7,6 +7,7 @@ public partial class Projectile : RayCast2D
     private float speed;
     private Vector2 velocity;
 
+
     public void Initialize(float damage, float speed, Vector2 position, float rotation)
     {
         this.damage = damage;
@@ -31,6 +32,12 @@ public partial class Projectile : RayCast2D
             if (collider is Humanoid humanoid)
             {
                 GD.Print($"{humanoid.Name}에게 {damage}의 피해를 입혔습니다.");
+                humanoid.GetDamage(damage);
+                QueueFree(); // 충돌 시 Projectile 제거
+            }
+            else if (collider is Wall wall)
+            {
+                GD.Print($"{wall.Name}에 적중됨.");
                 QueueFree(); // 충돌 시 Projectile 제거
             }
         }

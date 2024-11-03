@@ -8,8 +8,7 @@ public partial class Player : Humanoid
         base._Ready();
 
         // 새로운 무기 생성 및 장착 (예시로 rpm=600, damage=15, muzzleSpeed=400)
-        var weapon = new Weapon(600, 15, 20000);
-        EquipWeapon(weapon);
+        EquipWeapon(new Weapon(Weapon.Code.K2));
     }
     public override void _Process(double delta)
     {
@@ -40,8 +39,9 @@ public partial class Player : Humanoid
 
         // 발사 입력 감지 및 무기 발사 호출
         if (Input.IsActionPressed("fire"))
-        {
             equippedWeapon?.Shoot();
-        }
+        // 재장전 수행
+        if (Input.IsActionPressed("reload"))
+            equippedWeapon?.Reload();
     }
 }

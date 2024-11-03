@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dts7tc2lq631e"]
+[gd_scene load_steps=4 format=3 uid="uid://dts7tc2lq631e"]
 
 [ext_resource type="Script" path="res://EntityImplement/Player.cs" id="1_hps05"]
 [ext_resource type="Script" path="res://EntityParent/Humanoid.cs" id="1_rxmhm"]
+[ext_resource type="Script" path="res://EntityParent/Wall.cs" id="3_wbws8"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -14,3 +15,7 @@ script = ExtResource("1_hps05")
 [node name="Humanoid" type="RigidBody2D" parent="."]
 position = Vector2(206, 190)
 script = ExtResource("1_rxmhm")
+
+[node name="Wall" type="RigidBody2D" parent="."]
+position = Vector2(198, 126)
+script = ExtResource("3_wbws8")

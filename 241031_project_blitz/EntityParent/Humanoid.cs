@@ -10,8 +10,14 @@ public partial class Humanoid : RigidBody2D
     protected Weapon equippedWeapon;
     private float facingDir = 0f; // 현재 바라보는 방향 (라디안 단위)
 
+    public float healthNow;
+    public float healthMax;
+
     public override void _Ready()
     {
+        healthMax = 100f; // 최대 체력 초기화
+        healthNow = healthMax; // 현재 체력을 최대 체력으로 설정
+
         // Collision 생성 및 설정
         var collision = new CollisionShape2D();
         collision.Shape = new CircleShape2D() { Radius = 50 };
@@ -22,12 +28,13 @@ public partial class Humanoid : RigidBody2D
         LockRotation = true;
 
         // 무기 초기 장착 (기본 무기 생성 및 장착)
-        EquipWeapon(new Weapon(600, 10, 500)); // 임시로 무기 장착 (rpm, damage, muzzleSpeed 설정)
+        EquipWeapon(new Weapon(Weapon.Code.K2)); // 임시로 무기 장착 (rpm, damage, muzzleSpeed 설정)
 
 
-        SetCollisionLayerValue(1, true);
         SetCollisionMaskValue(1, true);
-        SetCollisionMaskValue(2, true);
+        SetCollisionLayerValue(1, true); // Humanoid 레이어
+        SetCollisionMaskValue(2, true);  // Projectile과 충돌 감지
+        SetCollisionMaskValue(3, true);  // Wall과 충돌 감지
     }
 
     public void EquipWeapon(Weapon weapon)
@@ -75,6 +82,26 @@ public partial class Humanoid : RigidBody2D
         // 바라보는 방향 설정
         facingDir = direction;
         UpdateWeaponRotation();
+    }
+
+    // 데미지 처리 함수
+    public void GetDamage(float damage)
+    {
+        healthNow -= damage;
+        GD.Print($"{Name}가 {damage}의 피해를 입어 현재 체력: {healthNow}");
+
+        // 체력이 0 이하이면 사망 처리
+        if (healthNow <= 0)
+        {
+            OnDead();
+        }
+    }
+
+    // 사망 처리 함수
+    private void OnDead()
+    {
+        GD.Print($"{Name}가 사망했습니다.");
+        QueueFree(); // 객체 삭제
     }
 
     public override void _Draw()
