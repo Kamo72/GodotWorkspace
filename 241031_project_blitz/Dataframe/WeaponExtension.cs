@@ -13,7 +13,7 @@ public partial class Weapon : Node2D
 
     static Dictionary<Code, WeaponStatus> weaponLibrary = new Dictionary<Code, WeaponStatus>
     {
-        { Code.K2, new WeaponStatus(1100, 15, 40000, 20, 2f) },
+        { Code.K2, new WeaponStatus(1100, 15, 40000, 20, 2f, "res://Asset/guns/ImageAR.png" , 50)},
     };
 
     public static WeaponStatus GetStatByCode(Code code)

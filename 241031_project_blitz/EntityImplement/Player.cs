@@ -10,8 +10,10 @@ public partial class Player : Humanoid
         // 새로운 무기 생성 및 장착 (예시로 rpm=600, damage=15, muzzleSpeed=400)
         EquipWeapon(new Weapon(Weapon.Code.K2));
     }
+
     public override void _Process(double delta)
     {
+        QueueRedraw();
         base._Process(delta);
 
         // WASD 키 입력에 따라 moveVec 조정
@@ -26,8 +28,6 @@ public partial class Player : Humanoid
             moveVec = new Vector2(0, 0);
         }
 
-
-
         // 마우스 위치를 얻어 Player의 위치로부터 방향 계산
         var mousePosition = GetGlobalMousePosition();
         var direction = mousePosition - GlobalPosition;
@@ -39,9 +39,26 @@ public partial class Player : Humanoid
 
         // 발사 입력 감지 및 무기 발사 호출
         if (Input.IsActionPressed("fire"))
-            equippedWeapon?.Shoot();
+        {
+            bool? isShoot = equippedWeapon?.Shoot();
+
+            if (isShoot.HasValue)
+                if(isShoot.Value)
+                    OnShoot();
+
+        }
+
         // 재장전 수행
         if (Input.IsActionPressed("reload"))
             equippedWeapon?.Reload();
+    }
+
+
+    public override void _Draw()
+    {
+        base._Draw();
+
+        // 실제 조준점을 화면에 그리기
+        DrawLine(equippedWeapon.Position, realAimPoint - GlobalPosition, Colors.Red, 2);
     }
 }
