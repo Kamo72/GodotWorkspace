@@ -32,6 +32,7 @@ public partial class Humanoid : CharacterBody2D
 		hands = FindChild("Hands") as Hands;
 		health = new Health(300f, () => GetParent().RemoveChild(this));
 		inventory = new Inventory(this);
+		aim = new Aim(this);
 	}
 
 	public override void _Process(double delta)
@@ -56,10 +57,14 @@ public partial class Humanoid : CharacterBody2D
     public override void _Draw()
     {
         base._Draw();
-        DrawCircle(aimTo, 400f, Colors.Yellow);
-        DrawCircle(aimNow, 400f, Colors.Red);
+		//DrawCircle(aimTo, 5f, Colors.Yellow);
+		//DrawCircle(aimNow, 5f, Colors.Red);
+
+		DrawLine(hands.Position, aimNow - GlobalPosition, Colors.Red, 2, true);
     }
-    //Get User Input
+    
+	
+	//Get User Input
     public Action<Humanoid, double> MovementInputProcess = (thisObj, delta) =>
 	{
 		//Get Input

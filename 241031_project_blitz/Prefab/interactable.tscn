@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://2covg0ovk53g"]
+
+[ext_resource type="Texture2D" uid="uid://cm1ijbp72an07" path="res://icon.svg" id="1_geh6y"]
+[ext_resource type="Script" path="res://EntityParent/Interactable.cs" id="1_sf6ib"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qixdo"]
+
+[node name="Interactable" type="RigidBody2D"]
+collision_layer = 0
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_sf6ib")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(3.18, 3.18)
+shape = SubResource("CircleShape2D_qixdo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -0.471239
+scale = Vector2(0.44, 0.44)
+skew = 0.471239
+texture = ExtResource("1_geh6y")
+
+[node name="InteractionUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -29.0
+offset_top = -57.0
+offset_right = 28.0
+offset_bottom = -38.0
+
+[node name="Sprite2D" type="Sprite2D" parent="InteractionUI"]
+position = Vector2(-2.44, 9.56)
+scale = Vector2(0.165, 0.165)
+texture = ExtResource("1_geh6y")
+
+[node name="Label" type="Label" parent="InteractionUI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.231
+anchor_bottom = 1.211
+offset_left = 8.56
+offset_top = -0.439999
+offset_right = 21.288
+offset_bottom = -0.448999
+scale = Vector2(0.845, 0.845)
+text = "상호작용"
+vertical_alignment = 1

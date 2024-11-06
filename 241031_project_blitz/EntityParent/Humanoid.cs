@@ -21,18 +21,14 @@ public partial class Humanoid : RigidBody2D
 
     private static FastNoiseLite noise = new FastNoiseLite();
 
-    protected Vector2 realAimPoint { get
+    public Vector2 realAimPoint { get
         {
             Vector2 aimPoint = virtualAimPoint;
 
             aimPoint += (recoilVec * aimLength / 1000 - GlobalPosition)
-                .Rotated(recoilVec.Length() * randFloat / 5000)
-                ;
-            
+                .Rotated(recoilVec.Length() * randFloat / 5000);
             
             aimPoint += GlobalPosition;
-
-
 
             // SimpleNoise를 기반으로 조준점 흔들림 계산
             float radius = 100f * (1f + recoilVec.Length() / 100f);
@@ -117,6 +113,8 @@ public partial class Humanoid : RigidBody2D
 
     public override void _Process(double delta)
     {
+        QueueRedraw();
+
         // 가상 조준점 업데이트
         virtualAimPoint = virtualAimPoint.Lerp(GetGlobalMousePosition(), 0.05f);
 

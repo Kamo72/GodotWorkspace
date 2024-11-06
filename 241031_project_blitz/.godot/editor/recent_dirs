@@ -1,2 +1,5 @@
-res://Scene
+res://EntityParent
+res://Ui
+res://Ui/Inventory
+res://Ui/Inventory/InventoryPage
 res://

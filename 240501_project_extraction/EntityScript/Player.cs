@@ -36,7 +36,6 @@ public partial class Player : Humanoid
             {"SecondWeapon", ()=> Input.IsActionJustPressed("SecondWeapon") },
             {"SubWeapon", ()=> Input.IsActionJustPressed("SubWeapon") },
         };
-
     }
     
 	public override void _EnterTree()

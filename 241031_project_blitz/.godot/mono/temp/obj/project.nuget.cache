@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nhuDuGTuCAM=",
+  "dgSpecHash": "fvH/Kw4XE5IfKniIrpJuWBXVAx3fLx5D2s92liCDnnW7bnZWK88BxBTrEIrIgxPMC4MIDHOz1rfad9vX6g6yNA==",
   "success": true,
-  "projectFilePath": "E:\\GodotWorkspace\\241031_project_blitz\\241031_project_blitz.csproj",
+  "projectFilePath": "S:\\GodotWorkspace\\241031_project_blitz\\241031_project_blitz.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\skyma\\.nuget\\packages\\godot.sourcegenerators\\4.2.2\\godot.sourcegenerators.4.2.2.nupkg.sha512",
     "C:\\Users\\skyma\\.nuget\\packages\\godotsharp\\4.2.2\\godotsharp.4.2.2.nupkg.sha512",

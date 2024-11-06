@@ -19,7 +19,7 @@ script = ExtResource("2_w2tjp")
 
 [node name="Player" parent="." instance=ExtResource("4_00bmr")]
 position = Vector2(238, -188)
-scale = Vector2(1.02031, 0.894157)
+scale = Vector2(1, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -129,12 +129,15 @@ position = Vector2(-257, 37)
 
 [node name="Enemy" parent="." instance=ExtResource("7_jeei5")]
 position = Vector2(-137, -166)
+scale = Vector2(1, 1)
 
 [node name="Enemy2" parent="." instance=ExtResource("7_jeei5")]
 position = Vector2(30, -192)
+scale = Vector2(1, 1)
 
 [node name="Enemy3" parent="." instance=ExtResource("7_jeei5")]
 position = Vector2(-246, -113)
+scale = Vector2(1, 1)
 
 [node name="Wall5" type="Sprite2D" parent="."]
 position = Vector2(704, -425)

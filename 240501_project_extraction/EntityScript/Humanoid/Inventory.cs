@@ -11,8 +11,6 @@ public partial class Humanoid
     public Inventory inventory;
     public partial class Inventory
     {
-
-
         public Inventory(Humanoid master)
         {
             this.master = master;

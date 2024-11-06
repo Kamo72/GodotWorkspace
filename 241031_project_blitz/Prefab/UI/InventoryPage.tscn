@@ -1,0 +1,217 @@
+[gd_scene load_steps=7 format=3 uid="uid://dcharhfjp5863"]
+
+[ext_resource type="Script" path="res://Ui/Inventory/InventoryPage.cs" id="1_32op5"]
+[ext_resource type="PackedScene" uid="uid://cretamyyae6ml" path="res://Prefab/UI/InventoryPage/EquipSlot.tscn" id="2_jn84s"]
+[ext_resource type="PackedScene" uid="uid://bqnmkshn01n2f" path="res://Prefab/UI/InventoryPage/StorageSlot.tscn" id="2_lseg4"]
+[ext_resource type="PackedScene" uid="uid://b1u5y8et2sbck" path="res://Prefab/UI/InventoryPage/WeaponSlot.tscn" id="3_dt2mp"]
+[ext_resource type="Texture2D" uid="uid://cm1ijbp72an07" path="res://icon.svg" id="5_6ndbv"]
+[ext_resource type="PackedScene" uid="uid://cov0e5qsp7n52" path="res://Prefab/UI/InventoryPage/PocketSlot.tscn" id="5_kaopl"]
+
+[node name="InventoryPage" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 15
+size_flags_vertical = 15
+script = ExtResource("1_32op5")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MyStatus" type="Panel" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HeadgearSlot" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.173
+anchor_top = 0.093
+anchor_right = 0.392
+anchor_bottom = 0.222
+offset_left = -0.201004
+offset_top = -0.440002
+offset_right = 0.29599
+offset_bottom = 0.239975
+
+[node name="HelmetSlot" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.392
+anchor_top = 0.093
+anchor_right = 0.612
+anchor_bottom = 0.222
+offset_left = 0.29599
+offset_top = -0.440002
+offset_right = 0.155975
+offset_bottom = 0.239975
+
+[node name="PlateSlot" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.392
+anchor_top = 0.222
+anchor_right = 0.612
+anchor_bottom = 0.352
+offset_left = 0.29599
+offset_top = 0.239975
+offset_right = 0.155975
+offset_bottom = -0.160034
+
+[node name="FirstWeaponSlot" parent="HBoxContainer/MyStatus" instance=ExtResource("3_dt2mp")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.173
+anchor_top = 0.352
+anchor_right = 0.597
+anchor_bottom = 0.481
+offset_left = -0.201004
+offset_top = -0.160034
+offset_right = -0.289001
+offset_bottom = 0.519958
+
+[node name="SecondWeaponSlot" parent="HBoxContainer/MyStatus" instance=ExtResource("3_dt2mp")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.173
+anchor_top = 0.481
+anchor_right = 0.597
+anchor_bottom = 0.611
+offset_left = -0.201004
+offset_top = 0.519958
+offset_right = -0.289001
+offset_bottom = 0.119995
+
+[node name="SubWeaponSlot" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.612
+anchor_top = 0.352
+anchor_right = 0.832
+anchor_bottom = 0.481
+offset_left = 0.155975
+offset_top = -0.160034
+offset_right = 0.0159912
+offset_bottom = 0.519958
+
+[node name="EquipSlot3" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 390.0
+offset_top = 100.0
+offset_right = 530.0
+offset_bottom = 240.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="PlateSlot1" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 390.0
+offset_top = 240.0
+offset_right = 530.0
+offset_bottom = 380.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="EquipSlot6" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 390.0
+offset_top = 520.0
+offset_right = 530.0
+offset_bottom = 660.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="EquipSlot8" parent="HBoxContainer/MyStatus" instance=ExtResource("2_jn84s")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 110.0
+offset_top = 240.0
+offset_right = 250.0
+offset_bottom = 380.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MyInventory" type="VBoxContainer" parent="HBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+
+[node name="RigSlot" parent="HBoxContainer/ScrollContainer/MyInventory" instance=ExtResource("2_lseg4")]
+layout_mode = 2
+
+[node name="PocketSlot" parent="HBoxContainer/ScrollContainer/MyInventory" instance=ExtResource("5_kaopl")]
+layout_mode = 2
+
+[node name="BackpackSlot" parent="HBoxContainer/ScrollContainer/MyInventory" instance=ExtResource("2_lseg4")]
+layout_mode = 2
+
+[node name="ContainerSlot" parent="HBoxContainer/ScrollContainer/MyInventory" instance=ExtResource("2_lseg4")]
+layout_mode = 2
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="OtherInventory" type="VBoxContainer" parent="HBoxContainer/ScrollContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Cursor" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Inspector" type="PanelContainer" parent="Cursor"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ItemImage" type="TextureRect" parent="Cursor"]
+layout_mode = 1
+anchors_preset = -1
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+
+[node name="CursorImage" type="TextureRect" parent="Cursor"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_6ndbv")
+expand_mode = 1

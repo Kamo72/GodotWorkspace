@@ -11,9 +11,10 @@ public partial class Player : Humanoid
         EquipWeapon(new Weapon(Weapon.Code.K2));
     }
 
+    public bool isInventory => ((Control)GetTree().Root.FindByName("MainUi")).Visible;
+
     public override void _Process(double delta)
     {
-        QueueRedraw();
         base._Process(delta);
 
         // WASD 키 입력에 따라 moveVec 조정
@@ -23,7 +24,7 @@ public partial class Player : Humanoid
         );
 
         // moveVec가 0일 경우 정지
-        if (moveVec.Length() == 0)
+        if (moveVec.Length() == 0 || isInventory)
         {
             moveVec = new Vector2(0, 0);
         }
@@ -38,19 +39,24 @@ public partial class Player : Humanoid
 
 
         // 발사 입력 감지 및 무기 발사 호출
-        if (Input.IsActionPressed("fire"))
+        if (Input.IsActionPressed("fire") && !isInventory)
         {
             bool? isShoot = equippedWeapon?.Shoot();
 
             if (isShoot.HasValue)
                 if(isShoot.Value)
                     OnShoot();
-
         }
 
         // 재장전 수행
-        if (Input.IsActionPressed("reload"))
+        if (Input.IsActionPressed("reload") && !isInventory)
             equippedWeapon?.Reload();
+
+        if (Input.IsActionJustPressed("inventory"))
+        {
+            Control mainUI = GetTree().Root.FindByName("MainUi") as Control;
+            mainUI.Visible = !mainUI.Visible;
+        }
     }
 
 
@@ -59,6 +65,6 @@ public partial class Player : Humanoid
         base._Draw();
 
         // 실제 조준점을 화면에 그리기
-        DrawLine(equippedWeapon.Position, realAimPoint - GlobalPosition, Colors.Red, 2);
+        DrawLine(equippedWeapon.Position, realAimPoint - GlobalPosition, Colors.Red, 1);
     }
 }

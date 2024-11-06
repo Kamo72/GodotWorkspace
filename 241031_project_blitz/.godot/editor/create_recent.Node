@@ -1,2 +1,5 @@
+Control
+CanvasLayer
+Camera2D
 RigidBody2D
 CollisionShape2D

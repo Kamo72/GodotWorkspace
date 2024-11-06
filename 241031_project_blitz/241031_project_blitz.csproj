@@ -7,8 +7,7 @@
     <RootNamespace>_project_blitz</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Scene\" />
-    <Folder Include="Ui\" />
+    <Folder Include="Ui\Scene\" />
     <Folder Include="Resource\" />
     <Folder Include="Manager\" />
   </ItemGroup>
