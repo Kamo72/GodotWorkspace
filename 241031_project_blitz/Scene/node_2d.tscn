@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://EntityImplement/Player.cs" id="1_hps05"]
 [ext_resource type="Script" path="res://EntityParent/Humanoid.cs" id="1_rxmhm"]
 [ext_resource type="Script" path="res://EntityParent/Wall.cs" id="3_wbws8"]
-[ext_resource type="Script" path="res://Ui/CameraManager.cs" id="4_8vsqg"]
+[ext_resource type="Script" path="res://Manager/CameraManager.cs" id="4_64v8r"]
 [ext_resource type="PackedScene" uid="uid://cxrn863chouys" path="res://Prefab/UI/MainUI.tscn" id="5_v7058"]
 [ext_resource type="PackedScene" uid="uid://c21ungwfkofeo" path="res://Prefab/droppedItem.tscn" id="6_awiyl"]
 [ext_resource type="PackedScene" uid="uid://2covg0ovk53g" path="res://Prefab/interactable.tscn" id="7_fobyc"]
@@ -25,7 +25,9 @@ position = Vector2(198, 126)
 script = ExtResource("3_wbws8")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
-script = ExtResource("4_8vsqg")
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+script = ExtResource("4_64v8r")
 target = NodePath("../Player")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -44,3 +46,27 @@ position = Vector2(308, 392)
 
 [node name="Interactable2" parent="." instance=ExtResource("7_fobyc")]
 position = Vector2(330, 391)
+
+[node name="Interactable3" parent="." instance=ExtResource("7_fobyc")]
+position = Vector2(829, -428)
+
+[node name="Interactable4" parent="." instance=ExtResource("7_fobyc")]
+position = Vector2(851, -429)
+
+[node name="Interactable5" parent="." instance=ExtResource("7_fobyc")]
+position = Vector2(-834, -447)
+
+[node name="Interactable6" parent="." instance=ExtResource("7_fobyc")]
+position = Vector2(-812, -448)
+
+[node name="Interactable7" parent="." instance=ExtResource("7_fobyc")]
+position = Vector2(-855, 458)
+
+[node name="Interactable8" parent="." instance=ExtResource("7_fobyc")]
+position = Vector2(-833, 457)
+
+[node name="Interactable9" parent="." instance=ExtResource("7_fobyc")]
+position = Vector2(905, 496)
+
+[node name="Interactable10" parent="." instance=ExtResource("7_fobyc")]
+position = Vector2(927, 495)

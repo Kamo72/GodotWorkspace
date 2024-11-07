@@ -30,7 +30,6 @@ public partial class Humanoid : CharacterBody2D
 
         public Vector2 realAimPoint
         {
-            get
             {
                 Vector2 aimPoint = virtualAimPoint;
 

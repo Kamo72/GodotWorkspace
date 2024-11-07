@@ -7,8 +7,10 @@
     <RootNamespace>_project_blitz</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Resource\**" />
+    <EmbeddedResource Remove="Resource\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Ui\Scene\" />
-    <Folder Include="Resource\" />
-    <Folder Include="Manager\" />
   </ItemGroup>
 </Project>

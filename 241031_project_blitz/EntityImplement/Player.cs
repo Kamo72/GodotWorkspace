@@ -1,12 +1,15 @@
 ﻿using Godot;
+using Microsoft.VisualBasic;
 using System;
 
 public partial class Player : Humanoid
 {
+    public static Player player;
     public override void _Ready()
     {
-        base._Ready();
-
+        GravityScale = 0;
+        player = this;
+        Interactable.player = this;
         // 새로운 무기 생성 및 장착 (예시로 rpm=600, damage=15, muzzleSpeed=400)
         EquipWeapon(new Weapon(Weapon.Code.K2));
     }
@@ -44,8 +47,11 @@ public partial class Player : Humanoid
             bool? isShoot = equippedWeapon?.Shoot();
 
             if (isShoot.HasValue)
-                if(isShoot.Value)
+                if (isShoot.Value)
+                {
                     OnShoot();
+                    CameraManager.current.ApplyRecoil(50, 50f/ 180f / (float)Math.PI);
+                }
         }
 
         // 재장전 수행
@@ -57,6 +63,16 @@ public partial class Player : Humanoid
             Control mainUI = GetTree().Root.FindByName("MainUi") as Control;
             mainUI.Visible = !mainUI.Visible;
         }
+
+        if (Input.IsActionJustPressed("interact"))
+        {
+            if (interactables.Count > 0) {
+
+                GD.Print(interactables[0]);
+                interactables[0].Interacted(this);
+            }
+            
+        }
     }
 
 
@@ -65,6 +81,6 @@ public partial class Player : Humanoid
         base._Draw();
 
         // 실제 조준점을 화면에 그리기
-        DrawLine(equippedWeapon.Position, realAimPoint - GlobalPosition, Colors.Red, 1);
+        DrawLine(equippedWeapon.Position, (realAimPoint - GlobalPosition).Rotated(equippedWeapon.Rotation - facingDir), Colors.Red, 1);
     }
 }

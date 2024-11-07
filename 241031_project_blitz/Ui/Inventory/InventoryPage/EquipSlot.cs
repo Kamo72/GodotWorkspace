@@ -10,33 +10,33 @@ public partial class EquipSlot : Control
 
 	public override void _Ready()
 	{
-        // GD.PrintErr("("+this.Name+")SlotTypeText(this.~) : " + this.FindByName("SlotTypeText"));
-        // GD.PrintErr("("+this.Name+")SlotTypeText : " + slotName);
-	}
+        GD.PrintErr("(" + this.Name + ")SlotTypeText(this.~) : " + this.FindByName("SlotTypeText"));
+        GD.PrintErr("(" + this.Name + ")SlotTypeText : " + slotName);
+    }
 
     public override void _Input(InputEvent @event)
     {
-        // if (@event is InputEventMouseButton mouseEvent)
-        // {
-        //     if (mouseEvent.Pressed)
-        //     {
-        //         GD.PrintErr("Mouse button pressed");
-        //     }
-        //     else
-        //     {
-        //         GD.PrintErr("Mouse button released");
-        //     }
-        // }
-        
-        // if (@event is InputEventMouseMotion mouseMotionEvent)
-        // {
-        //     GD.PrintErr("Mouse moved");
-        // }
-		
-        // if (GetRect().HasPoint(GetLocalMousePosition()))
-        // {
-        //     GD.PrintErr("Mouse is over the control");
-        // }
+        if (@event is InputEventMouseButton mouseEvent)
+        {
+            if (mouseEvent.Pressed)
+            {
+                GD.PrintErr("Mouse button pressed");
+            }
+            else
+            {
+                GD.PrintErr("Mouse button released");
+            }
+        }
+
+        if (@event is InputEventMouseMotion mouseMotionEvent)
+        {
+            GD.PrintErr("Mouse moved");
+        }
+
+        if (GetRect().HasPoint(GetLocalMousePosition()))
+        {
+            GD.PrintErr("Mouse is over the control");
+        }
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

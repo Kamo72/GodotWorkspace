@@ -23,17 +23,17 @@ public partial class PocketSlot : Control
         {
             if (mouseEvent.Pressed)
             {
-                //GD.PrintErr("Mouse button pressed");
+                GD.PrintErr("Mouse button pressed");
             }
             else
             {
-                //GD.PrintErr("Mouse button released");
+                GD.PrintErr("Mouse button released");
             }
         }
-        
+
         if (@event is InputEventMouseMotion mouseMotionEvent)
         {
-            //GD.PrintErr("Mouse moved");
+            GD.PrintErr("Mouse moved");
         }
 		
         

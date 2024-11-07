@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using static Humanoid;
 
 public partial class InventoryPage : Page
 {
@@ -53,9 +54,42 @@ public partial class InventoryPage : Page
     {
         base._Process(delta);
         cursor.GlobalPosition = GetGlobalMousePosition();
+
+
+        // 조끼 및 가방 Storage UI 업데이트
+        UpdateStorageUI(rigSlot, Player.player.inventory.rig);
+        UpdateStorageUI(backpackSlot, Player.player.inventory.backpack);
+        UpdateStorageUI(containerSlot, Player.player.inventory.sContainer);
     }
 
+    private void UpdateEquipUI(EquipSlot grid, Player.Inventory.EquipSlot slot)
+    {
+        if (slot.item == null)
+        {
+            return;
+        }
+        //TODO
+    }
 
+    private void UpdateStorageUI(StorageSlot grid, Player.Inventory.EquipSlot slot)
+    {
+        if (slot.item == null)
+        {
+            grid.SetStorageGrid(new Vector2I(0, 0));
+            return;
+        }
+
+
+        if (slot.item is HasStorage storage)
+        {
+            //grid.ClearChildren();
+
+            foreach (var storageNode in storage.storage.itemList)
+            {
+                //Add storageNode
+            }
+        }
+    }
 
 
 

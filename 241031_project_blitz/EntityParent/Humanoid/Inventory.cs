@@ -49,73 +49,30 @@ public partial class Humanoid
             return false;
         }
 
+        private bool EquipToSlot(Item item, EquipSlot slot)
+        {
+            if(item is Equipable equipable)
+            if (slot.DoEquipItem(equipable))
+            {
+                equipable.BeEquip(master);
+                return true;
+            }
+            return false;
+        }
         //빠른 장착
         public bool EquipItemQuick(Item item)
         {
             if (item is WeaponItem newWeapon)
             {
-                if (newWeapon.AbleSub())
-                {
-                    if (subWeapon.DoEquipItem(newWeapon))
-                    {
-                        newWeapon.BeEquip(master);
-                        return true;
-                    }
-                }
+                if (newWeapon.AbleSub() && EquipToSlot(newWeapon, subWeapon)) return true;
+                if (newWeapon.AbleMain() && (EquipToSlot(newWeapon, firstWeapon) || EquipToSlot(newWeapon, secondWeapon))) return true;
+            }
+            else if (item is Headgear newHeadgear && EquipToSlot(newHeadgear, headgear)) return true;
+            else if (item is Backpack newBackpack && EquipToSlot(newBackpack, backpack)) return true;
+            else if (item is Plate newPlate && EquipToSlot(newPlate, plate)) return true;
+            else if (item is Helmet newHelmet && EquipToSlot(newHelmet, helmet)) return true;
 
-                if (newWeapon.AbleMain())
-                {
-                    if (firstWeapon.DoEquipItem(newWeapon))
-                    {
-                        newWeapon.BeEquip(master);
-                        return true;
-                    }
-                    if (secondWeapon.DoEquipItem(newWeapon))
-                    {
-                        newWeapon.BeEquip(master);
-                        return true;
-                    }
-                }
-            }
-            else if (item is Headgear newHeadgear)
-            {
-                if (headgear.DoEquipItem(newHeadgear))
-                {
-                    newHeadgear.BeEquip(master);
-                    return true;
-                }
-            }
-            else if (item is Backpack newBackpack)
-            {
-                if (backpack.DoEquipItem(newBackpack))
-                {
-                    newBackpack.BeEquip(master);
-                    return true;
-                }
-            }
-            else if (item is Plate newPlate)
-            {
-                if (plate.DoEquipItem(newPlate))
-                {
-                    newPlate.BeEquip(master);
-                    return true;
-                }
-            }
-            else if (item is Helmet newHelmet)
-            {
-                if (helmet.DoEquipItem(newHelmet))
-                {
-                    newHelmet.BeEquip(master);
-                    return true;
-                }
-            }
-            else
-            {
-                Console.WriteLine("EquipItem - 해당 아이템은 장착할 수 없습니다.");
-                return false;
-            }
-
-            Console.WriteLine("EquipItem - 적절한 장착 위치를 찾지 못했습니다.");
+            Console.WriteLine("EquipItem - 장착할 수 없는 아이템이거나 적절한 위치를 찾지 못했습니다.");
             return false;
         }
 
@@ -160,6 +117,22 @@ public partial class Humanoid
             item.GetDroppedItem(master.Position);
 
             //item.droppedItem.LinearVelocity = Vector2.FromAngle(master.hands.direction) * 100f;
+        }
+
+        public void PrintInventoryStatus()
+        {
+            Console.WriteLine("=== 장착된 아이템 ===");
+            Console.WriteLine("Helmet: " + (helmet.item?.status.name ?? "없음"));
+            Console.WriteLine("Headgear: " + (headgear.item?.status.name ?? "없음"));
+            Console.WriteLine("First Weapon: " + (firstWeapon.item?.status.name ?? "없음"));
+            Console.WriteLine("Second Weapon: " + (secondWeapon.item?.status.name ?? "없음"));
+            Console.WriteLine("Sub Weapon: " + (subWeapon.item?.status.name ?? "없음"));
+            Console.WriteLine("Backpack: " + (backpack.item?.status.name ?? "없음"));
+
+            Console.WriteLine("=== 주머니 아이템 ===");
+            foreach (var item in pocket.itemList)
+                Console.WriteLine("Item: " + item.item.status.name);
+            
         }
         #endregion
 

@@ -7,7 +7,7 @@ public partial class Weapon : Node2D
     private float fireCooldown = 0f;
 
     private int ammoInMagazine;      // 현재 탄창 내의 탄약 수
-    private bool isReloading = false; // 재장전 중 여부
+    public bool isReloading = false; // 재장전 중 여부
 
     public Weapon(Code code)
     {

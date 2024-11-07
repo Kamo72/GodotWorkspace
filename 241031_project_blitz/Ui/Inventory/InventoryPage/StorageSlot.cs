@@ -26,17 +26,17 @@ public partial class StorageSlot : Control
         {
             if (mouseEvent.Pressed)
             {
-                //GD.PrintErr("Mouse button pressed");
+                GD.PrintErr("Mouse button pressed");
             }
             else
             {
-                //GD.PrintErr("Mouse button released");
+                GD.PrintErr("Mouse button released");
             }
         }
-        
+
         if (@event is InputEventMouseMotion mouseMotionEvent)
         {
-            //GD.PrintErr("Mouse moved");
+            GD.PrintErr("Mouse moved");
         }
 		
         
@@ -89,7 +89,7 @@ public partial class StorageSlot : Control
     }
 
     Vector2I storageSize = new Vector2I(0,0);
-    void SetStorageGrid(Vector2I size)
+    public void SetStorageGrid(Vector2I size)
     {
         int maxColumn = 7;
         SlotList = new List<Panel>();

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Humanoid : RigidBody2D
 {
@@ -8,13 +9,13 @@ public partial class Humanoid : RigidBody2D
     private float inertia = 0.15f; // 관성 계수 조절
 
     protected Weapon equippedWeapon;
-    private float facingDir = 0f; // 현재 바라보는 방향 (라디안 단위)
+    protected float facingDir = 0f; // 현재 바라보는 방향 (라디안 단위)
 
     public float healthNow;
     public float healthMax;
 
     // 조준점 관련 변수
-    private Vector2 virtualAimPoint;
+    public Vector2 virtualAimPoint;
     protected Vector2 delayedRecoilVec = Vector2.Zero;
     private Vector2 recoilVec = Vector2.Zero;
     private float aimLength => (virtualAimPoint - GlobalPosition).Length();
@@ -30,25 +31,25 @@ public partial class Humanoid : RigidBody2D
             
             aimPoint += GlobalPosition;
 
-            // SimpleNoise를 기반으로 조준점 흔들림 계산
-            float radius = 100f * (1f + recoilVec.Length() / 100f);
+            float aimStatble = 50f; // 조준 안정 계수
+
+            float radius = aimStatble * (1f + recoilVec.Length() / 100f);
             float noiseX = noise.GetNoise2D(aimStableTime * 10f, 6945) * radius;
-            float noiseY = noise.GetNoise2D(aimStableTime * 10f + 100, 1235) * radius; // 서로 다른 노이즈 값 생성
+            float noiseY = noise.GetNoise2D(aimStableTime * 10f + 100, 1235) * radius;
             aimPoint += new Vector2(noiseX, noiseY)
                 * aimLength / 1000;
-
 
             return aimPoint;
         } }
 
 
-    protected float delayedRecoilRatio = 0.9f;
+    protected float delayedRecoilRatio = 0.9f; //지연 반동 계수
     protected float aimStableTime = 0f;
 
     protected float randFloat => ((float)Random.Shared.NextDouble() - 0.5f) * 2f;
 
-    private Vector2 handPos;
-    private float handRot;
+    protected Vector2 handPos;
+    protected float handRot;
 
     public override void _Ready()
     {
@@ -116,17 +117,20 @@ public partial class Humanoid : RigidBody2D
         QueueRedraw();
 
         // 가상 조준점 업데이트
-        virtualAimPoint = virtualAimPoint.Lerp(GetGlobalMousePosition(), 0.05f);
+        virtualAimPoint = virtualAimPoint.Lerp(GetGlobalMousePosition(), 0.3f);
 
+        float recoilRecover = 0.1f; //반동 회복
         // 실제 반동 벡터 업데이트
         recoilVec += delayedRecoilVec * (1f - delayedRecoilRatio);
-        recoilVec *= 0.9f;
+        recoilVec *= (1f - recoilRecover);
 
         // 지연 반동 벡터 업데이트
         delayedRecoilVec *= delayedRecoilRatio;
 
-        //조준안정
+        //조준 안정
         aimStableTime += (float)delta * (1 + recoilVec.Length()/100) * 3f;
+
+        InteractionProcess();
     }
 
     private void UpdateWeaponRotation()
@@ -143,12 +147,18 @@ public partial class Humanoid : RigidBody2D
             {
                 //최소한의 길이 보장 X 총구 꺾임
                 handPos = handPos.Lerp(Vector2.FromAngle(facingDir) * handDistance / 4f, 0.1f);
-                handRot = Mathf.LerpAngle(handRot, (realAimPoint - equippedWeapon.GlobalPosition).Angle()-0.5f*3.14f, 0.1f);
+                handRot = Mathf.LerpAngle(handRot, (realAimPoint - equippedWeapon.GlobalPosition).Angle() - 0.5f * 3.14f, 0.1f);
+            }
+            else if (equippedWeapon.isReloading)
+            {//최소한의 길이 보장 X 총구 꺾임
+                handPos = handPos.Lerp(Vector2.FromAngle(facingDir) * handDistance / 2f, 0.1f);
+                handRot = Mathf.LerpAngle(handRot, (realAimPoint - equippedWeapon.GlobalPosition).Angle() - 0.25f * 3.14f, 0.1f);
+
             }
             else if (realDistance < allowedDistance)
             {
                 //최소한의 길이 보장 X 총구 밀림
-                handPos = handPos.Lerp(Vector2.FromAngle(facingDir) * (handDistance -allowedDistance + realDistance), 0.1f);
+                handPos = handPos.Lerp(Vector2.FromAngle(facingDir) * (handDistance - allowedDistance + realDistance), 0.1f);
                 handRot = Mathf.LerpAngle(handRot, (realAimPoint - equippedWeapon.GlobalPosition).Angle(), 0.1f);
             }
             else
@@ -169,6 +179,23 @@ public partial class Humanoid : RigidBody2D
         facingDir = direction;
         UpdateWeaponRotation();
     }
+
+    protected List<Interactable> interactables = new List<Interactable>();
+    void InteractionProcess()
+    {
+        interactables = new List<Interactable>();
+        Godot.Collections.Array<Node> nodes = this.GetTree().Root.GetChild(0).GetChildren();
+
+        foreach (Node node in nodes)
+            if (node is Interactable interactable)
+            {
+                float dist = (GlobalPosition - interactable.GlobalPosition).Length();
+                if (dist < interactable.interactableRange)
+                    interactables.Add(interactable);
+            }
+
+    }
+
 
     // 데미지 처리 함수
     public void GetDamage(float damage)
@@ -194,7 +221,8 @@ public partial class Humanoid : RigidBody2D
     public void OnShoot()
     {
         // 지연 반동 벡터에 반동 추가
-        delayedRecoilVec += Vector2.FromAngle(randFloat * 2 * (float)Math.PI) * 100;
+        float recoilValue = 100f; //반동 크기
+        delayedRecoilVec += Vector2.FromAngle(randFloat * 2 * (float)Math.PI) * recoilValue;
     }
 
 
