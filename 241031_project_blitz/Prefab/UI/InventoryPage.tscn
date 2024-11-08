@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dcharhfjp5863"]
+[gd_scene load_steps=8 format=3 uid="uid://dcharhfjp5863"]
 
 [ext_resource type="Script" path="res://Ui/Inventory/InventoryPage.cs" id="1_32op5"]
 [ext_resource type="PackedScene" uid="uid://cretamyyae6ml" path="res://Prefab/UI/InventoryPage/EquipSlot.tscn" id="2_jn84s"]
 [ext_resource type="PackedScene" uid="uid://bqnmkshn01n2f" path="res://Prefab/UI/InventoryPage/StorageSlot.tscn" id="2_lseg4"]
 [ext_resource type="PackedScene" uid="uid://b1u5y8et2sbck" path="res://Prefab/UI/InventoryPage/WeaponSlot.tscn" id="3_dt2mp"]
 [ext_resource type="PackedScene" uid="uid://cov0e5qsp7n52" path="res://Prefab/UI/InventoryPage/PocketSlot.tscn" id="5_kaopl"]
+[ext_resource type="Texture2D" uid="uid://vyq7y3r32jfa" path="res://Asset/guns/ImageAR.png" id="6_koxyx"]
 [ext_resource type="Texture2D" uid="uid://6wgvmktcwrdj" path="res://Asset/UI/cursor.png" id="6_v20n6"]
 
 [node name="InventoryPage" type="Panel"]
@@ -204,9 +205,8 @@ offset_bottom = 40.0
 
 [node name="ItemImage" type="TextureRect" parent="Cursor"]
 layout_mode = 1
-anchors_preset = -1
-grow_horizontal = 2
-grow_vertical = 2
+texture = ExtResource("6_koxyx")
+expand_mode = 2
 stretch_mode = 5
 
 [node name="CursorImage" type="TextureRect" parent="Cursor"]

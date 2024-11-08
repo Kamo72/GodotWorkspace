@@ -1,5 +1,6 @@
-SubViewport
+TextureRect
 Control
+SubViewport
 CanvasLayer
 Camera2D
 RigidBody2D

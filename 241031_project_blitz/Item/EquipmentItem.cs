@@ -55,8 +55,9 @@ public abstract class Plate : Equipable
 }
 
 public abstract class Rig : Equipable
-{ 
-    public Storage storage { get => storage; set => storage = value; }
+{
+    Storage storageValue;
+    public Storage storage { get => storageValue; set => storageValue = value; }
     public Rig()
     {
         status.category = Category.RIG;
@@ -66,7 +67,8 @@ public abstract class Rig : Equipable
 
 public abstract class Backpack : Equipable, HasStorage
 {
-    public Storage storage { get => storage; set => storage = value; }
+    Storage storageValue;
+    public Storage storage { get => storageValue; set => storageValue = value; }
     public Backpack()
     {
         status.category = Category.BACKPACK;
@@ -75,7 +77,8 @@ public abstract class Backpack : Equipable, HasStorage
 
 public abstract class SecContainer : Equipable, HasStorage
 {
-    public Storage storage { get => storage; set => storage = value; }
+    Storage storageValue;
+    public Storage storage { get => storageValue; set => storageValue = value; }
     public SecContainer()
     {
         status.category = Category.S_CONTAINER;

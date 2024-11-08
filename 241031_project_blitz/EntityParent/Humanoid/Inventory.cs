@@ -14,7 +14,7 @@ public partial class Humanoid
         public Inventory(Humanoid master)
         {
             this.master = master;
-        }
+    }
         public Humanoid master;
 
         #region [제공 함수]

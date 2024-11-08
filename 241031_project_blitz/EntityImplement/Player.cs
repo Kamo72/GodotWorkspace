@@ -7,11 +7,17 @@ public partial class Player : Humanoid
     public static Player player;
     public override void _Ready()
     {
-        GravityScale = 0;
+        base._Ready();
+
         player = this;
         Interactable.player = this;
         // 새로운 무기 생성 및 장착 (예시로 rpm=600, damage=15, muzzleSpeed=400)
         EquipWeapon(new Weapon(Weapon.Code.K2));
+
+        inventory.backpack.DoEquipItem(new TestBackpack());
+        //inventory.rig.DoEquipItem(new TestRig());
+        inventory.sContainer.DoEquipItem(new TestContainer());
+        inventory.TakeItem(new TestItem());
     }
 
     public bool isInventory => ((Control)GetTree().Root.FindByName("MainUi")).Visible;
@@ -26,11 +32,9 @@ public partial class Player : Humanoid
             (Input.IsActionPressed("move_back") ? 1 : 0) - (Input.IsActionPressed("move_forward") ? 1 : 0)
         );
 
-        // moveVec가 0일 경우 정지
+        // moveVec가 0 또는 인벤토리를 보는 중 일 경우 정지 
         if (moveVec.Length() == 0 || isInventory)
-        {
             moveVec = new Vector2(0, 0);
-        }
 
         // 마우스 위치를 얻어 Player의 위치로부터 방향 계산
         var mousePosition = GetGlobalMousePosition();

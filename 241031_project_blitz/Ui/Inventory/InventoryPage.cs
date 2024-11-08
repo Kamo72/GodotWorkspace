@@ -26,7 +26,7 @@ public partial class InventoryPage : Page
     
     VBoxContainer otherInventory => this.FindByName("OtherInventory") as VBoxContainer;
 
-    Control cursor => this.FindByName("Cursor") as Control;
+    public Control cursor => this.FindByName("Cursor") as Control;
 
     public override void _EnterTree()
     {
@@ -47,7 +47,6 @@ public partial class InventoryPage : Page
         containerSlot.slotName.Text = "컨테이너";
         containerSlot.DeclareStorageGrid(new Vector2I(2,2));
 
-        //myInventory.
     }
 
     public override void _Process(double delta)
@@ -55,8 +54,6 @@ public partial class InventoryPage : Page
         base._Process(delta);
         cursor.GlobalPosition = GetGlobalMousePosition();
 
-
-        // 조끼 및 가방 Storage UI 업데이트
         UpdateStorageUI(rigSlot, Player.player.inventory.rig);
         UpdateStorageUI(backpackSlot, Player.player.inventory.backpack);
         UpdateStorageUI(containerSlot, Player.player.inventory.sContainer);
@@ -73,24 +70,79 @@ public partial class InventoryPage : Page
 
     private void UpdateStorageUI(StorageSlot grid, Player.Inventory.EquipSlot slot)
     {
-        if (slot.item == null)
-        {
-            grid.SetStorageGrid(new Vector2I(0, 0));
-            return;
-        }
+        if (grid.updated == false)
+            grid.RestructureStorage(slot.item);
+        //if (slot.item == null)
+        //{
+        //    grid.SetStorageGrid(new Vector2I(0, 0));
+        //    return;
+        //}
 
+        //if (slot.item is HasStorage storage)
+        //{
+        //    grid.SetStorageGrid(storage.storage.size); // Storage의 크기에 맞춰 그리드 설정
 
-        if (slot.item is HasStorage storage)
-        {
-            //grid.ClearChildren();
+        //    foreach (var storageNode in storage.storage.itemList)
+        //    {
+        //        if (storageNode.item != null)
+        //        {
+        //            // ItemModel을 생성하고 아이템의 스프라이트를 적절한 위치에 추가
+        //            ItemModel itemModel = new ItemModel(storageNode.item);
 
-            foreach (var storageNode in storage.storage.itemList)
-            {
-                //Add storageNode
-            }
-        }
+        //            // storageNode의 위치에 맞춰 ItemModel 배치
+        //            Vector2 position = CalculatePosition(storageNode.pos, grid);
+        //            itemModel.SetPosition(position);
+        //            Vector2 size = CalculateSize(storageNode.item.status.size, grid);
+        //            itemModel.SetSize(size);
+
+        //            // 그리드에 ItemModel 추가
+        //            grid.AddChild(itemModel);
+        //        }
+        //    }
+        //}
     }
 
 
+    ItemModel onDragging = null;
+    Vector2I dragPos = Vector2I.Zero;
+    public void SetCursor(ItemModel iModel, Vector2I dragPos)
+    {
+        TextureRect image = cursor.FindByName("ItemImage") as TextureRect;
 
+        if (iModel == null) 
+        {
+            image.Texture = null;
+            image.CustomMinimumSize = Vector2.Zero;
+            onDragging?.SetDragging(false);
+            onDragging = null;
+            return;
+        }
+
+        this.dragPos = dragPos;
+        Vector2 dragRatio = new Vector2(
+            (-1f - dragPos.X * 2f) / (iModel.itemSize.X * 2f),
+            (-1f - dragPos.Y * 2f) / (iModel.itemSize.Y * 2f));
+
+        GD.PushWarning("dragRatio : " + dragRatio.ToString());
+        GD.PushWarning("dragPos : " + dragPos.ToString());
+        GD.PushWarning("iModel.itemSize : " + iModel.itemSize.ToString());
+
+        image.Texture = (Texture2D)ResourceLoader.Load(iModel.item.status.textureRoot);
+        image.CustomMinimumSize = new(iModel.textureRect.Size.X, iModel.textureRect.Size.Y);
+        image.Position = new Vector2(
+            iModel.textureRect.Size.X * dragRatio.X,
+            iModel.textureRect.Size.Y * dragRatio.Y
+            );
+
+        onDragging = iModel;
+        onDragging?.SetDragging(true);
+        
+    }
+
+    public (ItemModel, Vector2I)? ReleaseCursor()
+    {
+        if (onDragging == null) return null;
+
+        return (onDragging, dragPos);
+    }
 }

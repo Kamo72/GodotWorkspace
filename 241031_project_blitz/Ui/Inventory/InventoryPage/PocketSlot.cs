@@ -23,17 +23,17 @@ public partial class PocketSlot : Control
         {
             if (mouseEvent.Pressed)
             {
-                GD.PrintErr("Mouse button pressed");
+                GD.Print("Mouse button pressed");
             }
             else
             {
-                GD.PrintErr("Mouse button released");
+                GD.Print("Mouse button released");
             }
         }
 
         if (@event is InputEventMouseMotion mouseMotionEvent)
         {
-            GD.PrintErr("Mouse moved");
+            GD.Print("Mouse moved");
         }
 		
         
@@ -44,7 +44,7 @@ public partial class PocketSlot : Control
         base._Process(delta);
         OnMouseProcess();
 
-        GD.PrintErr("onMouse("+step+++") : " + (onMouse.HasValue? onMouse : null).ToString());
+        //GD.PrintErr("onMouse("+step+++") : " + (onMouse.HasValue? onMouse : null).ToString());
 
         if(updated == false){
             updated = true;
@@ -72,12 +72,6 @@ public partial class PocketSlot : Control
 
         CustomMinimumSize = new Vector2(CustomMinimumSize.X, maxHeight + 20);
 
-    }
-
-    public override void _Draw()
-    {
-        // Rect2 rect = new Rect2(Vector2.Zero, Size);
-        // DrawRect(rect, new Color(0.5f,0.5f,0.5f), false, 1f);
     }
 
     public void DeclareStorageGrid(Vector2I size){

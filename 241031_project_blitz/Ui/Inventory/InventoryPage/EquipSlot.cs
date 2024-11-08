@@ -10,8 +10,8 @@ public partial class EquipSlot : Control
 
 	public override void _Ready()
 	{
-        GD.PrintErr("(" + this.Name + ")SlotTypeText(this.~) : " + this.FindByName("SlotTypeText"));
-        GD.PrintErr("(" + this.Name + ")SlotTypeText : " + slotName);
+        GD.PushWarning("(" + this.Name + ")SlotTypeText(this.~) : " + this.FindByName("SlotTypeText"));
+        GD.PushWarning("(" + this.Name + ")SlotTypeText : " + slotName);
     }
 
     public override void _Input(InputEvent @event)
@@ -20,31 +20,29 @@ public partial class EquipSlot : Control
         {
             if (mouseEvent.Pressed)
             {
-                GD.PrintErr("Mouse button pressed");
+                GD.Print("Mouse button pressed");
             }
             else
             {
-                GD.PrintErr("Mouse button released");
+                GD.Print("Mouse button released");
             }
         }
 
         if (@event is InputEventMouseMotion mouseMotionEvent)
         {
-            GD.PrintErr("Mouse moved");
+            GD.Print("Mouse moved");
         }
 
         if (GetRect().HasPoint(GetLocalMousePosition()))
         {
-            GD.PrintErr("Mouse is over the control");
+            GD.Print("Mouse is over the control");
         }
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
         OnMouseProcess();
 	}
-
 
     void OnMouseProcess()
     {

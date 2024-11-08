@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using static Humanoid;
 
 public partial class Humanoid : RigidBody2D
 {
@@ -55,6 +56,8 @@ public partial class Humanoid : RigidBody2D
     {
         healthMax = 100f; // 최대 체력 초기화
         healthNow = healthMax; // 현재 체력을 최대 체력으로 설정
+
+        inventory = new Inventory(this);
 
         // Collision 생성 및 설정
         var collision = new CollisionShape2D();
