@@ -2,6 +2,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using StorageNode = Storage.StorageNode;
 
@@ -14,7 +15,17 @@ public partial class Humanoid
         public Inventory(Humanoid master)
         {
             this.master = master;
-    }
+            helmet = new EquipSlot(this, Item.Category.HELMET);
+            plate = new EquipSlot(this, Item.Category.PLATE);
+            headgear = new EquipSlot(this, Item.Category.HEADGEAR);
+            firstWeapon = new EquipSlot(this, Item.Category.WEAPON);
+            secondWeapon = new EquipSlot(this, Item.Category.WEAPON);
+            subWeapon = new EquipSlot(this, Item.Category.WEAPON, true);
+            rig = new EquipSlot(this, Item.Category.RIG);
+            pocket = new Storage(new Vector2I(4, 1));
+            backpack = new EquipSlot(this, Item.Category.BACKPACK);
+            sContainer = new EquipSlot(this, Item.Category.S_CONTAINER);
+        }
         public Humanoid master;
 
         #region [제공 함수]
@@ -23,16 +34,6 @@ public partial class Humanoid
         {
             StorageNode? newPlace;
 
-            //주머니 먼저 삽입
-            newPlace = pocket.GetPosInsert(item);
-            if (newPlace.HasValue)
-            {
-                item.onStorage?.RemoveItem(item);
-                pocket.Insert(newPlace.Value);
-
-                return true;
-            }
-
             //가방에 삽입
             if (backpack.item is Backpack bp)
             {
@@ -40,10 +41,15 @@ public partial class Humanoid
                 if (newPlace.HasValue)
                 {
                     item.onStorage?.RemoveItem(item);
-                    bp.storage.Insert(newPlace.Value);
-
-                    return true;
+                    return bp.storage.Insert(newPlace.Value);
                 }
+            }
+            //주머니 먼저 삽입
+            newPlace = pocket.GetPosInsert(item);
+            if (newPlace.HasValue)
+            {
+                item.onStorage?.RemoveItem(item);
+                return pocket.Insert(newPlace.Value);
             }
 
             return false;
@@ -52,13 +58,14 @@ public partial class Humanoid
         private bool EquipToSlot(Item item, EquipSlot slot)
         {
             if(item is Equipable equipable)
-            if (slot.DoEquipItem(equipable))
-            {
-                equipable.BeEquip(master);
-                return true;
-            }
+                if (slot.DoEquipItem(equipable))
+                {
+                    equipable.BeEquip(master);
+                    return true;
+                }
             return false;
         }
+        
         //빠른 장착
         public bool EquipItemQuick(Item item)
         {
@@ -79,25 +86,20 @@ public partial class Humanoid
         //슬롯 지정 장착
         public bool EquipItemTarget(EquipSlot slot, Equipable item)
         {
-            if (slot.DoEquipItem((Item)item))
-            {
-                item.UnEquip(master);
-                return true;
-            }
-            return false;
+            return slot.DoEquipItem((Item)item);
         }
 
         //아이템 장착 해제
         public bool UnEquipItem(EquipSlot slot, bool doThrow)
         {
             //해당 슬롯에 아이템이 없음.
-            if (slot.item == null) { return false; }
+            if (slot.item == null) return false;
 
             //인벤토리로
             if (!doThrow)
             {
-                bool isSuceed = TakeItem((Item)slot.item);
-                if (!isSuceed) { return false; }
+                if (!TakeItem(slot.item))
+                    return false;
             }
             else //필드로
             {
@@ -105,7 +107,7 @@ public partial class Humanoid
             }
 
             slot.UnEquipItem();
-            slot.item.UnEquip(master);
+            slot.item.UnEquip();
 
             return true;
         }
@@ -134,25 +136,22 @@ public partial class Humanoid
                 Console.WriteLine("Item: " + item.item.status.name);
             
         }
+
         #endregion
 
         #region [저장 공간]
-        public EquipSlot helmet = new EquipSlot(Item.Category.HELMET);
-        public EquipSlot plate = new EquipSlot(Item.Category.PLATE);
-        public EquipSlot headgear = new EquipSlot(Item.Category.HEADGEAR);
-        public EquipSlot firstWeapon = new EquipSlot(Item.Category.WEAPON);
-        public EquipSlot secondWeapon = new EquipSlot(Item.Category.WEAPON);
-        public EquipSlot subWeapon = new EquipSlot(Item.Category.WEAPON, true);
-        public EquipSlot rig = new EquipSlot(Item.Category.RIG);
-        public Storage pocket = new Storage(new Vector2I(4, 1));
-        public EquipSlot backpack = new EquipSlot(Item.Category.BACKPACK);
-        public EquipSlot sContainer = new EquipSlot(Item.Category.S_CONTAINER);
-
+        public EquipSlot helmet;
+        public EquipSlot plate;
+        public EquipSlot headgear;
+        public EquipSlot firstWeapon;
+        public EquipSlot secondWeapon;
+        public EquipSlot subWeapon;
+        public EquipSlot rig;
+        public Storage pocket;
+        public EquipSlot backpack;
+        public EquipSlot sContainer;
         #endregion
-
-
     }
-
 }
 
 
@@ -162,11 +161,12 @@ public partial class Humanoid
     {
         public class EquipSlot
         {
-
-
-            public EquipSlot(Item.Category equipmentType, bool isShortWeapon = false)
+            Inventory inventory;
+            public EquipSlot(Inventory inventory, Item.Category equipmentType, bool isShortWeapon = false)
             {
                 this.equipmentType = equipmentType;
+                this.inventory = inventory;
+                this.isShortWeapon = isShortWeapon;
             }
 
             public Equipable item;
@@ -175,10 +175,12 @@ public partial class Humanoid
 
             public bool AbleEquipItem(Item item)
             {
-                return true;
-            }
-            public virtual bool DoEquipItem(Item item)
-            {
+                if(item == null)
+                    return false;
+
+                if (item.status.category != equipmentType)
+                    return false;
+
                 switch (equipmentType)
                 {
                     case Item.Category.WEAPON:
@@ -195,32 +197,40 @@ public partial class Humanoid
                     case Item.Category.HELMET: if (item is Helmet == false) return false; break;
                     case Item.Category.PLATE: if (item is Plate == false) return false; break;
 
-                    case Item.Category.BACKPACK: if (item is Backpack == false) return false; break;
+                    case Item.Category.BACKPACK: if (item is Backpack == false) return false;  break;
                     case Item.Category.RIG: if (item is Rig == false) return false; break;
                     case Item.Category.S_CONTAINER: if (item is SecContainer == false) return false; break;
                 }
+                return true;
+            }
+            public virtual bool DoEquipItem(Item item)
+            {
+                if (AbleEquipItem(item) == false) return false;
 
-                if (this.item == null)
-                {
-                    this.item = item as Equipable;
-                    return true;
-                }
-
-                return false;
+                if (this.item != null)
+                    return false;
+                
+                this.item = item as Equipable;
+                this.item.BeEquip(inventory.master);
+                return true;
             }
             public Item UnEquipItem()
             {
                 if (this.item != null)
                 {
                     Item item = (Item)this.item;
+
+                    if (this == inventory.master.nowEquip)
+                        inventory.master.targetEquip = null;
+
+                    if (this.item.equipedBy != null)
+                        this.item.UnEquip();
+
                     this.item = null;
                     return item;
                 }
                 return null;
             }
-
-
         }
-
     }
 }

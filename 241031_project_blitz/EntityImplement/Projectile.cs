@@ -7,6 +7,19 @@ public partial class Projectile : RayCast2D
     private float speed;
     private Vector2 velocity;
 
+    public void Initialize(AmmoStatus ammoStatus, float speed, Vector2 position, float rotation)
+    {
+        this.damage = ammoStatus.lethality.damage;
+        this.speed = speed;
+        Position = position;
+        //Rotation = rotation;
+
+        // 속도 설정
+        velocity = new Vector2(speed, 0).Rotated(rotation);
+        TargetPosition = velocity.Normalized() * speed / 60; // Raycast 길이 설정 (속도에 따라 조정 가능)
+        Enabled = true; // RayCast 활성화
+
+    }
 
     public void Initialize(float damage, float speed, Vector2 position, float rotation)
     {

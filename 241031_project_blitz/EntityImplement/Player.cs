@@ -1,6 +1,7 @@
 ﻿using Godot;
 using Microsoft.VisualBasic;
 using System;
+using static Humanoid;
 
 public partial class Player : Humanoid
 {
@@ -11,16 +12,28 @@ public partial class Player : Humanoid
 
         player = this;
         Interactable.player = this;
-        // 새로운 무기 생성 및 장착 (예시로 rpm=600, damage=15, muzzleSpeed=400)
-        EquipWeapon(new Weapon(Weapon.Code.K2));
+
+        inventory.firstWeapon.DoEquipItem(new MP_155());
+        inventory.secondWeapon.DoEquipItem(new MP_133());
 
         inventory.backpack.DoEquipItem(new TestBackpack());
-        //inventory.rig.DoEquipItem(new TestRig());
         inventory.sContainer.DoEquipItem(new TestContainer());
+
         inventory.TakeItem(new TestItem());
+        inventory.TakeItem(new TestItemSmall());
+        inventory.TakeItem(new TestItemSmall());
+        inventory.TakeItem(new M855 { stackNow = 100 });
+        inventory.TakeItem(new M855 { stackNow = 50 });
+        inventory.TakeItem(new M855 { stackNow = 25 });
+        inventory.TakeItem(new AR15_StanagMag_30(typeof(M855)));
+        inventory.TakeItem(new AR15_StanagMag_30(typeof(M855)));
+        inventory.TakeItem(new AR15_StanagMag_30(typeof(M855)));
+        inventory.TakeItem(new AR15_StanagMag_30(typeof(M855)));
+        inventory.TakeItem(new G12_Grizzly { stackNow = 20 });
+        inventory.TakeItem(new G12_BuckShot_7p5 { stackNow = 20 });
     }
 
-    public bool isInventory => ((Control)GetTree().Root.FindByName("MainUi")).Visible;
+    public Control mainUI => GetTree().Root.FindByName("MainUi") as Control;
 
     public override void _Process(double delta)
     {
@@ -41,22 +54,33 @@ public partial class Player : Humanoid
         var direction = mousePosition - GlobalPosition;
         var angle = direction.Angle();
 
-        // Humanoid의 facingDir 업데이트
-        SetFacingDirection(angle);
+        // 바라보는 방향 설정
+        facingDir = angle;
+
+        mainUI.Visible = isInventory;
 
 
         // 발사 입력 감지 및 무기 발사 호출
         if (Input.IsActionPressed("fire") && !isInventory)
         {
-            bool? isShoot = equippedWeapon?.Shoot();
+            if (equippedWeapon == null) return;
+            if (equippedWeapon.IsBusy())
+            {
+                if(equippedWeapon.isReloading)
+                    equippedWeapon.DisruptReload();
+                return;
+            }
 
-            if (isShoot.HasValue)
-                if (isShoot.Value)
-                {
-                    OnShoot();
-                    CameraManager.current.ApplyRecoil(50, 50f/ 180f / (float)Math.PI);
-                }
+            bool isShoot = equippedWeapon.Shoot();
+
+            if (isShoot)
+            {
+                OnShoot();
+                CameraManager.current.ApplyRecoil(equippedWeapon.status.aimDt.strength);
+            }
         }
+        if (Input.IsActionJustReleased("fire"))
+                equippedWeapon?.SetRealease();
 
         // 재장전 수행
         if (Input.IsActionPressed("reload") && !isInventory)
@@ -64,18 +88,31 @@ public partial class Player : Humanoid
 
         if (Input.IsActionJustPressed("inventory"))
         {
+            isInventory = !isInventory;
+
             Control mainUI = GetTree().Root.FindByName("MainUi") as Control;
             mainUI.Visible = !mainUI.Visible;
         }
 
         if (Input.IsActionJustPressed("interact"))
         {
-            if (interactables.Count > 0) {
-
-                GD.Print(interactables[0]);
+            if (interactables.Count > 0)
                 interactables[0].Interacted(this);
-            }
-            
+        }
+        if (Input.IsActionJustPressed("firstWeapon"))
+        {
+            if (inventory.firstWeapon.item != null)
+                targetEquip = inventory.firstWeapon;
+        }
+        if (Input.IsActionJustPressed("secondWeapon"))
+        {
+            if (inventory.secondWeapon.item != null)
+                targetEquip = inventory.secondWeapon;
+        }
+        if (Input.IsActionJustPressed("subWeapon"))
+        {
+            if (inventory.subWeapon.item != null)
+                targetEquip = inventory.subWeapon;
         }
     }
 
@@ -85,6 +122,7 @@ public partial class Player : Humanoid
         base._Draw();
 
         // 실제 조준점을 화면에 그리기
-        DrawLine(equippedWeapon.Position, (realAimPoint - GlobalPosition).Rotated(equippedWeapon.Rotation - facingDir), Colors.Red, 1);
+        if(equippedWeapon != null)
+            DrawLine(equippedWeapon.Position, (realAimPoint - GlobalPosition).Rotated(equippedWeapon.Rotation - facingDir), Colors.Red, 1);
     }
 }

@@ -2,100 +2,60 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using static Storage;
 using Color = Godot.Color;
 
 public partial class StorageSlot : Control
 {
-
+    /* UI Reference */
     GridContainer storageCon => this.FindByName("StorageContainer") as GridContainer;
     PanelContainer slotContainer => this.FindByName("SlotContainer") as PanelContainer;
     public Label slotName => this.FindByName("SlotTypeText") as Label;
 
     List<Panel> SlotList = new List<Panel>();
 
-    public InventoryPage inventoryPage => ((InventoryPage)GetParent().GetParent().GetParent().GetParent());
 
+    /* Reference */
+    public InventoryPage inventoryPage => ((InventoryPage)GetParent().GetParent().GetParent().GetParent());
+    
+    Humanoid.Inventory.EquipSlot slot; //소켓과 장비된 아이템 정보
+    Equipable equiped = null; //소켓과 장비된 아이템 정보
+
+
+    /* Variables */
+    Vector2I storageSize = new Vector2I(0, 0);
+    int step = 0;
+
+    List<ItemModel> itemModels = new List<ItemModel>(); //장비된 아이템 내 Storage의 아이템들
+
+
+    /* Override */
     public override void _EnterTree()
     {
         base._EnterTree();
         UpdateSize();
     }
 
-    int step = 0;
-    public override void _Input(InputEvent @event)
-    {
-        Rect2 rect = GetRect();
-        rect.Position = GlobalPosition;
-
-        if (rect.HasPoint(GetGlobalMousePosition()) == false)
-        {
-            updated = false;
-            return;
-        }
-
-        if (@event is InputEventMouseButton mouseEvent)
-        {
-            if (mouseEvent.Pressed)
-            {
-                GD.Print("Mouse button pressed + " + onMouseItem);
-
-                Vector2I dragPos = new Vector2I(
-                    onMouse.Value.X - onMouseItem.storagePos.X,
-                    onMouse.Value.Y - onMouseItem.storagePos.Y
-                    );
-
-                GD.PushError("dragPos + " + dragPos + " - " + onMouse.Value + " - " + onMouseItem.storagePos);
-
-                if (onMouseItem != null)
-                    inventoryPage.SetCursor(onMouseItem, dragPos);
-            }
-            else
-            {
-                GD.Print("Mouse button released + " + onMouseItem);
-                var result = inventoryPage.ReleaseCursor();
-                if (result.HasValue)
-                {
-                    ItemModel sentItem = result.Value.Item1;
-                    Vector2I dragPos= result.Value.Item2;
-
-                    inventoryPage.SetCursor(null, new());
-
-                    if (equiped is HasStorage hasStorage) 
-                    {
-                        bool isStored = sentItem.item.Store(
-                            hasStorage.storage, onMouse.Value - dragPos, false);
-
-                        if (isStored)
-                            updated = false;
-                    }
-
-                }
-            }
-        }
-
-        if (@event is InputEventMouseMotion mouseMotionEvent)
-        {
-            GD.Print("Mouse moved" + onMouse);
-        }
-
-
-    }
-
     public override void _Process(double delta)
     {
-        base._Process(delta);
         OnMouseProcess();
-
-        //GD.PrintErr("onMouse(" + step++ + ") : " + (onMouse.HasValue ? onMouse : null).ToString());
-
-        //if (updated == false) {
-        //    updated = true;
-        //    SetStorageGrid(storageSize);
-        //}
     }
 
-    public bool updated = false;
 
+    /* Initiate */
+    public void DeclareStorageGrid(Vector2I size)
+    {
+        storageSize = size;
+        updated = false;
+    }
+
+    public void SetSocket(Humanoid.Inventory.EquipSlot equipSlot)
+    {
+        slot = equipSlot;
+    }
+
+
+    /* Process */
     private void UpdateSize()
     {
         float maxWidth = 0;
@@ -116,63 +76,7 @@ public partial class StorageSlot : Control
 
     }
 
-    public void DeclareStorageGrid(Vector2I size) {
-        storageSize = size;
-        updated = false;
-    }
-
-    Vector2I storageSize = new Vector2I(0, 0);
-    public void SetStorageGrid(Vector2I size)
-    {
-        int maxColumn = 7;
-        SlotList = new List<Panel>();
-
-        Control parent = GetParent() as Control;
-        float parentWidth = parent.Size.X;
-
-        float margin = 3f;
-        float widthAvailable = parentWidth - 150;
-        float nodeSize = (widthAvailable - margin * (maxColumn + 1)) / maxColumn;
-        float width = nodeSize * size.X + margin * (size.X + 1);
-
-        GridContainer scon = storageCon;
-
-        foreach (Node node in scon.GetChildren())
-            scon.RemoveChild(node);
-
-
-        // GD.PrintErr("scon.Size : " + scon.Size);
-        // GD.PrintErr("margin : " + margin + " / width : " + width + " / nodeSize : " + nodeSize);
-
-        for (int y = 0; y < size.Y; y++)
-            for (int x = 0; x < size.X; x++)
-            {
-                Vector2 tPosition = new Vector2(
-                    nodeSize * x + margin * (x + 1),
-                    nodeSize * y + margin * (y + 1)
-                );
-
-                Panel p = new Panel();
-                p.Position = tPosition;
-                p.Size = new Vector2(nodeSize, nodeSize);
-                p.CustomMinimumSize = p.Size;
-                p.Name = x + "x" + y;
-                scon.AddChild(p);
-                SlotList.Add(p);
-                //GD.PrintErr("p : " + p.Position + " / s : " + p.Size);
-            }
-        //GD.PushError($"SetStorageGrid - size : {size.X} {size.Y}");
-        scon.Columns = size.X > 1 ? size.X : 1;
-        scon.Size = new Vector2(
-            nodeSize * size.X + margin * (size.X + 1),
-            nodeSize * size.Y + margin * (size.Y + 1));
-
-        UpdateSize();
-
-    }
-
-
-    public static Dictionary<string, Color> highlight = new()
+    public static Dictionary<string, Color> highlight = new() //하이라이트 색상 정보
     {
         { "idle", new Color(1,1,1)},
         { "disable", new Color(1,0,0)},
@@ -180,8 +84,9 @@ public partial class StorageSlot : Control
         { "onMouse", new Color(0,0.5f,0.5f)},
     };
 
-    public Vector2I? onMouse = null;
-    public ItemModel onMouseItem = null;
+    public Vector2I? onMouse = null; //마우스 위치
+    public ItemModel onMouseItem = null; // 마우스 아이템
+    //OnMouse 정보를 찾는 과정 + 각 슬롯과 소켓의 UI 하이라이팅
     void OnMouseProcess()
     {
         ItemModel foundItem = null;
@@ -223,12 +128,12 @@ public partial class StorageSlot : Control
                 onMouseItem.storagePos + onMouseItem.itemSize,
                 highlight["idle"]);
 
-
         onMouseItem = foundItem;
 
         //마우스가 있는 노드가 바뀌면, 기존 노드 하이라이트 원상복구
         if (onMouse.HasValue && (!onMouseNow.HasValue || onMouse.Value != onMouseNow.Value))
-            GetNodeByPos(onMouse.Value).Modulate = highlight["idle"];
+            if (onMouse.Value != new Vector2I(-1, -1))
+                GetNodeByPos(onMouse.Value).Modulate = highlight["idle"];
 
         onMouse = onMouseNow.HasValue ? onMouseNow.Value : null;
 
@@ -239,10 +144,10 @@ public partial class StorageSlot : Control
             ItemModel sentItem = result.Value.Item1;
             Vector2I dragPos = result.Value.Item2;
             bool isInsertable = false;
-            if (equiped is HasStorage hasStorage) 
+            if (equiped is HasStorage hasStorage)
             {
                 isInsertable = hasStorage.storage.IsAbleToInsert(
-                    sentItem.item,onMouse.Value - dragPos, false);
+                    sentItem.item, onMouse.Value - dragPos, false);
 
                 SetNodesModulate(
                     Vector2I.Zero,
@@ -253,10 +158,11 @@ public partial class StorageSlot : Control
             SetNodesModulate(
                 onMouse.Value - dragPos,
                 onMouse.Value - dragPos + sentItem.itemSize,
-                isInsertable? highlight["enable"] : highlight["disable"]);
+                isInsertable ? highlight["enable"] : highlight["disable"]);
 
         }
-        else {
+        else
+        {
 
             //노드 하이라이트 적용
             if (onMouse.HasValue)
@@ -265,7 +171,7 @@ public partial class StorageSlot : Control
 
 
         //아이템 하이라이트 적용
-        if (foundItem != null)
+        if (foundItem != null && foundItem.storagePos != new Vector2I(-1, -1))
             SetNodesModulate(
                 onMouseItem.storagePos,
                 onMouseItem.storagePos + onMouseItem.itemSize,
@@ -275,17 +181,256 @@ public partial class StorageSlot : Control
         //장비칸 하이라이트 적용
         Rect2 rectt = slotContainer.GetRect();
         rectt.Position = slotContainer.GlobalPosition;
-        slotContainer.Modulate = rectt.HasPoint(GetGlobalMousePosition()) ?
-             highlight["onMouse"] : highlight["idle"];
+        if (rectt.HasPoint(GetGlobalMousePosition()))
+        {
+            slotContainer.Modulate = highlight["onMouse"];
+            onMouse = new(-1, -1);
+        }
+        else
+        {
+            slotContainer.Modulate = highlight["idle"];
+        }
+
     }
 
+
+    /* Updater */
+    public void SetStorageGrid(Vector2I size)
+    {
+        int maxColumn = 7;
+        SlotList = new List<Panel>();
+
+        Control parent = GetParent() as Control;
+        float parentWidth = parent.Size.X;
+
+        float margin = 3f;
+        float widthAvailable = parentWidth - 150;
+        float nodeSize = (widthAvailable - margin * (maxColumn + 1)) / maxColumn;
+        float width = nodeSize * size.X + margin * (size.X + 1);
+
+        GridContainer scon = storageCon;
+
+        foreach (Node node in scon.GetChildren())
+            scon.RemoveChild(node);
+
+        for (int y = 0; y < size.Y; y++)
+            for (int x = 0; x < size.X; x++)
+            {
+                Vector2 tPosition = new Vector2(
+                    nodeSize * x + margin * (x + 1),
+                    nodeSize * y + margin * (y + 1)
+                );
+
+                Panel p = new Panel();
+                p.Position = tPosition;
+                p.Size = new Vector2(nodeSize, nodeSize);
+                p.CustomMinimumSize = p.Size;
+                p.Name = x + "x" + y;
+                scon.AddChild(p);
+                SlotList.Add(p);
+                //GD.PrintErr("p : " + p.Position + " / s : " + p.Size);
+            }
+        //GD.PushError($"SetStorageGrid - size : {size.X} {size.Y}");
+        scon.Columns = size.X > 1 ? size.X : 1;
+        scon.Size = new Vector2(
+            nodeSize * size.X + margin * (size.X + 1),
+            nodeSize * size.Y + margin * (size.Y + 1));
+
+        UpdateSize();
+
+    }
+
+    //주어진 Equipable에 따라 모든 아이템 UI 초기화 (updated 변수에 의해 호출)
+    public bool updated = false;
+    public void RestructureStorage(Equipable equipable)
+    {
+        equiped = equipable;
+        updated = true;
+
+        if (equipable == null)
+        {
+            ResetItemModel();
+            SetStorageGrid(Vector2I.Zero);
+            return;
+        }
+
+        if (equipable is HasStorage hasStorage)
+        {
+            ResetItemModel();
+            SetItemEquiped(equipable);
+
+            var result = inventoryPage.ReleaseCursor();
+            if (result.HasValue)
+            {
+                ItemModel draggingItem = result.Value.Item1;
+                Vector2I dragPos = result.Value.Item2;
+                if (draggingItem.item == equiped)
+                {
+                    SetStorageGrid(Vector2I.Zero);
+                    return;
+                }
+            }
+
+            SetStorageGrid(hasStorage.storage.size);
+
+            foreach (Storage.StorageNode storageNode in hasStorage.storage.itemList)
+                SetItemModel(storageNode);
+        }
+
+    }
+
+    //InventoryPage로부터 입력에 대한 처리를 호출
+    public bool GetInput(InputEvent @event)
+    {
+        Rect2 rect = GetRect();
+        rect.Position = GlobalPosition;
+
+        if (rect.HasPoint(GetGlobalMousePosition()) == false)
+        {
+            //updated = false;
+            return false;
+        }
+
+        if (@event is InputEventMouseButton mouseEvent)
+        {
+            //Mouse button pressed 
+            if (mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+            {
+                //해당 지점에 아이템이 있다면 커서에 저장
+                if (onMouseItem != null)
+                {
+                    if (onMouse.HasValue)
+                    {
+                        //GD.PushWarning("Mouse button pressed : " + onMouse.Value + " - " + onMouseItem.storagePos);
+
+                        Vector2I dragPos = new Vector2I(
+                            onMouse.Value.X - onMouseItem.storagePos.X,
+                            onMouse.Value.Y - onMouseItem.storagePos.Y
+                            );
+
+                        inventoryPage.SetCursor(onMouseItem, dragPos);
+                    }
+                    else
+                    {
+                        //GD.PushWarning("Mouse button pressed : " + onMouseItem.storagePos);
+                        Vector2I itemSize = onMouseItem.item.status.size;
+                        inventoryPage.SetCursor(onMouseItem, new(itemSize.X / 2, itemSize.Y / 2));
+
+                    }
+                }
+
+                return true; //해당 코드에서 처리하기 성공
+            }
+            //Mouse button released
+            else if (mouseEvent.ButtonIndex == MouseButton.Left)
+            {
+                //커서에 아이템이 있다면
+                var result = inventoryPage.ReleaseCursor();
+                if (result.HasValue)
+                {
+                    ItemModel draggingItem = result.Value.Item1;
+                    Vector2I dragPos = result.Value.Item2;
+
+                    if (onMouse.HasValue)
+                    {
+                        //소켓에 템이 장착됨
+                        if (equiped is HasStorage hasStorage)
+                        {
+                            //아이템을 스스로 안에 저장 시도 시
+                            if (equiped == draggingItem.item)
+                                return false;
+
+                            //소켓에 장착된 템에 빠른 저장
+                            if (onMouse == new Vector2I(-1, -1))
+                            {
+                                //빠른 보관
+                                bool insertable = hasStorage.storage.IsAbleToInsert(draggingItem.item);
+                                if (insertable)
+                                {
+                                    StorageNode? sNode = hasStorage.storage.GetPosInsert(draggingItem.item);
+                                    if (sNode.HasValue)
+                                        return hasStorage.storage.Insert(sNode.Value);
+                                    //해당 코드에서 처리하기 성공
+                                }
+
+                                return false;
+                            }
+
+
+
+                            //Item을 Storage 객체에 Store
+                            bool isStored = draggingItem.item.Store(
+                                hasStorage.storage, onMouse.Value - dragPos, false);
+
+                            if (isStored)
+                                //가져온 아이템이 장비 가능하고, 장비 중이라면, 장비 해제
+                                if (draggingItem.item is Equipable draggingEquipable)
+                                {
+                                    if (draggingEquipable.equipedBy != null)
+                                        draggingEquipable.UnEquip();
+                                }
+
+                            inventoryPage.SetCursor(null, new());
+
+                            //Update
+                            if (isStored) updated = false;
+                            return true; //해당 코드에서 처리하기 성공
+                        }
+
+                        //비어 있는 소켓에 아이템에 가져다 놓기
+                        else if (equiped == null && onMouse == new Vector2I(-1, -1))
+                        {
+                            if (draggingItem.item is Equipable draggingEquipable)
+                            {
+                                bool isEpquipable = slot.AbleEquipItem(draggingEquipable);
+
+                                //GD.PushWarning("isEpquipable : " + isEpquipable);
+                                if (!isEpquipable) return false;
+
+                                if (draggingEquipable.equipedBy != null)
+                                    draggingEquipable.UnEquip();
+
+                                bool equipTargetResult = Player.player.inventory.EquipItemTarget(slot, draggingEquipable);
+
+                                //GD.PushWarning("equipTargetResult : " + equipTargetResult);
+                                return equipTargetResult;
+                            }
+                        }
+                    }
+                    onMouse = null;
+                    onMouseItem = null;
+                }
+            }
+        }
+
+        if (@event is InputEventMouseMotion mouseMotionEvent)
+        {
+            GD.Print("Mouse moved" + onMouse);
+        }
+
+        if (GetRect().HasPoint(GetLocalMousePosition()))
+        {
+            GD.Print("Mouse is over the control");
+        }
+
+        return false; //해당 코드에서 처리하지 못함
+    }
+
+
+    /* Convenience Functions  */
+    //위치를 통해 UI노드 반환
     Control GetNodeByPos(Vector2I pos)
     {
         return this.FindByName(pos.X + "x" + pos.Y) as Control;
     }
 
+    //UI 하이라이팅
     void SetNodesModulate(Vector2I start, Vector2I end, Color color)
     {
+        if (inventoryPage.ReleaseCursor().HasValue)
+            if (inventoryPage.ReleaseCursor().Value.Item1.item == equiped)
+                return;
+
         if (equiped is HasStorage hasStorage)
         {
             start = new Vector2I(
@@ -303,30 +448,17 @@ public partial class StorageSlot : Control
         }
     }
 
-    Equipable equiped = null;
-    List<ItemModel> itemModels = new List<ItemModel>();
-    public void RestructureStorage(Equipable equipable)
+    //소켓 장비 UI 추가
+    public void SetItemEquiped(Equipable equipable)
     {
-        equiped = equipable;
-        updated = true;
-
-        if (equipable == null)
-        {
-            SetStorageGrid(Vector2I.Zero);
-            return;
-        }
-
-        if (equipable is HasStorage hasStorage) 
-        {
-            ResetItemModel();
-            SetStorageGrid(hasStorage.storage.size);
-
-            foreach (Storage.StorageNode storageNode in hasStorage.storage.itemList)
-                SetItemModel(storageNode);
-        }
+        ItemModel iModel = new ItemModel(equipable, slotContainer);
+        AddChild(iModel);
+        itemModels.Add(iModel);
+        iModel.Position = slotContainer.Position;
 
     }
 
+    //인벤토리 아이템 UI 추가
     public void SetItemModel(Storage.StorageNode storageNode)
     {
         int maxColumn = 7;
@@ -345,26 +477,12 @@ public partial class StorageSlot : Control
             );
         ItemModel iModel = new ItemModel(storageNode.item, storageNode.pos, size);
         AddChild(iModel);
-        iModel.Position = storageCon.Position + pos;
         itemModels.Add(iModel);
-
-        //GetNodeByPos(storageNode.pos).Size = size;
-
-        //for (int x = storageNode.pos.X; x < storageNode.pos.X + itemSize.X; x++)
-        //for (int y = storageNode.pos.Y; y < storageNode.pos.Y + itemSize.Y; y++)
-        //{
-        //    //if (new Vector2I(x, y) == storageNode.pos)
-        //    //    continue;
-            
-        //    //GetNodeByPos(new(x,y)).Visible = false;
-        //}
+        iModel.Position = storageCon.Position + pos;
 
     }
-    public void GetItemModel(int x, int y) => GetItemModel(new Vector2I(x, y));
-    public void GetItemModel(Vector2I pos)
-    {
-
-    }
+    
+    //모든 아이템 UI 삭제
     public void ResetItemModel()
     {
         foreach (ItemModel iModel in itemModels) 

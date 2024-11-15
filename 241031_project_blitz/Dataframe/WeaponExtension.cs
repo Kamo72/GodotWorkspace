@@ -1,45 +1,49 @@
 ﻿using Godot;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
-public partial class Weapon : Node2D
-{
-    public enum Code {
-        K2,
-    }
-
-    static Dictionary<Code, WeaponStatus> weaponLibrary = new Dictionary<Code, WeaponStatus>
-    {
-        { Code.K2, new WeaponStatus(1100, 15, 40000, 20, 2f, "res://Asset/guns/ImageAR.png" , 50)},
-    };
-
-    public static WeaponStatus GetStatByCode(Code code)
-    {
-        WeaponStatus weaponStatus;
-
-        if (weaponLibrary.TryGetValue(code, out weaponStatus)) 
-            return weaponStatus;
-
-        return weaponLibrary[Code.K2];
-    }
-
-}
+using System.Text.Json;
 
 
 
 #region [총기 기본 정보]
 public enum CaliberType
 {
-    p38,
-    p45,
-    mm9x18,
-    mm9x19,
-    mm5p56x45,
-    mm7p62x51,
-    g12,
+    //권총탄
+    p38, //.38 Special
+    p45, //.45AVP
+    mm7p62x25, //토카레프
+    mm9x18, //마카로프
+    mm9x19, //파라벨룸
+    mm9x21, //베레스크 smg에서 쓴데요
+
+    //소형소총탄
+    mm4p6x30, //HK 46
+    mm5p7x28, //FN 57
+
+    //소구경 소총탄
+    mm5p45x39, //5.45
+    mm5p56x45, //5.56
+
+    //아음속탄
+    p300,   //.300 blackout
+    mm9x39, //9x39mm
+
+    //중형소총탄
+    mm7p62x39,  //7.62x39
+    mm7p62x51,  //7.62x51 .308
+
+    //대구경탄
+    mm7p62x54R,  //7.62x54R
+    p50, //.50 BMG
+
+    //산탄
+    g12, //12 gage
 }
 public enum SelectorType
 {
@@ -50,16 +54,16 @@ public enum SelectorType
 }
 public enum MechanismType
 {
-    CLOSED_BOLT,    //폐쇄 노리쇠
-    OPEN_BOLT,      //개방 노리쇠
-    MANUAL_RELOAD,  //수동 약실 장전
-    NONE,           //볼트 없음
+    CLOSED_BOLT,    //폐쇄 노리쇠 - M4A1
+    OPEN_BOLT,      //개방 노리쇠 - PPSH
+    MANUAL_RELOAD,  //수동 장전 - 더블액션, 펌프 액션 등
+    NONE,           //볼트 없음 - 싱글 액션, 브레이크 액션 등
 }
 public enum MagazineType
 {
     MAGAZINE,   //박스형 탄창 - 빠른 교체
     SYLINDER,   //탄창X 약실만 - 중절식, 리볼버 등 탄창 개념이 없음.
-    TUBE,       //튜브형 탄창 - 전탄 소진 시, 약실 장전
+    TUBE,       //튜브형 탄창 - 트랩도어 장전(전탄 소진 시, 약실 장전 후, 트랩도어 장전)
     INTERNAL,   //내장형 탄창 - 장전 시 볼트 재낌    
 }
 public enum BoltLockerType
@@ -70,9 +74,9 @@ public enum BoltLockerType
     NONE,           //노리쇠 후퇴 고정 불가 ex AK47
 }
 
-public struct WeaponStatuss
+public struct WeaponStatus
 {
-    public WeaponStatuss(WeaponStatuss status)
+    public WeaponStatus(WeaponStatus status)
     {
         this.typeDt = status.typeDt;
         this.aimDt = status.aimDt;
@@ -81,7 +85,7 @@ public struct WeaponStatuss
         this.detailDt = status.detailDt;
         this.attachDt = status.attachDt;
     }
-    public WeaponStatuss(TypeData typeData, AimData aimData, TimeData timeData, MovementData movementData, DetailData detailData, AttachData attachData)
+    public WeaponStatus(TypeData typeData, AimData aimData, TimeData timeData, MovementData movementData, DetailData detailData, AttachData attachData)
     {
         this.typeDt = typeData;
         this.aimDt = aimData;
@@ -116,115 +120,30 @@ public struct WeaponStatuss
     public AimData aimDt;
     public struct AimData
     {
-        public struct HipData   //지향 사격
-        {
-            public struct HipStancelData    //자세 값
-            {
-                /// <summary>
-                /// 지향 자세 회복 속도
-                /// </summary>
-                public float recovery;
-                /// <summary>
-                /// 지향 자세 정확도
-                /// </summary>
-                public float accuracy;
-                /// <summary>
-                ///  정확도 변인 [엄폐, 걷기]
-                /// </summary>
-                public (float crounch, float walk) accuracyAdjust;
-            }
-            /// <summary>
-            /// 자세 값
-            /// </summary>
-            public HipStancelData stance;
-
-            public struct HipRecoilData     //반동 값
-            {
-                /// <summary>
-                /// 지향 반동 회복 속도
-                /// </summary>
-                public float recovery;
-                /// <summary>
-                /// 회복 속도 변인 [엄폐, 걷기]
-                /// </summary>
-                public (float crounch, float walk) recoveryAdjust;
-                /// <summary>
-                /// 지향 반동 크기
-                /// </summary>
-                public float strength;
-            }
-            /// <summary>
-            /// 반동 값
-            /// </summary>
-            public HipRecoilData recoil;
-
-            /// <summary>
-            /// 트래깅 속도
-            /// </summary>
-            public float traggingSpeed;
-        };
         /// <summary>
-        /// 지향 사격
+        /// 조준안정
         /// </summary>
-        public HipData hip;
+        public float stance;
 
-        public struct AdsData   //조준 사격
-        {
-            public struct AdsStancelData    //자세 값
-            {
-                /// <summary>
-                /// 조준 자세 정확도
-                /// </summary>
-                public float accuracy;
-                /// <summary>
-                /// 정확도 변인 [엄폐, 걷기]
-                /// </summary>
-                public (float crounch, float walk) accuracyAdjust;
-            }
-            /// <summary>
-            /// 자세 값
-            /// </summary>
-            public AdsStancelData stance;
-
-            public struct AdsRecoilData    //반동 값
-            {
-                /// <summary>
-                /// 조준점 반동 고정
-                /// </summary>
-                public Vector2 fix;
-                /// <summary>
-                /// 조준점 반동 랜덤
-                /// </summary>
-                public Vector2 random;
-                /// <summary>
-                /// 조준점 반동 회복 속도
-                /// </summary>
-                public float recovery;
-                /// <summary>
-                /// 지향 반동 크기 변인
-                /// </summary>
-                public (float crounch, float walk) strengthAdjust;
-            }
-            /// <summary>
-            /// 반동 값
-            /// </summary>
-            public AdsRecoilData recoil;
-
-            /// <summary>
-            /// 절대 명중률(거리 1000 기준)
-            /// </summary>
-            public float moa;
-
-            /// <summary>
-            /// adsData 라이브러리에서 adsData를 찾는 키값
-            /// </summary>
-            public string adsName;
-        };
         /// <summary>
-        /// 조준 사격
+        /// 반동 세기
         /// </summary>
-        public AdsData ads;
+        public float strength;
 
+        /// <summary>
+        /// 조준점 속도
+        /// </summary>
+        public float traggingSpeed;
+        
+        /// <summary>
+        /// 반동 회복 속도
+        /// </summary>
+        public float recovery;
+
+        /// <summary>
+        /// 절대 탄퍼짐
+        /// </summary>
+        public float moa;
     }
 
     //행동 소요 시간 정보 
@@ -232,12 +151,28 @@ public struct WeaponStatuss
     public struct TimeData
     {
         public float adsTime;       //조준 속도
-        public float sprintTime;    //질주 후 사격 전환 속도
+        public float sprintTime;    //질주 후 사격 전환  속도
+        public float swapTime;      //무기 교체 속도
+
         /// <summary>
-        /// 재장전 속도 - 박스(분리 / 결합 (장전)) - 실린더(사출 / 장전 / 결합) - 내부(볼트 재낌 /장전) - (장전 준비 / (약실 장전) / 튜브 장전 )
+        /// 재장전 속도 - 
+        /// 박스(분리 / 결합 준비 / 결합)
+        /// 실린더(분리 / 장전1회 / 결합)
+        /// 내부(후퇴고정 / 장전 / 전진)
+        /// 튜브(장전 준비 / (약실 장전) / 튜브 장전 )
         /// </summary>
         public (float, float, float) reloadTime;
-        public float swapTime;      //무기 교체 속도
+
+        /// <summary>
+        ///총기 확인의 선후 딜레이
+        /// </summary>
+        public (float, float) inspectTime;
+
+        /// <summary>
+        ///노리쇠 조작 시간 (전진, 후퇴전진, 후퇴고정)
+        /// </summary>
+        public (float, float, float) boltTime;
+
     }
 
     //이동 속도 정보
@@ -261,22 +196,21 @@ public struct WeaponStatuss
         public float RoundDelay => 60f / roundPerMinute;
         public float roundPerMinute;
         public int chamberSize; //약실 크기
-        public List<Type> magazineWhiteList;  //장착 가능한 탄창리스트
+        public List<string> magazineWhiteList;  //장착 가능한 탄창리스트
         public float muzzleVelocity;    //총구 속도
         public float effectiveRange;    //유효 사거리
-        public float muzzleSpeed;      //총기 전장
+        public float muzzleDistance;      //총기 전장
         public float loudness;          //소음 크기 (거리로 ex 10000)
 
-        public int basicMag;
-        public float basicDamage;
-        public int pellitAmount;
     }
 
+    //부착물 정보
     public AttachData attachDt;
     public struct AttachData
     {
         //internal List<AttachSocket> socketList;
     }
+
 }
 //public static class WeaponStatusEx
 //{
@@ -331,13 +265,18 @@ internal static class WeaponLibrary
     static WeaponLibrary()
     {
         weaponLib = new Dictionary<string, WeaponStatus>();
-        WeaponDataLoad();
+        //WeaponDataLoad();
     }
 
     static Dictionary<string, WeaponStatus> weaponLib;
     static void WeaponDataLoad()
     {
         //정적 생성자를 불러오는 역할?
+        new K2();
+        new K2C1();
+        new AKS_74U();
+        new MP_133();
+        new M4A1();
     }
     public static WeaponStatus Get(string weaponName)
     {
@@ -348,7 +287,8 @@ internal static class WeaponLibrary
         if (weaponLib.ContainsKey(weaponName)) throw new Exception("weaponLib - 중복된 키 삽입!");
         weaponLib.Add(weaponName, weaponStatus);
     }
-
 }
 
 #endregion
+
+

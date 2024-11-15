@@ -3,11 +3,6 @@ using System;
 
 public partial class DroppedItem : Interactable
 {
-    // public override void _Ready()
-    // {
-    //     base._Ready();
-    // }
-
     public override void _Process(double delta)
     {
         base._Process(delta);
@@ -19,9 +14,8 @@ public partial class DroppedItem : Interactable
         this.item = item;
         Sprite2D sprite = this.FindByName("Sprite2D") as Sprite2D;
         sprite.Texture = ResourceLoader.Load<Texture2D>(item.status.textureRoot);
+        sprite.TextureFilter = TextureFilterEnum.Nearest;
     }
-
-
 
     public override void Interacted(Humanoid humanoid)
     {

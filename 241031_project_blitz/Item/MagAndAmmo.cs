@@ -35,7 +35,7 @@ public abstract class Magazine : Item
             }
         }
 
-        string magazineCode;
+        public string magazineCode;
         public MagazineStatus magStatusOrigin { get { return MagazineLibrary.Get(magazineCode); } }
         public MagazineStatus magStatus;
 
@@ -113,10 +113,11 @@ public abstract class Magazine : Item
 
         public struct Lethality
         {
-            public float damage;          //피해량
+            public float damage;    //피해량
             public float pierceLevel;   //관통계수
-            public float bleeding;   //출혈 발생
-            public int pellitCount;   //펠릿 갯수
+            public float suppress;  //저지력
+            public float bleeding;  //출혈 발생
+            public int pellitCount; //펠릿 갯수
         }
         public Lethality lethality;
 

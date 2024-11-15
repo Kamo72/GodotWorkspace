@@ -17,7 +17,7 @@ public partial class CameraManager : Camera2D
         current = this;
         IgnoreRotation= false;
     }
-
+    
     public override void _Process(double delta)
     {
         if (target != null)
@@ -45,9 +45,9 @@ public partial class CameraManager : Camera2D
 
     protected float randFloat => ((float)Random.Shared.NextDouble() - 0.5f) * 2f;
     // 반동 효과를 적용하는 메서드
-    public void ApplyRecoil(float vector, float rotation)
+    public void ApplyRecoil(float strength)
     {
-        recoilOffset += Vector2.FromAngle(randFloat * 360f) * vector * randFloat;
-        recoilRotation += randFloat * rotation;
+        recoilOffset += Vector2.FromAngle(randFloat * 360f) * strength * randFloat;
+        recoilRotation += randFloat * strength / 180f / (float)Math.PI;
     }
 }

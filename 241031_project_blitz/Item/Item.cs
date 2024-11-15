@@ -90,12 +90,39 @@ public abstract class Item
         QUEST,
         ETC,
     }
+
 }
+
+public static class ItemEx
+{
+
+    public static Item Split(this Item stackable, int getCount)
+    {
+        if (stackable is IStackable iStackable)
+        {
+            if (iStackable.stackNow <= getCount) throw new Exception("wrong getCount value");
+
+            Item newItem = Activator.CreateInstance(stackable.GetType()) as Item;
+
+            if (newItem is IStackable newItemStackable)
+            {
+                newItemStackable.stackNow = getCount;
+                iStackable.stackNow -= getCount;
+
+                return newItem;
+            }
+        }
+        return null;
+    }
+
+}
+
 
 public interface IStackable
 {
     int stackNow { get; set; }
     int stackMax { get; set; }
+
 }
 
 public interface IDurable

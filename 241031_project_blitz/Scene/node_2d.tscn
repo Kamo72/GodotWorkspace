@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://56g0mqmufwwk"]
+[gd_scene load_steps=9 format=3 uid="uid://56g0mqmufwwk"]
 
 [ext_resource type="Script" path="res://EntityImplement/Player.cs" id="1_hps05"]
 [ext_resource type="Script" path="res://EntityParent/Humanoid.cs" id="1_rxmhm"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cxrn863chouys" path="res://Prefab/UI/MainUI.tscn" id="5_v7058"]
 [ext_resource type="PackedScene" uid="uid://c21ungwfkofeo" path="res://Prefab/droppedItem.tscn" id="6_awiyl"]
 [ext_resource type="PackedScene" uid="uid://2covg0ovk53g" path="res://Prefab/interactable.tscn" id="7_fobyc"]
+[ext_resource type="PackedScene" uid="uid://ceku0tattvrf1" path="res://Prefab/container.tscn" id="8_tqfvt"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -70,3 +71,6 @@ position = Vector2(905, 496)
 
 [node name="Interactable10" parent="." instance=ExtResource("7_fobyc")]
 position = Vector2(927, 495)
+
+[node name="DroppedItem3" parent="." instance=ExtResource("8_tqfvt")]
+position = Vector2(-335, 45)

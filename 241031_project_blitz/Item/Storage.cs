@@ -106,13 +106,11 @@ public class Storage
         if (IsOverlapped(newNode))
             return false;
 
-
         if (newNode.item.onStorage != null)
             newNode.item.onStorage.RemoveItem(newNode.item);
 
         itemList.Add(newNode);
         newNode.item.onStorage = this;
-
 
         return true;
     }

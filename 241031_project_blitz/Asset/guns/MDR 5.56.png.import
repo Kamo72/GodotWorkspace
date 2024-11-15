@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6wgvmktcwrdj"
-path="res://.godot/imported/cursor.png-4485aa45beb90ad31029ecb2cf581f29.ctex"
+uid="uid://cn5uxwpo2uxc0"
+path="res://.godot/imported/MDR 5.56.png-f0389cc52e44d1ab19d03941a563fb8e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Asset/UI/cursor.png"
-dest_files=["res://.godot/imported/cursor.png-4485aa45beb90ad31029ecb2cf581f29.ctex"]
+source_file="res://Asset/guns/MDR 5.56.png"
+dest_files=["res://.godot/imported/MDR 5.56.png-f0389cc52e44d1ab19d03941a563fb8e.ctex"]
 
 [params]
 
