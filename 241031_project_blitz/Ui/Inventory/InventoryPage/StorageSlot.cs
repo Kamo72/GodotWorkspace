@@ -5,7 +5,7 @@ using System.Drawing;
 using static Storage;
 using Color = Godot.Color;
 
-public partial class StorageSlot : Control
+public partial class StorageSlot : InventorySlot
 {
     /* UI Reference */
     GridContainer storageCon => this.FindByName("StorageContainer") as GridContainer;
@@ -16,8 +16,6 @@ public partial class StorageSlot : Control
 
 
     /* Reference */
-    public InventoryPage inventoryPage => ((InventoryPage)GetParent().GetParent().GetParent().GetParent());
-    
     Humanoid.Inventory.EquipSlot slot; //소켓과 장비된 아이템 정보
     Equipable equiped = null; //소켓과 장비된 아이템 정보
 
@@ -76,18 +74,10 @@ public partial class StorageSlot : Control
 
     }
 
-    public static Dictionary<string, Color> highlight = new() //하이라이트 색상 정보
-    {
-        { "idle", new Color(1,1,1)},
-        { "disable", new Color(1,0,0)},
-        { "enable", new Color(0,1,0)},
-        { "onMouse", new Color(0,0.5f,0.5f)},
-    };
-
     public Vector2I? onMouse = null; //마우스 위치
     public ItemModel onMouseItem = null; // 마우스 아이템
     //OnMouse 정보를 찾는 과정 + 각 슬롯과 소켓의 UI 하이라이팅
-    void OnMouseProcess()
+    public override void OnMouseProcess()
     {
         ItemModel foundItem = null;
         Vector2I? onMouseNow = null;
@@ -241,46 +231,48 @@ public partial class StorageSlot : Control
     }
 
     //주어진 Equipable에 따라 모든 아이템 UI 초기화 (updated 변수에 의해 호출)
-    public bool updated = false;
-    public void RestructureStorage(Equipable equipable)
+    public override void RestructureStorage()
     {
-        equiped = equipable;
+        if (updated) return;
         updated = true;
 
-        if (equipable == null)
+        Equipable equipable = slot.item;
         {
-            ResetItemModel();
-            SetStorageGrid(Vector2I.Zero);
-            return;
-        }
-
-        if (equipable is HasStorage hasStorage)
-        {
-            ResetItemModel();
-            SetItemEquiped(equipable);
-
-            var result = inventoryPage.ReleaseCursor();
-            if (result.HasValue)
+            equiped = equipable;
+            if (equipable == null)
             {
-                ItemModel draggingItem = result.Value.Item1;
-                Vector2I dragPos = result.Value.Item2;
-                if (draggingItem.item == equiped)
-                {
-                    SetStorageGrid(Vector2I.Zero);
-                    return;
-                }
+                ResetItemModel();
+                SetStorageGrid(Vector2I.Zero);
+                return;
             }
 
-            SetStorageGrid(hasStorage.storage.size);
+            if (equipable is HasStorage hasStorage)
+            {
+                ResetItemModel();
+                SetItemEquiped(equipable);
 
-            foreach (Storage.StorageNode storageNode in hasStorage.storage.itemList)
-                SetItemModel(storageNode);
+                var result = inventoryPage.ReleaseCursor();
+                if (result.HasValue)
+                {
+                    ItemModel draggingItem = result.Value.Item1;
+                    Vector2I dragPos = result.Value.Item2;
+                    if (draggingItem.item == equiped)
+                    {
+                        SetStorageGrid(Vector2I.Zero);
+                        return;
+                    }
+                }
+
+                SetStorageGrid(hasStorage.storage.size);
+
+                foreach (Storage.StorageNode storageNode in hasStorage.storage.itemList)
+                    SetItemModel(storageNode);
+            }
         }
-
     }
 
     //InventoryPage로부터 입력에 대한 처리를 호출
-    public bool GetInput(InputEvent @event)
+    public override bool GetInput(InputEvent @event)
     {
         Rect2 rect = GetRect();
         rect.Position = GlobalPosition;

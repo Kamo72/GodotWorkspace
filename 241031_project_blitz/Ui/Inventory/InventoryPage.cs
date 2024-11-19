@@ -1,10 +1,11 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using static Humanoid;
 
 public partial class InventoryPage : Page
 {
-
+    public static InventoryPage instance = null;
 
     Panel myStatus => this.FindByName("MyStatus") as Panel;
 
@@ -16,22 +17,26 @@ public partial class InventoryPage : Page
     EquipSlot subWeaponSlot => this.FindByName("SubWeaponSlot") as EquipSlot;
 
     VBoxContainer myInventory => this.FindByName("MyInventory") as VBoxContainer;
-    
+
     StorageSlot rigSlot => this.FindByName("RigSlot") as StorageSlot;
     StorageSlot backpackSlot => this.FindByName("BackpackSlot") as StorageSlot;
     PocketSlot pocketSlot => this.FindByName("PocketSlot") as PocketSlot;
     StorageSlot containerSlot => this.FindByName("ContainerSlot") as StorageSlot;
-    
-    
+
+
     VBoxContainer otherInventory => this.FindByName("OtherInventory") as VBoxContainer;
 
-    //TODO
+    List<InventorySlot> mySlotList;
+    List<InventorySlot> otherSlotList;
+
 
     public Control cursor => this.FindByName("Cursor") as Control;
 
     public override void _EnterTree()
     {
         base._EnterTree();
+        instance = this;
+
         cursor.TextureFilter = TextureFilterEnum.Nearest;
 
         helmetSlot.slotName.Text = "헬멧";
@@ -56,6 +61,19 @@ public partial class InventoryPage : Page
         containerSlot.slotName.Text = "컨테이너";
         containerSlot.SetSocket(Player.player.inventory.sContainer);
 
+        mySlotList = new() {
+            helmetSlot,
+            headgearSlot,
+            plateSlot,
+            firstWeaponSlot,
+            secondWeaponSlot,
+            subWeaponSlot,
+            pocketSlot,
+            rigSlot,
+            backpackSlot,
+            containerSlot,
+        };
+        otherSlotList = new() { };
     }
 
     public override void _Process(double delta)
@@ -63,18 +81,10 @@ public partial class InventoryPage : Page
         base._Process(delta);
         cursor.GlobalPosition = GetGlobalMousePosition();
 
-        UpdateEquipUI(helmetSlot, Player.player.inventory.helmet);
-        UpdateEquipUI(headgearSlot, Player.player.inventory.headgear);
-        UpdateEquipUI(plateSlot, Player.player.inventory.plate);
-        UpdateEquipUI(firstWeaponSlot, Player.player.inventory.firstWeapon);
-        UpdateEquipUI(secondWeaponSlot, Player.player.inventory.secondWeapon);
-        UpdateEquipUI(subWeaponSlot, Player.player.inventory.subWeapon);
-
-        UpdatePocketUI(pocketSlot, Player.player.inventory.pocket);
-
-        UpdateStorageUI(rigSlot, Player.player.inventory.rig);
-        UpdateStorageUI(backpackSlot, Player.player.inventory.backpack);
-        UpdateStorageUI(containerSlot, Player.player.inventory.sContainer);
+        foreach (var item in mySlotList)
+            item.RestructureStorage();
+        foreach (var item in otherSlotList)
+            item.RestructureStorage();
     }
 
     public override void _Input(InputEvent @event)
@@ -82,21 +92,14 @@ public partial class InventoryPage : Page
         UiMain uiMain = GetParent().GetParent().GetParent() as UiMain;
         if (!uiMain.Visible) return;
 
+        foreach (var item in mySlotList)
+            item.GetInput(@event);
 
-        if (helmetSlot.GetInput(@event)) { }
-        if (headgearSlot.GetInput(@event)) { }
-        if (plateSlot.GetInput(@event)) { }
-        if (firstWeaponSlot.GetInput(@event)) { }
-        if (secondWeaponSlot.GetInput(@event)) { }
-        if (subWeaponSlot.GetInput(@event)) { }
+        foreach (var item in otherSlotList)
+            item.GetInput(@event);
 
-        if (pocketSlot.GetInput(@event)) { }
-
-        if (rigSlot.GetInput(@event)) { }
-        if (backpackSlot.GetInput(@event)) { }
-        if (containerSlot.GetInput(@event)) { }
         if (@event is InputEventMouseButton mouseEvent)
-            if(mouseEvent.Pressed != true)
+            if (mouseEvent.Pressed != true)
                 SetCursor(null, new());
 
         UpdateAllUI();
@@ -105,36 +108,144 @@ public partial class InventoryPage : Page
 
     public void UpdateAllUI()
     {
-        helmetSlot.updated = false;
-        headgearSlot.updated = false;
-        plateSlot.updated = false;
-        firstWeaponSlot.updated = false;
-        secondWeaponSlot.updated = false;
-        subWeaponSlot.updated = false;
+        foreach (var item in mySlotList)
+            item.updated = false;
 
-        pocketSlot.updated = false;
-
-        rigSlot.updated = false;
-        backpackSlot.updated = false;
-        containerSlot.updated = false;
+        foreach (var item in otherSlotList)
+            item.updated = false;
     }
 
-    private void UpdateEquipUI(EquipSlot grid, Player.Inventory.EquipSlot slot)
+    public void SetOtherPanel(Storage storage)
     {
-        if (grid.updated == false)
-            grid.RestructureStorage(slot.item);
+        ResetOtherPanel();
+        if (storage == null) return;
+
+        PocketSlot pocketSlot = ResourceLoader.Load<PackedScene>("res://Prefab/UI/InventoryPage/PocketSlot.tscn").Instantiate() as PocketSlot;
+        pocketSlot.SetStorage(storage);
+
+
+        otherInventory.AddChild(pocketSlot);
+        otherSlotList.Add(pocketSlot);
+
+        UpdateAllUI();
     }
 
-    private void UpdateStorageUI(StorageSlot grid, Player.Inventory.EquipSlot slot)
+    public void SetOtherPanel(Inventory inventory)
     {
-        if (grid.updated == false)
-            grid.RestructureStorage(slot.item);
+        ResetOtherPanel();
+
+        if (inventory == null) return;
+
+        StorageSlot storageSlot;
+        PocketSlot pocketSlot;
+        EquipSlot equipSlot;
+
+        {
+            equipSlot = GetEquipSlot();
+            equipSlot.slotName.Text = "헬멧";
+            equipSlot.SetSocket(inventory.helmet);
+            otherInventory.AddChild(equipSlot);
+            otherSlotList.Add(equipSlot);
+        }
+        {
+            equipSlot = GetEquipSlot();
+            equipSlot.slotName.Text = "헤드기어";
+            equipSlot.SetSocket(inventory.headgear);
+            otherInventory.AddChild(equipSlot);
+            otherSlotList.Add(equipSlot);
+        }
+        {
+            equipSlot = GetEquipSlot();
+            equipSlot.slotName.Text = "방탄판";
+            equipSlot.SetSocket(inventory.plate);
+            otherInventory.AddChild(equipSlot);
+            otherSlotList.Add(equipSlot);
+        }
+
+        {
+            equipSlot = GetWeaponSlot();
+            equipSlot.slotName.Text = "주무장";
+            equipSlot.SetSocket(inventory.firstWeapon);
+            otherInventory.AddChild(equipSlot);
+            otherSlotList.Add(equipSlot);
+        }
+        {
+            equipSlot = GetWeaponSlot();
+            equipSlot.slotName.Text = "부무장";
+            equipSlot.SetSocket(inventory.secondWeapon);
+            otherInventory.AddChild(equipSlot);
+            otherSlotList.Add(equipSlot);
+        }
+        {
+            equipSlot = GetEquipSlot();
+            equipSlot.slotName.Text = "보조무장";
+            equipSlot.SetSocket(inventory.subWeapon);
+            otherInventory.AddChild(equipSlot);
+            otherSlotList.Add(equipSlot);
+        }
+
+
+
+        {
+            storageSlot = GetStorageSlot();
+            storageSlot.slotName.Text = "조끼";
+            storageSlot.SetSocket(inventory.rig);
+            otherInventory.AddChild(storageSlot);
+            otherSlotList.Add(storageSlot);
+        }
+        {
+            pocketSlot = GetPocketSlot();
+            pocketSlot.SetStorage(inventory.pocket);
+            otherInventory.AddChild(pocketSlot);
+            otherSlotList.Add(pocketSlot);
+        }
+        {
+            storageSlot = GetStorageSlot();
+            storageSlot.slotName.Text = "가방";
+            storageSlot.SetSocket(inventory.backpack);
+            otherInventory.AddChild(storageSlot);
+            otherSlotList.Add(storageSlot);
+        }
+        {
+            storageSlot = GetStorageSlot();
+            storageSlot.slotName.Text = "컨테이너";
+            storageSlot.SetSocket(inventory.sContainer);
+            otherInventory.AddChild(storageSlot);
+            otherSlotList.Add(storageSlot);
+        }
+
+
+        UpdateAllUI();
     }
 
-    private void UpdatePocketUI(PocketSlot grid, Storage storage)
+    StorageSlot GetStorageSlot()
     {
-        if (grid.updated == false)
-            grid.RestructureStorage(storage);
+        return ResourceLoader.Load<PackedScene>("res://Prefab/UI/InventoryPage/StorageSlot.tscn")
+                .Instantiate() as StorageSlot;
+    }
+    PocketSlot GetPocketSlot()
+    {
+        return ResourceLoader.Load<PackedScene>("res://Prefab/UI/InventoryPage/PocketSlot.tscn")
+                .Instantiate() as PocketSlot;
+    }
+    EquipSlot GetEquipSlot()
+    {
+        return ResourceLoader.Load<PackedScene>("res://Prefab/UI/InventoryPage/EquipSlot.tscn")
+                .Instantiate() as EquipSlot;
+    }
+    EquipSlot GetWeaponSlot()
+    {
+        return ResourceLoader.Load<PackedScene>("res://Prefab/UI/InventoryPage/WeaponSlot.tscn")
+                .Instantiate() as EquipSlot;
+    }
+
+
+
+    public void ResetOtherPanel()
+    {
+        foreach (var slot in otherSlotList)
+            slot.QueueFree();
+        otherSlotList.Clear();
     }
 
 
@@ -192,4 +303,6 @@ public partial class InventoryPage : Page
 
         return (onDragging, dragPos);
     }
+
+
 }

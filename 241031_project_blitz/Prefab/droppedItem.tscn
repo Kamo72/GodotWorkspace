@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c21ungwfkofeo"]
 
-[ext_resource type="Script" path="res://EntityParent/DroppedItem.cs" id="1_begqt"]
+[ext_resource type="Script" path="res://EntityParent/Interactable/DroppedItem.cs" id="1_ib1qb"]
 [ext_resource type="Texture2D" uid="uid://cm1ijbp72an07" path="res://icon.svg" id="2_f7luc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qixdo"]
@@ -9,7 +9,7 @@
 collision_layer = 0
 collision_mask = 0
 gravity_scale = 0.0
-script = ExtResource("1_begqt")
+script = ExtResource("1_ib1qb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(3.18, 3.18)

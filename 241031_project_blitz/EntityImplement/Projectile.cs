@@ -53,6 +53,11 @@ public partial class Projectile : RayCast2D
                 GD.Print($"{wall.Name}에 적중됨.");
                 QueueFree(); // 충돌 시 Projectile 제거
             }
+            else if (collider is Glass glass)
+            {
+                GD.Print($"{glass.Name}에 적중됨.");
+                //speed *= 0.99f;
+            }
         }
         else
         {

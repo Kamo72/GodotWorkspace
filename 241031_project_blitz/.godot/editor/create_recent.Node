@@ -1,8 +1,15 @@
+DirectionalLight2D
+LightOccluder2D
+PointLight2D
+ColorRect
 Sprite2D
+Node2D
+CanvasModulate
+Node
+CollisionShape2D
+TileMap
 TextureRect
 Control
 SubViewport
 CanvasLayer
 Camera2D
-RigidBody2D
-CollisionShape2D

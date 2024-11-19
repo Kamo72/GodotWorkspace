@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://2covg0ovk53g"]
 
+[ext_resource type="Script" path="res://EntityParent/Interactable/Interactable.cs" id="1_earic"]
 [ext_resource type="Texture2D" uid="uid://cm1ijbp72an07" path="res://icon.svg" id="1_geh6y"]
-[ext_resource type="Script" path="res://EntityParent/Interactable.cs" id="1_sf6ib"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qixdo"]
 
@@ -9,7 +9,7 @@
 collision_layer = 0
 collision_mask = 0
 gravity_scale = 0.0
-script = ExtResource("1_sf6ib")
+script = ExtResource("1_earic")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 0)

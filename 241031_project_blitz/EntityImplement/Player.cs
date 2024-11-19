@@ -59,29 +59,6 @@ public partial class Player : Humanoid
 
         mainUI.Visible = isInventory;
 
-
-        // 발사 입력 감지 및 무기 발사 호출
-        if (Input.IsActionPressed("fire") && !isInventory)
-        {
-            if (equippedWeapon == null) return;
-            if (equippedWeapon.IsBusy())
-            {
-                if(equippedWeapon.isReloading)
-                    equippedWeapon.DisruptReload();
-                return;
-            }
-
-            bool isShoot = equippedWeapon.Shoot();
-
-            if (isShoot)
-            {
-                OnShoot();
-                CameraManager.current.ApplyRecoil(equippedWeapon.status.aimDt.strength);
-            }
-        }
-        if (Input.IsActionJustReleased("fire"))
-                equippedWeapon?.SetRealease();
-
         // 재장전 수행
         if (Input.IsActionPressed("reload") && !isInventory)
             equippedWeapon?.Reload();
@@ -89,31 +66,50 @@ public partial class Player : Humanoid
         if (Input.IsActionJustPressed("inventory"))
         {
             isInventory = !isInventory;
+            InventoryPage.instance?.ResetOtherPanel();
 
             Control mainUI = GetTree().Root.FindByName("MainUi") as Control;
             mainUI.Visible = !mainUI.Visible;
         }
 
+        GD.Print("interactables.Count : " + interactables.Count);
+
         if (Input.IsActionJustPressed("interact"))
-        {
             if (interactables.Count > 0)
                 interactables[0].Interacted(this);
-        }
+
         if (Input.IsActionJustPressed("firstWeapon"))
-        {
             if (inventory.firstWeapon.item != null)
                 targetEquip = inventory.firstWeapon;
-        }
+
         if (Input.IsActionJustPressed("secondWeapon"))
-        {
             if (inventory.secondWeapon.item != null)
                 targetEquip = inventory.secondWeapon;
-        }
+
         if (Input.IsActionJustPressed("subWeapon"))
-        {
             if (inventory.subWeapon.item != null)
                 targetEquip = inventory.subWeapon;
+
+        // 발사 입력 감지 및 무기 발사 호출
+        if (Input.IsActionPressed("fire") && !isInventory)
+        {
+            if (equippedWeapon == null) return;
+            if (equippedWeapon.IsBusy())
+            {
+                if (equippedWeapon.isReloading)
+                    equippedWeapon.DisruptReload();
+                return;
+            }
+
+            bool isShoot = equippedWeapon.Shoot();
+            if (isShoot)
+            {
+                OnShoot();
+                CameraManager.current.ApplyRecoil(equippedWeapon.status.aimDt.strength);
+            }
         }
+        if (Input.IsActionJustReleased("fire"))
+            equippedWeapon?.SetRealease();
     }
 
 

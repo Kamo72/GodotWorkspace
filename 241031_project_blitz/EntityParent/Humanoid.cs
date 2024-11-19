@@ -156,12 +156,13 @@ public partial class Humanoid : RigidBody2D
     void InteractionProcess()
     {
         interactables = new List<Interactable>();
-        Godot.Collections.Array<Node> nodes = this.GetTree().Root.GetChild(0).GetChildren();
-
+        Godot.Collections.Array<Node> nodes = this.GetTree().Root.GetChild(0).FindByName("World").GetChildren();
+        
         foreach (Node node in nodes)
             if (node is Interactable interactable)
             {
                 float dist = (GlobalPosition - interactable.GlobalPosition).Length();
+
                 if (dist < interactable.interactableRange)
                     interactables.Add(interactable);
             }

@@ -4,6 +4,33 @@ using System;
 
 public partial class UiMain : Control
 {
+    public static UiMain instance = null;
+
+    public enum PageType 
+    {
+        PROFILE,
+        INVENTORY,
+        STATUS,
+        MAP,
+        QUEST,
+        OPTION,
+    }
+    public Dictionary<PageType, PackedScene> PagePrefabByType = new()
+    {
+        {PageType.PROFILE, null},
+        {PageType.INVENTORY, ResourceLoader.Load<PackedScene>("res://Prefab/UI/InventoryPage.tscn")},
+        {PageType.STATUS, null},
+        {PageType.MAP, null},
+        {PageType.QUEST, null},
+        {PageType.OPTION, null},
+    };
+
+    public override void _Ready()
+    {
+        base._Ready();
+        instance = this;
+    }
+
     public Page page {
         get{
             Array<Node> childrens = this.FindByName("Pcon").GetChildren();
@@ -34,7 +61,7 @@ public partial class UiMain : Control
         profileB.Pressed += ()=>
             page = null;
         inventoryB.Pressed += ()=>
-            page = ResourceLoader.Load<PackedScene>("res://Prefab/UI/InventoryPage.tscn").Instantiate() as Page;
+            page = SetPage(PageType.INVENTORY);
         statusB.Pressed += ()=>
             page = null;
         mapB.Pressed += ()=>
@@ -43,6 +70,14 @@ public partial class UiMain : Control
             page = null;
         optionB.Pressed += ()=>
             page = null;
+    }
+
+    public Page SetPage(PageType type) 
+    {
+        var prefab = PagePrefabByType[type];
+        if (prefab == null) return null;
+
+        return prefab.Instantiate() as Page;
     }
 
 } 

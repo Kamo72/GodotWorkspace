@@ -1,76 +1,158 @@
-[gd_scene load_steps=9 format=3 uid="uid://56g0mqmufwwk"]
+[gd_scene load_steps=17 format=3 uid="uid://56g0mqmufwwk"]
 
 [ext_resource type="Script" path="res://EntityImplement/Player.cs" id="1_hps05"]
 [ext_resource type="Script" path="res://EntityParent/Humanoid.cs" id="1_rxmhm"]
-[ext_resource type="Script" path="res://EntityParent/Wall.cs" id="3_wbws8"]
+[ext_resource type="Texture2D" uid="uid://e25tij3vihe6" path="res://Asset/Particle/RadialAlphaGradient.png" id="3_1of8b"]
+[ext_resource type="Script" path="res://EntityParent/Environment/Wall.cs" id="4_6lamc"]
 [ext_resource type="Script" path="res://Manager/CameraManager.cs" id="4_64v8r"]
+[ext_resource type="Script" path="res://EntityParent/Environment/Glass.cs" id="4_jn10p"]
+[ext_resource type="Script" path="res://EntityParent/Environment/Bush.cs" id="5_o117g"]
 [ext_resource type="PackedScene" uid="uid://cxrn863chouys" path="res://Prefab/UI/MainUI.tscn" id="5_v7058"]
 [ext_resource type="PackedScene" uid="uid://c21ungwfkofeo" path="res://Prefab/droppedItem.tscn" id="6_awiyl"]
 [ext_resource type="PackedScene" uid="uid://2covg0ovk53g" path="res://Prefab/interactable.tscn" id="7_fobyc"]
 [ext_resource type="PackedScene" uid="uid://ceku0tattvrf1" path="res://Prefab/container.tscn" id="8_tqfvt"]
+[ext_resource type="Script" path="res://EntityParent/Interactable/Container.cs" id="12_pgxwj"]
+[ext_resource type="Script" path="res://EntityParent/Interactable/Body.cs" id="13_6x31y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3kiu8"]
+size = Vector2(92.5, 100.72)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_gvgyw"]
+polygon = PackedVector2Array(-25, -25, 25, -25, 25, 25, -25, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gnw3g"]
+size = Vector2(60.7505, 172)
 
 [node name="Node2D" type="Node2D"]
-
-[node name="Player" type="RigidBody2D" parent="."]
-position = Vector2(12, 22)
-scale = Vector2(8.20354, 86.0655)
-lock_rotation = true
-script = ExtResource("1_hps05")
-
-[node name="Humanoid" type="RigidBody2D" parent="."]
-position = Vector2(206, 190)
-script = ExtResource("1_rxmhm")
-
-[node name="Wall" type="RigidBody2D" parent="."]
-position = Vector2(198, 126)
-script = ExtResource("3_wbws8")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 script = ExtResource("4_64v8r")
-target = NodePath("../Player")
+target = NodePath("../World/Player")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="MainUi" parent="CanvasLayer" instance=ExtResource("5_v7058")]
 visible = false
 
-[node name="DroppedItem" parent="." instance=ExtResource("6_awiyl")]
+[node name="World" type="Node2D" parent="."]
+
+[node name="Background" type="ColorRect" parent="World"]
+z_index = -1
+offset_left = -955.0
+offset_top = -542.0
+offset_right = -915.0
+offset_bottom = -502.0
+scale = Vector2(71.364, 40.6229)
+color = Color(0.0962047, 0.0962048, 0.0962047, 1)
+
+[node name="Player" type="RigidBody2D" parent="World"]
+position = Vector2(-369, -201)
+lock_rotation = true
+script = ExtResource("1_hps05")
+
+[node name="PointLight2D" type="PointLight2D" parent="World/Player"]
+energy = 0.5
+shadow_enabled = true
+shadow_filter_smooth = 9.0
+texture = ExtResource("3_1of8b")
+texture_scale = 10.0
+
+[node name="Humanoid" type="RigidBody2D" parent="World"]
+position = Vector2(-102, 306)
+scale = Vector2(-0.00494312, 0.897468)
+script = ExtResource("1_rxmhm")
+
+[node name="Wall" type="RigidBody2D" parent="World"]
+position = Vector2(105, -121)
+script = ExtResource("4_6lamc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall"]
+scale = Vector2(0.988425, 1)
+shape = SubResource("RectangleShape2D_3kiu8")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="World/Wall"]
+position = Vector2(1.90735e-06, 3.8147e-06)
+scale = Vector2(1.82258, 2.00651)
+occluder = SubResource("OccluderPolygon2D_gvgyw")
+
+[node name="Glass" type="RigidBody2D" parent="World"]
+position = Vector2(92, 284)
+scale = Vector2(1, 7.04)
+script = ExtResource("4_jn10p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Glass"]
+scale = Vector2(0.988425, 1)
+shape = SubResource("RectangleShape2D_3kiu8")
+
+[node name="Bush" type="RigidBody2D" parent="World"]
+position = Vector2(-279, -218)
+scale = Vector2(2.72, 1.76)
+script = ExtResource("5_o117g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Bush"]
+scale = Vector2(0.988425, 1)
+shape = SubResource("RectangleShape2D_3kiu8")
+debug_color = Color(0, 0.619191, 0.572255, 0.42)
+
+[node name="Wall2" type="RigidBody2D" parent="World"]
+position = Vector2(194, -120)
+script = ExtResource("4_6lamc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall2"]
+position = Vector2(-1, -42)
+shape = SubResource("RectangleShape2D_3kiu8")
+
+[node name="Wall3" type="RigidBody2D" parent="World"]
+position = Vector2(286, -183)
+script = ExtResource("4_6lamc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall3"]
+position = Vector2(55.3753, -38)
+scale = Vector2(2, 1)
+shape = SubResource("RectangleShape2D_gnw3g")
+
+[node name="DroppedItem" parent="World" instance=ExtResource("6_awiyl")]
 position = Vector2(64, 390)
 
-[node name="DroppedItem2" parent="." instance=ExtResource("6_awiyl")]
+[node name="DroppedItem2" parent="World" instance=ExtResource("6_awiyl")]
 position = Vector2(98, 392)
 
-[node name="Interactable" parent="." instance=ExtResource("7_fobyc")]
+[node name="Interactable" parent="World" instance=ExtResource("7_fobyc")]
 position = Vector2(308, 392)
 
-[node name="Interactable2" parent="." instance=ExtResource("7_fobyc")]
+[node name="Interactable2" parent="World" instance=ExtResource("7_fobyc")]
 position = Vector2(330, 391)
 
-[node name="Interactable3" parent="." instance=ExtResource("7_fobyc")]
+[node name="Interactable3" parent="World" instance=ExtResource("7_fobyc")]
 position = Vector2(829, -428)
 
-[node name="Interactable4" parent="." instance=ExtResource("7_fobyc")]
+[node name="Interactable4" parent="World" instance=ExtResource("7_fobyc")]
 position = Vector2(851, -429)
 
-[node name="Interactable5" parent="." instance=ExtResource("7_fobyc")]
+[node name="Interactable5" parent="World" instance=ExtResource("7_fobyc")]
 position = Vector2(-834, -447)
 
-[node name="Interactable6" parent="." instance=ExtResource("7_fobyc")]
+[node name="Interactable6" parent="World" instance=ExtResource("7_fobyc")]
 position = Vector2(-812, -448)
 
-[node name="Interactable7" parent="." instance=ExtResource("7_fobyc")]
+[node name="Interactable7" parent="World" instance=ExtResource("7_fobyc")]
 position = Vector2(-855, 458)
 
-[node name="Interactable8" parent="." instance=ExtResource("7_fobyc")]
+[node name="Interactable8" parent="World" instance=ExtResource("7_fobyc")]
 position = Vector2(-833, 457)
 
-[node name="Interactable9" parent="." instance=ExtResource("7_fobyc")]
+[node name="Interactable9" parent="World" instance=ExtResource("7_fobyc")]
 position = Vector2(905, 496)
 
-[node name="Interactable10" parent="." instance=ExtResource("7_fobyc")]
+[node name="Interactable10" parent="World" instance=ExtResource("7_fobyc")]
 position = Vector2(927, 495)
 
-[node name="DroppedItem3" parent="." instance=ExtResource("8_tqfvt")]
-position = Vector2(-335, 45)
+[node name="Container" parent="World" instance=ExtResource("8_tqfvt")]
+position = Vector2(-287, 238)
+script = ExtResource("12_pgxwj")
+
+[node name="Body" parent="World" instance=ExtResource("8_tqfvt")]
+position = Vector2(-283, 104)
+script = ExtResource("13_6x31y")

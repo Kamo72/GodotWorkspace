@@ -15,8 +15,9 @@ public partial class Weapon : Node2D
     private float fireCooldown = 0f;    //격발 지연
     public bool isReloading = false; // 재장전 중 여부
     public bool isCharging = false; // 재장전 중 여부
-    bool isReloadDisrupt = false;
-    public bool isRealeased = false;
+    bool isReloadDisrupt = false; //재장전 중단 요청 입력됨
+    public bool isRealeased = false; //단발 전용 트리거
+
     /* Instantiate */
     public Weapon(WeaponItem weaponItem, String code)
     {
@@ -32,7 +33,6 @@ public partial class Weapon : Node2D
         AddChild(sprite);
     }
 
-
     /* Process */
     public override void _Process(double delta)
     {
@@ -40,7 +40,6 @@ public partial class Weapon : Node2D
         if (fireCooldown > 0f)
             fireCooldown -= (float)delta;
     }
-
 
     /* Callable Actions */
     public bool Shoot()
@@ -133,8 +132,7 @@ public partial class Weapon : Node2D
             {
                 if (master.inventory.TakeItem(magBefore))
                 {
-                    if (Player.player.mainUI.FindByName("InventoryPage") is InventoryPage ip)
-                        ip.UpdateAllUI();
+                    InventoryPage.instance?.UpdateAllUI();
 
                     //[timeout] reloadTime - detach
                     await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item1), "timeout"); // 재장전 시간 대기
@@ -164,8 +162,7 @@ public partial class Weapon : Node2D
                 if (res == false)
                     GD.PushError("새로 장착한 탄창이 Storage에서 제대로 제거되지 않았습니다!");
 
-                if (Player.player.mainUI.FindByName("InventoryPage") is InventoryPage ipp)
-                    ipp.UpdateAllUI();
+            InventoryPage.instance?.UpdateAllUI();
         }
 
         //[timeout] Inspect - out
@@ -213,12 +210,9 @@ public partial class Weapon : Node2D
             ammo = GetAmmoOne();
             if (ammo == null) throw new Exception("ReloadTube - GetAmmoOne() returned null!!");
             weaponItem.chamber = ammo;
-            
-            if (Player.player.mainUI.FindByName("InventoryPage") is InventoryPage ipp)
-                ipp.UpdateAllUI();
+
+            InventoryPage.instance?.UpdateAllUI();
         }
-
-
 
         while (weaponItem.magazine.ammoCount != weaponItem.magazine.magStatus.ammoSize)
         {
@@ -232,8 +226,8 @@ public partial class Weapon : Node2D
                 bool res = weaponItem.magazine.AmmoPush(ammo);
                 if (!res) throw new Exception("ReloadTube - AmmoPush(ammo) failed, what happened!?");
 
-                if (Player.player.mainUI.FindByName("InventoryPage") is InventoryPage ipp)
-                    ipp.UpdateAllUI();
+
+                InventoryPage.instance?.UpdateAllUI();
             }
         }
 
@@ -257,8 +251,8 @@ public partial class Weapon : Node2D
         {
             weaponItem.FeedAmmo();
 
-            if (Player.player.mainUI.FindByName("InventoryPage") is InventoryPage ip)
-                ip.UpdateAllUI();
+
+            InventoryPage.instance?.UpdateAllUI();
         }
         isCharging = false;
     }

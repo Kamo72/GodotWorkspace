@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using static Storage;
 
-public partial class EquipSlot : Control
+public partial class EquipSlot : InventorySlot
 {
     /* UI Reference */
     PanelContainer slotContainer => this.FindByName("SlotContainer") as PanelContainer;
@@ -11,8 +11,6 @@ public partial class EquipSlot : Control
 
 
     /* Reference */
-    public InventoryPage inventoryPage => ((InventoryPage)GetParent().GetParent().GetParent());
-
     Humanoid.Inventory.EquipSlot slot; //소켓과 장비된 아이템 정보
     Equipable equiped = null; //소켓과 장비된 아이템 정보
 
@@ -36,17 +34,9 @@ public partial class EquipSlot : Control
 
 
     /* Process */
-    public static Dictionary<string, Color> highlight = new() //하이라이트 색상 정보
-    {
-        { "idle", new Color(1,1,1)},
-        { "disable", new Color(1,0,0)},
-        { "enable", new Color(0,1,0)},
-        { "onMouse", new Color(0,0.5f,0.5f)},
-    };
-
     public ItemModel onMouseItem = null; // 마우스 아이템
     //OnMouse 정보를 찾는 과정 + 각 슬롯과 소켓의 UI 하이라이팅
-    void OnMouseProcess()
+    public override void OnMouseProcess()
     {
         ItemModel foundItem = null;
 
@@ -83,24 +73,27 @@ public partial class EquipSlot : Control
 
     /* Updater */
     //주어진 Equipable에 따라 모든 아이템 UI 초기화 (updated 변수에 의해 호출)
-    public bool updated = false;
-    public void RestructureStorage(Equipable equipable)
+    public override void RestructureStorage()
     {
-        equiped = equipable;
+        if (updated) return;
         updated = true;
 
-        if (equipable == null)
+        Equipable equipable = slot.item;
         {
-            ResetItemModel();
-            return;
-        }
+            equiped = equipable;
+            if (equipable == null)
+            {
+                ResetItemModel();
+                return;
+            }
 
-        ResetItemModel();
-        SetItemEquiped(equipable);
+            ResetItemModel();
+            SetItemEquiped(equipable);
+        }
     }
 
     //_Input 호출부를 InventoryPage급으로 올리며네서 리팩토링된 코드
-    public bool GetInput(InputEvent @event)
+    public override bool GetInput(InputEvent @event)
     {
         Rect2 rect = GetRect();
         rect.Position = GlobalPosition;

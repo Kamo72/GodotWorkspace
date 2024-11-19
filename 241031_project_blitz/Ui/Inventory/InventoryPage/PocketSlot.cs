@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using static Storage;
 
-public partial class PocketSlot : Control
+public partial class PocketSlot : InventorySlot
 {
     /* UI Reference */
     GridContainer storageCon => this.FindByName("StorageContainer") as GridContainer;
@@ -12,8 +12,6 @@ public partial class PocketSlot : Control
 
 
     /* Reference */
-    public InventoryPage inventoryPage => ((InventoryPage)GetParent().GetParent().GetParent().GetParent());
-
     Storage storage = null; //소켓과 장비된 아이템 정보
 
     /* Variables */
@@ -72,18 +70,11 @@ public partial class PocketSlot : Control
 
     }
 
-    public static Dictionary<string, Color> highlight = new() //하이라이트 색상 정보
-    {
-        { "idle", new Color(1,1,1)},
-        { "disable", new Color(1,0,0)},
-        { "enable", new Color(0,1,0)},
-        { "onMouse", new Color(0,0.5f,0.5f)},
-    };
 
     public Vector2I? onMouse = null; //마우스 위치
     public ItemModel onMouseItem = null; // 마우스 아이템
     //OnMouse 정보를 찾는 과정 + 각 슬롯과 소켓의 UI 하이라이팅
-    void OnMouseProcess()
+    public override void OnMouseProcess()
     {
         ItemModel foundItem = null;
         Vector2I? onMouseNow = null;
@@ -227,22 +218,23 @@ public partial class PocketSlot : Control
     }
 
     //주어진 Equipable에 따라 모든 아이템 UI 초기화 (updated 변수에 의해 호출)
-    public bool updated = false;
-    public void RestructureStorage(Storage storage)
+    public override void RestructureStorage()
     {
+        if (updated) return;
         updated = true;
-        
-        ResetItemModel();
-        SetStorageGrid(storage.size);
 
-        foreach (Storage.StorageNode storageNode in storage.itemList)
-            SetItemModel(storageNode);
-        
+        //Storage storage = storage as Storage;
+        {
+            ResetItemModel();
+            SetStorageGrid(storage.size);
 
+            foreach (Storage.StorageNode storageNode in storage.itemList)
+                SetItemModel(storageNode);
+        }
     }
 
     //InventoryPage로부터 입력에 대한 처리를 호출
-    public bool GetInput(InputEvent @event)
+    public override bool GetInput(InputEvent @event)
     {
         //GD.PushWarning($"OnMouse : {onMouse} - {(onMouseItem != null ? onMouseItem.item.status.name : "null")}");
         Rect2 rect = GetRect();
