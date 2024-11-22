@@ -1,9 +1,13 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using static Humanoid;
 public class Equipable : Item
 {
     public Humanoid equipedBy { get; set; }
+    public Humanoid.Inventory inventory { get; set; }
+    public bool isEquiping => inventory != null || equipedBy != null;
+    public bool isBody => inventory != null && equipedBy == null;
 
     //장착 및 장착 해제
     public void BeEquip(Humanoid entity)
@@ -11,48 +15,57 @@ public class Equipable : Item
         onStorage?.RemoveItem(this);
         
         equipedBy = entity;
+        inventory = entity.inventory;
     }
+
+    public void BeEquip(Inventory inventory)
+    {
+        onStorage?.RemoveItem(this);
+
+        this.inventory = inventory;
+    }
+
     public Item UnEquip()
     {
         //GD.PushWarning("UnEquip Called!");
-        if (equipedBy == null) throw new Exception("Equipable - UnEquip - ERROR : 장착하지 않은 아이템을 장착 해제하려고 합니다!");
-        if (equipedBy is Humanoid human)
-        {
-            equipedBy = null;
-            Item result = null;
-            switch (status.category)
-            {
-                case Category.HEADGEAR:
-                    result = human.inventory.headgear.UnEquipItem();
-                    break;
-                case Category.HELMET:
-                    result = human.inventory.helmet.UnEquipItem();
-                    break;
-                case Category.PLATE:
-                    result = human.inventory.plate.UnEquipItem();
-                    break;
-                case Category.RIG:
-                    result = human.inventory.rig.UnEquipItem();
-                    break;
-                case Category.BACKPACK:
-                    result = human.inventory.backpack.UnEquipItem();
-                    break;
-                case Category.S_CONTAINER:
-                    result = human.inventory.sContainer.UnEquipItem();
-                    break;
-                case Category.WEAPON:
-                    if (human.inventory.firstWeapon.item == this)
-                        result = human.inventory.firstWeapon.UnEquipItem();
-                    else if (human.inventory.secondWeapon.item == this)
-                        result = human.inventory.secondWeapon.UnEquipItem();
-                    else
-                        result = human.inventory.subWeapon.UnEquipItem();
-                    break;
-            }
+        if (!isEquiping) throw new Exception("Equipable - UnEquip - ERROR : 장착하지 않은 아이템을 장착 해제하려고 합니다!");
 
-            return result;
+        Item result = null;
+        Inventory tInventory = inventory;
+        equipedBy = null;
+        inventory = null;
+
+        switch (status.category)
+        {
+            case Category.HEADGEAR:
+                result = tInventory.headgear.UnEquipItem();
+                break;
+            case Category.HELMET:
+                result = tInventory.helmet.UnEquipItem();
+                break;
+            case Category.PLATE:
+                result = tInventory.plate.UnEquipItem();
+                break;
+            case Category.RIG:
+                result = tInventory.rig.UnEquipItem();
+                break;
+            case Category.BACKPACK:
+                result = tInventory.backpack.UnEquipItem();
+                break;
+            case Category.S_CONTAINER:
+                result = tInventory.sContainer.UnEquipItem();
+                break;
+            case Category.WEAPON:
+                if (tInventory.firstWeapon.item == this)
+                    result = tInventory.firstWeapon.UnEquipItem();
+                else if (tInventory.secondWeapon.item == this)
+                    result = tInventory.secondWeapon.UnEquipItem();
+                else
+                    result = tInventory.subWeapon.UnEquipItem();
+                break;
         }
-        return null;
+
+        return result;
     }
 }
 

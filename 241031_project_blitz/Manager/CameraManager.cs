@@ -4,7 +4,7 @@ using System;
 public partial class CameraManager : Camera2D
 {
     [Export]
-    private Humanoid target;
+    public Humanoid target;
 
     public static CameraManager current;
 

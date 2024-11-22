@@ -19,15 +19,13 @@ public partial class DroppedItem : Interactable
 
     public override void Interacted(Humanoid humanoid)
     {
-        if (item == null || humanoid == null) return;
-        if (humanoid.inventory == null) return;
+        if (item == null) return;
 
-        bool taken = humanoid.inventory.TakeItem(item);
+        bool takable = humanoid.inventory.TakeItemAvailable(item);
 
-        if (!taken) return;
+        if (!takable) return;
 
-        GD.Print("DropppedItem interacted!");
-        item.droppedItem = null;
-        GetParent().RemoveChild(this);
+        humanoid.inventory.TakeItem(item);
+        QueueFree();
     }
 }

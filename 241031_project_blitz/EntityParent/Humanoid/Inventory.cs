@@ -35,6 +35,23 @@ public partial class Humanoid
             StorageNode? newPlace;
 
             //가방에 삽입
+            if (rig.item is Rig rg)
+            {
+                newPlace = rg.storage.GetPosInsert(item);
+                if (newPlace.HasValue)
+                {
+                    item.onStorage?.RemoveItem(item);
+                    return rg.storage.Insert(newPlace.Value);
+                }
+            }
+            //주머니 먼저 삽입
+            newPlace = pocket.GetPosInsert(item);
+            if (newPlace.HasValue)
+            {
+                item.onStorage?.RemoveItem(item);
+                return pocket.Insert(newPlace.Value);
+            }
+            //가방에 삽입
             if (backpack.item is Backpack bp)
             {
                 newPlace = bp.storage.GetPosInsert(item);
@@ -44,12 +61,49 @@ public partial class Humanoid
                     return bp.storage.Insert(newPlace.Value);
                 }
             }
+            //컨테이너에 삽입
+            if (sContainer.item is SecContainer scon)
+            {
+                newPlace = scon.storage.GetPosInsert(item);
+                if (newPlace.HasValue)
+                {
+                    item.onStorage?.RemoveItem(item);
+                    return scon.storage.Insert(newPlace.Value);
+                }
+            }
+
+            return false;
+        }
+
+        public bool TakeItemAvailable(Item item)
+        {
+            StorageNode? newPlace;
+
+            //가방에 삽입
+            if (rig.item is Rig rg)
+            {
+                newPlace = rg.storage.GetPosInsert(item);
+                if (newPlace.HasValue)
+                    return true;
+            }
             //주머니 먼저 삽입
             newPlace = pocket.GetPosInsert(item);
             if (newPlace.HasValue)
+                return true;
+
+            //가방에 삽입
+            if (backpack.item is Backpack bp)
             {
-                item.onStorage?.RemoveItem(item);
-                return pocket.Insert(newPlace.Value);
+                newPlace = bp.storage.GetPosInsert(item);
+                if (newPlace.HasValue)
+                    return true;
+            }
+            //컨테이너에 삽입
+            if (sContainer.item is SecContainer scon)
+            {
+                newPlace = scon.storage.GetPosInsert(item);
+                if (newPlace.HasValue)
+                    return true;
             }
 
             return false;
@@ -60,7 +114,7 @@ public partial class Humanoid
             if(item is Equipable equipable)
                 if (slot.DoEquipItem(equipable))
                 {
-                    equipable.BeEquip(master);
+                    equipable.BeEquip(this);
                     return true;
                 }
             return false;
@@ -211,7 +265,7 @@ public partial class Humanoid
                     return false;
                 
                 this.item = item as Equipable;
-                this.item.BeEquip(inventory.master);
+                this.item.BeEquip(inventory);
                 return true;
             }
             public Item UnEquipItem()
@@ -220,10 +274,11 @@ public partial class Humanoid
                 {
                     Item item = (Item)this.item;
 
-                    if (this == inventory.master.nowEquip)
-                        inventory.master.targetEquip = null;
+                    if (inventory.master != null)
+                        if (this == inventory.master.nowEquip)
+                            inventory.master.targetEquip = null;
 
-                    if (this.item.equipedBy != null)
+                    if (this.item.isEquiping)
                         this.item.UnEquip();
 
                     this.item = null;

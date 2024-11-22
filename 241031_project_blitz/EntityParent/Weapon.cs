@@ -10,6 +10,7 @@ public partial class Weapon : Node2D
     public WeaponStatus status;
     public WeaponItem weaponItem;
     public int ammoInMagazine => weaponItem.ammoInMagazine;
+    public Sprite2D sprite2D => this.FindByName("Sprite2D") as Sprite2D;
 
     /* State */
     private float fireCooldown = 0f;    //격발 지연

@@ -1,15 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://ceku0tattvrf1"]
+[gd_scene load_steps=4 format=3 uid="uid://t1nubu6ybhkj"]
 
-[ext_resource type="Script" path="res://EntityParent/Interactable/Container.cs" id="1_jrvus"]
-[ext_resource type="Texture2D" uid="uid://cm1ijbp72an07" path="res://icon.svg" id="2_ibtfi"]
+[ext_resource type="Script" path="res://EntityParent/Interactable/Body.cs" id="1_f1gpm"]
+[ext_resource type="Texture2D" uid="uid://cm1ijbp72an07" path="res://icon.svg" id="2_ktypk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qixdo"]
 
-[node name="DroppedItem" type="RigidBody2D"]
+[node name="Interactable" type="RigidBody2D"]
 collision_layer = 0
 collision_mask = 0
 gravity_scale = 0.0
-script = ExtResource("1_jrvus")
+script = ExtResource("1_f1gpm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(3.18, 3.18)
@@ -17,7 +17,7 @@ shape = SubResource("CircleShape2D_qixdo")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.44, 0.44)
-texture = ExtResource("2_ibtfi")
+texture = ExtResource("2_ktypk")
 
 [node name="InteractionUI" type="Control" parent="."]
 layout_mode = 3
@@ -30,7 +30,7 @@ offset_bottom = -38.0
 [node name="Sprite2D" type="Sprite2D" parent="InteractionUI"]
 position = Vector2(-2.44, 9.56)
 scale = Vector2(0.165, 0.165)
-texture = ExtResource("2_ibtfi")
+texture = ExtResource("2_ktypk")
 
 [node name="Label" type="Label" parent="InteractionUI"]
 layout_mode = 1

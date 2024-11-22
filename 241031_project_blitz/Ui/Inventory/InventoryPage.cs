@@ -29,6 +29,7 @@ public partial class InventoryPage : Page
     List<InventorySlot> mySlotList;
     List<InventorySlot> otherSlotList;
 
+    List<Window> windowList;
 
     public Control cursor => this.FindByName("Cursor") as Control;
 
@@ -74,6 +75,9 @@ public partial class InventoryPage : Page
             containerSlot,
         };
         otherSlotList = new() { };
+        windowList = new() { };
+
+        OpenStorageWindow(((Backpack)Player.player.inventory.backpack.item).storage);
     }
 
     public override void _Process(double delta)
@@ -113,8 +117,14 @@ public partial class InventoryPage : Page
 
         foreach (var item in otherSlotList)
             item.updated = false;
+
+        foreach (var item in mySlotList)
+            item.RestructureStorage();
+        foreach (var item in otherSlotList)
+            item.RestructureStorage();
     }
 
+    //OtherInventory 조작
     public void SetOtherPanel(Storage storage)
     {
         ResetOtherPanel();
@@ -129,7 +139,6 @@ public partial class InventoryPage : Page
 
         UpdateAllUI();
     }
-
     public void SetOtherPanel(Inventory inventory)
     {
         ResetOtherPanel();
@@ -140,48 +149,61 @@ public partial class InventoryPage : Page
         PocketSlot pocketSlot;
         EquipSlot equipSlot;
 
+        Control control = new Control();
+        otherInventory.AddChild(control);
+        control.CustomMinimumSize = new(687, 687);
+        control.Position = new(0, 0);
+        //control.SizeFlagsHorizontal = SizeFlags.Fill;
+        //control.SizeFlagsVertical = SizeFlags.ShrinkBegin;
+
         {
             equipSlot = GetEquipSlot();
             equipSlot.slotName.Text = "헬멧";
             equipSlot.SetSocket(inventory.helmet);
-            otherInventory.AddChild(equipSlot);
             otherSlotList.Add(equipSlot);
+            control.AddChild(equipSlot);
+            equipSlot.Position = new(250, 100);
         }
         {
             equipSlot = GetEquipSlot();
             equipSlot.slotName.Text = "헤드기어";
             equipSlot.SetSocket(inventory.headgear);
-            otherInventory.AddChild(equipSlot);
             otherSlotList.Add(equipSlot);
+            control.AddChild(equipSlot);
+            equipSlot.Position = new(110, 100);
         }
         {
             equipSlot = GetEquipSlot();
             equipSlot.slotName.Text = "방탄판";
             equipSlot.SetSocket(inventory.plate);
-            otherInventory.AddChild(equipSlot);
             otherSlotList.Add(equipSlot);
+            control.AddChild(equipSlot);
+            equipSlot.Position = new(250, 240);
         }
 
         {
             equipSlot = GetWeaponSlot();
             equipSlot.slotName.Text = "주무장";
             equipSlot.SetSocket(inventory.firstWeapon);
-            otherInventory.AddChild(equipSlot);
             otherSlotList.Add(equipSlot);
+            control.AddChild(equipSlot);
+            equipSlot.Position = new(110, 380);
         }
         {
             equipSlot = GetWeaponSlot();
             equipSlot.slotName.Text = "부무장";
             equipSlot.SetSocket(inventory.secondWeapon);
-            otherInventory.AddChild(equipSlot);
             otherSlotList.Add(equipSlot);
+            control.AddChild(equipSlot);
+            equipSlot.Position = new(110, 520);
         }
         {
             equipSlot = GetEquipSlot();
             equipSlot.slotName.Text = "보조무장";
             equipSlot.SetSocket(inventory.subWeapon);
-            otherInventory.AddChild(equipSlot);
             otherSlotList.Add(equipSlot);
+            control.AddChild(equipSlot);
+            equipSlot.Position = new(390, 380);
         }
 
 
@@ -217,6 +239,17 @@ public partial class InventoryPage : Page
 
         UpdateAllUI();
     }
+    public void ResetOtherPanel()
+    {
+        foreach (var control in otherInventory.GetChildren())
+            control.QueueFree();
+
+        foreach(var window in windowList)
+            window.QueueFree();
+
+        otherSlotList.Clear();
+        windowList.Clear();
+    }
 
     StorageSlot GetStorageSlot()
     {
@@ -239,15 +272,27 @@ public partial class InventoryPage : Page
                 .Instantiate() as EquipSlot;
     }
 
-
-
-    public void ResetOtherPanel()
+    public void OpenStorageWindow(Storage storage)
     {
-        foreach (var slot in otherSlotList)
-            slot.QueueFree();
-        otherSlotList.Clear();
-    }
+        foreach (var window in windowList)
+            if (window.FindByName("PocketSlot") is PocketSlot ps)
+                if (ps.HasStorage(storage))
+                    return;
 
+        PocketSlot pocketSlot = GetPocketSlot();
+        pocketSlot.SetStorage(storage);
+        
+        otherSlotList.Add(pocketSlot);
+
+        Window control = new Window();
+        control.AddChild(pocketSlot);
+        AddChild(control);
+        control.CloseRequested += () => control.QueueFree();
+        control.Size = new(687, 687);
+        control.Position = new(600, 600);
+        //otherInventory.AddChild(control);
+        windowList.Add(control);
+    }
 
     ItemModel onDragging = null;        //집은 아이템
     Vector2I dragPos = Vector2I.Zero;   //집은 위치 저장
@@ -297,12 +342,7 @@ public partial class InventoryPage : Page
     }
 
     //집고 있는 아이템 구하기
-    public (ItemModel, Vector2I)? ReleaseCursor()
-    {
-        if (onDragging == null) return null;
-
-        return (onDragging, dragPos);
-    }
+    public (ItemModel, Vector2I)? ReleaseCursor() => (onDragging == null)? null : (onDragging, dragPos);
 
 
 }

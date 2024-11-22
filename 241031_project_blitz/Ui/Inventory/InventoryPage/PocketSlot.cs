@@ -217,6 +217,54 @@ public partial class PocketSlot : InventorySlot
 
     }
 
+    void SetStorageGridWindow(Vector2I size)
+    {
+        SlotList = new List<Panel>();
+
+        Window parent = GetParent() as Window;
+
+        float margin = 3f;
+        int maxColumn = 7;
+        float nodeSize = ((687-150) - margin * (maxColumn + 1)) / maxColumn;
+        float width = nodeSize * size.X + margin * (size.X + 1) + 15;
+        float height = nodeSize * size.Y + margin * (size.Y + 1) + 15;
+
+        parent.Size = new((int)width, (int)height);
+      
+        GridContainer scon = storageCon;
+
+        foreach (Node node in scon.GetChildren())
+            scon.RemoveChild(node);
+
+        // GD.PrintErr("scon.Size : " + scon.Size);
+        // GD.PrintErr("margin : " + margin + " / width : " + width + " / nodeSize : " + nodeSize);
+
+        for (int y = 0; y < size.Y; y++)
+            for (int x = 0; x < size.X; x++)
+            {
+                Vector2 tPosition = new Vector2(
+                    nodeSize * x + margin * (x + 1),
+                    nodeSize * y + margin * (y + 1)
+                );
+
+                Panel p = new Panel();
+                p.Position = tPosition;
+                p.Size = new Vector2(nodeSize, nodeSize);
+                p.CustomMinimumSize = p.Size;
+                p.Name = x + "x" + y;
+                scon.AddChild(p);
+                SlotList.Add(p);
+                //GD.PrintErr("p : " + p.Position + " / s : " + p.Size);
+            }
+
+        scon.Columns = size.X;
+        scon.Size = new Vector2(
+            nodeSize * size.X + margin * (size.X + 1),
+            nodeSize * size.Y + margin * (size.Y + 1));
+
+        UpdateSize();
+    }
+
     //주어진 Equipable에 따라 모든 아이템 UI 초기화 (updated 변수에 의해 호출)
     public override void RestructureStorage()
     {
@@ -224,13 +272,17 @@ public partial class PocketSlot : InventorySlot
         updated = true;
 
         //Storage storage = storage as Storage;
-        {
-            ResetItemModel();
+        
+        ResetItemModel();
+        if(GetParent() is Control)
             SetStorageGrid(storage.size);
+        else
+            SetStorageGridWindow(storage.size);
 
-            foreach (Storage.StorageNode storageNode in storage.itemList)
-                SetItemModel(storageNode);
-        }
+
+        foreach (Storage.StorageNode storageNode in storage.itemList)
+            SetItemModel(storageNode);
+        
     }
 
     //InventoryPage로부터 입력에 대한 처리를 호출
@@ -297,7 +349,7 @@ public partial class PocketSlot : InventorySlot
                         //가져온 아이템이 장비 가능하고, 장비 중이라면, 장비 해제
                         if (isStored)
                             if (draggingItem.item is Equipable draggingEquipable)
-                                if (draggingEquipable.equipedBy != null)
+                                if (draggingEquipable.isEquiping)
                                     draggingEquipable.UnEquip();
 
                         inventoryPage.SetCursor(null, new());
@@ -362,10 +414,16 @@ public partial class PocketSlot : InventorySlot
         int maxColumn = 7;
         float margin = 3f;
 
-        Control parent = GetParent() as Control;
-        float parentWidth = parent.Size.X;
+        float parentWidth = 0;
+
+        if (GetParent() is Control control)
+            parentWidth = control.Size.X;
+        else if (GetParent() is Window window)
+            parentWidth = window.Size.X;
+
+        GD.Print("parentWidth : " + parentWidth);
         float widthAvailable = parentWidth - 150;
-        float nodeSize = (widthAvailable - margin * (maxColumn + 1)) / maxColumn;
+        float nodeSize = (storageCon.GetChild(0) as Control).Size.X;//(widthAvailable - margin * (maxColumn + 1)) / maxColumn;
 
         Vector2 pos = GetNodeByPos(storageNode.pos).Position;
         Vector2I itemSize = storageNode.item.status.size;
@@ -378,6 +436,8 @@ public partial class PocketSlot : InventorySlot
         itemModels.Add(iModel);
         iModel.Position = storageCon.Position + pos;
 
+        //GD.Print("iModel.Size" + iModel.Size);
+
     }
 
     //모든 아이템 UI 삭제
@@ -388,5 +448,6 @@ public partial class PocketSlot : InventorySlot
         itemModels.Clear();
     }
 
+    public bool HasStorage(Storage storage) => storage == this.storage;
 }
 

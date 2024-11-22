@@ -39,10 +39,6 @@ public partial class Container : Interactable
     {
         if (humanoid is Player player) 
         {
-            //string str = "";
-            //foreach (var a in LevelManager.inst.GetSpawnedItems(LevelManager.Theme.ARMORY, new(3, 3), 1f))
-            //    str += a.status.name + " - ";
-            //GD.PushWarning(str);
             player.isInventory = true;
             UiMain.instance.page = UiMain.instance.SetPage(PageType.INVENTORY);
             InventoryPage.instance.SetOtherPanel(storage);

@@ -159,10 +159,10 @@ public partial class EquipSlot : InventorySlot
                             GD.PushWarning("isEpquipable : " + isEpquipable);
                             if (!isEpquipable) return false;
 
-                            if (draggingEquipable.equipedBy != null)
+                            if (draggingEquipable.isEquiping)
                                 draggingEquipable.UnEquip();
 
-                            bool equipTargetResult = Player.player.inventory.EquipItemTarget(slot, draggingEquipable);
+                            bool equipTargetResult = slot.DoEquipItem(draggingEquipable);
 
                             GD.PushWarning("equipTargetResult : " + equipTargetResult);
                             return equipTargetResult;

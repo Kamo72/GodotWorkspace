@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public abstract partial class InventorySlot : Control
 {
-    public InventoryPage inventoryPage => ((InventoryPage)GetParent().GetParent().GetParent().GetParent());
+    public InventoryPage inventoryPage => InventoryPage.instance;
 
     public bool updated = false;
     public abstract void OnMouseProcess();

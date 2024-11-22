@@ -12,9 +12,6 @@ public partial class DoorTransition : Interactable
     [Export]
     string doorName;
 
-
-
-
     public override void Interacted(Humanoid humanoid)
     {
         //if (item == null || humanoid == null) return;

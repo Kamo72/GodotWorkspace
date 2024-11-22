@@ -1,8 +1,10 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using static Godot.OpenXRHand;
 using static Humanoid;
+using static System.Net.Mime.MediaTypeNames;
 
 public partial class Humanoid : RigidBody2D
 {
@@ -13,7 +15,7 @@ public partial class Humanoid : RigidBody2D
     private float inertia = 0.15f; // 관성 계수 조절
 
     //방향 관련 변수
-    protected float facingDir = 0f; // 현재 바라보는 방향 (라디안 단위)
+    public float facingDir = 0f; // 현재 바라보는 방향 (라디안 단위)
     protected bool isRightSide => Math.Abs(facingDir) < MathF.PI / 2f;
 
 
@@ -67,7 +69,7 @@ public partial class Humanoid : RigidBody2D
     protected float handRot;
 
     //장비 중인 무기 슬롯, Weapon 장비 딜레이
-    protected Inventory.EquipSlot nowEquip = null;
+    public Inventory.EquipSlot nowEquip = null;
     protected Inventory.EquipSlot targetEquip = null;
     protected float equipValue = 0f;
     public bool isEquiped => equipValue >= 1f && nowEquip != null;
@@ -132,23 +134,9 @@ public partial class Humanoid : RigidBody2D
     public override void _Process(double delta)
     {
         QueueRedraw();
+        intelligence?.Process((float)delta);
 
-        // 가상 조준점 업데이트
-        virtualAimPoint = virtualAimPoint.Lerp(GetGlobalMousePosition(),
-            equippedWeapon == null? 0.3f : equippedWeapon.status.aimDt.traggingSpeed);
-
-        float recoilRecover = 0.1f; //반동 회복
-        // 실제 반동 벡터 업데이트
-        recoilVec += delayedRecoilVec * (1f - delayedRecoilRatio);
-        recoilVec *= (1f - recoilRecover);
-
-        // 지연 반동 벡터 업데이트
-        delayedRecoilVec *= delayedRecoilRatio;
-
-        //조준 안정
-        float aimStableStrength = equippedWeapon == null? 1f : equippedWeapon.status.aimDt.stance;
-        aimStableTime += (float)delta * (1 + recoilVec.Length()/100) * 3f * aimStableStrength/50f;
-
+        IntelligenceProcess((float)delta);
         InteractionProcess();
         WeaponEquipProcess((float)delta);
     }
@@ -302,6 +290,93 @@ public partial class Humanoid : RigidBody2D
         equippedWeapon.Scale = new(1f, rotSider);
     }
 
+    bool noIntelligenceErrored = false;
+    void IntelligenceProcess(float delta)
+    {
+        if (intelligence == null ) {
+            if (!noIntelligenceErrored)
+            {
+                GD.PushError($"[ERROR] {Name} : 해당 Humanoid에게 등록된 Intelligence가 없습니다!");
+                noIntelligenceErrored = true;
+            }
+            return;
+        }
+        
+        //이동
+        moveVec = intelligence.vectorMap["MoveVec"];
+
+        // 마우스 위치를 얻어 Player의 위치로부터 방향 계산
+        var mousePosition = intelligence.vectorMap["AimPos"];
+        var direction = mousePosition - GlobalPosition;
+        var angle = direction.Angle();
+
+        // 바라보는 방향 설정
+        facingDir = angle;
+
+
+        // 가상 조준점 업데이트
+        virtualAimPoint = virtualAimPoint.Lerp(intelligence.vectorMap["AimPos"],
+            equippedWeapon == null ? 0.3f : equippedWeapon.status.aimDt.traggingSpeed);
+
+        float recoilRecover = 0.1f; //반동 회복
+        // 실제 반동 벡터 업데이트
+        recoilVec += delayedRecoilVec * (1f - delayedRecoilRatio);
+        recoilVec *= (1f - recoilRecover);
+
+        // 지연 반동 벡터 업데이트
+        delayedRecoilVec *= delayedRecoilRatio;
+
+        //조준 안정
+        float aimStableStrength = equippedWeapon == null ? 1f : equippedWeapon.status.aimDt.stance;
+        aimStableTime += (float)delta * (1 + recoilVec.Length() / 100) * 3f * aimStableStrength / 50f;
+
+        // 재장전 수행
+        if (intelligence.commandMap["Reload"])
+            equippedWeapon?.Reload();
+
+        if (intelligence.commandMap["Inventory"])
+        {
+            isInventory = !isInventory;
+            InventoryPage.instance?.ResetOtherPanel();
+
+            Control mainUI = GetTree().Root.FindByName("MainUi") as Control;
+            mainUI.Visible = !mainUI.Visible;
+        }
+
+        if (intelligence.commandMap["Interact"])
+            if (interactables.Count > 0)
+                interactables[0].Interacted(this);
+
+        if (intelligence.commandMap["FirstWeapon"])
+            if (inventory.firstWeapon.item != null)
+                targetEquip = inventory.firstWeapon;
+
+        if (intelligence.commandMap["SecondWeapon"])
+            if (inventory.secondWeapon.item != null)
+                targetEquip = inventory.secondWeapon;
+
+        if (intelligence.commandMap["SubWeapon"])
+            if (inventory.subWeapon.item != null)
+                targetEquip = inventory.subWeapon;
+
+        if (intelligence.commandMap["Fire"])
+        {
+            if (equippedWeapon == null) return;
+            if (equippedWeapon.IsBusy())
+            {
+                if (equippedWeapon.isReloading)
+                    equippedWeapon.DisruptReload();
+                return;
+            }
+
+            bool isShoot = equippedWeapon.Shoot();
+            if (isShoot)
+                OnShoot();
+        }
+        if (intelligence.commandMap["FireReleased"])
+            equippedWeapon?.SetRealease();
+    }
+
     /* Updater */
     public void EquipWeapon(Weapon weapon)
     {
@@ -323,6 +398,9 @@ public partial class Humanoid : RigidBody2D
         healthNow -= damage;
         GD.Print($"{Name}가 {damage}의 피해를 입어 현재 체력: {healthNow}");
 
+        if (CameraManager.current.target == this)
+            CameraManager.current.ApplyRecoil(damage * 10f);
+
         // 체력이 0 이하이면 사망 처리
         if (healthNow <= 0)
         {
@@ -333,6 +411,20 @@ public partial class Humanoid : RigidBody2D
     private void OnDead()
     {
         GD.Print($"{Name}가 사망했습니다.");
+
+        //시체 생성
+        Body body = ResourceLoader.Load<PackedScene>("res://Prefab/body.tscn").Instantiate() as Body;
+        inventory.master = null;
+        body.Initiate( inventory );
+ 
+
+        //기타 추가적인 정보 전달
+        GetParent().AddChild(body);
+        body.Position = Position;
+
+        if (CameraManager.current.target == this) 
+            CameraManager.current.target = null;
+
         QueueFree(); // 객체 삭제
     }
 
@@ -343,6 +435,12 @@ public partial class Humanoid : RigidBody2D
         float recoilValue = 100f; //반동 크기
         delayedRecoilVec += Vector2.FromAngle(randFloat * 2 * (float)Math.PI) * recoilValue;
         handPos += Vector2.FromAngle(facingDir) * -recoilVec.Length() * 0.3f;
+
+
+        if (CameraManager.current.target == this)
+            CameraManager.current.ApplyRecoil(equippedWeapon.status.aimDt.strength);
+        //if (CameraManager.current.target == this)
+        //    CameraManager.current.ApplyRecoil(100);
     }
 
 

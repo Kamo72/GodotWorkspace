@@ -358,7 +358,7 @@ public partial class StorageSlot : InventorySlot
                                 //가져온 아이템이 장비 가능하고, 장비 중이라면, 장비 해제
                                 if (draggingItem.item is Equipable draggingEquipable)
                                 {
-                                    if (draggingEquipable.equipedBy != null)
+                                    if (draggingEquipable.isEquiping)
                                         draggingEquipable.UnEquip();
                                 }
 
@@ -376,15 +376,13 @@ public partial class StorageSlot : InventorySlot
                             {
                                 bool isEpquipable = slot.AbleEquipItem(draggingEquipable);
 
-                                //GD.PushWarning("isEpquipable : " + isEpquipable);
                                 if (!isEpquipable) return false;
 
-                                if (draggingEquipable.equipedBy != null)
+                                if (draggingEquipable.isEquiping)
                                     draggingEquipable.UnEquip();
 
-                                bool equipTargetResult = Player.player.inventory.EquipItemTarget(slot, draggingEquipable);
+                                bool equipTargetResult = slot.DoEquipItem(draggingEquipable);
 
-                                //GD.PushWarning("equipTargetResult : " + equipTargetResult);
                                 return equipTargetResult;
                             }
                         }
@@ -472,6 +470,7 @@ public partial class StorageSlot : InventorySlot
         itemModels.Add(iModel);
         iModel.Position = storageCon.Position + pos;
 
+        //GD.Print("iModel.Size" + iModel.Size);
     }
     
     //모든 아이템 UI 삭제
