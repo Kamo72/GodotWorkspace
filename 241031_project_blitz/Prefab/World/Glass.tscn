@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://jklxhcvk7oc1"]
+
+[ext_resource type="Script" path="res://EntityParent/Environment/Glass.cs" id="1_l2jim"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3kiu8"]
+size = Vector2(100, 100)
+
+[node name="Glass" type="RigidBody2D"]
+position = Vector2(92, 284)
+scale = Vector2(1, 7.04)
+script = ExtResource("1_l2jim")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.988425, 1)
+shape = SubResource("RectangleShape2D_3kiu8")

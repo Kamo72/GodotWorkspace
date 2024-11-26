@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("241003_blitzServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c39d1df80a1a9b1d0bc48fbc2f26fe57a81e0df8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+435ba4054960608dc438619bfacf8e2a28ced8d6")]
 [assembly: System.Reflection.AssemblyProductAttribute("241003_blitzServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("241003_blitzServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

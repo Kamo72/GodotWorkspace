@@ -1,9 +1,9 @@
+Node2D
 DirectionalLight2D
 LightOccluder2D
 PointLight2D
 ColorRect
 Sprite2D
-Node2D
 CanvasModulate
 Node
 CollisionShape2D

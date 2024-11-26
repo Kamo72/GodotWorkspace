@@ -1,0 +1,109 @@
+[gd_scene load_steps=16 format=3 uid="uid://56g0mqmufwwk"]
+
+[ext_resource type="Script" path="res://Manager/CameraManager.cs" id="1_mn1s0"]
+[ext_resource type="PackedScene" uid="uid://cxrn863chouys" path="res://Prefab/UI/MainUI.tscn" id="2_h8yga"]
+[ext_resource type="Script" path="res://Manager/WorldManager.cs" id="3_50wo7"]
+[ext_resource type="Script" path="res://EntityImplement/Player.cs" id="3_787dm"]
+[ext_resource type="Texture2D" uid="uid://e25tij3vihe6" path="res://Asset/Particle/RadialAlphaGradient.png" id="4_l3t1x"]
+[ext_resource type="Script" path="res://EntityImplement/Npc.cs" id="5_0qhd2"]
+[ext_resource type="PackedScene" uid="uid://jklxhcvk7oc1" path="res://Prefab/World/Glass.tscn" id="6_2nl1d"]
+[ext_resource type="PackedScene" uid="uid://iv4em4gra0j6" path="res://Prefab/World/Bush.tscn" id="7_80cdm"]
+[ext_resource type="PackedScene" uid="uid://c21ungwfkofeo" path="res://Prefab/droppedItem.tscn" id="8_vbxe4"]
+[ext_resource type="PackedScene" uid="uid://ceku0tattvrf1" path="res://Prefab/container.tscn" id="9_e2n0o"]
+[ext_resource type="Script" path="res://EntityParent/Interactable/Body.cs" id="10_sbma8"]
+[ext_resource type="Script" path="res://EntityParent/Environment/Wall.cs" id="11_hqets"]
+[ext_resource type="PackedScene" uid="uid://pehgr0lw4xlt" path="res://Prefab/World/Wall.tscn" id="11_jfjl2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3kiu8"]
+size = Vector2(100, 100)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_gvgyw"]
+polygon = PackedVector2Array(-51, -51, 50, -50, 50, 50, -50, 50)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+script = ExtResource("1_mn1s0")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MainUi" parent="CanvasLayer" instance=ExtResource("2_h8yga")]
+visible = false
+
+[node name="Background" type="ColorRect" parent="."]
+z_index = -1
+offset_left = -955.0
+offset_top = -542.0
+offset_right = -915.0
+offset_bottom = -502.0
+scale = Vector2(71.364, 40.6229)
+color = Color(0.0962047, 0.0962048, 0.0962047, 1)
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+color = Color(0.172549, 0, 0.180392, 0.639216)
+energy = 1.5
+blend_mode = 2
+
+[node name="World" type="Node2D" parent="."]
+script = ExtResource("3_50wo7")
+
+[node name="Player" type="RigidBody2D" parent="World"]
+position = Vector2(-369, -201)
+lock_rotation = true
+script = ExtResource("3_787dm")
+
+[node name="PointLight2D" type="PointLight2D" parent="World/Player"]
+energy = 1.38
+shadow_enabled = true
+shadow_filter_smooth = 9.0
+texture = ExtResource("4_l3t1x")
+texture_scale = 10.0
+
+[node name="Humanoid" type="RigidBody2D" parent="World"]
+position = Vector2(-55, 318)
+script = ExtResource("5_0qhd2")
+
+[node name="Glass" parent="World" instance=ExtResource("6_2nl1d")]
+
+[node name="Bush" parent="World" instance=ExtResource("7_80cdm")]
+
+[node name="DroppedItem" parent="World" instance=ExtResource("8_vbxe4")]
+position = Vector2(252, 500)
+
+[node name="DroppedItem2" parent="World" instance=ExtResource("8_vbxe4")]
+position = Vector2(250, 383)
+
+[node name="Container" parent="World" instance=ExtResource("9_e2n0o")]
+position = Vector2(-387, 209)
+
+[node name="Body" parent="World" instance=ExtResource("9_e2n0o")]
+position = Vector2(-390, 79)
+script = ExtResource("10_sbma8")
+
+[node name="Wall" parent="World" instance=ExtResource("11_jfjl2")]
+
+[node name="Wall2" type="RigidBody2D" parent="World"]
+position = Vector2(488, 320)
+scale = Vector2(2.82243, 9.47248)
+script = ExtResource("11_hqets")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall2"]
+shape = SubResource("RectangleShape2D_3kiu8")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="World/Wall2"]
+position = Vector2(1.90735e-06, 3.8147e-06)
+occluder = SubResource("OccluderPolygon2D_gvgyw")
+
+[node name="Wall3" type="RigidBody2D" parent="World"]
+position = Vector2(-566, 534)
+scale = Vector2(1.8, 4.28)
+script = ExtResource("11_hqets")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall3"]
+shape = SubResource("RectangleShape2D_3kiu8")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="World/Wall3"]
+position = Vector2(1.90735e-06, 3.8147e-06)
+occluder = SubResource("OccluderPolygon2D_gvgyw")

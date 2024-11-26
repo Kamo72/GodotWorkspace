@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsbgmc5b8f3mm"]
+
+[ext_resource type="Script" path="res://Manager/World/Chunk.cs" id="1_mjp40"]
+[ext_resource type="PackedScene" uid="uid://pehgr0lw4xlt" path="res://Prefab/World/Wall.tscn" id="2_pl3eb"]
+
+[node name="Chunk1,0" type="Node2D"]
+script = ExtResource("1_mjp40")
+chunkPos = Vector2i(1, 0)
+
+[node name="Wall" parent="." instance=ExtResource("2_pl3eb")]
+position = Vector2(1185, 140)
+rotation = -0.806342
+
+[node name="Wall2" parent="." instance=ExtResource("2_pl3eb")]
+position = Vector2(2015, 794)
+rotation = -0.806342
+
+[node name="Wall3" parent="." instance=ExtResource("2_pl3eb")]
+position = Vector2(1971, 157)
+rotation = -0.806342
+
+[node name="Wall4" parent="." instance=ExtResource("2_pl3eb")]
+position = Vector2(1169, 869)
+rotation = -0.806342
