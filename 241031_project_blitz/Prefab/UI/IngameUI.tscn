@@ -38,12 +38,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_fmpxf")
 
 [node name="Stats" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 script = ExtResource("2_gharf")
 
 [node name="Conversation" type="Control" parent="."]
@@ -203,12 +205,14 @@ offset_bottom = 210.985
 text = "번째 선택지"
 
 [node name="Trade" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("4_5gwmv")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Trade"]
@@ -224,6 +228,8 @@ grow_vertical = 2
 [node name="ScrollContainer3" type="ScrollContainer" parent="Trade/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 2
 
 [node name="TraderInventory" type="VBoxContainer" parent="Trade/HBoxContainer/ScrollContainer3"]
 layout_mode = 2
@@ -233,6 +239,8 @@ size_flags_vertical = 2
 [node name="ScrollContainer" type="ScrollContainer" parent="Trade/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 2
 
 [node name="MyInventory" type="VBoxContainer" parent="Trade/HBoxContainer/ScrollContainer"]
 layout_mode = 2
@@ -242,6 +250,8 @@ size_flags_vertical = 2
 [node name="ScrollContainer2" type="ScrollContainer" parent="Trade/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 2
 
 [node name="StashInventory" type="VBoxContainer" parent="Trade/HBoxContainer/ScrollContainer2"]
 layout_mode = 2
@@ -530,4 +540,22 @@ offset_bottom = 1055.0
 text = "0"
 label_settings = SubResource("LabelSettings_ppxbh")
 horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="Trade"]
+offset_left = 805.0
+offset_top = 13.0
+offset_right = 1105.0
+offset_bottom = 93.0
+
+[node name="Label" type="Label" parent="Trade/CloseButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "뒤로가기"
+label_settings = SubResource("LabelSettings_auins")
+horizontal_alignment = 1
 vertical_alignment = 1

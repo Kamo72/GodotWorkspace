@@ -132,18 +132,28 @@ public partial class EquipSlot : InventorySlot
                     //소켓에 템이 장착됨
                     if (equiped is HasStorage hasStorage)
                     {
+                        GD.PushWarning("EquipSlot : equiped is HasStorage hasStorage");
+
                         //아이템을 스스로 안에 저장 시도 시
                         if (equiped == draggingItem.item)
+                        {
+                            GD.PushWarning("EquipSlot : equiped == draggingItem.item");
                             return false;
+                        }
 
-                            
                         //빠른 보관
                         bool insertable = hasStorage.storage.IsAbleToInsert(draggingItem.item);
+
+                        GD.PushWarning($"EquipSlot : insertable = {insertable}");
                         if (insertable)
                         {
                             StorageNode? sNode = hasStorage.storage.GetPosInsert(draggingItem.item);
+
                             if (sNode.HasValue)
+                            {
+                                GD.PushWarning($"EquipSlot : sNode.HasValue");
                                 return hasStorage.storage.Insert(sNode.Value);
+                            }
                             //해당 코드에서 처리하기 성공
                         }
                         return false;
@@ -152,6 +162,7 @@ public partial class EquipSlot : InventorySlot
                     //비어 있는 소켓에 아이템에 가져다 놓기
                     else if (equiped == null)
                     {
+                        GD.PushWarning($"EquipSlot : equiped == null");
                         if (draggingItem.item is Equipable draggingEquipable)
                         {
                             bool isEpquipable = slot.AbleEquipItem(draggingEquipable);
@@ -160,8 +171,10 @@ public partial class EquipSlot : InventorySlot
                             if (!isEpquipable) return false;
 
                             if (draggingEquipable.isEquiping)
-                                draggingEquipable.UnEquip();
+                                //if (draggingEquipable.equipedBy != null)
+                                    draggingEquipable.UnEquip();
 
+                            //bool equipTargetResult = Player.player.inventory.EquipItemTarget(slot, draggingEquipable);
                             bool equipTargetResult = slot.DoEquipItem(draggingEquipable);
 
                             GD.PushWarning("equipTargetResult : " + equipTargetResult);

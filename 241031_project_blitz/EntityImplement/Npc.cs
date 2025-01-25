@@ -66,14 +66,7 @@ public partial class Npc : Humanoid, IInteractable
 
     public override void _Process(double delta)
     {
-        GD.Print($"debug : {this.Name} {nowEquip}");
-        GD.Print($"debug : {this.Name} 1 : {inventory.firstWeapon.item}");
-        GD.Print($"debug : {this.Name} 2 : {inventory.secondWeapon.item}");
-        GD.Print($"debug : {this.Name} 3 : {inventory.subWeapon.item}");
-
         base._Process(delta);
-
-        //GD.Print("highlightValue : " + highlightValue);
 
         //Hightlight
         HightlightProcess((float)delta);

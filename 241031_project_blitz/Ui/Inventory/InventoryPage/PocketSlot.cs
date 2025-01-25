@@ -293,7 +293,7 @@ public partial class PocketSlot : InventorySlot
     //InventoryPage로부터 입력에 대한 처리를 호출
     public override bool GetInput(InputEvent @event)
     {
-        //GD.PushWarning($"OnMouse : {onMouse} - {(onMouseItem != null ? onMouseItem.item.status.name : "null")}");
+        GD.PushWarning($"OnMouse : {onMouse} - {(onMouseItem != null ? onMouseItem.item.status.name : "null")}");
         Rect2 rect = GetRect();
         rect.Position = GlobalPosition;
 
@@ -308,13 +308,14 @@ public partial class PocketSlot : InventorySlot
             //Mouse button pressed 
             if (mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
             {
+                GD.PushWarning("Mouse button pressed ");
                 //해당 지점에 아이템이 있다면 커서에 저장
-                GD.PushWarning("onMouseItem != null");
                 if (onMouseItem != null)
                 {
-                    GD.PushWarning("onMouse.HasValue");
+                    GD.PushWarning("onMouseItem != null");
                     if (onMouse.HasValue)
                     {
+                        GD.PushWarning("onMouse.HasValue");
                         GD.PushWarning("Mouse button pressed : " + onMouse.Value + " - " + onMouseItem.storagePos);
 
                         Vector2I dragPos = new Vector2I(

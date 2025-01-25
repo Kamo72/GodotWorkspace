@@ -20,11 +20,13 @@ public partial class Trade : Control
     Dictionary<VBoxContainer, List<InventorySlot>> slotListDic = new();
     Storage traderStorage = new Storage(new(8, 12));
 
-    Button confirmButton, conversionButton;
+    Button confirmButton, conversionButton, closeButton;
 
 
-
+    
     Trader trader = null;
+
+
 
     public override void _EnterTree()
     {
@@ -41,6 +43,8 @@ public partial class Trade : Control
 
         confirmButton = this.FindByName("ConfirmButton") as Button;
         conversionButton = this.FindByName("ConversionButton") as Button;
+        closeButton = this.FindByName("CloseButton") as Button;
+        closeButton.Pressed += () => this.Visible = false;
 
         slotListDic = new() {
             {traderInventory, new List<InventorySlot>() },
@@ -231,135 +235,23 @@ public partial class Trade : Control
         windowList.Clear();
     }
 
-    //OtherInventory 조작
-    //public void SetOtherPanel(Storage storage)
-    //{
-    //    ResetOtherPanel();
-    //    if (storage == null) return;
+    //Trade UI 관련
+    public void OpenTrade()
+    {
+        OpenTrade(null);
+    }
+    public void OpenTrade(Trader trader) 
+    {
+        this.Visible = true;
+    }
 
-    //    PocketSlot pocketSlot = ResourceLoader.Load<PackedScene>("res://Prefab/UI/InventoryPage/PocketSlot.tscn").Instantiate() as PocketSlot;
-    //    pocketSlot.SetStorage(storage);
+    public void CloseTrade() 
+    {
+        this.Visible = false;
+    }
 
-
-    //    otherInventory.AddChild(pocketSlot);
-    //    otherSlotList.Add(pocketSlot);
-
-    //    UpdateAllUI();
-    //}
-    //public void SetOtherPanel(Inventory inventory)
-    //{
-    //    ResetOtherPanel();
-
-    //    if (inventory == null) return;
-
-    //    StorageSlot storageSlot;
-    //    PocketSlot pocketSlot;
-    //    EquipSlot equipSlot;
-
-    //    Control control = new Control();
-    //    otherInventory.AddChild(control);
-    //    control.CustomMinimumSize = new(687, 687);
-    //    control.Position = new(0, 0);
-    //    //control.SizeFlagsHorizontal = SizeFlags.Fill;
-    //    //control.SizeFlagsVertical = SizeFlags.ShrinkBegin;
-
-    //    {
-    //        equipSlot = GetEquipSlot();
-    //        equipSlot.slotName.Text = "헬멧";
-    //        equipSlot.SetSocket(inventory.helmet);
-    //        otherSlotList.Add(equipSlot);
-    //        control.AddChild(equipSlot);
-    //        equipSlot.Position = new(250, 100);
-    //    }
-    //    {
-    //        equipSlot = GetEquipSlot();
-    //        equipSlot.slotName.Text = "헤드기어";
-    //        equipSlot.SetSocket(inventory.headgear);
-    //        otherSlotList.Add(equipSlot);
-    //        control.AddChild(equipSlot);
-    //        equipSlot.Position = new(110, 100);
-    //    }
-    //    {
-    //        equipSlot = GetEquipSlot();
-    //        equipSlot.slotName.Text = "방탄판";
-    //        equipSlot.SetSocket(inventory.plate);
-    //        otherSlotList.Add(equipSlot);
-    //        control.AddChild(equipSlot);
-    //        equipSlot.Position = new(250, 240);
-    //    }
-
-    //    {
-    //        equipSlot = GetWeaponSlot();
-    //        equipSlot.slotName.Text = "주무장";
-    //        equipSlot.SetSocket(inventory.firstWeapon);
-    //        otherSlotList.Add(equipSlot);
-    //        control.AddChild(equipSlot);
-    //        equipSlot.Position = new(110, 380);
-    //    }
-    //    {
-    //        equipSlot = GetWeaponSlot();
-    //        equipSlot.slotName.Text = "부무장";
-    //        equipSlot.SetSocket(inventory.secondWeapon);
-    //        otherSlotList.Add(equipSlot);
-    //        control.AddChild(equipSlot);
-    //        equipSlot.Position = new(110, 520);
-    //    }
-    //    {
-    //        equipSlot = GetEquipSlot();
-    //        equipSlot.slotName.Text = "보조무장";
-    //        equipSlot.SetSocket(inventory.subWeapon);
-    //        otherSlotList.Add(equipSlot);
-    //        control.AddChild(equipSlot);
-    //        equipSlot.Position = new(390, 380);
-    //    }
-
-
-
-    //    {
-    //        storageSlot = GetStorageSlot();
-    //        storageSlot.slotName.Text = "조끼";
-    //        storageSlot.SetSocket(inventory.rig);
-    //        otherInventory.AddChild(storageSlot);
-    //        otherSlotList.Add(storageSlot);
-    //    }
-    //    {
-    //        pocketSlot = GetPocketSlot();
-    //        pocketSlot.SetStorage(inventory.pocket);
-    //        otherInventory.AddChild(pocketSlot);
-    //        otherSlotList.Add(pocketSlot);
-    //    }
-    //    {
-    //        storageSlot = GetStorageSlot();
-    //        storageSlot.slotName.Text = "가방";
-    //        storageSlot.SetSocket(inventory.backpack);
-    //        otherInventory.AddChild(storageSlot);
-    //        otherSlotList.Add(storageSlot);
-    //    }
-    //    {
-    //        storageSlot = GetStorageSlot();
-    //        storageSlot.slotName.Text = "컨테이너";
-    //        storageSlot.SetSocket(inventory.sContainer);
-    //        otherInventory.AddChild(storageSlot);
-    //        otherSlotList.Add(storageSlot);
-    //    }
-
-
-    //    UpdateAllUI();
-    //}
-    //public void ResetOtherPanel()
-    //{
-    //    foreach (var control in otherInventory.GetChildren())
-    //        control.QueueFree();
-
-    //    foreach (var window in windowList)
-    //        window.QueueFree();
-
-    //    otherSlotList.Clear();
-    //    windowList.Clear();
-    //}
 
     //슬롯 객체 생성
-
     StorageSlot GetStorageSlot()
     {
         return ResourceLoader.Load<PackedScene>("res://Prefab/UI/InventoryPage/StorageSlot.tscn")

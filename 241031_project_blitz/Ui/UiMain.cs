@@ -60,8 +60,11 @@ public partial class UiMain : Control
     {
         profileB.Pressed += ()=>
             page = null;
-        inventoryB.Pressed += ()=>
+        inventoryB.Pressed += () =>
+        {
+            GD.Print("SetPage(PageType.INVENTORY);");  
             page = SetPage(PageType.INVENTORY);
+        };
         statusB.Pressed += ()=>
             page = null;
         mapB.Pressed += ()=>
