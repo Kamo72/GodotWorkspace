@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://04i7pr15xtro"
+path="res://.godot/imported/Grenade8.wav-7a28b41d41cc9ad3bfb3c3078c7c7439.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Firearm/Grenade Sound FX/Grenade/Grenade8.wav"
+dest_files=["res://.godot/imported/Grenade8.wav-7a28b41d41cc9ad3bfb3c3078c7c7439.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

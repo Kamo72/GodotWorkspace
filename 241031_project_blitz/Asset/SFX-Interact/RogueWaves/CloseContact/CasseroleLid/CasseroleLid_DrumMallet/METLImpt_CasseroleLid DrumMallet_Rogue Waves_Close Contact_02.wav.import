@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bv4ge2m7jgl47"
+path="res://.godot/imported/METLImpt_CasseroleLid DrumMallet_Rogue Waves_Close Contact_02.wav-94aa7a4b66f43db69b49ba4243e1efa8.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/CasseroleLid/CasseroleLid_DrumMallet/METLImpt_CasseroleLid DrumMallet_Rogue Waves_Close Contact_02.wav"
+dest_files=["res://.godot/imported/METLImpt_CasseroleLid DrumMallet_Rogue Waves_Close Contact_02.wav-94aa7a4b66f43db69b49ba4243e1efa8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

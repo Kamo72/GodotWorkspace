@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ichmcqs44kfj"
+path="res://.godot/imported/METLFric_FireGuard S Knife_Rogue Waves_Close Contact_02.wav-96f70880c1f56d62ffd70271d87263ca.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Fireguard/Firegaurd_S_Knife/METLFric_FireGuard S Knife_Rogue Waves_Close Contact_02.wav"
+dest_files=["res://.godot/imported/METLFric_FireGuard S Knife_Rogue Waves_Close Contact_02.wav-96f70880c1f56d62ffd70271d87263ca.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

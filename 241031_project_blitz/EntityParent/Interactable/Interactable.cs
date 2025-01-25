@@ -1,11 +1,28 @@
 ﻿using Godot;
 using System;
 
-public partial class Interactable : RigidBody2D
+public partial class Interactable : RigidBody2D, IInteractable
 {
     public string interactableText {
         get => ((Label)this.FindByName("Label")).Text;
         set => ((Label)this.FindByName("Label")).Text = value;
+    }
+
+    float highlightValue = 0f;
+    float highlightDelay = 0.4f;
+    bool isHighlighted => Player.player == null ? false : (GlobalPosition - Player.player.GlobalPosition).Length() < interactableRange;
+    
+    public override void _EnterTree()
+    {
+        base._EnterTree();
+
+        WorldManager.interactables.Add(this);
+    }
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+
+        WorldManager.interactables.Remove(this);
     }
 
     public override void _Process(double delta)
@@ -69,11 +86,7 @@ public partial class Interactable : RigidBody2D
             return null;
     }
 
-    public float interactableRange = 100f;
-
-    bool isHighlighted => Player.player == null? false : (GlobalPosition - Player.player.GlobalPosition).Length() < interactableRange;
-    float highlightValue = 0f;
-    float highlightDelay = 0.4f;
+    public float interactableRange { get; set; } = 100f;
 
     public virtual void Interacted(Humanoid humanoid)
     {

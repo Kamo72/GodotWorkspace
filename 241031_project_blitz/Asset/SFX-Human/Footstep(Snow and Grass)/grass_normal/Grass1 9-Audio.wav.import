@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://vcx2ojpa8ly5"
+path="res://.godot/imported/Grass1 9-Audio.wav-bc9e53314fa44f7bf5afe726f5d0814b.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Human/Footstep(Snow and Grass)/grass_normal/Grass1 9-Audio.wav"
+dest_files=["res://.godot/imported/Grass1 9-Audio.wav-bc9e53314fa44f7bf5afe726f5d0814b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

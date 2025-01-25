@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://f5el0k3h4asb"
+path="res://.godot/imported/METLTonl_DrainGrill DrumStick_Rogue Waves_Close Contact_02.wav-568acfb1eaed4492d78964a563acd7fb.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/DrainGrill/DrainGrill_Drumstick/METLTonl_DrainGrill DrumStick_Rogue Waves_Close Contact_02.wav"
+dest_files=["res://.godot/imported/METLTonl_DrainGrill DrumStick_Rogue Waves_Close Contact_02.wav-568acfb1eaed4492d78964a563acd7fb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://p3qkuh1srai2"
+path="res://.godot/imported/SB_VoxPat_Devilish Creature.wav-f2f9dc6268e3b5425451f662f6f73429.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Monster/Sounds/SB_VoxPat_Devilish Creature.wav"
+dest_files=["res://.godot/imported/SB_VoxPat_Devilish Creature.wav-f2f9dc6268e3b5425451f662f6f73429.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

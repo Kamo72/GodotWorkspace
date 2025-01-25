@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bq103tywaaqn3"
+path="res://.godot/imported/METLMisc_Tinfoil Air_Rogue Waves_Close Contact_01.wav-7e5aeb8f16a7cdb386588be9a07bb803.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Tinfoil/Tinfoil_Air/METLMisc_Tinfoil Air_Rogue Waves_Close Contact_01.wav"
+dest_files=["res://.godot/imported/METLMisc_Tinfoil Air_Rogue Waves_Close Contact_01.wav-7e5aeb8f16a7cdb386588be9a07bb803.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

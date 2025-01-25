@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bdhpto03sy2nw"
+path="res://.godot/imported/METLFric_LongRuler PizzaRoller_Rogue Waves_Close Contact_02.wav-ceeaefa1a5b753d932db6fc97ebebb4d.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/LongRuler/LongRuler_PizzaRoller/METLFric_LongRuler PizzaRoller_Rogue Waves_Close Contact_02.wav"
+dest_files=["res://.godot/imported/METLFric_LongRuler PizzaRoller_Rogue Waves_Close Contact_02.wav-ceeaefa1a5b753d932db6fc97ebebb4d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

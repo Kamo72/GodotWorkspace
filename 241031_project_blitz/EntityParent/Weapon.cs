@@ -7,10 +7,12 @@ public partial class Weapon : Node2D
 {
     /* Reference*/
     protected Humanoid master => GetParent<Humanoid>();
+    public Sprite2D sprite2D => this.FindByName("Sprite2D") as Sprite2D;
+    public PointLight2D light2D => this.FindByName("PointLight2D") as PointLight2D;
+
     public WeaponStatus status;
     public WeaponItem weaponItem;
     public int ammoInMagazine => weaponItem.ammoInMagazine;
-    public Sprite2D sprite2D => this.FindByName("Sprite2D") as Sprite2D;
 
     /* State */
     private float fireCooldown = 0f;    //격발 지연
@@ -32,6 +34,17 @@ public partial class Weapon : Node2D
         sprite.Texture = ResourceLoader.Load<Texture2D>(weaponItem.status.textureRoot);
         sprite.TextureFilter = TextureFilterEnum.Nearest;
         AddChild(sprite);
+
+        var light = new PointLight2D();
+        light.Name = "PointLight2D";
+        light.Position = new(status.detailDt.muzzleDistance, 0f);
+        light.TextureScale = 4.0f;
+        light.Energy = 2f;
+        light.Color = Colors.LightYellow;
+        light.Texture = ResourceLoader.Load<Texture2D>("res://Asset/Particle/RadialAlphaGradient.png");
+        light.TextureFilter = TextureFilterEnum.Nearest;
+        light.ShadowEnabled = true;
+        AddChild(light);
     }
 
     /* Process */
@@ -40,6 +53,8 @@ public partial class Weapon : Node2D
         // fireCooldown 감소 (발사 간격 관리)
         if (fireCooldown > 0f)
             fireCooldown -= (float)delta;
+
+        light2D.Color = new Color(light2D.Color, light2D.Color.A * 0.5f);
     }
 
     /* Callable Actions */
@@ -47,6 +62,7 @@ public partial class Weapon : Node2D
     {
         if (IsBusy()) return false;
         if (fireCooldown > 0f) return false;
+        if (master.movement.sprintValue > 0.01f) return false;
 
         if (status.typeDt.selectorList[0] == SelectorType.SEMI && !isRealeased) return false;
         isRealeased = false;
@@ -86,6 +102,14 @@ public partial class Weapon : Node2D
 
         // 발사 후 fireCooldown 설정 (rpm을 기준으로 발사 간격 계산)
         fireCooldown = 60f / status.detailDt.roundPerMinute;
+        
+        //총구 섬광
+        light2D.Color = new Color(light2D.Color, 1f);
+
+        //소리 발생
+        Sound.Make(master, GlobalPosition, 2000f, 1f, GetSoundRscShot());
+        Sound.Make(master, GlobalPosition, 400f, 0.4f, GetSoundRscShell());
+
 
         return true;
     }
@@ -136,6 +160,7 @@ public partial class Weapon : Node2D
                     InventoryPage.instance?.UpdateAllUI();
 
                     //[timeout] reloadTime - detach
+                    Sound.Make(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipOut());
                     await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item1), "timeout"); // 재장전 시간 대기
                 }
                 else
@@ -148,8 +173,10 @@ public partial class Weapon : Node2D
         if (!isReloadDisrupt)
         {
             //[timeout] reloadTime - getMag
+            Sound.Make(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipIn());
             await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item2), "timeout"); // 재장전 시간 대기
-            
+
+
             //탄창 장착
             weaponItem.AttachMagazine(foundMag.Value.node.item as Magazine);
         }
@@ -204,9 +231,10 @@ public partial class Weapon : Node2D
         }
 
         if (!isReloadDisrupt)
-        if (weaponItem.chamber == null) { 
-            //[timeout] reloadTime - chamber load
-            await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item2), "timeout"); // 재장전 시간 대기
+        if (weaponItem.chamber == null) {
+                //[timeout] reloadTime - chamber load
+                Sound.Make(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipIn());
+                await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item2), "timeout"); // 재장전 시간 대기
 
             ammo = GetAmmoOne();
             if (ammo == null) throw new Exception("ReloadTube - GetAmmoOne() returned null!!");
@@ -222,6 +250,7 @@ public partial class Weapon : Node2D
             if (ammo == null) break;
 
             //[timeout] reloadTime - mag load
+            Sound.Make(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipOut());
             await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item3), "timeout"); // 재장전 시간 대기
             {
                 bool res = weaponItem.magazine.AmmoPush(ammo);
@@ -248,6 +277,7 @@ public partial class Weapon : Node2D
         isCharging = true;
 
         //[timeout] bolt - rewind
+        Sound.Make(master, GlobalPosition, 200f, 0.1f, GetSoundRscArming());
         await ToSignal(GetTree().CreateTimer(status.timeDt.boltTime.Item2), "timeout"); // 재장전 시간 대기
         {
             weaponItem.FeedAmmo();
@@ -303,5 +333,16 @@ public partial class Weapon : Node2D
             return ammo.Split(1) as Ammo;
         }
     }
+
+    string GetSoundRscShell() => 
+    $"res://Asset/SFX-Firearm/KompositeGun/BULLETS/Shell/Shell_Short_0{Random.Shared.Next() % 2 + 1}_SFX.wav";
+    string GetSoundRscShot() => 
+    $"res://Asset/SFX-Firearm/KompositeGun/GUN/Pistol_01_Fire_0{Random.Shared.Next() % 5 + 1}_SFX.wav";
+    string GetSoundRscClipIn() =>
+    $"res://Asset/SFX-Firearm/KompositeGun/GUN/Handling_Gun_01_Clip_In_SFX.wav";
+    string GetSoundRscClipOut() =>
+    $"res://Asset/SFX-Firearm/KompositeGun/GUN/Handling_Gun_01_Clip_Out_SFX.wav";
+    string GetSoundRscArming() =>
+    $"res://Asset/SFX-Firearm/KompositeGun/GUN/Handling_Gun_01_Arming_SFX.wav";
 
 }

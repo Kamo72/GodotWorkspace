@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://12uitgvwihs5"
+path="res://.godot/imported/METLFric_BikeWheel StanleyKnife_Rogue Waves_Close Contact_03.wav-ac52ad77e6d29c2fba2ebf029168df0f.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/BikeWheel/BikeWheel_StanleyKnife/METLFric_BikeWheel StanleyKnife_Rogue Waves_Close Contact_03.wav"
+dest_files=["res://.godot/imported/METLFric_BikeWheel StanleyKnife_Rogue Waves_Close Contact_03.wav-ac52ad77e6d29c2fba2ebf029168df0f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

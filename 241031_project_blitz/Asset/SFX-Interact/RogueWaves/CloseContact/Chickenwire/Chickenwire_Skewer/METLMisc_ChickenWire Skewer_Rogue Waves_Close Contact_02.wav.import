@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cix02ls8o6gdl"
+path="res://.godot/imported/METLMisc_ChickenWire Skewer_Rogue Waves_Close Contact_02.wav-10110c4a9756e6e3763330b13ce0ca1c.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Chickenwire/Chickenwire_Skewer/METLMisc_ChickenWire Skewer_Rogue Waves_Close Contact_02.wav"
+dest_files=["res://.godot/imported/METLMisc_ChickenWire Skewer_Rogue Waves_Close Contact_02.wav-10110c4a9756e6e3763330b13ce0ca1c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

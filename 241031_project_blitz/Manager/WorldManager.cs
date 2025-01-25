@@ -7,10 +7,13 @@ public partial class WorldManager : Node2D
 {
     private string savePath = "C:\\Users\\skyma\\Downloads\\241031ProjectBlitzMapFile"; // 청크 파일 저장 경로
 
+    public static WorldManager instance;
+
     public override void _Ready()
     {
         base._Ready();
         SaveWorldChunks();
+        instance = this;
     }
 
     public override void _Process(double delta)
@@ -18,12 +21,24 @@ public partial class WorldManager : Node2D
         ChunkProcess((float)delta);
     }
 
-    /* Chunks */
+
+    #region Entitys
+    public static List<Humanoid> humanoids = new ();
+    public static List<Sound> sounds = new();
+    public static List<IInteractable> interactables = new();
+
+
+    #endregion
+
+    #region Navigation
+    #endregion
+
+    #region Chunk
     public List<Vector2I> loadedChunks = new();
 
-    const float ChunkUpdatePeriod = 5f;
+    const float ChunkUpdatePeriod = 1f;
     float chunnkUpdateTime = 0f;
-    int chunkRange = 1;
+    int chunkRange = 4;
     
     void ChunkProcess(float delta)
     {
@@ -185,8 +200,6 @@ public partial class WorldManager : Node2D
             }
         
     }
-
-
-    /*  */
+    #endregion
 }
 

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ckuj7ikaegfuw"
+path="res://.godot/imported/METLFric_Riddle Marbles_Rogue Waves_Close Contact_05.wav-b2c4065e2e4a804ae8e811a78aed3006.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Riddle/Riddle_Marbles/METLFric_Riddle Marbles_Rogue Waves_Close Contact_05.wav"
+dest_files=["res://.godot/imported/METLFric_Riddle Marbles_Rogue Waves_Close Contact_05.wav-b2c4065e2e4a804ae8e811a78aed3006.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bb4w2aec4rdx5"
+path="res://.godot/imported/METLFric_FireGuard PizzaRoller_Rogue Waves_Close Contact_01.wav-a5fd8c9766175441cd6ffcbe3d837527.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Fireguard/Firegaurd_PizzaRoller/METLFric_FireGuard PizzaRoller_Rogue Waves_Close Contact_01.wav"
+dest_files=["res://.godot/imported/METLFric_FireGuard PizzaRoller_Rogue Waves_Close Contact_01.wav-a5fd8c9766175441cd6ffcbe3d837527.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

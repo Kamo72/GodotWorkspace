@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bhgq4y3cpj2dc"
+path="res://.godot/imported/METLFric_Riddle PizzaRoller_Rogue Waves_Close Contact_01.wav-ab4d307f7c1c094dc618a9ad9dd4b8ad.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Riddle/Riddle_PizzaRoller/METLFric_Riddle PizzaRoller_Rogue Waves_Close Contact_01.wav"
+dest_files=["res://.godot/imported/METLFric_Riddle PizzaRoller_Rogue Waves_Close Contact_01.wav-ab4d307f7c1c094dc618a9ad9dd4b8ad.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

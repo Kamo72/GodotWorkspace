@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bggyjuaoj3064"
+path="res://.godot/imported/METLTonl_LampSpring Tac_Rogue Waves_Close Contact_02.wav-ce890faabcdd21fa28e03c4200fe4f2e.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/LampSpring/LampSpring_Tac/METLTonl_LampSpring Tac_Rogue Waves_Close Contact_02.wav"
+dest_files=["res://.godot/imported/METLTonl_LampSpring Tac_Rogue Waves_Close Contact_02.wav-ce890faabcdd21fa28e03c4200fe4f2e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

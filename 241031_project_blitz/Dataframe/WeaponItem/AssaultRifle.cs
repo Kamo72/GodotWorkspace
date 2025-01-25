@@ -115,7 +115,7 @@ public class K2C1 : WeaponItem
             effectiveRange = 500f,
             loudness = 3000,
             magazineWhiteList = new(){
-                        "STANAG_AR15_30"
+                "STANAG_AR15_30"
             },
             muzzleVelocity = 10000f,
             muzzleDistance = 50f,

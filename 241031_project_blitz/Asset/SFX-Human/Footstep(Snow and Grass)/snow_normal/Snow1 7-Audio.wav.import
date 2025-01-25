@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://iskvw7jyoyln"
+path="res://.godot/imported/Snow1 7-Audio.wav-337f3f72792b8e8583808e65d5b73af1.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Human/Footstep(Snow and Grass)/snow_normal/Snow1 7-Audio.wav"
+dest_files=["res://.godot/imported/Snow1 7-Audio.wav-337f3f72792b8e8583808e65d5b73af1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

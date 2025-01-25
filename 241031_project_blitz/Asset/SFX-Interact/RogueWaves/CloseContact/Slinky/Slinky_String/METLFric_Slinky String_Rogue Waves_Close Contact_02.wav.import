@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bcjco3s4wbede"
+path="res://.godot/imported/METLFric_Slinky String_Rogue Waves_Close Contact_02.wav-895d61b97e62f16c9f29b54f3aef4051.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Slinky/Slinky_String/METLFric_Slinky String_Rogue Waves_Close Contact_02.wav"
+dest_files=["res://.godot/imported/METLFric_Slinky String_Rogue Waves_Close Contact_02.wav-895d61b97e62f16c9f29b54f3aef4051.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

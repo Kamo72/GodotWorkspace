@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c5qusih43smr"
+path="res://.godot/imported/METLFric_MeshPan Chopsticks_Rogue Waves_Close Contact_03.wav-46acdbef27a14112c4cda2dc8814efd4.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/MeshPan/MeshPan_Chopsticks/METLFric_MeshPan Chopsticks_Rogue Waves_Close Contact_03.wav"
+dest_files=["res://.godot/imported/METLFric_MeshPan Chopsticks_Rogue Waves_Close Contact_03.wav-46acdbef27a14112c4cda2dc8814efd4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

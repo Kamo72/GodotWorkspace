@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cjjvmtx2e0o03"
+path="res://.godot/imported/METLFric_SmallRuler File_Rogue Waves_Close Contact_01.wav-b7867edd5dd408d34ab8d6c2e80d0088.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/SmallRuler/SmallRuler_File/METLFric_SmallRuler File_Rogue Waves_Close Contact_01.wav"
+dest_files=["res://.godot/imported/METLFric_SmallRuler File_Rogue Waves_Close Contact_01.wav-b7867edd5dd408d34ab8d6c2e80d0088.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

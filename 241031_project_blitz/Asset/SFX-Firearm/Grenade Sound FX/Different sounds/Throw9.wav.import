@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bc1xi8xmclxju"
+path="res://.godot/imported/Throw9.wav-1b2f3c4f217b2224bc83e276a2a7d885.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Firearm/Grenade Sound FX/Different sounds/Throw9.wav"
+dest_files=["res://.godot/imported/Throw9.wav-1b2f3c4f217b2224bc83e276a2a7d885.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

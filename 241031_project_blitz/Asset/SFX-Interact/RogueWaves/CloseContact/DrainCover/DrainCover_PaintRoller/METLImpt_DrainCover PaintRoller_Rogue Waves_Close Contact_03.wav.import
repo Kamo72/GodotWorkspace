@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d1fg2rwwg8ass"
+path="res://.godot/imported/METLImpt_DrainCover PaintRoller_Rogue Waves_Close Contact_03.wav-1f84ede78e5d67048b07f21b3ad46385.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/DrainCover/DrainCover_PaintRoller/METLImpt_DrainCover PaintRoller_Rogue Waves_Close Contact_03.wav"
+dest_files=["res://.godot/imported/METLImpt_DrainCover PaintRoller_Rogue Waves_Close Contact_03.wav-1f84ede78e5d67048b07f21b3ad46385.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

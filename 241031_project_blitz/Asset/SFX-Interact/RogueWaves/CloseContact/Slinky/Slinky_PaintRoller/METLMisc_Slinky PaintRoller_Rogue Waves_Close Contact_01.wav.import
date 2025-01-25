@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://m6f04m6ktaao"
+path="res://.godot/imported/METLMisc_Slinky PaintRoller_Rogue Waves_Close Contact_01.wav-e300a3b39eea31cb9d0dff37db8986c8.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Slinky/Slinky_PaintRoller/METLMisc_Slinky PaintRoller_Rogue Waves_Close Contact_01.wav"
+dest_files=["res://.godot/imported/METLMisc_Slinky PaintRoller_Rogue Waves_Close Contact_01.wav-e300a3b39eea31cb9d0dff37db8986c8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

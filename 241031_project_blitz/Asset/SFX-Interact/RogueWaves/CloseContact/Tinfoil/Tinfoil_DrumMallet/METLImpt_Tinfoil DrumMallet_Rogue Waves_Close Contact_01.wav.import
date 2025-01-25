@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://biwm3tamp06gv"
+path="res://.godot/imported/METLImpt_Tinfoil DrumMallet_Rogue Waves_Close Contact_01.wav-e60e3e022b93720a49c6e98a26387a73.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Tinfoil/Tinfoil_DrumMallet/METLImpt_Tinfoil DrumMallet_Rogue Waves_Close Contact_01.wav"
+dest_files=["res://.godot/imported/METLImpt_Tinfoil DrumMallet_Rogue Waves_Close Contact_01.wav-e60e3e022b93720a49c6e98a26387a73.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

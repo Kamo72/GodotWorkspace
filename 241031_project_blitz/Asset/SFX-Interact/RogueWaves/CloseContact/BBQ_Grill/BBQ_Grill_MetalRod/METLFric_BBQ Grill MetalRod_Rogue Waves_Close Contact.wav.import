@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dquqcwvdyrg15"
+path="res://.godot/imported/METLFric_BBQ Grill MetalRod_Rogue Waves_Close Contact.wav-c4b78319f7a7cec7e8bdebe045c3411c.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/BBQ_Grill/BBQ_Grill_MetalRod/METLFric_BBQ Grill MetalRod_Rogue Waves_Close Contact.wav"
+dest_files=["res://.godot/imported/METLFric_BBQ Grill MetalRod_Rogue Waves_Close Contact.wav-c4b78319f7a7cec7e8bdebe045c3411c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

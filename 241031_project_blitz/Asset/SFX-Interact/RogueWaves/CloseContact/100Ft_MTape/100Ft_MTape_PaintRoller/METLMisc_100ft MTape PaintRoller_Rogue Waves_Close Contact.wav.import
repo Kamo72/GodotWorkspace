@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cecyf1xa8mwj8"
+path="res://.godot/imported/METLMisc_100ft MTape PaintRoller_Rogue Waves_Close Contact.wav-36d7027bf099573d76a5985670b0ab4c.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/100Ft_MTape/100Ft_MTape_PaintRoller/METLMisc_100ft MTape PaintRoller_Rogue Waves_Close Contact.wav"
+dest_files=["res://.godot/imported/METLMisc_100ft MTape PaintRoller_Rogue Waves_Close Contact.wav-36d7027bf099573d76a5985670b0ab4c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

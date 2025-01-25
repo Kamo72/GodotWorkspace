@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://biouns0c1ijgc"
+path="res://.godot/imported/METLImpt_FullSkip PaintRoller_Rogue Waves_Close Contact_02.wav-3c9bee7c2706f45e5045be236af4ece6.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/FullSkip/FullSkip_PaintRoller/METLImpt_FullSkip PaintRoller_Rogue Waves_Close Contact_02.wav"
+dest_files=["res://.godot/imported/METLImpt_FullSkip PaintRoller_Rogue Waves_Close Contact_02.wav-3c9bee7c2706f45e5045be236af4ece6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

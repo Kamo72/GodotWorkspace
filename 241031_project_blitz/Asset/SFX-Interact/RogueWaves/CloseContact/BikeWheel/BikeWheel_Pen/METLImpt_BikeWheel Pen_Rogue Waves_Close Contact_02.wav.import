@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://o8inf1ssvjhm"
+path="res://.godot/imported/METLImpt_BikeWheel Pen_Rogue Waves_Close Contact_02.wav-6569225a10e73108d53412b08c592fee.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/BikeWheel/BikeWheel_Pen/METLImpt_BikeWheel Pen_Rogue Waves_Close Contact_02.wav"
+dest_files=["res://.godot/imported/METLImpt_BikeWheel Pen_Rogue Waves_Close Contact_02.wav-6569225a10e73108d53412b08c592fee.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

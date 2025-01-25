@@ -11,19 +11,12 @@ public partial class Humanoid : RigidBody2D
     /* Movement */
     //이동 관련 변수
     public Vector2 moveVec = new Vector2(0, 0);
-    private float speed = 100f;  // 이동 속도 조절
-    private float inertia = 0.15f; // 관성 계수 조절
+    //private float speed = 100f;  // 이동 속도 조절
+    //private float inertia = 0.15f; // 관성 계수 조절
 
     //방향 관련 변수
     public float facingDir = 0f; // 현재 바라보는 방향 (라디안 단위)
     protected bool isRightSide => Math.Abs(facingDir) < MathF.PI / 2f;
-
-
-    /* Health */
-    //체력
-    public float healthNow;
-    public float healthMax;
-
 
     /* Aim */
     // 조준점 관련 변수
@@ -78,8 +71,8 @@ public partial class Humanoid : RigidBody2D
     public bool isInventory = false;
 
     //상호작용
-    protected List<Interactable> interactables = new List<Interactable>();
-    public Interactable interacting = null;
+    protected List<IInteractable> interactables = new List<IInteractable>();
+    public IInteractable interacting = null;
 
 
     //노이즈 객체
@@ -91,11 +84,6 @@ public partial class Humanoid : RigidBody2D
     /* Initiate */
     public override void _Ready()
     {
-        healthMax = 100f; // 최대 체력 초기화
-        healthNow = healthMax; // 현재 체력을 최대 체력으로 설정
-
-        inventory = new Inventory(this);
-
         // Collision 생성 및 설정
         var collision = new CollisionShape2D();
         collision.Shape = new CircleShape2D() { Radius = 35 };
@@ -116,49 +104,64 @@ public partial class Humanoid : RigidBody2D
         handPos = GlobalPosition;
     }
 
+    public override void _EnterTree()
+    {
+        inventory = new Inventory(this);
+        movement = new Movement(this);
+        health = new Health(this, 400);
+
+        WorldManager.humanoids.Add(this);
+    }
+    public override void _ExitTree()
+    {
+        WorldManager.humanoids.Remove(this);
+    }
+
 
     /* Process */
     public override void _PhysicsProcess(double delta)
     {
-        // moveVec이 길이 1을 초과하면 normalize 처리
-        if (moveVec.Length() > 1)
-            moveVec = moveVec.Normalized();
+        if (GetParent() is Chunk chunk)
+        {
+            chunk.RemoveChild(this);
+            chunk.GetParent().AddChild(this);
+        }
 
-        // 이동 처리: 관성을 적용해 이동
-        LinearVelocity += moveVec * speed;
-        LinearVelocity = LinearVelocity.Lerp(Vector2.Zero, inertia);
-
-        WeaponTransformProcess();
+        movement?.PhysicProcess(moveVec);
     }
 
     public override void _Process(double delta)
     {
         QueueRedraw();
         intelligence?.Process((float)delta);
+        movement?.Process((float)delta);
+        health?.Process((float)delta);
 
         IntelligenceProcess((float)delta);
         InteractionProcess();
         WeaponEquipProcess((float)delta);
+        WeaponTransformProcess((float)delta);
     }
 
     void InteractionProcess()
     {
-        interactables = new List<Interactable>();
-        Godot.Collections.Array<Node> nodes = this.GetTree().Root.GetChild(0).FindByName("World").GetChildren();
-        
-        foreach (Node node in nodes)
-            if (node is Interactable interactable)
-            {
-                float dist = (GlobalPosition - interactable.GlobalPosition).Length();
+        interactables = new List<IInteractable>();
+        foreach (Node node in WorldManager.interactables)
+            if(node is Node2D node2d)
+                if (node is IInteractable interactable)
+                {
+                    if (node == this) continue;
 
-                if (dist < interactable.interactableRange)
-                    interactables.Add(interactable);
-            }
+                    float dist = (GlobalPosition - node2d.GlobalPosition).Length();
 
+                    if (dist < interactable.interactableRange)
+                        interactables.Add(interactable);
+                }
     }
 
     void WeaponEquipProcess(float delta)
     {
+
         bool isNotCorrectEquiped =
             (equippedWeapon != null && equippedWeapon.weaponItem != null &&
             nowEquip != null && nowEquip.item != null)
@@ -210,13 +213,13 @@ public partial class Humanoid : RigidBody2D
                 if (targetEquip != null && targetEquip.item is WeaponItem wItem)
                 {
                     EquipWeapon(wItem.GetWeapon());
-                    WeaponTransformProcess();
+                    WeaponTransformProcess(delta);
                 }
             }
         }
     }
 
-    void WeaponTransformProcess()
+    void WeaponTransformProcess(float delta)
     {
         if (equippedWeapon == null)
             return;
@@ -260,6 +263,18 @@ public partial class Humanoid : RigidBody2D
         if (!isEquiped)
         {
             float ratio = MathF.Pow(1f - equipValue, 1f / 2f);
+
+            tPos = tPos.Lerp(Vector2.FromAngle(facingDir) * -handDistance / 2f * rotSider, ratio);
+
+            tRot = Mathf.LerpAngle(tRot,
+                (realAimPoint - equippedWeapon.GlobalPosition).Angle() - 0.5f * 3.14f * rotSider,
+                ratio);
+        }
+        
+        //달리기에 따른 위상
+        else if (movement.sprintValue > 0.01f)
+        {
+            float ratio = MathF.Pow(movement.sprintValue, 1f / 2f);
 
             tPos = tPos.Lerp(Vector2.FromAngle(facingDir) * -handDistance / 2f * rotSider, ratio);
 
@@ -344,8 +359,11 @@ public partial class Humanoid : RigidBody2D
         }
 
         if (intelligence.commandMap["Interact"])
+        {
+            GD.PushWarning("Interaction Call : " + interactables.Count);
             if (interactables.Count > 0)
                 interactables[0].Interacted(this);
+        }
 
         if (intelligence.commandMap["FirstWeapon"])
             if (inventory.firstWeapon.item != null)
@@ -393,27 +411,12 @@ public partial class Humanoid : RigidBody2D
         equippedWeapon.Position = Vector2.Zero;
     }
 
-    public void GetDamage(float damage)
-    {
-        healthNow -= damage;
-        GD.Print($"{Name}가 {damage}의 피해를 입어 현재 체력: {healthNow}");
-
-        if (CameraManager.current.target == this)
-            CameraManager.current.ApplyRecoil(damage * 10f);
-
-        // 체력이 0 이하이면 사망 처리
-        if (healthNow <= 0)
-        {
-            OnDead();
-        }
-    }
-
     private void OnDead()
     {
         GD.Print($"{Name}가 사망했습니다.");
 
         //시체 생성
-        Body body = ResourceLoader.Load<PackedScene>("res://Prefab/body.tscn").Instantiate() as Body;
+        Body body = ResourceLoader.Load<PackedScene>("res://Prefab/Dynamic/body.tscn").Instantiate() as Body;
         inventory.master = null;
         body.Initiate( inventory );
  

@@ -1,41 +1,181 @@
-[gd_scene load_steps=3 format=3 uid="uid://bn5vsnbludk3q"]
+[gd_scene load_steps=11 format=3 uid="uid://bn5vsnbludk3q"]
 
-[ext_resource type="Script" path="res://Manager/World/Chunk.cs" id="1_vo3q8"]
-[ext_resource type="PackedScene" uid="uid://pehgr0lw4xlt" path="res://Prefab/World/Wall.tscn" id="2_2b81r"]
+[ext_resource type="PackedScene" uid="uid://pehgr0lw4xlt" path="res://Prefab/Static/Wall.tscn" id="2_2b81r"]
+[ext_resource type="Script" path="res://EntityImplement/Npc.cs" id="2_6kgyl"]
+[ext_resource type="PackedScene" uid="uid://c21ungwfkofeo" path="res://Prefab/Dynamic/droppedItem.tscn" id="3_jqk0u"]
+[ext_resource type="PackedScene" uid="uid://ceku0tattvrf1" path="res://Prefab/Dynamic/container.tscn" id="4_goacj"]
+[ext_resource type="PackedScene" uid="uid://jklxhcvk7oc1" path="res://Prefab/Static/Glass.tscn" id="5_07yba"]
+[ext_resource type="Script" path="res://EntityParent/Interactable/Body.cs" id="5_u1mfq"]
+[ext_resource type="PackedScene" uid="uid://iv4em4gra0j6" path="res://Prefab/Static/Bush.tscn" id="6_rocji"]
+[ext_resource type="AudioStream" uid="uid://dd2uytvh4o4eb" path="res://Asset/SFX-Human/Footsteps-Essentials/Footsteps_Tile/Footsteps_Tile_Walk/Footsteps_Tile_Walk_01.wav" id="8_6v5ww"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_wwdii"]
+outlines = Array[PackedVector2Array]([PackedVector2Array(83, -589, -85.613, -633.698, -392, -635, -504, -647, -708, -439, -651, -252, -469.395, -216.819, -267, -201, -25.5855, -208.44, 34.442, -297.472, -69.8681, -392.788, -256.839, -383.361, -405, -331, -535, -410, -442, -546, -324.739, -473.441, -71.8362, -445.16, 49, -484)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_jwyqv"]
+outlines = Array[PackedVector2Array]([PackedVector2Array(-174, -172, 320, -202, 524, 127, 260, 380, -178, 302, -401, -7)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [node name="World" type="Node2D"]
 
-[node name="Chunk0,0" type="Node2D" parent="."]
-script = ExtResource("1_vo3q8")
+[node name="Wall" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(-600, -1000)
+scale = Vector2(9, 1)
 
-[node name="Wall" parent="Chunk0,0" instance=ExtResource("2_2b81r")]
-position = Vector2(117, 178)
+[node name="Wall2" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(600, -1000)
+scale = Vector2(9, 1)
 
-[node name="Wall2" parent="Chunk0,0" instance=ExtResource("2_2b81r")]
-position = Vector2(947, 832)
+[node name="Wall3" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(-600, 1000)
+scale = Vector2(9, 1)
 
-[node name="Wall3" parent="Chunk0,0" instance=ExtResource("2_2b81r")]
-position = Vector2(903, 195)
+[node name="Wall4" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(600, 1000)
+scale = Vector2(9, 1)
 
-[node name="Wall4" parent="Chunk0,0" instance=ExtResource("2_2b81r")]
-position = Vector2(101, 907)
+[node name="Wall5" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(-1000, -600)
+scale = Vector2(1, 9)
 
-[node name="Chunk1,0" type="Node2D" parent="."]
-script = ExtResource("1_vo3q8")
-chunkPos = Vector2i(1, 0)
+[node name="Wall6" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(-1000, 600)
+scale = Vector2(1, 9)
 
-[node name="Wall" parent="Chunk1,0" instance=ExtResource("2_2b81r")]
-position = Vector2(1185, 140)
-rotation = -0.806342
+[node name="Wall7" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(1000, -600)
+scale = Vector2(1, 9)
 
-[node name="Wall2" parent="Chunk1,0" instance=ExtResource("2_2b81r")]
-position = Vector2(2015, 794)
-rotation = -0.806342
+[node name="Wall8" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(1000, 600)
+scale = Vector2(1, 9)
 
-[node name="Wall3" parent="Chunk1,0" instance=ExtResource("2_2b81r")]
-position = Vector2(1971, 157)
-rotation = -0.806342
+[node name="DroppedItem" parent="." instance=ExtResource("3_jqk0u")]
+position = Vector2(252, 500)
 
-[node name="Wall4" parent="Chunk1,0" instance=ExtResource("2_2b81r")]
-position = Vector2(1169, 869)
-rotation = -0.806342
+[node name="DroppedItem2" parent="." instance=ExtResource("3_jqk0u")]
+position = Vector2(250, 383)
+
+[node name="Container" parent="." instance=ExtResource("4_goacj")]
+position = Vector2(-387, 209)
+
+[node name="Body" parent="." instance=ExtResource("4_goacj")]
+position = Vector2(-390, 79)
+script = ExtResource("5_u1mfq")
+
+[node name="Glass" parent="." instance=ExtResource("5_07yba")]
+position = Vector2(3, 365)
+
+[node name="Bush" parent="." instance=ExtResource("6_rocji")]
+position = Vector2(-183, 554)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+visible = false
+position = Vector2(-167, 1081)
+scale = Vector2(1.0162, 0.954713)
+navigation_polygon = SubResource("NavigationPolygon_wwdii")
+
+[node name="NavigationRegion2D2" type="NavigationRegion2D" parent="."]
+visible = false
+position = Vector2(-641, 633)
+navigation_polygon = SubResource("NavigationPolygon_jwyqv")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+visible = false
+position = Vector2(-206, 697)
+scale = Vector2(1.04654, 0.431621)
+vertices = PackedVector2Array(-397, -287, 79, -189, 279, 145, -25, 271, -521, 159, -559, -115)
+
+[node name="Humanoid" type="RigidBody2D" parent="."]
+position = Vector2(-196, 739)
+script = ExtResource("2_6kgyl")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Humanoid"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Humanoid"]
+stream = ExtResource("8_6v5ww")
+
+[node name="Humanoid2" type="RigidBody2D" parent="."]
+position = Vector2(240, 696)
+script = ExtResource("2_6kgyl")
+
+[node name="Wall11" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(2048, -3022)
+scale = Vector2(20.48, 1)
+
+[node name="Wall12" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(3022, -2048)
+rotation = 1.5708
+scale = Vector2(20.48, 1)
+
+[node name="Wall13" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(-3022, 2048)
+rotation = 1.5708
+scale = Vector2(20.48, 1)
+
+[node name="Wall14" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(-2048, 3022)
+scale = Vector2(20.48, 1)
+
+[node name="Wall15" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(2048, -3022)
+scale = Vector2(20.48, 1)
+
+[node name="Wall16" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(3022, 2048)
+rotation = 1.5708
+scale = Vector2(20.48, 1)
+
+[node name="Wall17" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(-3022, -2048)
+rotation = 1.5708
+scale = Vector2(20.48, 1)
+
+[node name="Wall18" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(-2048, -3022)
+scale = Vector2(20.48, 1)
+
+[node name="Wall19" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(2048, 3022)
+scale = Vector2(20.48, 1)
+
+[node name="Wall20" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(-824, -3022)
+rotation = 1.5708
+scale = Vector2(4, 4)
+
+[node name="Wall21" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(825, -3007)
+rotation = 1.57079
+scale = Vector2(4, 4)
+
+[node name="Wall22" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(-823, 3016)
+rotation = 1.5708
+scale = Vector2(4, 4)
+
+[node name="Wall23" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(826, 3031)
+rotation = 1.57079
+scale = Vector2(4, 4)
+
+[node name="Wall24" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(3015, -817)
+rotation = 1.5708
+scale = Vector2(4, 4)
+
+[node name="Wall25" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(3023, 833)
+rotation = 1.57079
+scale = Vector2(4, 4)
+
+[node name="Wall26" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(-3033, -829)
+rotation = 1.5708
+scale = Vector2(4, 4)
+
+[node name="Wall27" parent="." instance=ExtResource("2_2b81r")]
+position = Vector2(-3025, 821)
+rotation = 1.57079
+scale = Vector2(4, 4)

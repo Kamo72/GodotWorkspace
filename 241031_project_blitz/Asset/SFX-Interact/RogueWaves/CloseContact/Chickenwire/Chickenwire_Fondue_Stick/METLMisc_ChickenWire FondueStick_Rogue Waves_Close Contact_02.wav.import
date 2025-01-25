@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cki5c71td75an"
+path="res://.godot/imported/METLMisc_ChickenWire FondueStick_Rogue Waves_Close Contact_02.wav-45e7c986105b7c856723c2fa3147acb6.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Chickenwire/Chickenwire_Fondue_Stick/METLMisc_ChickenWire FondueStick_Rogue Waves_Close Contact_02.wav"
+dest_files=["res://.godot/imported/METLMisc_ChickenWire FondueStick_Rogue Waves_Close Contact_02.wav-45e7c986105b7c856723c2fa3147acb6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("241031_project_blitz")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+435ba4054960608dc438619bfacf8e2a28ced8d6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b16539346570e1e4febbe6fb563f708fca64d3cb")]
 [assembly: System.Reflection.AssemblyProductAttribute("241031_project_blitz")]
 [assembly: System.Reflection.AssemblyTitleAttribute("241031_project_blitz")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

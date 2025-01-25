@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://domnpexunpbpg"
+path="res://.godot/imported/METLImpt_Tinfoil Self_Rogue Waves_Close Contact_01.wav-55629fad44c2136064f0c4d40816b48b.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Tinfoil/Tinfoil_Pencil/METLImpt_Tinfoil Self_Rogue Waves_Close Contact_01.wav"
+dest_files=["res://.godot/imported/METLImpt_Tinfoil Self_Rogue Waves_Close Contact_01.wav-55629fad44c2136064f0c4d40816b48b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

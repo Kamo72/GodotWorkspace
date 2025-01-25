@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://3k7v6oay6ru4"
+path="res://.godot/imported/METLImpt_Scaffolding PaintRoller_Rogue Waves_Close Contact_03.wav-16b4df3899ba4a8f0564baef9f831697.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Scaffolding/Scaffolding_PaintRoller/METLImpt_Scaffolding PaintRoller_Rogue Waves_Close Contact_03.wav"
+dest_files=["res://.godot/imported/METLImpt_Scaffolding PaintRoller_Rogue Waves_Close Contact_03.wav-16b4df3899ba4a8f0564baef9f831697.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

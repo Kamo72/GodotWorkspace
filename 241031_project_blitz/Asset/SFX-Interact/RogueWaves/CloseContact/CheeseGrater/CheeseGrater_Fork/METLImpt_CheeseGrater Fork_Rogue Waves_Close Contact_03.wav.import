@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://tn1g6mxihdcw"
+path="res://.godot/imported/METLImpt_CheeseGrater Fork_Rogue Waves_Close Contact_03.wav-4d8c7364a70b8905f7eb31f3d083b8fe.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/CheeseGrater/CheeseGrater_Fork/METLImpt_CheeseGrater Fork_Rogue Waves_Close Contact_03.wav"
+dest_files=["res://.godot/imported/METLImpt_CheeseGrater Fork_Rogue Waves_Close Contact_03.wav-4d8c7364a70b8905f7eb31f3d083b8fe.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

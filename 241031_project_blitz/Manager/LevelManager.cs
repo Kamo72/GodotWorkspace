@@ -10,14 +10,11 @@ public class LevelManager
 {
     static LevelManager()
     {
-        inst = new LevelManager();
+        instance = new LevelManager();
     }
-    public static LevelManager inst;
-
+    public static LevelManager instance;
     private LevelManager()
     {
-
-
     }
 
     public enum Theme {
@@ -25,7 +22,6 @@ public class LevelManager
         ARMORY,
         HOSPITAL,
         COMPUTER,
-        
     }
 
     public Dictionary<Theme, Dictionary<Type, float>> theme= new()
@@ -88,10 +84,5 @@ public class LevelManager
 
         return itemStack;
     }
-
-
-
-
-    
 
 }

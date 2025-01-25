@@ -257,9 +257,9 @@ public class G12_Grizzly : Ammo
             {
                 damage = 120,
                 bleeding = 56,
-                suppress = 800f,
-                pellitCount = 1,
+                suppress = 80f,
                 pierceLevel = 2.6f,
+                pellitCount = 1,
             },
             tracer = new()
             {

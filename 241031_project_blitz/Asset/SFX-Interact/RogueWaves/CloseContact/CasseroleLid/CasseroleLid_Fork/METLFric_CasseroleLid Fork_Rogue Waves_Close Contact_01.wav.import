@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://8hboshq8gqrp"
+path="res://.godot/imported/METLFric_CasseroleLid Fork_Rogue Waves_Close Contact_01.wav-38d4dc305427aa59b472c6ed33460f2a.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/CasseroleLid/CasseroleLid_Fork/METLFric_CasseroleLid Fork_Rogue Waves_Close Contact_01.wav"
+dest_files=["res://.godot/imported/METLFric_CasseroleLid Fork_Rogue Waves_Close Contact_01.wav-38d4dc305427aa59b472c6ed33460f2a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

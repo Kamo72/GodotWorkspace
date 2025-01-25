@@ -11,9 +11,6 @@
     <EmbeddedResource Remove="Resource\**" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="메모장.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Ui\Scene\" />
   </ItemGroup>
 </Project>

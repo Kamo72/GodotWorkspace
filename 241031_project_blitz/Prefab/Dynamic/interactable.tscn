@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://2covg0ovk53g"]
+
+[ext_resource type="Script" path="res://EntityParent/Interactable/Interactable.cs" id="1_53f8n"]
+[ext_resource type="Texture2D" uid="uid://cm1ijbp72an07" path="res://icon.svg" id="2_promg"]
+[ext_resource type="PackedScene" uid="uid://c8uqrqayen2ro" path="res://Prefab/UI/interactionUI.tscn" id="3_cpqyu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qixdo"]
+
+[node name="Interactable" type="RigidBody2D"]
+collision_layer = 0
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_53f8n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 0)
+scale = Vector2(3.18, 3.18)
+shape = SubResource("CircleShape2D_qixdo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -0.471239
+scale = Vector2(0.44, 0.44)
+skew = 0.471239
+texture = ExtResource("2_promg")
+
+[node name="InteractionUI" parent="." instance=ExtResource("3_cpqyu")]
+offset_left = -25.0
+offset_top = -67.0
+offset_right = 32.0
+offset_bottom = -48.0

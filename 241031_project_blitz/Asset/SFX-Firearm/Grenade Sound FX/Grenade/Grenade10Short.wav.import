@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c7b0e7sb6vxa4"
+path="res://.godot/imported/Grenade10Short.wav-d6aaa202ef9d0f1f19f5404a1635aa7b.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Firearm/Grenade Sound FX/Grenade/Grenade10Short.wav"
+dest_files=["res://.godot/imported/Grenade10Short.wav-d6aaa202ef9d0f1f19f5404a1635aa7b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

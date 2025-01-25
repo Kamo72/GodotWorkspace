@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dhkrijnqj5qd5"
+path="res://.godot/imported/METLFric_MeshPan Marble_Rogue Waves_Close Contact_03.wav-0b760df00f6c590b89b7f4c23f244b23.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/MeshPan/MeshPan_Marble/METLFric_MeshPan Marble_Rogue Waves_Close Contact_03.wav"
+dest_files=["res://.godot/imported/METLFric_MeshPan Marble_Rogue Waves_Close Contact_03.wav-0b760df00f6c590b89b7f4c23f244b23.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

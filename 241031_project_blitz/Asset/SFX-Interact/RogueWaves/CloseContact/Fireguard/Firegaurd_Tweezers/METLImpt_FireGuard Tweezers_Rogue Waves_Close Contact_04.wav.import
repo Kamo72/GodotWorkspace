@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dehw62hnicy4l"
+path="res://.godot/imported/METLImpt_FireGuard Tweezers_Rogue Waves_Close Contact_04.wav-37d4b636f1e274514e16c575a14f76ac.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Fireguard/Firegaurd_Tweezers/METLImpt_FireGuard Tweezers_Rogue Waves_Close Contact_04.wav"
+dest_files=["res://.godot/imported/METLImpt_FireGuard Tweezers_Rogue Waves_Close Contact_04.wav-37d4b636f1e274514e16c575a14f76ac.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

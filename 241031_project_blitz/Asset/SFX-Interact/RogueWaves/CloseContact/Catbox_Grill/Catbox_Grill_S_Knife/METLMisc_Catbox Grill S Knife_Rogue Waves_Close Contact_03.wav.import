@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bmbgiqcivmcoa"
+path="res://.godot/imported/METLMisc_Catbox Grill S Knife_Rogue Waves_Close Contact_03.wav-06cb53d3495c2492203026248fb909d9.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Catbox_Grill/Catbox_Grill_S_Knife/METLMisc_Catbox Grill S Knife_Rogue Waves_Close Contact_03.wav"
+dest_files=["res://.godot/imported/METLMisc_Catbox Grill S Knife_Rogue Waves_Close Contact_03.wav-06cb53d3495c2492203026248fb909d9.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

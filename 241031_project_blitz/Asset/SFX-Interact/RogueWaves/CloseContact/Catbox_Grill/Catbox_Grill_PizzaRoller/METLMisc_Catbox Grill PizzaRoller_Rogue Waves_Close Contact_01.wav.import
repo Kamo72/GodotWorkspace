@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c8b44v7cmsifr"
+path="res://.godot/imported/METLMisc_Catbox Grill PizzaRoller_Rogue Waves_Close Contact_01.wav-46db3548a0d0ef6de5a3737c2456b115.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Catbox_Grill/Catbox_Grill_PizzaRoller/METLMisc_Catbox Grill PizzaRoller_Rogue Waves_Close Contact_01.wav"
+dest_files=["res://.godot/imported/METLMisc_Catbox Grill PizzaRoller_Rogue Waves_Close Contact_01.wav-46db3548a0d0ef6de5a3737c2456b115.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

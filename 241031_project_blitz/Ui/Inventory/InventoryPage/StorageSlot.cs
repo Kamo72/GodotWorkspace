@@ -83,18 +83,24 @@ public partial class StorageSlot : InventorySlot
         Vector2I? onMouseNow = null;
 
         //마우스가 있는 노드 찾기
-        foreach (Control node in SlotList)
+        if (GetNodeByPos(new(0, 0)) != null && GetNodeByPos(new(1, 0)) != null)
         {
-            Rect2 rect = node.GetRect();
-            rect.Position = node.GlobalPosition;
+            //throw new Exception("PocketSlot - OnMouseProcess :: GetNodeByPos(new(0, 0)) == null || GetNodeByPos(new(1, 0)) == null is True!!!");
 
-            if (rect.HasPoint(GetGlobalMousePosition()))
-            {
-                string nodeName = node.Name;
-                string[] ss = nodeName.Split('x');
-                onMouseNow = new Vector2I(int.Parse(ss[0]), int.Parse(ss[1]));
-                break;
-            }
+            Rect2 zeroNode = GetNodeByPos(new Vector2I(0, 0)).GetRect(), oneNode = GetNodeByPos(new Vector2I(1, 0)).GetRect();
+            float nodeSep = oneNode.Position.X - zeroNode.End.X;
+
+            Vector2 zeroPos = zeroNode.Position - (Vector2.One * nodeSep / 2f);
+            float inputSep = zeroNode.Size.X + nodeSep;
+            Vector2 mousePos = GetLocalMousePosition();
+
+            Vector2 nodePosFloat = (mousePos - zeroPos) / inputSep;
+            Vector2I nodePos = new(
+                Mathf.RoundToInt(nodePosFloat.X),
+                Mathf.RoundToInt(nodePosFloat.Y));
+
+            if (GetNodeByPos(nodePos) != null)
+                onMouseNow = nodePos;
         }
 
         //마우스가 있는 아이템 찾기
@@ -128,7 +134,7 @@ public partial class StorageSlot : InventorySlot
         onMouse = onMouseNow.HasValue ? onMouseNow.Value : null;
 
         //아이템 하이라이팅
-        var result = inventoryPage.ReleaseCursor();
+        var result = GetCursor();
         if (result.HasValue && onMouse.HasValue)
         {
             ItemModel sentItem = result.Value.Item1;
@@ -251,7 +257,7 @@ public partial class StorageSlot : InventorySlot
                 ResetItemModel();
                 SetItemEquiped(equipable);
 
-                var result = inventoryPage.ReleaseCursor();
+                var result = GetCursor();
                 if (result.HasValue)
                 {
                     ItemModel draggingItem = result.Value.Item1;
@@ -300,13 +306,13 @@ public partial class StorageSlot : InventorySlot
                             onMouse.Value.Y - onMouseItem.storagePos.Y
                             );
 
-                        inventoryPage.SetCursor(onMouseItem, dragPos);
+                        SetCursor(onMouseItem, dragPos);
                     }
                     else
                     {
                         //GD.PushWarning("Mouse button pressed : " + onMouseItem.storagePos);
                         Vector2I itemSize = onMouseItem.item.status.size;
-                        inventoryPage.SetCursor(onMouseItem, new(itemSize.X / 2, itemSize.Y / 2));
+                        SetCursor(onMouseItem, new(itemSize.X / 2, itemSize.Y / 2));
 
                     }
                 }
@@ -317,7 +323,7 @@ public partial class StorageSlot : InventorySlot
             else if (mouseEvent.ButtonIndex == MouseButton.Left)
             {
                 //커서에 아이템이 있다면
-                var result = inventoryPage.ReleaseCursor();
+                var result = GetCursor();
                 if (result.HasValue)
                 {
                     ItemModel draggingItem = result.Value.Item1;
@@ -362,7 +368,7 @@ public partial class StorageSlot : InventorySlot
                                         draggingEquipable.UnEquip();
                                 }
 
-                            inventoryPage.SetCursor(null, new());
+                            SetCursor(null, new());
 
                             //Update
                             if (isStored) updated = false;
@@ -395,12 +401,12 @@ public partial class StorageSlot : InventorySlot
 
         if (@event is InputEventMouseMotion mouseMotionEvent)
         {
-            GD.Print("Mouse moved" + onMouse);
+            //GD.Print("Mouse moved" + onMouse);
         }
 
         if (GetRect().HasPoint(GetLocalMousePosition()))
         {
-            GD.Print("Mouse is over the control");
+            //GD.Print("Mouse is over the control");
         }
 
         return false; //해당 코드에서 처리하지 못함
@@ -417,8 +423,8 @@ public partial class StorageSlot : InventorySlot
     //UI 하이라이팅
     void SetNodesModulate(Vector2I start, Vector2I end, Color color)
     {
-        if (inventoryPage.ReleaseCursor().HasValue)
-            if (inventoryPage.ReleaseCursor().Value.Item1.item == equiped)
+        if (GetCursor().HasValue)
+            if (GetCursor().Value.Item1.item == equiped)
                 return;
 
         if (equiped is HasStorage hasStorage)

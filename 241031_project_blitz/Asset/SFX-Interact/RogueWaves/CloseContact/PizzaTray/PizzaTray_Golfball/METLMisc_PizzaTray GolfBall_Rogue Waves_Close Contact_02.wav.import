@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bacla405s0diq"
+path="res://.godot/imported/METLMisc_PizzaTray GolfBall_Rogue Waves_Close Contact_02.wav-ac9afa6409c0ca527a262e93b6d64ff5.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/PizzaTray/PizzaTray_Golfball/METLMisc_PizzaTray GolfBall_Rogue Waves_Close Contact_02.wav"
+dest_files=["res://.godot/imported/METLMisc_PizzaTray GolfBall_Rogue Waves_Close Contact_02.wav-ac9afa6409c0ca527a262e93b6d64ff5.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

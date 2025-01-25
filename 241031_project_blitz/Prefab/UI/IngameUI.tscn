@@ -1,0 +1,533 @@
+[gd_scene load_steps=17 format=3 uid="uid://crp53kcjq6p2s"]
+
+[ext_resource type="Script" path="res://Ui/UiIngame.cs" id="1_fmpxf"]
+[ext_resource type="Script" path="res://Ui/Ingame/Stats.cs" id="2_gharf"]
+[ext_resource type="Script" path="res://Ui/Ingame/Conversation.cs" id="3_pow5m"]
+[ext_resource type="Script" path="res://Ui/Ingame/Trade.cs" id="4_5gwmv"]
+[ext_resource type="Texture2D" uid="uid://vyq7y3r32jfa" path="res://Asset/IMG-Firearm/ImageAR.png" id="4_cd5wd"]
+[ext_resource type="Texture2D" uid="uid://6wgvmktcwrdj" path="res://EntityImplement/cursor.png" id="5_j6jsd"]
+[ext_resource type="Texture2D" uid="uid://cjyrfw3kbbvx5" path="res://Asset/IMG-Firearm/FN FAL.png" id="7_uwqns"]
+[ext_resource type="Texture2D" uid="uid://brxmnxn5t55v3" path="res://Asset/IMG-Firearm/AK-74.png" id="8_pgm5r"]
+[ext_resource type="Texture2D" uid="uid://cg2i38g1k4j00" path="res://Asset/IMG-Firearm/MDR 7.62.png" id="9_dkmk1"]
+[ext_resource type="Texture2D" uid="uid://d35cj6fggupd2" path="res://Asset/IMG-Firearm/MP-155.png" id="10_07pjf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1ymof"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_krsj5"]
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_vojba"]
+font_size = 32
+font_color = Color(0.762404, 0.762404, 0.762404, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_auins"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_111ws"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_ppxbh"]
+font_size = 28
+font_color = Color(0, 1, 0, 1)
+
+[node name="IngameUi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fmpxf")
+
+[node name="Stats" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_gharf")
+
+[node name="Conversation" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_pow5m")
+
+[node name="Panel" type="Panel" parent="Conversation"]
+modulate = Color(1, 1, 1, 0.482353)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="illust_0" type="Sprite2D" parent="Conversation"]
+position = Vector2(226, 650)
+
+[node name="illust_1" type="Sprite2D" parent="Conversation"]
+position = Vector2(563, 650)
+
+[node name="illust_2" type="Sprite2D" parent="Conversation"]
+position = Vector2(959, 650)
+
+[node name="illust_3" type="Sprite2D" parent="Conversation"]
+position = Vector2(1371, 650)
+
+[node name="illust_4" type="Sprite2D" parent="Conversation"]
+position = Vector2(1741, 650)
+
+[node name="Quote" type="Panel" parent="Conversation"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 110.0
+offset_top = -268.0
+offset_right = -110.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="QuoteText" type="Label" parent="Conversation/Quote"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 3.0
+offset_bottom = 1.0
+text = "테스트용 텍스트입니다.테스트용 텍스트입니다.테스트용 텍스트입니다.테스트용 텍스트입니다.테스트용 텍스트입니다.테스트용 텍스트입니다.테스트용 텍스트입니다.테스트용 텍스트입니다.테스트용 텍스트입니다.테스트용 텍스트입니다.테스트용 텍스트입니다.테스트용 텍스트입니다.테스트용 텍스트입니다.테스트용 텍스트입니다.테스트용 텍스트입니다.테스트용 텍스트입니다."
+label_settings = SubResource("LabelSettings_1ymof")
+autowrap_mode = 1
+
+[node name="Name" type="Panel" parent="Conversation/Quote"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 2.0
+offset_top = -122.0
+offset_right = 522.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="NameText" type="Label" parent="Conversation/Quote/Name"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.009
+anchor_right = 1.0
+anchor_bottom = 0.991
+offset_top = -0.0350001
+offset_bottom = 0.034996
+grow_horizontal = 2
+grow_vertical = 2
+text = "홍길동"
+label_settings = SubResource("LabelSettings_krsj5")
+
+[node name="JobText" type="Label" parent="Conversation/Quote/Name"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.004
+anchor_right = 1.006
+anchor_bottom = 0.983
+offset_left = -0.0800002
+offset_top = 2.0
+offset_right = -0.119995
+offset_bottom = -0.0450058
+grow_horizontal = 2
+grow_vertical = 2
+text = "묵시록 화력팀 2중대 1소대장"
+label_settings = SubResource("LabelSettings_vojba")
+vertical_alignment = 2
+
+[node name="Selections" type="Control" parent="Conversation"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -216.0
+offset_top = -235.0
+offset_right = 214.0
+offset_bottom = 226.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Selection_0" type="Button" parent="Conversation/Selections"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.007
+anchor_bottom = 0.115
+offset_right = -0.0100403
+offset_bottom = -0.0149994
+text = "첫번째 선택지"
+
+[node name="Selection_1" type="Button" parent="Conversation/Selections"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.007
+anchor_bottom = 0.115
+offset_top = 71.0
+offset_right = -0.0100403
+offset_bottom = 70.985
+text = "번째 선택지"
+
+[node name="Selection_2" type="Button" parent="Conversation/Selections"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.007
+anchor_bottom = 0.115
+offset_left = 4.0
+offset_top = 142.0
+offset_right = 3.98996
+offset_bottom = 141.985
+text = "번째 선택지"
+
+[node name="Selection_3" type="Button" parent="Conversation/Selections"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.007
+anchor_bottom = 0.115
+offset_left = 4.0
+offset_top = 211.0
+offset_right = 3.98996
+offset_bottom = 210.985
+text = "번째 선택지"
+
+[node name="Trade" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_5gwmv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Trade"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 100.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer3" type="ScrollContainer" parent="Trade/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TraderInventory" type="VBoxContainer" parent="Trade/HBoxContainer/ScrollContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Trade/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MyInventory" type="VBoxContainer" parent="Trade/HBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="Trade/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StashInventory" type="VBoxContainer" parent="Trade/HBoxContainer/ScrollContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Cursor" type="Control" parent="Trade"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="Inspector" type="PanelContainer" parent="Trade/Cursor"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="ItemImage" type="TextureRect" parent="Trade/Cursor"]
+layout_mode = 1
+mouse_filter = 2
+texture = ExtResource("4_cd5wd")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="CursorImage" type="TextureRect" parent="Trade/Cursor"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("5_j6jsd")
+expand_mode = 1
+
+[node name="ConfirmButton" type="Button" parent="Trade"]
+layout_mode = 2
+offset_left = 976.0
+offset_top = 986.0
+offset_right = 1276.0
+offset_bottom = 1066.0
+
+[node name="Label" type="Label" parent="Trade/ConfirmButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "거래 확정"
+label_settings = SubResource("LabelSettings_auins")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ConversionButton" type="Button" parent="Trade"]
+layout_mode = 0
+offset_left = 657.0
+offset_top = 987.0
+offset_right = 957.0
+offset_bottom = 1067.0
+
+[node name="Label" type="Label" parent="Trade/ConversionButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "판매/구매 변경"
+label_settings = SubResource("LabelSettings_auins")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TraderList" type="HBoxContainer" parent="Trade"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 610.0
+offset_bottom = 90.0
+
+[node name="TraderStriker" type="Button" parent="Trade/TraderList"]
+layout_mode = 2
+icon = ExtResource("7_uwqns")
+
+[node name="Label" type="Label" parent="Trade/TraderList/TraderStriker"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "스트라이커"
+horizontal_alignment = 1
+vertical_alignment = 3
+clip_text = true
+
+[node name="TraderSecurity" type="Button" parent="Trade/TraderList"]
+layout_mode = 2
+icon = ExtResource("8_pgm5r")
+
+[node name="Label" type="Label" parent="Trade/TraderList/TraderSecurity"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "시큐리티
+"
+horizontal_alignment = 1
+vertical_alignment = 3
+clip_text = true
+
+[node name="TraderScience" type="Button" parent="Trade/TraderList"]
+layout_mode = 2
+icon = ExtResource("9_dkmk1")
+
+[node name="Label" type="Label" parent="Trade/TraderList/TraderScience"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "사이언스"
+horizontal_alignment = 1
+vertical_alignment = 3
+clip_text = true
+
+[node name="TraderSupply" type="Button" parent="Trade/TraderList"]
+layout_mode = 2
+icon = ExtResource("10_07pjf")
+
+[node name="Label" type="Label" parent="Trade/TraderList/TraderSupply"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "서플라이
+"
+horizontal_alignment = 1
+vertical_alignment = 3
+clip_text = true
+
+[node name="StashList" type="HBoxContainer" parent="Trade"]
+layout_mode = 0
+offset_left = 1310.0
+offset_top = 9.0
+offset_right = 1910.0
+offset_bottom = 89.0
+alignment = 2
+
+[node name="StashTest" type="Button" parent="Trade/StashList"]
+layout_mode = 2
+icon = ExtResource("7_uwqns")
+
+[node name="Label" type="Label" parent="Trade/StashList/StashTest"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 3
+clip_text = true
+
+[node name="StashTest2" type="Button" parent="Trade/StashList"]
+layout_mode = 2
+icon = ExtResource("8_pgm5r")
+
+[node name="Label" type="Label" parent="Trade/StashList/StashTest2"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "2
+"
+horizontal_alignment = 1
+vertical_alignment = 3
+clip_text = true
+
+[node name="StashTest3" type="Button" parent="Trade/StashList"]
+layout_mode = 2
+icon = ExtResource("9_dkmk1")
+
+[node name="Label" type="Label" parent="Trade/StashList/StashTest3"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 3
+clip_text = true
+
+[node name="StashTest4" type="Button" parent="Trade/StashList"]
+layout_mode = 2
+icon = ExtResource("10_07pjf")
+
+[node name="Label" type="Label" parent="Trade/StashList/StashTest4"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "4"
+horizontal_alignment = 1
+vertical_alignment = 3
+clip_text = true
+
+[node name="MoneyMy" type="Control" parent="Trade"]
+anchors_preset = 0
+offset_left = 765.0
+offset_top = 2.0
+offset_right = 805.0
+offset_bottom = 42.0
+
+[node name="Label" type="Label" parent="Trade/MoneyMy"]
+layout_mode = 0
+offset_left = 655.0
+offset_top = 1009.0
+offset_right = 1055.0
+offset_bottom = 1054.0
+text = "보 유 금 :                                 ₩"
+label_settings = SubResource("LabelSettings_111ws")
+
+[node name="MoneyMyValue" type="Label" parent="Trade/MoneyMy"]
+layout_mode = 0
+offset_left = 799.0
+offset_top = 1010.0
+offset_right = 1042.0
+offset_bottom = 1055.0
+text = "100,000,000,000"
+label_settings = SubResource("LabelSettings_ppxbh")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="MoneyPay" type="Control" parent="Trade"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -582.0
+offset_top = -8.0
+offset_right = -542.0
+offset_bottom = 32.0
+
+[node name="Label" type="Label" parent="Trade/MoneyPay"]
+layout_mode = 0
+offset_left = 655.0
+offset_top = 1009.0
+offset_right = 1055.0
+offset_bottom = 1054.0
+text = "거 래 금  :                                 ₩"
+label_settings = SubResource("LabelSettings_111ws")
+
+[node name="MoneyPayValue" type="Label" parent="Trade/MoneyPay"]
+layout_mode = 0
+offset_left = 799.0
+offset_top = 1010.0
+offset_right = 1042.0
+offset_bottom = 1055.0
+text = "0"
+label_settings = SubResource("LabelSettings_ppxbh")
+horizontal_alignment = 2
+vertical_alignment = 1

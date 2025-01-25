@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://7dyxet37sua0"
+path="res://.godot/imported/METLFric_SmallRuler S Knife_Rogue Waves_Close Contact_03.wav-0ba0f3efe39be9ed3ec25257f2319c7a.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/SmallRuler/SmallRuler_S_Knife/METLFric_SmallRuler S Knife_Rogue Waves_Close Contact_03.wav"
+dest_files=["res://.godot/imported/METLFric_SmallRuler S Knife_Rogue Waves_Close Contact_03.wav-0ba0f3efe39be9ed3ec25257f2319c7a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

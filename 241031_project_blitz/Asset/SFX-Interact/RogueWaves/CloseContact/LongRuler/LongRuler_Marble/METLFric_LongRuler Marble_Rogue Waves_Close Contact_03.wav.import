@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cgmbsddsevyi2"
+path="res://.godot/imported/METLFric_LongRuler Marble_Rogue Waves_Close Contact_03.wav-0488a9c59cc86469ed7e5545aaf1f973.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/LongRuler/LongRuler_Marble/METLFric_LongRuler Marble_Rogue Waves_Close Contact_03.wav"
+dest_files=["res://.godot/imported/METLFric_LongRuler Marble_Rogue Waves_Close Contact_03.wav-0488a9c59cc86469ed7e5545aaf1f973.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

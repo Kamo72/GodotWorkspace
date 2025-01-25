@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b7kem1chw58d7"
+path="res://.godot/imported/studios_0010.wav-647cc4b0ace654731d5cd89b8fc4be59.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Human/Deckard 4char voice/studios_0010.wav"
+dest_files=["res://.godot/imported/studios_0010.wav-647cc4b0ace654731d5cd89b8fc4be59.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

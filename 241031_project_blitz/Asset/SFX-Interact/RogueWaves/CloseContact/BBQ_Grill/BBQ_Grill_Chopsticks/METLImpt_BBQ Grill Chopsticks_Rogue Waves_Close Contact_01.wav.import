@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b7foe7mkju42x"
+path="res://.godot/imported/METLImpt_BBQ Grill Chopsticks_Rogue Waves_Close Contact_01.wav-fb14562835594a88b2eca99a65ce9632.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/BBQ_Grill/BBQ_Grill_Chopsticks/METLImpt_BBQ Grill Chopsticks_Rogue Waves_Close Contact_01.wav"
+dest_files=["res://.godot/imported/METLImpt_BBQ Grill Chopsticks_Rogue Waves_Close Contact_01.wav-fb14562835594a88b2eca99a65ce9632.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

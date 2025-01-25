@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dwtvqwc0tohq0"
+path="res://.godot/imported/METLImpt_ComputerChassis DrumMallet_Rogue Waves_Close Contact_01.wav-4f37491786e36e685491ba28ef42d730.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/ComputerChassis/ComputerChassis_DrumMallet/METLImpt_ComputerChassis DrumMallet_Rogue Waves_Close Contact_01.wav"
+dest_files=["res://.godot/imported/METLImpt_ComputerChassis DrumMallet_Rogue Waves_Close Contact_01.wav-4f37491786e36e685491ba28ef42d730.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

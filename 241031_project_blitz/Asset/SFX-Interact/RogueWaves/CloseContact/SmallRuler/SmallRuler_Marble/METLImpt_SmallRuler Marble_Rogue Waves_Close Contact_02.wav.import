@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://fkwi30vom8xu"
+path="res://.godot/imported/METLImpt_SmallRuler Marble_Rogue Waves_Close Contact_02.wav-9eb60a836d7d0dbd9f89b40245505383.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/SmallRuler/SmallRuler_Marble/METLImpt_SmallRuler Marble_Rogue Waves_Close Contact_02.wav"
+dest_files=["res://.godot/imported/METLImpt_SmallRuler Marble_Rogue Waves_Close Contact_02.wav-9eb60a836d7d0dbd9f89b40245505383.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

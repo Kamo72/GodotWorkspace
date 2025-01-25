@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c4hld4ln04jpe"
+path="res://.godot/imported/SB_VoxPat_Corroded Thorat.wav-eca71830c987fd6518dbe35ec1570299.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Monster/Sounds/SB_VoxPat_Corroded Thorat.wav"
+dest_files=["res://.godot/imported/SB_VoxPat_Corroded Thorat.wav-eca71830c987fd6518dbe35ec1570299.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

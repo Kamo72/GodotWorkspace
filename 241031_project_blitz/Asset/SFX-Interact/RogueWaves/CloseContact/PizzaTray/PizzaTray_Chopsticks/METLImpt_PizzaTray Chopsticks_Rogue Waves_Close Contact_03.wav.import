@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://u6jv88uxuvnl"
+path="res://.godot/imported/METLImpt_PizzaTray Chopsticks_Rogue Waves_Close Contact_03.wav-ae120b7ae58aacb53595a525dab4decd.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/PizzaTray/PizzaTray_Chopsticks/METLImpt_PizzaTray Chopsticks_Rogue Waves_Close Contact_03.wav"
+dest_files=["res://.godot/imported/METLImpt_PizzaTray Chopsticks_Rogue Waves_Close Contact_03.wav-ae120b7ae58aacb53595a525dab4decd.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

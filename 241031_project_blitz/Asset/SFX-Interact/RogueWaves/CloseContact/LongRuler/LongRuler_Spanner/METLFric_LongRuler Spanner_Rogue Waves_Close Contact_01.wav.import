@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://3dntrdc0rde3"
+path="res://.godot/imported/METLFric_LongRuler Spanner_Rogue Waves_Close Contact_01.wav-acc61550f8c082026c4eaf30843ffb6f.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/LongRuler/LongRuler_Spanner/METLFric_LongRuler Spanner_Rogue Waves_Close Contact_01.wav"
+dest_files=["res://.godot/imported/METLFric_LongRuler Spanner_Rogue Waves_Close Contact_01.wav-acc61550f8c082026c4eaf30843ffb6f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

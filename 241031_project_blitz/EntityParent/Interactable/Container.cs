@@ -20,7 +20,7 @@ public partial class Container : Interactable
     public void Initiate(Vector2I size, LevelManager.Theme theme, float valueRatio)
     {
         storage = new Storage(size);
-        var list = LevelManager.inst.GetSpawnedItems(theme, storage.size, valueRatio);
+        var list = LevelManager.instance.GetSpawnedItems(theme, storage.size, valueRatio);
 
         if (list == null) throw new Exception("Container - Initiate - LevelManager.inst.GetSpawnedItems() == null!!!");
 

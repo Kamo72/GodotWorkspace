@@ -114,7 +114,7 @@ public partial class EquipSlot : InventorySlot
                 {
                     GD.PushWarning("Mouse button pressed : " + onMouseItem.storagePos);
                     Vector2I itemSize = onMouseItem.item.status.size;
-                    inventoryPage.SetCursor(onMouseItem, new(itemSize.X / 2, itemSize.Y / 2));
+                    SetCursor(onMouseItem, new(itemSize.X / 2, itemSize.Y / 2));
                 }
 
                 return true; //해당 코드에서 처리하기 성공
@@ -123,7 +123,7 @@ public partial class EquipSlot : InventorySlot
             else if (mouseEvent.ButtonIndex == MouseButton.Left)
             {
                 //커서에 아이템이 있다면
-                var result = inventoryPage.ReleaseCursor();
+                var result = GetCursor();
                 if (result.HasValue)
                 {
                     ItemModel draggingItem = result.Value.Item1;
@@ -176,12 +176,12 @@ public partial class EquipSlot : InventorySlot
 
         if (@event is InputEventMouseMotion mouseMotionEvent)
         {
-            GD.Print("Mouse moved");
+            //GD.Print("Mouse moved");
         }
 
         if (GetRect().HasPoint(GetLocalMousePosition()))
         {
-            GD.Print("Mouse is over the control");
+            //GD.Print("Mouse is over the control");
         }
 
         return false; //해당 코드에서 처리하지 못함

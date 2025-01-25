@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://useorin5f7i"
+path="res://.godot/imported/METLMisc_LongRuler DrumMallet_Rogue Waves_Close Contact_03.wav-7c502b70e68e80fdb51baed59b81b393.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/LongRuler/LongRuler_DrumMallet/METLMisc_LongRuler DrumMallet_Rogue Waves_Close Contact_03.wav"
+dest_files=["res://.godot/imported/METLMisc_LongRuler DrumMallet_Rogue Waves_Close Contact_03.wav-7c502b70e68e80fdb51baed59b81b393.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

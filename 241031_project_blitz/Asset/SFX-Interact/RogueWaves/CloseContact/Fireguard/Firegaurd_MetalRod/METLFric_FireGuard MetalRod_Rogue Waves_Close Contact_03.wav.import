@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bbqbexppaism1"
+path="res://.godot/imported/METLFric_FireGuard MetalRod_Rogue Waves_Close Contact_03.wav-3e3c1a4af7c2fbb1a8be642f7de36c53.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Fireguard/Firegaurd_MetalRod/METLFric_FireGuard MetalRod_Rogue Waves_Close Contact_03.wav"
+dest_files=["res://.godot/imported/METLFric_FireGuard MetalRod_Rogue Waves_Close Contact_03.wav-3e3c1a4af7c2fbb1a8be642f7de36c53.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -77,7 +77,7 @@ public partial class InventoryPage : Page
         otherSlotList = new() { };
         windowList = new() { };
 
-        OpenStorageWindow(((Backpack)Player.player.inventory.backpack.item).storage);
+        //OpenStorageWindow(((Backpack)Player.player.inventory.backpack.item).storage);
     }
 
     public override void _Process(double delta)
@@ -91,6 +91,7 @@ public partial class InventoryPage : Page
             item.RestructureStorage();
     }
 
+    //입력 받기
     public override void _Input(InputEvent @event)
     {
         UiMain uiMain = GetParent().GetParent().GetParent() as UiMain;
@@ -110,6 +111,7 @@ public partial class InventoryPage : Page
 
     }
 
+    //UI 초기화
     public void UpdateAllUI()
     {
         foreach (var item in mySlotList)
@@ -251,6 +253,7 @@ public partial class InventoryPage : Page
         windowList.Clear();
     }
 
+    //슬롯 객체 생성
     StorageSlot GetStorageSlot()
     {
         return ResourceLoader.Load<PackedScene>("res://Prefab/UI/InventoryPage/StorageSlot.tscn")
@@ -272,6 +275,7 @@ public partial class InventoryPage : Page
                 .Instantiate() as EquipSlot;
     }
 
+    //인벤토리 '창' 생성
     public void OpenStorageWindow(Storage storage)
     {
         foreach (var window in windowList)
@@ -294,10 +298,11 @@ public partial class InventoryPage : Page
         windowList.Add(control);
     }
 
+    //커서에 집은 아이템
     ItemModel onDragging = null;        //집은 아이템
     Vector2I dragPos = Vector2I.Zero;   //집은 위치 저장
 
-    //커서 클릭 시 반응
+    //커서 관련 함수
     public void SetCursor(ItemModel iModel, Vector2I dragPos)
     {
         //GD.PushWarning("SetCursor : " + iModel + " - " + dragPos);
@@ -340,8 +345,6 @@ public partial class InventoryPage : Page
         onDragging?.SetDragging(true);
         
     }
-
-    //집고 있는 아이템 구하기
     public (ItemModel, Vector2I)? ReleaseCursor() => (onDragging == null)? null : (onDragging, dragPos);
 
 

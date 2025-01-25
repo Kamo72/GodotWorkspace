@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c13jjejjtrdn"
+path="res://.godot/imported/METLMisc_Typewriter Key_Rogue Waves_Close Contact_03.wav-9a194cdd86ff978d3ec63bbef59983c1.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Typewriter/Typewriter/METLMisc_Typewriter Key_Rogue Waves_Close Contact_03.wav"
+dest_files=["res://.godot/imported/METLMisc_Typewriter Key_Rogue Waves_Close Contact_03.wav-9a194cdd86ff978d3ec63bbef59983c1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

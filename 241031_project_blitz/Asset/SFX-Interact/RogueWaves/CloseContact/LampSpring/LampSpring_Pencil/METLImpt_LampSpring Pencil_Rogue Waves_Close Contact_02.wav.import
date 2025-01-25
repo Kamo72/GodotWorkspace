@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ds1t4haw2mayj"
+path="res://.godot/imported/METLImpt_LampSpring Pencil_Rogue Waves_Close Contact_02.wav-a271de23a69525988e893888ec74681a.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/LampSpring/LampSpring_Pencil/METLImpt_LampSpring Pencil_Rogue Waves_Close Contact_02.wav"
+dest_files=["res://.godot/imported/METLImpt_LampSpring Pencil_Rogue Waves_Close Contact_02.wav-a271de23a69525988e893888ec74681a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

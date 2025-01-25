@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b1j6xfkfceld0"
+path="res://.godot/imported/METLFric_Dumbbell Cog_Rogue Waves_Close Contact_02.wav-29680a61eb99b962a38dc5b50d86173d.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Dumbbell/Dumbbell_Cog/METLFric_Dumbbell Cog_Rogue Waves_Close Contact_02.wav"
+dest_files=["res://.godot/imported/METLFric_Dumbbell Cog_Rogue Waves_Close Contact_02.wav-29680a61eb99b962a38dc5b50d86173d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

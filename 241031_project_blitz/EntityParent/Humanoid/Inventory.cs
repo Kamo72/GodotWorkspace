@@ -12,6 +12,7 @@ public partial class Humanoid
     public Inventory inventory;
     public partial class Inventory
     {
+        public Humanoid master;
         public Inventory(Humanoid master)
         {
             this.master = master;
@@ -26,7 +27,6 @@ public partial class Humanoid
             backpack = new EquipSlot(this, Item.Category.BACKPACK);
             sContainer = new EquipSlot(this, Item.Category.S_CONTAINER);
         }
-        public Humanoid master;
 
         #region [제공 함수]
         //드랍된 아이템 줍기

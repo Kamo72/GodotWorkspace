@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://npdslap8jduu"
+path="res://.godot/imported/METLImpt_Riddle DrumMallet_Rogue Waves_Close Contact_03.wav-ac65fcdddfda78fa5c718361052d24b0.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Riddle/Riddle_DrumMallet/METLImpt_Riddle DrumMallet_Rogue Waves_Close Contact_03.wav"
+dest_files=["res://.godot/imported/METLImpt_Riddle DrumMallet_Rogue Waves_Close Contact_03.wav-ac65fcdddfda78fa5c718361052d24b0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

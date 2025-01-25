@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using static Script;
 using static Storage;
 
 public partial class PocketSlot : InventorySlot
@@ -31,7 +32,6 @@ public partial class PocketSlot : InventorySlot
     public override void _Process(double delta)
     {
         OnMouseProcess();
-
     }
 
 
@@ -80,19 +80,24 @@ public partial class PocketSlot : InventorySlot
         Vector2I? onMouseNow = null;
 
         //마우스가 있는 노드 찾기
-        foreach (Control node in SlotList)
-        {
-            Rect2 rect = node.GetRect();
-            rect.Position = node.GlobalPosition;
+        if (GetNodeByPos(new(0, 0)) == null || GetNodeByPos(new(1, 0)) == null)
+            throw new Exception("PocketSlot - OnMouseProcess :: GetNodeByPos(new(0, 0)) == null || GetNodeByPos(new(1, 0)) == null is True!!!");
 
-            if (rect.HasPoint(GetGlobalMousePosition()))
-            {
-                string nodeName = node.Name;
-                string[] ss = nodeName.Split('x');
-                onMouseNow = new Vector2I(int.Parse(ss[0]), int.Parse(ss[1]));
-                break;
-            }
-        }
+        Rect2 zeroNode = GetNodeByPos(new Vector2I(0, 0)).GetRect(), oneNode = GetNodeByPos(new Vector2I(1, 0)).GetRect();
+        float nodeSep = oneNode.Position.X - zeroNode.End.X;
+        
+        Vector2 zeroPos = zeroNode.Position - (Vector2.One * nodeSep / 2f);
+        float inputSep = zeroNode.Size.X + nodeSep;
+        Vector2 mousePos = GetLocalMousePosition();
+
+        Vector2 nodePosFloat = (mousePos - zeroPos)/inputSep;
+        Vector2I nodePos = new(
+            Mathf.RoundToInt(nodePosFloat.X), 
+            Mathf.RoundToInt(nodePosFloat.Y));
+
+        if(GetNodeByPos(nodePos) != null)
+            onMouseNow = nodePos;
+
 
         //마우스가 있는 아이템 찾기
         foreach (ItemModel iModel in itemModels)
@@ -125,7 +130,7 @@ public partial class PocketSlot : InventorySlot
         onMouse = onMouseNow.HasValue ? onMouseNow.Value : null;
 
         //아이템 하이라이팅
-        var result = inventoryPage.ReleaseCursor();
+        (ItemModel, Vector2I)? result = GetCursor();
         if (result.HasValue && onMouse.HasValue)
         {
             ItemModel sentItem = result.Value.Item1;
@@ -183,7 +188,7 @@ public partial class PocketSlot : InventorySlot
 
         GridContainer scon = storageCon;
 
-        foreach (Node node in scon.GetChildren())
+        foreach (Godot.Node node in scon.GetChildren())
             scon.RemoveChild(node);
 
 
@@ -233,7 +238,7 @@ public partial class PocketSlot : InventorySlot
       
         GridContainer scon = storageCon;
 
-        foreach (Node node in scon.GetChildren())
+        foreach (Godot.Node node in scon.GetChildren())
             scon.RemoveChild(node);
 
         // GD.PrintErr("scon.Size : " + scon.Size);
@@ -317,13 +322,13 @@ public partial class PocketSlot : InventorySlot
                             onMouse.Value.Y - onMouseItem.storagePos.Y
                             );
 
-                        inventoryPage.SetCursor(onMouseItem, dragPos);
+                        SetCursor(onMouseItem, dragPos);
                     }
                     else
                     {
                         GD.PushWarning("Mouse button pressed : " + onMouseItem.storagePos);
                         Vector2I itemSize = onMouseItem.item.status.size;
-                        inventoryPage.SetCursor(onMouseItem, new(itemSize.X / 2, itemSize.Y / 2));
+                        SetCursor(onMouseItem, new(itemSize.X / 2, itemSize.Y / 2));
 
                     }
                 }
@@ -334,7 +339,7 @@ public partial class PocketSlot : InventorySlot
             else if (mouseEvent.ButtonIndex == MouseButton.Left)
             {
                 //커서에 아이템이 있다면
-                var result = inventoryPage.ReleaseCursor();
+                var result = GetCursor();
                 if (result.HasValue)
                 {
                     ItemModel draggingItem = result.Value.Item1;
@@ -352,7 +357,7 @@ public partial class PocketSlot : InventorySlot
                                 if (draggingEquipable.isEquiping)
                                     draggingEquipable.UnEquip();
 
-                        inventoryPage.SetCursor(null, new());
+                        SetCursor(null, new());
 
                         //Update
                         if (isStored)
@@ -369,12 +374,12 @@ public partial class PocketSlot : InventorySlot
 
         if (@event is InputEventMouseMotion mouseMotionEvent)
         {
-            GD.Print("Mouse moved");
+            //GD.Print("Mouse moved");
         }
 
         if (GetRect().HasPoint(GetLocalMousePosition()))
         {
-            GD.Print("Mouse is over the control");
+            //GD.Print("Mouse is over the control");
         }
 
         return false; //해당 코드에서 처리하지 못함
@@ -421,7 +426,7 @@ public partial class PocketSlot : InventorySlot
         else if (GetParent() is Window window)
             parentWidth = window.Size.X;
 
-        GD.Print("parentWidth : " + parentWidth);
+        //GD.Print("parentWidth : " + parentWidth);
         float widthAvailable = parentWidth - 150;
         float nodeSize = (storageCon.GetChild(0) as Control).Size.X;//(widthAvailable - margin * (maxColumn + 1)) / maxColumn;
 

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://fwb2nsvsebq5"
+path="res://.godot/imported/METLMisc_TeaCaddy Coin_Rogue Waves_Close Contact_01.wav-6e910a3c2accbf8941228e2473448d7e.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/TeaCaddy/TeaCaddy_Coin/METLMisc_TeaCaddy Coin_Rogue Waves_Close Contact_01.wav"
+dest_files=["res://.godot/imported/METLMisc_TeaCaddy Coin_Rogue Waves_Close Contact_01.wav-6e910a3c2accbf8941228e2473448d7e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

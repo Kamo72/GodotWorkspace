@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c6ucndxndo2wa"
+path="res://.godot/imported/METLImpt_Chain PaintRoller_Rogue Waves_Close Contact.wav-e80a05deadbc39fecec8bc9f480a227d.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Chain/Chain_PaintRoller/METLImpt_Chain PaintRoller_Rogue Waves_Close Contact.wav"
+dest_files=["res://.godot/imported/METLImpt_Chain PaintRoller_Rogue Waves_Close Contact.wav-e80a05deadbc39fecec8bc9f480a227d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

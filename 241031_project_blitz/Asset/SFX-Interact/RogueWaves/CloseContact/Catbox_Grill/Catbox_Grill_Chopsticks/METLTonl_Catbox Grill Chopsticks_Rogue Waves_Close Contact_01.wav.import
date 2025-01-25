@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c7kh23yoygjdg"
+path="res://.godot/imported/METLTonl_Catbox Grill Chopsticks_Rogue Waves_Close Contact_01.wav-408043bfb9b0aecee40a1b297c0b1c78.sample"
+
+[deps]
+
+source_file="res://Asset/SFX-Interact/RogueWaves/CloseContact/Catbox_Grill/Catbox_Grill_Chopsticks/METLTonl_Catbox Grill Chopsticks_Rogue Waves_Close Contact_01.wav"
+dest_files=["res://.godot/imported/METLTonl_Catbox Grill Chopsticks_Rogue Waves_Close Contact_01.wav-408043bfb9b0aecee40a1b297c0b1c78.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
