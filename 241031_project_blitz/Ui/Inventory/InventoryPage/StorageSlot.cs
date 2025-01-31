@@ -120,7 +120,7 @@ public partial class StorageSlot : InventorySlot
         }
 
         //마우스가 있는 아이템이 바뀌면, 기존 아이템 하이라이트 원상복구
-        if (foundItem != onMouseItem && onMouseItem != null)
+        if (foundItem != onMouseItem && onMouseItem != null && inventoryContainer != null)
             SetNodesModulate(
                 onMouseItem.storagePos,
                 onMouseItem.storagePos
@@ -163,7 +163,6 @@ public partial class StorageSlot : InventorySlot
         }
         else
         {
-
             //노드 하이라이트 적용
             if (onMouse.HasValue)
                 GetNodeByPos(onMouse.Value).Modulate = highlight["onMouse"];
@@ -171,7 +170,7 @@ public partial class StorageSlot : InventorySlot
 
 
         //아이템 하이라이트 적용
-        if (foundItem != null && foundItem.storagePos != new Vector2I(-1, -1))
+        if (foundItem != null && foundItem.storagePos != new Vector2I(-1, -1) && inventoryContainer != null)
             SetNodesModulate(
                 onMouseItem.storagePos,
                 onMouseItem.storagePos
@@ -339,6 +338,8 @@ public partial class StorageSlot : InventorySlot
                         //소켓에 템이 장착됨
                         if (equiped is HasStorage hasStorage)
                         {
+                            bool isStored;
+
                             //아이템을 스스로 안에 저장 시도 시
                             if (equiped == draggingItem.item)
                                 return false;
@@ -351,27 +352,73 @@ public partial class StorageSlot : InventorySlot
                                 if (insertable)
                                 {
                                     StorageNode? sNode = hasStorage.storage.GetPosInsert(draggingItem.item);
+
+                                    if(sNode.HasValue)
+                                        GD.PushWarning("")
+
                                     if (sNode.HasValue)
                                         return hasStorage.storage.Insert(sNode.Value);
                                     //해당 코드에서 처리하기 성공
                                 }
+                                isStored = true;
+                            }
+                            //수동 저장
+                            else
+                            {
+                                //Item을 Storage 객체에 Store
+                                isStored = draggingItem.item.Store(
+                                    hasStorage.storage, onMouse.Value - dragPos, inventoryContainer.toRotate);
 
-                                return false;
+                                //Item을 onMouseItem에 상호작용
+                                if (!isStored && onMouseItem != null)
+                                {
+                                    //스택 가능한 아이템에 적용
+                                    if (onMouseItem.item is IStackable)
+                                    {
+                                        onMouseItem.item.StackFrom(draggingItem.item);
+                                    }
+                                    //저장공간이 있는 아이템에 적용
+                                    else if (onMouseItem.item is HasStorage hasStorageInner)
+                                    {
+                                        if (hasStorageInner.storage.IsAbleToInsert(draggingItem.item) == false) return false;
+
+                                        var storageNode = hasStorageInner.storage.GetPosInsert(draggingItem.item);
+
+                                        if (!storageNode.HasValue) return false;
+
+                                        hasStorageInner.storage.Insert(storageNode.Value);
+                                        isStored = true;
+                                    }
+                                    //탄창에 삽탄 시도
+                                    else if (onMouseItem.item is Magazine magazine)
+                                    {
+                                        if (draggingItem.item is Ammo ammo)
+                                        {
+                                            try
+                                            {
+                                                while (true)
+                                                {
+                                                    if (ammo.stackNow <= 0) break;
+                                                    if (magazine.AmmoPush(ammo) == false) break;
+                                                }
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                Console.WriteLine(e.Message + e.StackTrace);
+                                            }
+
+                                        }
+                                    }
+
+                                }
                             }
 
-
-
-                            //Item을 Storage 객체에 Store
-                            bool isStored = draggingItem.item.Store(
-                                hasStorage.storage, onMouse.Value - dragPos, inventoryContainer.toRotate);
-
+                            //가져온 아이템이 장비 가능하고, 장비 중이라면, 장비 해제
                             if (isStored)
-                                //가져온 아이템이 장비 가능하고, 장비 중이라면, 장비 해제
                                 if (draggingItem.item is Equipable draggingEquipable)
-                                {
                                     if (draggingEquipable.isEquiping)
                                         draggingEquipable.UnEquip();
-                                }
+                                
 
                             SetCursor(null, new());
 

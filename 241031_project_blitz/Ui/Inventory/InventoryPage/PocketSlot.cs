@@ -356,9 +356,53 @@ public partial class PocketSlot : InventorySlot
 
                     if (onMouse.HasValue)
                     {
+
+                        bool isStored;
+
                         //Item을 Storage 객체에 Store
-                        bool isStored = draggingItem.item.Store(
+                        isStored = draggingItem.item.Store(
                             storage, onMouse.Value - dragPos, inventoryContainer.toRotate);
+
+                        //Item을 onMouseItem에 상호작용
+                        if (!isStored && onMouseItem != null)
+                        {
+                            //스택 가능한 아이템에 적용
+                            if (onMouseItem.item is IStackable)
+                            {
+                                onMouseItem.item.StackFrom(draggingItem.item);
+                            }
+                            //저장공간이 있는 아이템에 적용
+                            else if (onMouseItem.item is HasStorage hasStorageInner)
+                            {
+                                if (hasStorageInner.storage.IsAbleToInsert(draggingItem.item) == false) return false;
+
+                                var storageNode = hasStorageInner.storage.GetPosInsert(draggingItem.item);
+
+                                if (!storageNode.HasValue) return false;
+
+                                hasStorageInner.storage.Insert(storageNode.Value);
+                                isStored = true;
+                            }
+                            //탄창에 삽탄 시도
+                            else if (onMouseItem.item is Magazine magazine)
+                            {
+                                if (draggingItem.item is Ammo ammo)
+                                {
+                                    try
+                                    {
+                                        while (true)
+                                        {
+                                            if (ammo.stackNow <= 0) break;
+                                            if (magazine.AmmoPush(ammo) == false) break;
+                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        Console.WriteLine(e.Message + e.StackTrace);
+                                    }
+                                }
+                            }
+                        }
 
                         //가져온 아이템이 장비 가능하고, 장비 중이라면, 장비 해제
                         if (isStored)

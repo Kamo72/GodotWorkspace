@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Godot;
 using static Godot.OpenXRHand;
 
@@ -113,6 +114,34 @@ public static class ItemEx
             }
         }
         return null;
+    }
+
+    public static void StackFrom(this Item stackable, Item stackableResource)
+    {
+        if (stackable.status.name != stackableResource.status.name) return;
+        if (stackable == stackableResource) return;
+        if (stackable is IStackable iStackable && stackableResource is IStackable iStackableR)
+        {
+            int emptyCount = iStackable.stackMax - iStackable.stackNow;
+            if (emptyCount <= 0) return;
+            int remainCount = iStackableR.stackNow - emptyCount;
+
+            //남는게 없음    
+            if (remainCount <= 0)
+            {
+                iStackable.stackNow = iStackable.stackMax + remainCount;
+                GD.PushWarning($"{iStackable.stackNow} = {iStackable.stackMax} - {remainCount}");
+
+                stackableResource.onStorage?.RemoveItem(stackableResource);
+            }
+            //남는게 이씀
+            else
+            {
+                iStackable.stackNow = iStackable.stackMax;
+                iStackableR.stackNow = remainCount;
+            }
+
+        }
     }
 
 }
