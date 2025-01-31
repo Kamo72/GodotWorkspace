@@ -3,32 +3,20 @@
   "WorkspaceRootPath": "E:\\GodotWorkspace\\241031_project_blitz\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\dataframe\\weaponitem\\assaultrifle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:dataframe\\weaponitem\\assaultrifle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\ui\\inventory\\inventorypage\\storageslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:ui\\inventory\\inventorypage\\storageslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\dataframe\\weaponitem\\shotgun.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:dataframe\\weaponitem\\shotgun.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\ui\\inventory\\itemmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:ui\\inventory\\itemmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityimplement\\npc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityimplement\\npc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\ui\\inventory\\inventorypage\\inventoryslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:ui\\inventory\\inventorypage\\inventoryslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityparent\\humanoid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityparent\\humanoid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityimplement\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityimplement\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityimplement\\sound.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityimplement\\sound.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityimplement\\projectile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityimplement\\projectile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\ui\\ingame\\trade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:ui\\ingame\\trade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\ui\\inventory\\inventorypage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -39,28 +27,59 @@
       "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:ui\\inventory\\inventorypage\\equipslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\ui\\inventory\\inventorypage\\pocketslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:ui\\inventory\\inventorypage\\pocketslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\library\\extension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:library\\extension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\ui\\ingame\\trade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:ui\\ingame\\trade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityparent\\weapon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityparent\\weapon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityparent\\interactable\\interactable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityparent\\interactable\\interactable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\skyma\\AppData\\Local\\Temp\\VSGeneratedDocuments\\13563d1d-feea-64b3-11a2-f0894e2c809f\\PocketSlot_ScriptMethods.generated.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityimplement\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityimplement\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityparent\\humanoid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityparent\\humanoid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\dataframe\\weaponitem\\assaultrifle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:dataframe\\weaponitem\\assaultrifle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\item\\magandammo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:item\\magandammo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\ui\\ingame\\stats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:ui\\ingame\\stats.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\dataframe\\weaponitem\\shotgun.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:dataframe\\weaponitem\\shotgun.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityimplement\\npc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityimplement\\npc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityimplement\\sound.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityimplement\\sound.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityimplement\\projectile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityimplement\\projectile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\ui\\ingame\\conversation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:ui\\ingame\\conversation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\ui\\inventory\\inventorypage\\inventoryslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:ui\\inventory\\inventorypage\\inventoryslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\ui\\inventory\\inventorypage\\storageslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:ui\\inventory\\inventorypage\\storageslot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityparent\\humanoid\\health.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -69,14 +88,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityparent\\humanoid\\movement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityparent\\humanoid\\movement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityparent\\interactable\\interactable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityparent\\interactable\\interactable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\entityparent\\weapon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|solutionrelative:entityparent\\weapon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E818C311-C7F3-4596-89FC-66EC874DCC12}|241031_project_blitz.csproj|e:\\godotworkspace\\241031_project_blitz\\manager\\worldmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -193,7 +204,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -205,116 +216,155 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Humanoid.cs",
-              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Humanoid.cs",
-              "RelativeDocumentMoniker": "EntityParent\\Humanoid.cs",
-              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Humanoid.cs",
-              "RelativeToolTip": "EntityParent\\Humanoid.cs",
-              "ViewState": "AQIAAJQAAAAAAAAAAAAAAKIAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T12:35:32.134Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Npc.cs",
-              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityImplement\\Npc.cs",
-              "RelativeDocumentMoniker": "EntityImplement\\Npc.cs",
-              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\EntityImplement\\Npc.cs",
-              "RelativeToolTip": "EntityImplement\\Npc.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACQAAAAxAAAA",
+              "Title": "InventorySlot.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\InventoryPage\\InventorySlot.cs",
+              "RelativeDocumentMoniker": "Ui\\Inventory\\InventoryPage\\InventorySlot.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\InventoryPage\\InventorySlot.cs",
+              "RelativeToolTip": "Ui\\Inventory\\InventoryPage\\InventorySlot.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T11:14:15.422Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Sound.cs",
-              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityImplement\\Sound.cs",
-              "RelativeDocumentMoniker": "EntityImplement\\Sound.cs",
-              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\EntityImplement\\Sound.cs",
-              "RelativeToolTip": "EntityImplement\\Sound.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAABkAAAAVAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T13:56:39.838Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Player.cs",
-              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityImplement\\Player.cs",
-              "RelativeDocumentMoniker": "EntityImplement\\Player.cs",
-              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\EntityImplement\\Player.cs",
-              "RelativeToolTip": "EntityImplement\\Player.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAB4AAAAVAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T12:35:32.11Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Shotgun.cs",
-              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Dataframe\\WeaponItem\\Shotgun.cs",
-              "RelativeDocumentMoniker": "Dataframe\\WeaponItem\\Shotgun.cs",
-              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Dataframe\\WeaponItem\\Shotgun.cs",
-              "RelativeToolTip": "Dataframe\\WeaponItem\\Shotgun.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMBAAAeAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-08T14:49:51.357Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AssaultRifle.cs",
-              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Dataframe\\WeaponItem\\AssaultRifle.cs",
-              "RelativeDocumentMoniker": "Dataframe\\WeaponItem\\AssaultRifle.cs",
-              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Dataframe\\WeaponItem\\AssaultRifle.cs",
-              "RelativeToolTip": "Dataframe\\WeaponItem\\AssaultRifle.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAK0BAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-08T14:49:50.706Z",
+              "WhenOpened": "2024-12-27T10:31:32.723Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "InventoryPage.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\InventoryPage.cs",
               "RelativeDocumentMoniker": "Ui\\Inventory\\InventoryPage.cs",
               "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\InventoryPage.cs",
               "RelativeToolTip": "Ui\\Inventory\\InventoryPage.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACsAAAAbAAAA",
+              "ViewState": "AQIAAGAAAAAAAAAAAAAAAHIAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T07:05:20.438Z"
+              "WhenOpened": "2024-12-09T07:05:20.438Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
+              "Title": "ItemModel.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\ItemModel.cs",
+              "RelativeDocumentMoniker": "Ui\\Inventory\\ItemModel.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\ItemModel.cs",
+              "RelativeToolTip": "Ui\\Inventory\\ItemModel.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAjwBoAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-26T05:43:16.618Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "StorageSlot.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\InventoryPage\\StorageSlot.cs",
+              "RelativeDocumentMoniker": "Ui\\Inventory\\InventoryPage\\StorageSlot.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\InventoryPage\\StorageSlot.cs",
+              "RelativeToolTip": "Ui\\Inventory\\InventoryPage\\StorageSlot.cs",
+              "ViewState": "AQIAAFgAAAAAAAAAAAAjwHYAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-27T10:30:56.678Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Trade.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Ingame\\Trade.cs",
+              "RelativeDocumentMoniker": "Ui\\Ingame\\Trade.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Ingame\\Trade.cs",
+              "RelativeToolTip": "Ui\\Ingame\\Trade.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAAAIwEYAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-25T15:33:24.75Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "EquipSlot.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\InventoryPage\\EquipSlot.cs",
               "RelativeDocumentMoniker": "Ui\\Inventory\\InventoryPage\\EquipSlot.cs",
               "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\InventoryPage\\EquipSlot.cs",
               "RelativeToolTip": "Ui\\Inventory\\InventoryPage\\EquipSlot.cs",
-              "ViewState": "AQIAAKIAAAAAAAAAAIAywLcAAAAWAAAA",
+              "ViewState": "AQIAAF8AAAAAAAAAAIAxwHQAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-27T10:31:16.023Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Conversation.cs",
-              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Ingame\\Conversation.cs",
-              "RelativeDocumentMoniker": "Ui\\Ingame\\Conversation.cs",
-              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Ingame\\Conversation.cs",
-              "RelativeToolTip": "Ui\\Ingame\\Conversation.cs",
-              "ViewState": "AQIAAJUAAAAAAAAAAAAAABEAAAAAAAAA",
+              "DocumentIndex": 6,
+              "Title": "Extension.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Library\\Extension.cs",
+              "RelativeDocumentMoniker": "Library\\Extension.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Library\\Extension.cs",
+              "RelativeToolTip": "Library\\Extension.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-10T14:25:21.671Z"
+              "WhenOpened": "2025-01-29T06:29:42.038Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 7,
+              "Title": "Weapon.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Weapon.cs",
+              "RelativeDocumentMoniker": "EntityParent\\Weapon.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Weapon.cs",
+              "RelativeToolTip": "EntityParent\\Weapon.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAF0AAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-03T12:35:32.131Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Interactable.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Interactable\\Interactable.cs",
+              "RelativeDocumentMoniker": "EntityParent\\Interactable\\Interactable.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Interactable\\Interactable.cs",
+              "RelativeToolTip": "EntityParent\\Interactable\\Interactable.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADoAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T11:16:26.712Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AssaultRifle.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Dataframe\\WeaponItem\\AssaultRifle.cs",
+              "RelativeDocumentMoniker": "Dataframe\\WeaponItem\\AssaultRifle.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Dataframe\\WeaponItem\\AssaultRifle.cs",
+              "RelativeToolTip": "Dataframe\\WeaponItem\\AssaultRifle.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAD4BAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-08T14:49:50.706Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PocketSlot_ScriptMethods.generated.cs",
+              "DocumentMoniker": "C:\\Users\\skyma\\AppData\\Local\\Temp\\VSGeneratedDocuments\\13563d1d-feea-64b3-11a2-f0894e2c809f\\PocketSlot_ScriptMethods.generated.cs",
+              "ToolTip": "PocketSlot_ScriptMethods.generated.cs [Godot.SourceGenerators.ScriptMethodsGenerator\uC774(\uAC00) \uC0DD\uC131\uD568]",
+              "ViewState": "AQIAAHgAAAAAAAAAAAAuwIoAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "OverriddenToolTip": "PocketSlot_ScriptMethods.generated.cs [Godot.SourceGenerators.ScriptMethodsGenerator\uC774(\uAC00) \uC0DD\uC131\uD568]",
+              "WhenOpened": "2025-01-28T05:33:49.871Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "MagAndAmmo.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Item\\MagAndAmmo.cs",
+              "RelativeDocumentMoniker": "Item\\MagAndAmmo.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Item\\MagAndAmmo.cs",
+              "RelativeToolTip": "Item\\MagAndAmmo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-26T07:19:38.285Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
               "Title": "Stats.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Ingame\\Stats.cs",
               "RelativeDocumentMoniker": "Ui\\Ingame\\Stats.cs",
@@ -327,18 +377,78 @@
             {
               "$type": "Document",
               "DocumentIndex": 10,
-              "Title": "Trade.cs",
-              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Ingame\\Trade.cs",
-              "RelativeDocumentMoniker": "Ui\\Ingame\\Trade.cs",
-              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Ingame\\Trade.cs",
-              "RelativeToolTip": "Ui\\Ingame\\Trade.cs",
-              "ViewState": "AQIAACwAAAAAAAAAAADwv0MAAAALAAAA",
+              "Title": "Player.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityImplement\\Player.cs",
+              "RelativeDocumentMoniker": "EntityImplement\\Player.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\EntityImplement\\Player.cs",
+              "RelativeToolTip": "EntityImplement\\Player.cs",
+              "ViewState": "AQIAAFYAAAAAAAAAAADwv2gAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-25T15:33:24.75Z"
+              "WhenOpened": "2024-11-03T12:35:32.11Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Shotgun.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Dataframe\\WeaponItem\\Shotgun.cs",
+              "RelativeDocumentMoniker": "Dataframe\\WeaponItem\\Shotgun.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Dataframe\\WeaponItem\\Shotgun.cs",
+              "RelativeToolTip": "Dataframe\\WeaponItem\\Shotgun.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMBAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-08T14:49:51.357Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Sound.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityImplement\\Sound.cs",
+              "RelativeDocumentMoniker": "EntityImplement\\Sound.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\EntityImplement\\Sound.cs",
+              "RelativeToolTip": "EntityImplement\\Sound.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABkAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T13:56:39.838Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 16,
+              "Title": "Npc.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityImplement\\Npc.cs",
+              "RelativeDocumentMoniker": "EntityImplement\\Npc.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\EntityImplement\\Npc.cs",
+              "RelativeToolTip": "EntityImplement\\Npc.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACQAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-02T11:14:15.422Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Humanoid.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Humanoid.cs",
+              "RelativeDocumentMoniker": "EntityParent\\Humanoid.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Humanoid.cs",
+              "RelativeToolTip": "EntityParent\\Humanoid.cs",
+              "ViewState": "AQIAAIgAAAAAAAAAAAAAAKIAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-03T12:35:32.134Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Conversation.cs",
+              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Ingame\\Conversation.cs",
+              "RelativeDocumentMoniker": "Ui\\Ingame\\Conversation.cs",
+              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Ingame\\Conversation.cs",
+              "RelativeToolTip": "Ui\\Ingame\\Conversation.cs",
+              "ViewState": "AQIAAJUAAAAAAAAAAAAAABEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-10T14:25:21.671Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
               "Title": "Movement.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Humanoid\\Movement.cs",
               "RelativeDocumentMoniker": "EntityParent\\Humanoid\\Movement.cs",
@@ -350,7 +460,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 20,
               "Title": "Health.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Humanoid\\Health.cs",
               "RelativeDocumentMoniker": "EntityParent\\Humanoid\\Health.cs",
@@ -362,31 +472,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Interactable.cs",
-              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Interactable\\Interactable.cs",
-              "RelativeDocumentMoniker": "EntityParent\\Interactable\\Interactable.cs",
-              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Interactable\\Interactable.cs",
-              "RelativeToolTip": "EntityParent\\Interactable\\Interactable.cs",
-              "ViewState": "AQIAABsAAAAAAAAAAADgvzoAAAAEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T11:16:26.712Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "Weapon.cs",
-              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Weapon.cs",
-              "RelativeDocumentMoniker": "EntityParent\\Weapon.cs",
-              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Weapon.cs",
-              "RelativeToolTip": "EntityParent\\Weapon.cs",
-              "ViewState": "AQIAAEcAAAAAAAAAAAAAAF0AAAApAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-03T12:35:32.131Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 22,
               "Title": "WorldManager.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Manager\\WorldManager.cs",
               "RelativeDocumentMoniker": "Manager\\WorldManager.cs",
@@ -398,7 +484,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 18,
               "Title": "Projectile.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityImplement\\Projectile.cs",
               "RelativeDocumentMoniker": "EntityImplement\\Projectile.cs",
@@ -410,43 +496,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "PocketSlot.cs",
-              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\InventoryPage\\PocketSlot.cs",
-              "RelativeDocumentMoniker": "Ui\\Inventory\\InventoryPage\\PocketSlot.cs",
-              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\InventoryPage\\PocketSlot.cs",
-              "RelativeToolTip": "Ui\\Inventory\\InventoryPage\\PocketSlot.cs",
-              "ViewState": "AQIAAOIAAAAAAAAAAAAAwBEBAAArAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T07:05:15.995Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "StorageSlot.cs",
-              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\InventoryPage\\StorageSlot.cs",
-              "RelativeDocumentMoniker": "Ui\\Inventory\\InventoryPage\\StorageSlot.cs",
-              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\InventoryPage\\StorageSlot.cs",
-              "RelativeToolTip": "Ui\\Inventory\\InventoryPage\\StorageSlot.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFYAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-27T10:30:56.678Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "InventorySlot.cs",
-              "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\InventoryPage\\InventorySlot.cs",
-              "RelativeDocumentMoniker": "Ui\\Inventory\\InventoryPage\\InventorySlot.cs",
-              "ToolTip": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\Inventory\\InventoryPage\\InventorySlot.cs",
-              "RelativeToolTip": "Ui\\Inventory\\InventoryPage\\InventorySlot.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-27T10:31:32.723Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 23,
               "Title": "Inventory.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Humanoid\\Inventory.cs",
               "RelativeDocumentMoniker": "EntityParent\\Humanoid\\Inventory.cs",
@@ -458,7 +508,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 24,
               "Title": "EquipmentItem.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Item\\EquipmentItem.cs",
               "RelativeDocumentMoniker": "Item\\EquipmentItem.cs",
@@ -470,7 +520,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 27,
               "Title": "LevelManager.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Manager\\LevelManager.cs",
               "RelativeDocumentMoniker": "Manager\\LevelManager.cs",
@@ -482,7 +532,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 26,
               "Title": "TraderManager.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Manager\\TraderManager.cs",
               "RelativeDocumentMoniker": "Manager\\TraderManager.cs",
@@ -494,7 +544,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 25,
               "Title": "Container.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Interactable\\Container.cs",
               "RelativeDocumentMoniker": "EntityParent\\Interactable\\Container.cs",
@@ -506,7 +556,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "CameraManager.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Manager\\CameraManager.cs",
               "RelativeDocumentMoniker": "Manager\\CameraManager.cs",
@@ -518,7 +568,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 30,
               "Title": "UiMain.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\UiMain.cs",
               "RelativeDocumentMoniker": "Ui\\UiMain.cs",
@@ -530,7 +580,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 29,
               "Title": "UiIngame.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Ui\\UiIngame.cs",
               "RelativeDocumentMoniker": "Ui\\UiIngame.cs",
@@ -542,7 +592,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 33,
               "Title": "FactionData.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Dataframe\\FactionData.cs",
               "RelativeDocumentMoniker": "Dataframe\\FactionData.cs",
@@ -554,7 +604,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 31,
               "Title": "Intelligence.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Humanoid\\Intelligence.cs",
               "RelativeDocumentMoniker": "EntityParent\\Humanoid\\Intelligence.cs",
@@ -566,7 +616,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 34,
               "Title": "Tactical.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Humanoid\\Interlligence\\Tactical.cs",
               "RelativeDocumentMoniker": "EntityParent\\Humanoid\\Interlligence\\Tactical.cs",
@@ -578,7 +628,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 32,
               "Title": "TestItem.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Dataframe\\TestItem.cs",
               "RelativeDocumentMoniker": "Dataframe\\TestItem.cs",
@@ -590,7 +640,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 35,
               "Title": "WeaponStatus.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Dataframe\\WeaponStatus.cs",
               "RelativeDocumentMoniker": "Dataframe\\WeaponStatus.cs",
@@ -602,7 +652,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 36,
               "Title": "WeaponExtension.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Dataframe\\WeaponExtension.cs",
               "RelativeDocumentMoniker": "Dataframe\\WeaponExtension.cs",
@@ -614,7 +664,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 37,
               "Title": "Faction.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Dataframe\\Faction.cs",
               "RelativeDocumentMoniker": "Dataframe\\Faction.cs",
@@ -626,7 +676,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 38,
               "Title": "Spacefinder.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Humanoid\\Interlligence\\Spacefinder.cs",
               "RelativeDocumentMoniker": "EntityParent\\Humanoid\\Interlligence\\Spacefinder.cs",
@@ -638,7 +688,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 39,
               "Title": "Perception.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Humanoid\\Interlligence\\Perception.cs",
               "RelativeDocumentMoniker": "EntityParent\\Humanoid\\Interlligence\\Perception.cs",
@@ -650,7 +700,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 40,
               "Title": "Pathfinder.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Humanoid\\Interlligence\\Pathfinder.cs",
               "RelativeDocumentMoniker": "EntityParent\\Humanoid\\Interlligence\\Pathfinder.cs",
@@ -662,7 +712,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 41,
               "Title": "Memory.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Humanoid\\Interlligence\\Memory.cs",
               "RelativeDocumentMoniker": "EntityParent\\Humanoid\\Interlligence\\Memory.cs",
@@ -674,7 +724,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 42,
               "Title": "Sound_ScriptSignals.generated.cs",
               "DocumentMoniker": "C:\\Users\\skyma\\AppData\\Local\\Temp\\VSGeneratedDocuments\\dddff5a3-937e-6f51-ca05-d756476d2c94\\Sound_ScriptSignals.generated.cs",
               "ToolTip": "Sound_ScriptSignals.generated.cs [Godot.SourceGenerators.ScriptSignalsGenerator\uC774(\uAC00) \uC0DD\uC131\uD568]",
@@ -685,7 +735,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 43,
               "Title": "Society.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Humanoid\\Society.cs",
               "RelativeDocumentMoniker": "EntityParent\\Humanoid\\Society.cs",
@@ -697,7 +747,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 44,
               "Title": "IInteractable.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Interactable\\IInteractable.cs",
               "RelativeDocumentMoniker": "EntityParent\\Interactable\\IInteractable.cs",
@@ -709,7 +759,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 47,
               "Title": "ShellEject.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\ShellEject.cs",
               "RelativeDocumentMoniker": "EntityParent\\ShellEject.cs",
@@ -721,7 +771,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 45,
               "Title": "NoiseGenerator.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\Library\\NoiseGenerator.cs",
               "RelativeDocumentMoniker": "Library\\NoiseGenerator.cs",
@@ -733,7 +783,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 48,
               "Title": "Wall.cs",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\EntityParent\\Wall.cs",
               "RelativeDocumentMoniker": "EntityParent\\Wall.cs",
@@ -745,7 +795,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 46,
               "Title": "241031_project_blitz.csproj",
               "DocumentMoniker": "E:\\GodotWorkspace\\241031_project_blitz\\241031_project_blitz.csproj",
               "RelativeDocumentMoniker": "241031_project_blitz.csproj",

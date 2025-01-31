@@ -5,6 +5,17 @@ public partial class InventorySlot : Control
 {
     public InventoryPage inventoryPage => InventoryPage.instance;
 
+    public InventorySlotContainer inventoryContainer{ get {
+
+            if(InventoryPage.instance != null && InventoryPage.instance.Visible == true)
+                return InventoryPage.instance as InventorySlotContainer;
+
+            else if (Trade.instance != null && Trade.instance.Visible == true)
+                return Trade.instance as InventorySlotContainer;
+
+            else return null;
+        } }
+
     public bool updated = false;
     public virtual void OnMouseProcess() { }
 
@@ -35,4 +46,16 @@ public partial class InventorySlot : Control
         else
             Trade.instance.SetCursor(iModel, dragPos);
     }
+}
+
+
+public interface InventorySlotContainer
+{
+    public void SetCursor(ItemModel iModel, Vector2I dragPos);
+    public (ItemModel, Vector2I)? ReleaseCursor();
+    public void RotateCursor();
+
+
+    public bool isRotated { get; set; }
+    public bool toRotate{get; set;}
 }

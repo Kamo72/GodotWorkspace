@@ -87,17 +87,18 @@ public partial class StorageSlot : InventorySlot
         {
             //throw new Exception("PocketSlot - OnMouseProcess :: GetNodeByPos(new(0, 0)) == null || GetNodeByPos(new(1, 0)) == null is True!!!");
 
-            Rect2 zeroNode = GetNodeByPos(new Vector2I(0, 0)).GetRect(), oneNode = GetNodeByPos(new Vector2I(1, 0)).GetRect();
+            Rect2 zeroNode = GetNodeByPos(new Vector2I(0, 0)).GetRect(), 
+                oneNode = GetNodeByPos(new Vector2I(1, 0)).GetRect();
             float nodeSep = oneNode.Position.X - zeroNode.End.X;
 
-            Vector2 zeroPos = zeroNode.Position - (Vector2.One * nodeSep / 2f);
+            Vector2 zeroPos = zeroNode.Position + storageCon.Position - (Vector2.One * nodeSep / 2f);
             float inputSep = zeroNode.Size.X + nodeSep;
             Vector2 mousePos = GetLocalMousePosition();
 
             Vector2 nodePosFloat = (mousePos - zeroPos) / inputSep;
             Vector2I nodePos = new(
-                Mathf.RoundToInt(nodePosFloat.X),
-                Mathf.RoundToInt(nodePosFloat.Y));
+                Mathf.FloorToInt(nodePosFloat.X),
+                Mathf.FloorToInt(nodePosFloat.Y));
 
             if (GetNodeByPos(nodePos) != null)
                 onMouseNow = nodePos;
@@ -108,6 +109,7 @@ public partial class StorageSlot : InventorySlot
         {
             Rect2 rect = iModel.GetRect();
             rect.Position = iModel.GlobalPosition;
+            rect.Size = iModel.isRotated ? new Vector2(rect.Size.Y, rect.Size.X) : rect.Size;
 
             if (rect.HasPoint(GetGlobalMousePosition()))
             {
@@ -121,7 +123,8 @@ public partial class StorageSlot : InventorySlot
         if (foundItem != onMouseItem && onMouseItem != null)
             SetNodesModulate(
                 onMouseItem.storagePos,
-                onMouseItem.storagePos + onMouseItem.itemSize,
+                onMouseItem.storagePos
+                + (inventoryContainer.toRotate? new Vector2I(onMouseItem.itemSize.Y, onMouseItem.itemSize.X) : onMouseItem.itemSize),
                 highlight["idle"]);
 
         onMouseItem = foundItem;
@@ -153,7 +156,8 @@ public partial class StorageSlot : InventorySlot
 
             SetNodesModulate(
                 onMouse.Value - dragPos,
-                onMouse.Value - dragPos + sentItem.itemSize,
+                onMouse.Value - dragPos
+                + (inventoryContainer.toRotate ? new Vector2I(sentItem.itemSize.Y, sentItem.itemSize.X) :sentItem.itemSize),
                 isInsertable ? highlight["enable"] : highlight["disable"]);
 
         }
@@ -170,7 +174,8 @@ public partial class StorageSlot : InventorySlot
         if (foundItem != null && foundItem.storagePos != new Vector2I(-1, -1))
             SetNodesModulate(
                 onMouseItem.storagePos,
-                onMouseItem.storagePos + onMouseItem.itemSize,
+                onMouseItem.storagePos
+                + (inventoryContainer.toRotate ? new Vector2I(onMouseItem.itemSize.Y, onMouseItem.itemSize.X) : onMouseItem.itemSize),
                 highlight["onMouse"]);
 
 
@@ -358,7 +363,7 @@ public partial class StorageSlot : InventorySlot
 
                             //Item을 Storage 객체에 Store
                             bool isStored = draggingItem.item.Store(
-                                hasStorage.storage, onMouse.Value - dragPos, false);
+                                hasStorage.storage, onMouse.Value - dragPos, inventoryContainer.toRotate);
 
                             if (isStored)
                                 //가져온 아이템이 장비 가능하고, 장비 중이라면, 장비 해제
@@ -471,7 +476,7 @@ public partial class StorageSlot : InventorySlot
             nodeSize * itemSize.X + margin * (itemSize.X - 1),
             nodeSize * itemSize.Y + margin * (itemSize.Y - 1)
             );
-        ItemModel iModel = new ItemModel(storageNode.item, storageNode.pos, size);
+        ItemModel iModel = new ItemModel(storageNode.item, storageNode.pos, size, storageNode.isRotated);
         AddChild(iModel);
         itemModels.Add(iModel);
         iModel.Position = storageCon.Position + pos;

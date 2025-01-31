@@ -288,11 +288,18 @@ texture = ExtResource("5_j6jsd")
 expand_mode = 1
 
 [node name="ConfirmButton" type="Button" parent="Trade"]
-layout_mode = 2
-offset_left = 976.0
-offset_top = 986.0
-offset_right = 1276.0
-offset_bottom = 1066.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = -92.0
+offset_right = 307.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="Label" type="Label" parent="Trade/ConfirmButton"]
 layout_mode = 1
@@ -307,11 +314,18 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ConversionButton" type="Button" parent="Trade"]
-layout_mode = 0
-offset_left = 657.0
-offset_top = 987.0
-offset_right = 957.0
-offset_bottom = 1067.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -303.0
+offset_top = -91.0
+offset_right = -3.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="Label" type="Label" parent="Trade/ConversionButton"]
 layout_mode = 1
@@ -326,7 +340,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TraderList" type="HBoxContainer" parent="Trade"]
-layout_mode = 0
+layout_mode = 1
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 610.0
@@ -407,11 +421,13 @@ vertical_alignment = 3
 clip_text = true
 
 [node name="StashList" type="HBoxContainer" parent="Trade"]
-layout_mode = 0
-offset_left = 1310.0
-offset_top = 9.0
-offset_right = 1910.0
-offset_bottom = 89.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -600.0
+offset_bottom = 80.0
+grow_horizontal = 0
 alignment = 2
 
 [node name="StashTest" type="Button" parent="Trade/StashList"]
@@ -488,65 +504,76 @@ vertical_alignment = 3
 clip_text = true
 
 [node name="MoneyMy" type="Control" parent="Trade"]
-anchors_preset = 0
-offset_left = 765.0
-offset_top = 2.0
-offset_right = 805.0
-offset_bottom = 42.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
 
 [node name="Label" type="Label" parent="Trade/MoneyMy"]
 layout_mode = 0
-offset_left = 655.0
-offset_top = 1009.0
-offset_right = 1055.0
-offset_bottom = 1054.0
+offset_left = -423.0
+offset_top = -28.0
+offset_right = -4.0
+offset_bottom = 17.0
 text = "보 유 금 :                                 ₩"
 label_settings = SubResource("LabelSettings_111ws")
 
 [node name="MoneyMyValue" type="Label" parent="Trade/MoneyMy"]
 layout_mode = 0
-offset_left = 799.0
-offset_top = 1010.0
-offset_right = 1042.0
-offset_bottom = 1055.0
+offset_left = -279.0
+offset_top = -27.0
+offset_right = -36.0
+offset_bottom = 18.0
 text = "100,000,000,000"
 label_settings = SubResource("LabelSettings_ppxbh")
 horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="MoneyPay" type="Control" parent="Trade"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -582.0
-offset_top = -8.0
-offset_right = -542.0
-offset_bottom = 32.0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
 
 [node name="Label" type="Label" parent="Trade/MoneyPay"]
 layout_mode = 0
-offset_left = 655.0
-offset_top = 1009.0
-offset_right = 1055.0
-offset_bottom = 1054.0
+offset_left = 85.0
+offset_top = -30.0
+offset_right = 512.0
+offset_bottom = 15.0
 text = "거 래 금  :                                 ₩"
 label_settings = SubResource("LabelSettings_111ws")
 
 [node name="MoneyPayValue" type="Label" parent="Trade/MoneyPay"]
 layout_mode = 0
-offset_left = 799.0
-offset_top = 1010.0
-offset_right = 1042.0
-offset_bottom = 1055.0
+offset_left = 229.0
+offset_top = -29.0
+offset_right = 472.0
+offset_bottom = 16.0
 text = "0"
 label_settings = SubResource("LabelSettings_ppxbh")
 horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="CloseButton" type="Button" parent="Trade"]
-offset_left = 805.0
-offset_top = 13.0
-offset_right = 1105.0
-offset_bottom = 93.0
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 18.0
+offset_right = 150.0
+offset_bottom = 98.0
+grow_horizontal = 2
 
 [node name="Label" type="Label" parent="Trade/CloseButton"]
 layout_mode = 1

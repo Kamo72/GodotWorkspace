@@ -13,6 +13,9 @@ public partial class ItemModel : Control
     public Vector2I storagePos = new Vector2I(-1, -1);
     public bool isEquiped => storagePos == new Vector2I(-1, -1);
 
+    public bool isRotated = false;
+    public Vector2 size = new Vector2();
+
     public ItemModel(Item item, Control slotContainer) 
     {
         this.item = item;
@@ -21,7 +24,7 @@ public partial class ItemModel : Control
         {
             CustomMinimumSize = tRect.Size;
             Size = tRect.Size;
-
+            size = Size;
             var label = new Label { 
                 Name="Label",
                 Text = item.status.name,
@@ -63,12 +66,14 @@ public partial class ItemModel : Control
         }
     }
 
-    public ItemModel(Item item, Vector2I pos, Vector2 size)
+    public ItemModel(Item item, Vector2I pos, Vector2 size, bool isRotated)
     {
         this.item = item;
         //GD.PushError($"ItemModel() : {item.status.name} {pos} {size}");
         CustomMinimumSize = size;
         Size = size;
+        this.size = size;
+        this.isRotated = isRotated;
 
         var label = new Label
         {
@@ -85,6 +90,8 @@ public partial class ItemModel : Control
 
             ExpandMode = size.Y > size.X? TextureRect.ExpandModeEnum.FitHeight : TextureRect.ExpandModeEnum.FitWidth,
             StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+            Rotation = isRotated ? Mathf.Pi * 0.5f : 0f,
+            Position = isRotated? new Vector2(size.Y,0f) : Vector2.Zero,
         };
         AddChild(textureRect);
         textureRect.Size = size;
@@ -97,7 +104,7 @@ public partial class ItemModel : Control
             {
                 Name = "StackLabel",
                 Text = iStackable.stackNow.ToString(),
-                Size = Size,
+                Size = isRotated ? new Vector2(Size.Y, Size.X) : Size,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Bottom,
             };
@@ -110,7 +117,7 @@ public partial class ItemModel : Control
             {
                 Name = "StackLabel",
                 Text = magazine.ammoCount + "/" + magazine.magStatus.ammoSize,
-                Size = Size,
+                Size = isRotated ? new Vector2(Size.Y, Size.X) : Size,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Bottom,
             };
@@ -139,7 +146,11 @@ public partial class ItemModel : Control
             GD.PushError("textureRect == null!!!!");
             GD.PushError(item.status.name);
         }
-        DrawRect(new Rect2(Vector2.Zero, textureRect.Size), Colors.White, false, 1);
-        DrawRect(new Rect2(Vector2.Zero, textureRect.Size), new Color(0.2f, 0.2f, 0.2f,0.5f), true);
+
+        Vector2 boxSize = isRotated && !isEquiped ? new Vector2(textureRect.Size.Y, textureRect.Size.X) : textureRect.Size;
+
+
+        DrawRect(new Rect2(Vector2.Zero, boxSize), Colors.White, false, 1);
+        DrawRect(new Rect2(Vector2.Zero, boxSize), new Color(0.2f, 0.2f, 0.2f,0.5f), true);
     }
 }

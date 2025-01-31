@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static Humanoid;
 
-public partial class Trade : Control
+public partial class Trade : Control, InventorySlotContainer
 {
     public static Trade instance = null;
 
@@ -22,11 +22,7 @@ public partial class Trade : Control
 
     Button confirmButton, conversionButton, closeButton;
 
-
-    
     Trader trader = null;
-
-
 
     public override void _EnterTree()
     {
@@ -61,7 +57,8 @@ public partial class Trade : Control
 
     public override void _Process(double delta)
     {
-        base._Process(delta);
+        if (this.Visible == false) return;
+
         cursor.GlobalPosition = GetGlobalMousePosition();
 
         //foreach (var slotListPair in slotListDic)
@@ -72,7 +69,8 @@ public partial class Trade : Control
     //입력 받기
     public override void _Input(InputEvent @event)
     {
-        base._Input(@event);
+        if (this.Visible == false) return;
+        //base._Input(@event);
 
         UiIngame uiIngame = UiIngame.instance;
         if (!uiIngame.Visible) return;
@@ -84,6 +82,9 @@ public partial class Trade : Control
         if (@event is InputEventMouseButton mouseEvent)
             if (mouseEvent.Pressed != true)
                 SetCursor(null, new());
+
+        if (Input.IsActionJustPressed("reload"))
+            RotateCursor();
 
         UpdateAllUI();
     }
@@ -301,6 +302,9 @@ public partial class Trade : Control
     ItemModel onDragging = null;        //집은 아이템
     Vector2I dragPos = Vector2I.Zero;   //집은 위치 저장
 
+    public bool isRotated { get; set; } = false;
+    public bool toRotate { get; set; } = false;
+
     //커서 관련 함수
     public void SetCursor(ItemModel iModel, Vector2I dragPos)
     {
@@ -308,6 +312,13 @@ public partial class Trade : Control
 
         //image 가져오기
         TextureRect image = cursor.FindByName("ItemImage") as TextureRect;
+
+        //onDragging 세팅
+        onDragging = iModel;
+        onDragging?.SetDragging(true);
+
+        //집은 위치 구하기
+        this.dragPos = dragPos;
 
         if (iModel == null)
         {
@@ -321,29 +332,40 @@ public partial class Trade : Control
             return;
         }
 
-        //집은 위치 구하기
-        this.dragPos = dragPos;
-        Vector2 dragRatio = new Vector2(
-            (-1f - dragPos.X * 2f) / (iModel.itemSize.X * 2f),
-            (-1f - dragPos.Y * 2f) / (iModel.itemSize.Y * 2f));
+        isRotated = iModel.isRotated;
+        toRotate = isRotated;
 
-        //GD.PushWarning("dragRatio : " + dragRatio.ToString());
-        //GD.PushWarning("dragPos : " + dragPos.ToString());
-        //GD.PushWarning("iModel.itemSize : " + iModel.itemSize.ToString());
-
-        //image 세팅
-        image.Texture = (Texture2D)ResourceLoader.Load(iModel.item.status.textureRoot);
-        image.CustomMinimumSize = new(iModel.textureRect.Size.X, iModel.textureRect.Size.Y);
-        image.Position = new Vector2(
-            iModel.textureRect.Size.X * dragRatio.X,
-            iModel.textureRect.Size.Y * dragRatio.Y
-            );
-
-        //onDragging 세팅
-        onDragging = iModel;
-        onDragging?.SetDragging(true);
+        SetCursorImage();
 
     }
     public (ItemModel, Vector2I)? ReleaseCursor() => (onDragging == null) ? null : (onDragging, dragPos);
+
+
+    public void RotateCursor()
+    {
+        if (onDragging == null)
+            return;
+
+        toRotate = !toRotate;
+        dragPos = new Vector2I(dragPos.Y, dragPos.X);
+        SetCursorImage();
+    }
+
+    void SetCursorImage()
+    {
+        TextureRect image = cursor.FindByName("ItemImage") as TextureRect;
+        ItemModel iModel = onDragging;
+        Vector2 dragRatio = new Vector2(
+            (-1f - dragPos.X * 2f) / (onDragging.itemSize.X * 2f),
+            (-1f - dragPos.Y * 2f) / (onDragging.itemSize.Y * 2f));
+
+        image.Texture = (Texture2D)ResourceLoader.Load(onDragging.item.status.textureRoot);
+        image.CustomMinimumSize = new(onDragging.size.X, onDragging.size.Y);
+        image.Position = new Vector2(
+            onDragging.size.X * dragRatio.X,
+            onDragging.size.Y * dragRatio.Y
+            );
+        image.Rotation = toRotate ? Mathf.Pi * 1 / 2f : 0;
+    }
 
 }
