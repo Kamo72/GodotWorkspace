@@ -1,3 +1,4 @@
+res://Prefab/UI/IngameUI.tscn
 res://Scene/ingame.tscn
 res://Prefab/UI/MainUI.tscn
 res://Prefab/Dynamic/droppedItem.tscn
@@ -8,7 +9,6 @@ res://Prefab/UI/InventoryPage/WeaponSlot.tscn
 res://Prefab/Static/WallCircle.tscn
 res://Prefab/Static/Wall.tscn
 res://Prefab/UI/interactionUI.tscn
-res://Prefab/UI/IngameUI.tscn
 res://Prefab/UI/InventoryPage.tscn
 res://Prefab/UI/InventoryPage/StorageSlot.tscn
 res://Ui/Inventory/ItemModel.cs

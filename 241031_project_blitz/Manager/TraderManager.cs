@@ -15,6 +15,9 @@ public  class TraderManager
     {
     }
 
+    public static float fund = 0f;
+
+
     public Dictionary<string, Trader> traderLibrary = new() {
         { "medic", new Trader(){
             code = "medic",

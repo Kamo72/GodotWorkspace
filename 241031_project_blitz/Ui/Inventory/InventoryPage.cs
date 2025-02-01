@@ -82,6 +82,7 @@ public partial class InventoryPage : Page, InventorySlotContainer
 
         //OpenStorageWindow(((Backpack)Player.player.inventory.backpack.item).storage);
 
+        SetOtherStash();
     }
 
     public override void _Process(double delta)
@@ -251,6 +252,47 @@ public partial class InventoryPage : Page, InventorySlotContainer
 
         UpdateAllUI();
     }
+    public void SetOtherStash()
+    {
+        ResetOtherPanel();
+
+        HBoxContainer buttonList = new HBoxContainer() { 
+            
+            LayoutMode = 1,
+            AnchorsPreset = 12,
+            Alignment = BoxContainer.AlignmentMode.Begin,
+
+        };
+        Button button;
+        otherInventory.AddChild(buttonList);
+        buttonList.CustomMinimumSize = new Vector2(600, 80);
+
+        Action<string, string> addStash = (name, spr) => {
+            button = new Button();
+            button.AddChild(new Label()
+            {
+                Text = name,
+                LayoutMode = 1,
+                AnchorsPreset = 14,
+            });
+            button.Pressed += () => { GD.Print("TLlqkf" + name); };
+            button.MouseEntered += () => button.Modulate = new Color(1f, 0f, 0f);
+            button.MouseExited += () => button.Modulate = new Color(1f, 1f, 1f);
+            buttonList.AddChild(button);
+            button.CustomMinimumSize = new Vector2(72, 80);
+        };
+
+        addStash("1", "");
+        addStash("2", "");
+        addStash("3", "");
+
+        PocketSlot pocketSlot = ResourceLoader.Load<PackedScene>("res://Prefab/UI/InventoryPage/PocketSlot.tscn").Instantiate() as PocketSlot;
+        pocketSlot.SetStorage(TraderManager.instance.stashList[0]);
+
+        otherInventory.AddChild(pocketSlot);
+        otherSlotList.Add(pocketSlot);
+
+    }
     public void ResetOtherPanel()
     {
         foreach (var control in otherInventory.GetChildren())
@@ -279,7 +321,7 @@ public partial class InventoryPage : Page, InventorySlotContainer
         return ResourceLoader.Load<PackedScene>("res://Prefab/UI/InventoryPage/EquipSlot.tscn")
                 .Instantiate() as EquipSlot;
     }
-    EquipSlot GetWeaponSlot()
+    EquipSlot GetWeaponSlot()   
     {
         return ResourceLoader.Load<PackedScene>("res://Prefab/UI/InventoryPage/WeaponSlot.tscn")
                 .Instantiate() as EquipSlot;

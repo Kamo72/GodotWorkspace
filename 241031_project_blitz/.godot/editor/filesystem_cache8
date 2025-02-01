@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1738409736
+::res://::1738430188
 icon.svg::CompressedTexture2D::5669283197920867606::1730356117::1738299739::1::::<><>::
 ::res://Asset/::1737805162
 ::res://Asset/guns/::1731656741
@@ -20,7 +20,7 @@ MDR 5.56.png::CompressedTexture2D::5748484259776317449::1731386539::1731386539::
 MDR 7.62.png::CompressedTexture2D::5250250110480695895::1731386539::1731386539::1::::<><>::
 MP-155.png::CompressedTexture2D::9186620147925990845::1731470138::1731470141::1::::<><>::
 RFB.png::CompressedTexture2D::9098778503593704639::1731386539::1731386539::1::::<><>::
-::res://Asset/IMG-Firearm/::1737805156
+::res://Asset/IMG-Firearm/::1738410930
 AK-74.png::CompressedTexture2D::3627864762626166014::1737805156::1737805156::1::::<><>::
 AKS-74.png::CompressedTexture2D::1764530313032552529::1737805156::1737805156::1::::<><>::
 AKS-74U.png::CompressedTexture2D::6432373128528822858::1737805156::1737805156::1::::<><>::
@@ -2832,9 +2832,9 @@ Npc.cs::CSharpScript::-1::1737810784::0::1::::<>RigidBody2D<>::
 Player.cs::CSharpScript::-1::1738409760::0::1::::<>RigidBody2D<>::
 Projectile.cs::CSharpScript::-1::1737805162::0::1::::<>RayCast2D<>::
 Sound.cs::CSharpScript::-1::1737805162::0::1::::<>AudioStreamPlayer2D<>::
-::res://EntityParent/::1738407447
+::res://EntityParent/::1738411120
 Humanoid.cs::CSharpScript::-1::1737805162::0::1::::<>RigidBody2D<>::
-Weapon.cs::CSharpScript::-1::1738407447::0::1::::<>Node2D<>::
+Weapon.cs::CSharpScript::-1::1738411120::0::1::::<>Node2D<>::
 ::res://EntityParent/Environment/::1731909732
 Bush.cs::CSharpScript::-1::1731909732::0::1::::<>RigidBody2D<>::
 Glass.cs::CSharpScript::-1::1731909318::0::1::::<>RigidBody2D<>::
@@ -2842,7 +2842,7 @@ Wall.cs::CSharpScript::-1::1731909338::0::1::::<>RigidBody2D<>::
 ::res://EntityParent/Humanoid/::1738410784
 Health.cs::CSharpScript::-1::1737805162::0::1::::<><>::
 Intelligence.cs::CSharpScript::-1::1737805162::0::1::::<><>::
-Inventory.cs::CSharpScript::-1::1737805162::0::1::::<><>::
+Inventory.cs::CSharpScript::-1::1738410784::0::1::::<><>::
 Movement.cs::CSharpScript::-1::1737805162::0::1::::<><>::
 Society.cs::CSharpScript::-1::1737805162::0::1::::<><>::
 ::res://EntityParent/Humanoid/Interlligence/::1737805162
@@ -2860,9 +2860,9 @@ IInteractable.cs::CSharpScript::-1::1737805162::0::1::::<><>::
 Interactable.cs::CSharpScript::-1::1738401969::0::1::::<>RigidBody2D<>::
 ::res://Item/::1738409828
 EquipmentItem.cs::CSharpScript::-1::1732065015::0::1::::<><>::
-Item.cs::CSharpScript::-1::1738308316::0::1::::<><>::
+Item.cs::CSharpScript::-1::1738409828::0::1::::<><>::
 MagAndAmmo.cs::CSharpScript::-1::1731567009::0::1::::<><>::
-Storage.cs::CSharpScript::-1::1731545520::0::1::::<><>::
+Storage.cs::CSharpScript::-1::1738396207::0::1::::<><>::
 ::res://Library/::1730795211
 Extension.cs::CSharpScript::-1::1719028202::0::1::::<><>::
 NoiseGenerator.cs::CSharpScript::-1::1730792142::0::1::::<><>::
@@ -2876,29 +2876,29 @@ Chunk.cs::CSharpScript::-1::1732512411::0::1::::<>Node2D<>::
 ::res://Particle/::1738409736
 ShellEject.cs::CSharpScript::-1::1730792142::0::1::::<>RigidBody2D<>::
 ::res://Prefab/::1737805162
-::res://Prefab/Dynamic/::1738410795
-body.tscn::PackedScene::1388086972372287841::1738410795::0::1::::<><>::res://EntityParent/Interactable/Body.cs<>uid://cm1ijbp72an07::::res://icon.svg
+::res://Prefab/Dynamic/::1738411122
+body.tscn::PackedScene::1388086972372287841::1738411122::0::1::::<><>::res://EntityParent/Interactable/Body.cs<>uid://cm1ijbp72an07::::res://icon.svg
 container.tscn::PackedScene::5075500503015042496::1737805162::0::1::::<><>::res://EntityParent/Interactable/Container.cs<>uid://cm1ijbp72an07::::res://icon.svg
-droppedItem.tscn::PackedScene::6722851871761618266::1738410795::0::1::::<><>::res://EntityParent/Interactable/DroppedItem.cs<>uid://cm1ijbp72an07::::res://icon.svg
-interactable.tscn::PackedScene::1900115427730526166::1738410795::0::1::::<><>::res://EntityParent/Interactable/Interactable.cs<>uid://cm1ijbp72an07::::res://icon.svg<>uid://c8uqrqayen2ro::::res://Prefab/UI/interactionUI.tscn
-::res://Prefab/Static/::1738410795
+droppedItem.tscn::PackedScene::6722851871761618266::1738411122::0::1::::<><>::res://EntityParent/Interactable/DroppedItem.cs<>uid://cm1ijbp72an07::::res://icon.svg
+interactable.tscn::PackedScene::1900115427730526166::1738411122::0::1::::<><>::res://EntityParent/Interactable/Interactable.cs<>uid://cm1ijbp72an07::::res://icon.svg<>uid://c8uqrqayen2ro::::res://Prefab/UI/interactionUI.tscn
+::res://Prefab/Static/::1738411122
 Bush.tscn::PackedScene::606631293280250693::1737805162::0::1::::<><>::res://EntityParent/Environment/Bush.cs
 Glass.tscn::PackedScene::653052702184974038::1737805162::0::1::::<><>::res://EntityParent/Environment/Glass.cs
-Wall.tscn::PackedScene::1061526831346938189::1738410795::0::1::::<><>::res://EntityParent/Environment/Wall.cs
-WallCircle.tscn::PackedScene::5227008751320869411::1738410795::0::1::::<><>::res://EntityParent/Environment/Wall.cs
-::res://Prefab/UI/::1738410795
-IngameUI.tscn::PackedScene::5998889416310627452::1738410795::0::1::::<><>::res://Ui/UiIngame.cs<>res://Ui/Ingame/Stats.cs<>res://Ui/Ingame/Conversation.cs<>res://Ui/Ingame/Trade.cs<>uid://vyq7y3r32jfa::::res://Asset/IMG-Firearm/ImageAR.png<>uid://6wgvmktcwrdj::::res://EntityImplement/cursor.png<>uid://cjyrfw3kbbvx5::::res://Asset/IMG-Firearm/FN FAL.png<>uid://brxmnxn5t55v3::::res://Asset/IMG-Firearm/AK-74.png<>uid://cg2i38g1k4j00::::res://Asset/IMG-Firearm/MDR 7.62.png<>uid://d35cj6fggupd2::::res://Asset/IMG-Firearm/MP-155.png
-interactionUI.tscn::PackedScene::7131363434373053540::1738410795::0::1::::<><>::uid://cm1ijbp72an07::::res://icon.svg
-InventoryPage.tscn::PackedScene::7314121116947824894::1738410795::0::1::::<><>::res://Ui/Inventory/InventoryPage.cs<>uid://cretamyyae6ml::::res://Prefab/UI/InventoryPage/EquipSlot.tscn<>uid://bqnmkshn01n2f::::res://Prefab/UI/InventoryPage/StorageSlot.tscn<>uid://b1u5y8et2sbck::::res://Prefab/UI/InventoryPage/WeaponSlot.tscn<>uid://cov0e5qsp7n52::::res://Prefab/UI/InventoryPage/PocketSlot.tscn<>uid://vyq7y3r32jfa::::res://Asset/IMG-Firearm/ImageAR.png<>uid://6wgvmktcwrdj::::res://EntityImplement/cursor.png
-MainUI.tscn::PackedScene::6423129116563966258::1738410795::0::1::::<><>::res://Ui/UiMain.cs
-::res://Prefab/UI/InventoryPage/::1738410795
+Wall.tscn::PackedScene::1061526831346938189::1738411122::0::1::::<><>::res://EntityParent/Environment/Wall.cs
+WallCircle.tscn::PackedScene::5227008751320869411::1738411122::0::1::::<><>::res://EntityParent/Environment/Wall.cs
+::res://Prefab/UI/::1738411122
+IngameUI.tscn::PackedScene::5998889416310627452::1738411122::0::1::::<><>::res://Ui/UiIngame.cs<>res://Ui/Ingame/Stats.cs<>res://Ui/Ingame/Conversation.cs<>res://Ui/Ingame/Trade.cs<>uid://vyq7y3r32jfa::::res://Asset/IMG-Firearm/ImageAR.png<>uid://6wgvmktcwrdj::::res://EntityImplement/cursor.png<>uid://cjyrfw3kbbvx5::::res://Asset/IMG-Firearm/FN FAL.png<>uid://brxmnxn5t55v3::::res://Asset/IMG-Firearm/AK-74.png<>uid://cg2i38g1k4j00::::res://Asset/IMG-Firearm/MDR 7.62.png<>uid://d35cj6fggupd2::::res://Asset/IMG-Firearm/MP-155.png
+interactionUI.tscn::PackedScene::7131363434373053540::1738411122::0::1::::<><>::uid://cm1ijbp72an07::::res://icon.svg
+InventoryPage.tscn::PackedScene::7314121116947824894::1738411122::0::1::::<><>::res://Ui/Inventory/InventoryPage.cs<>uid://cretamyyae6ml::::res://Prefab/UI/InventoryPage/EquipSlot.tscn<>uid://bqnmkshn01n2f::::res://Prefab/UI/InventoryPage/StorageSlot.tscn<>uid://b1u5y8et2sbck::::res://Prefab/UI/InventoryPage/WeaponSlot.tscn<>uid://cov0e5qsp7n52::::res://Prefab/UI/InventoryPage/PocketSlot.tscn<>uid://vyq7y3r32jfa::::res://Asset/IMG-Firearm/ImageAR.png<>uid://6wgvmktcwrdj::::res://EntityImplement/cursor.png
+MainUI.tscn::PackedScene::6423129116563966258::1738411122::0::1::::<><>::res://Ui/UiMain.cs
+::res://Prefab/UI/InventoryPage/::1738411122
 EquipSlot.tscn::PackedScene::5975463511557705919::1731377112::0::1::::<><>::res://Ui/Inventory/InventoryPage/EquipSlot.cs
 PocketSlot.tscn::PackedScene::5800363780405223419::1730804214::0::1::::<><>::res://Ui/Inventory/InventoryPage/PocketSlot.cs
-StorageSlot.tscn::PackedScene::3537026511415683087::1738410795::0::1::::<><>::res://Ui/Inventory/InventoryPage/StorageSlot.cs
-WeaponSlot.tscn::PackedScene::4254484282549685234::1738410795::0::1::::<><>::res://Ui/Inventory/InventoryPage/EquipSlot.cs
-::res://Scene/::1738410795
-ingame.tscn::PackedScene::2170070621890292662::1738410795::0::1::::<><>::res://Manager/CameraManager.cs<>uid://cxrn863chouys::::res://Prefab/UI/MainUI.tscn<>res://Manager/WorldManager.cs<>res://EntityImplement/Player.cs<>uid://crp53kcjq6p2s::::res://Prefab/UI/IngameUI.tscn<>uid://e25tij3vihe6::::res://Asset/Particle/RadialAlphaGradient.png<>uid://pehgr0lw4xlt::::res://Prefab/Static/Wall.tscn
-world.tscn::PackedScene::3362114869622702312::1738410795::0::1::::<><>::uid://pehgr0lw4xlt::::res://Prefab/Static/Wall.tscn<>res://EntityImplement/Npc.cs<>uid://c21ungwfkofeo::::res://Prefab/Dynamic/droppedItem.tscn<>uid://ceku0tattvrf1::::res://Prefab/Dynamic/container.tscn<>uid://jklxhcvk7oc1::::res://Prefab/Static/Glass.tscn<>res://EntityParent/Interactable/Body.cs<>uid://iv4em4gra0j6::::res://Prefab/Static/Bush.tscn<>uid://dd2uytvh4o4eb::::res://Asset/SFX-Human/Footsteps-Essentials/Footsteps_Tile/Footsteps_Tile_Walk/Footsteps_Tile_Walk_01.wav
+StorageSlot.tscn::PackedScene::3537026511415683087::1738411122::0::1::::<><>::res://Ui/Inventory/InventoryPage/StorageSlot.cs
+WeaponSlot.tscn::PackedScene::4254484282549685234::1738411122::0::1::::<><>::res://Ui/Inventory/InventoryPage/EquipSlot.cs
+::res://Scene/::1738411122
+ingame.tscn::PackedScene::2170070621890292662::1738411122::0::1::::<><>::res://Manager/CameraManager.cs<>uid://cxrn863chouys::::res://Prefab/UI/MainUI.tscn<>res://Manager/WorldManager.cs<>res://EntityImplement/Player.cs<>uid://crp53kcjq6p2s::::res://Prefab/UI/IngameUI.tscn<>uid://e25tij3vihe6::::res://Asset/Particle/RadialAlphaGradient.png<>uid://pehgr0lw4xlt::::res://Prefab/Static/Wall.tscn
+world.tscn::PackedScene::3362114869622702312::1738411122::0::1::::<><>::uid://pehgr0lw4xlt::::res://Prefab/Static/Wall.tscn<>res://EntityImplement/Npc.cs<>uid://c21ungwfkofeo::::res://Prefab/Dynamic/droppedItem.tscn<>uid://ceku0tattvrf1::::res://Prefab/Dynamic/container.tscn<>uid://jklxhcvk7oc1::::res://Prefab/Static/Glass.tscn<>res://EntityParent/Interactable/Body.cs<>uid://iv4em4gra0j6::::res://Prefab/Static/Bush.tscn<>uid://dd2uytvh4o4eb::::res://Asset/SFX-Human/Footsteps-Essentials/Footsteps_Tile/Footsteps_Tile_Walk/Footsteps_Tile_Walk_01.wav
 ::res://Ui/::1737810222
 UiIngame.cs::CSharpScript::-1::1737805162::0::1::::<>Control<>::
 UiMain.cs::CSharpScript::-1::1737810222::0::1::::<>Control<>::

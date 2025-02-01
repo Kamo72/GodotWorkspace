@@ -208,7 +208,6 @@ offset_bottom = 210.985
 text = "번째 선택지"
 
 [node name="Trade" type="Panel" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

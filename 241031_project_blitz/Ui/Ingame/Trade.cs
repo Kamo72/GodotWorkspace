@@ -18,9 +18,11 @@ public partial class Trade : Control, InventorySlotContainer
 
     //데이터
     Dictionary<VBoxContainer, List<InventorySlot>> slotListDic = new();
-    Storage traderStorage = new Storage(new(8, 12));
+    Storage traderStorage = new Storage(new(8, 30));
+    Storage productStorage = new Storage(new(8, 10));
 
     Button confirmButton, conversionButton, closeButton;
+    Label payMoneyLabel, myMoneyLabel;
 
     Trader trader = null;
 
@@ -42,6 +44,9 @@ public partial class Trade : Control, InventorySlotContainer
         closeButton = this.FindByName("CloseButton") as Button;
         closeButton.Pressed += () => this.Visible = false;
 
+        payMoneyLabel = this.FindByName("MoneyPayValue") as Label;
+        myMoneyLabel = this.FindByName("MoneyMyValue") as Label;
+
         slotListDic = new() {
             {traderInventory, new List<InventorySlot>() },
             {myInventory, new List<InventorySlot>() },
@@ -51,7 +56,7 @@ public partial class Trade : Control, InventorySlotContainer
     public override void _Ready()
     {
         SetPanel(traderInventory, traderStorage);
-        SetPanel(myInventory, Player.player.inventory);
+        SetPanel(myInventory, productStorage);
         SetPanel(stashInventory, TraderManager.instance.stashList[0]);
     }
 
