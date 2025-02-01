@@ -47,6 +47,7 @@ public partial class Player : Humanoid
         inventory.TakeItem(new AR15_StanagMag_30(typeof(M855)));
         inventory.TakeItem(new G12_Grizzly { stackNow = 20 });
         inventory.TakeItem(new G12_BuckShot_7p5 { stackNow = 20 });
+
     }
 
     public bool isConversation => UiIngame.instance.conversation.isConversation;

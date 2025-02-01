@@ -44,7 +44,7 @@ public partial class StorageSlot : InventorySlot
     public void DeclareStorageGrid(Vector2I size)
     {
         storageSize = size;
-        updated = false;
+        uiUpdated = false;
     }
 
     public void SetSocket(Humanoid.Inventory.EquipSlot equipSlot)
@@ -240,17 +240,17 @@ public partial class StorageSlot : InventorySlot
 
     }
 
-    //주어진 Equipable에 따라 모든 아이템 UI 초기화 (updated 변수에 의해 호출)
+    //주어진 Equipable에 따라 모든 아이템 UI 초기화 (uiUpdated 변수에 의해 호출)
     public override void RestructureStorage()
     {
-        if (updated) return;
-        updated = true;
+        if (uiUpdated) return;
+        uiUpdated = true;
 
         Equipable equipable = slot.item;
         {
-            equiped = equipable;
             if (equipable == null)
             {
+                equiped = null;
                 ResetItemModel();
                 SetStorageGrid(Vector2I.Zero);
                 return;
@@ -282,6 +282,7 @@ public partial class StorageSlot : InventorySlot
     }
 
     //InventoryPage로부터 입력에 대한 처리를 호출
+    bool droppingKey = false;
     public override bool GetInput(InputEvent @event)
     {
         Rect2 rect = GetRect();
@@ -289,7 +290,7 @@ public partial class StorageSlot : InventorySlot
 
         if (rect.HasPoint(GetGlobalMousePosition()) == false)
         {
-            //updated = false;
+            //uiUpdated = false;
             return false;
         }
 
@@ -301,7 +302,13 @@ public partial class StorageSlot : InventorySlot
                 //해당 지점에 아이템이 있다면 커서에 저장
                 if (onMouseItem != null)
                 {
-                    if (onMouse.HasValue)
+                    //버리기 조작 중
+                    if (droppingKey)
+                    {
+                        Player.player.inventory.ThrowItem(onMouseItem.item);
+                    }
+                    //집으려고 시도
+                    else if (onMouse.HasValue)
                     {
                         //GD.PushWarning("Mouse button pressed : " + onMouse.Value + " - " + onMouseItem.storagePos);
 
@@ -338,7 +345,7 @@ public partial class StorageSlot : InventorySlot
                         //소켓에 템이 장착됨
                         if (equiped is HasStorage hasStorage)
                         {
-                            bool isStored;
+                            bool isStored = false;
 
                             //아이템을 스스로 안에 저장 시도 시
                             if (equiped == draggingItem.item)
@@ -347,20 +354,15 @@ public partial class StorageSlot : InventorySlot
                             //소켓에 장착된 템에 빠른 저장
                             if (onMouse == new Vector2I(-1, -1))
                             {
+                                //GD.PushWarning($"try to quick Store");
                                 //빠른 보관
-                                bool insertable = hasStorage.storage.IsAbleToInsert(draggingItem.item);
-                                if (insertable)
+                                if (hasStorage.storage.IsAbleToInsert(draggingItem.item))
                                 {
                                     StorageNode? sNode = hasStorage.storage.GetPosInsert(draggingItem.item);
 
-                                    if(sNode.HasValue)
-                                        GD.PushWarning("")
-
                                     if (sNode.HasValue)
-                                        return hasStorage.storage.Insert(sNode.Value);
-                                    //해당 코드에서 처리하기 성공
+                                        isStored = hasStorage.storage.Insert(sNode.Value);
                                 }
-                                isStored = true;
                             }
                             //수동 저장
                             else
@@ -423,7 +425,7 @@ public partial class StorageSlot : InventorySlot
                             SetCursor(null, new());
 
                             //Update
-                            if (isStored) updated = false;
+                            if (isStored) uiUpdated = false;
                             return true; //해당 코드에서 처리하기 성공
                         }
 
@@ -451,6 +453,11 @@ public partial class StorageSlot : InventorySlot
             }
         }
 
+        if (@event is InputEventKey keyEvent) 
+        {
+            if (keyEvent.Keycode == Key.Capslock)
+                droppingKey = keyEvent.Pressed;
+        }
         if (@event is InputEventMouseMotion mouseMotionEvent)
         {
             //GD.Print("Mouse moved" + onMouse);
@@ -499,7 +506,8 @@ public partial class StorageSlot : InventorySlot
     //소켓 장비 UI 추가
     public void SetItemEquiped(Equipable equipable)
     {
-        ItemModel iModel = new ItemModel(equipable, slotContainer);
+        equiped = equipable;
+        ItemModel iModel = new ItemModel(equiped, slotContainer);
         AddChild(iModel);
         itemModels.Add(iModel);
         iModel.Position = slotContainer.Position;

@@ -8,6 +8,7 @@ public partial class Weapon : Node2D
     /* Reference*/
     protected Humanoid master => GetParent<Humanoid>();
     public Sprite2D sprite2D => this.FindByName("Sprite2D") as Sprite2D;
+    public Sprite2D spriteMag => this.FindByName("SpriteMag") as Sprite2D;
     public PointLight2D light2D => this.FindByName("PointLight2D") as PointLight2D;
 
     public WeaponStatus status;
@@ -32,6 +33,13 @@ public partial class Weapon : Node2D
         sprite.Position = Vector2.Zero;
         sprite.Scale = Vector2.One * 2.5f;
         sprite.Texture = ResourceLoader.Load<Texture2D>(weaponItem.status.textureRoot);
+        sprite.TextureFilter = TextureFilterEnum.Nearest;
+        AddChild(sprite);
+
+
+        sprite = new Sprite2D();
+        sprite.Name = "SpriteMag";
+        sprite.Texture = ResourceLoader.Load<Texture2D>(weaponItem.magazine.status.textureRoot);
         sprite.TextureFilter = TextureFilterEnum.Nearest;
         AddChild(sprite);
 

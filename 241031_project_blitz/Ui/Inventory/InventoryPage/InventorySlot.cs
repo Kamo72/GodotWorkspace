@@ -5,7 +5,8 @@ public partial class InventorySlot : Control
 {
     public InventoryPage inventoryPage => InventoryPage.instance;
 
-    public InventorySlotContainer inventoryContainer{ get {
+    public static InventorySlotContainer inventoryContainer
+    { get {
 
             if(InventoryPage.instance != null && InventoryPage.instance.Visible == true)
                 return InventoryPage.instance as InventorySlotContainer;
@@ -16,7 +17,8 @@ public partial class InventorySlot : Control
             else return null;
         } }
 
-    public bool updated = false;
+    public bool storageUpdated = false;
+    public bool uiUpdated = false;
     public virtual void OnMouseProcess() { }
 
     public static Dictionary<string, Color> highlight = new() //하이라이트 색상 정보

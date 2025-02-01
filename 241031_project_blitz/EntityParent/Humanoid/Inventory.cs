@@ -170,7 +170,9 @@ public partial class Humanoid
         public void ThrowItem(Item item)
         {
             item.onStorage?.RemoveItem(item);
-            item.GetDroppedItem(master.Position);
+            if (item is Equipable equipable)
+                equipable.UnEquip();
+            item.GetDroppedItem(master.Position + Vector2.FromAngle(master.facingDir) * 40f);
 
             //item.droppedItem.LinearVelocity = Vector2.FromAngle(master.hands.direction) * 100f;
         }

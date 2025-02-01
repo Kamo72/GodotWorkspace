@@ -39,7 +39,7 @@ public partial class PocketSlot : InventorySlot
     public void DeclareStorageGrid(Vector2I size)
     {
         storageSize = size;
-        updated = false;
+        uiUpdated = false;
     }
 
     public void SetStorage(Storage storage)
@@ -173,10 +173,6 @@ public partial class PocketSlot : InventorySlot
                 onMouseItem.storagePos
                 + (inventoryContainer.toRotate ? new Vector2I(onMouseItem.itemSize.Y, onMouseItem.itemSize.X) : onMouseItem.itemSize),
                 highlight["onMouse"]);
-
-
-
-
     }
 
 
@@ -278,11 +274,11 @@ public partial class PocketSlot : InventorySlot
         UpdateSize();
     }
 
-    //주어진 Equipable에 따라 모든 아이템 UI 초기화 (updated 변수에 의해 호출)
+    //주어진 Equipable에 따라 모든 아이템 UI 초기화 (uiUpdated 변수에 의해 호출)
     public override void RestructureStorage()
     {
-        if (updated) return;
-        updated = true;
+        if (uiUpdated) return;
+        uiUpdated = true;
 
         //Storage storage = storage as Storage;
         
@@ -299,6 +295,8 @@ public partial class PocketSlot : InventorySlot
     }
 
     //InventoryPage로부터 입력에 대한 처리를 호출
+
+    bool droppingKey = false;
     public override bool GetInput(InputEvent @event)
     {
         //GD.PushWarning($"OnMouse : {onMouse} - {(onMouseItem != null ? onMouseItem.item.status.name : "null")}");
@@ -307,7 +305,7 @@ public partial class PocketSlot : InventorySlot
 
         if (rect.HasPoint(GetGlobalMousePosition()) == false)
         {
-            //updated = false;
+            //uiUpdated = false;
             return false;
         }
 
@@ -320,11 +318,14 @@ public partial class PocketSlot : InventorySlot
                 //해당 지점에 아이템이 있다면 커서에 저장
                 if (onMouseItem != null)
                 {
-                    GD.PushWarning("onMouseItem != null");
-                    if (onMouse.HasValue)
+                    //버리기 조작 중
+                    if (droppingKey)
                     {
-                        GD.PushWarning("onMouse.HasValue");
-                        GD.PushWarning("Mouse button pressed : " + onMouse.Value + " - " + onMouseItem.storagePos);
+                        Player.player.inventory.ThrowItem(onMouseItem.item);
+                    }
+                    //집으려고 시도
+                    else if (onMouse.HasValue)
+                    {
 
                         Vector2I dragPos = new Vector2I(
                             onMouse.Value.X - onMouseItem.storagePos.X,
@@ -415,7 +416,7 @@ public partial class PocketSlot : InventorySlot
                         //Update
                         if (isStored)
                         {
-                            updated = false;
+                            uiUpdated = false;
                             return true; //해당 코드에서 처리하기 성공
                         }
                     }
@@ -428,6 +429,12 @@ public partial class PocketSlot : InventorySlot
         if (@event is InputEventMouseMotion mouseMotionEvent)
         {
             //GD.Print("Mouse moved");
+        }
+
+        if (@event is InputEventKey keyEvent)
+        {
+            if (keyEvent.Keycode == Key.Capslock)
+                droppingKey = keyEvent.Pressed;
         }
 
         if (GetRect().HasPoint(GetLocalMousePosition()))

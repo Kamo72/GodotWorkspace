@@ -52,17 +52,15 @@ public class Storage
     //임의 위치에 아이템을 저장 가능
     public bool IsAbleToInsert(Item item)
     {
-        Vector2I itemSize = item.status.size;
-
         // 모든 가능한 위치에서 시도
-        for (int i = 0; i <= size.X - itemSize.X; i++)
+        for (int i = 0; i <= size.Y; i++)
         {
-            for (int j = 0; j <= size.Y - itemSize.Y; j++)
+            for (int j = 0; j <= size.X; j++)
             {
                 StorageNode newNode = new StorageNode
                 {
                     item = item,
-                    pos = new Vector2I(i, j),
+                    pos = new Vector2I(j, i),
                     isRotated = false // 일단은 회전 안 시키도록 설정
                 };
 

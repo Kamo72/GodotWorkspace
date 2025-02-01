@@ -72,11 +72,11 @@ public partial class EquipSlot : InventorySlot
 
 
     /* Updater */
-    //주어진 Equipable에 따라 모든 아이템 UI 초기화 (updated 변수에 의해 호출)
+    //주어진 Equipable에 따라 모든 아이템 UI 초기화 (uiUpdated 변수에 의해 호출)
     public override void RestructureStorage()
     {
-        if (updated) return;
-        updated = true;
+        if (uiUpdated) return;
+        uiUpdated = true;
 
         Equipable equipable = slot.item;
         {
@@ -93,6 +93,8 @@ public partial class EquipSlot : InventorySlot
     }
 
     //_Input 호출부를 InventoryPage급으로 올리며네서 리팩토링된 코드
+
+    bool droppingKey = false;
     public override bool GetInput(InputEvent @event)
     {
         Rect2 rect = GetRect();
@@ -100,7 +102,7 @@ public partial class EquipSlot : InventorySlot
 
         if (rect.HasPoint(GetGlobalMousePosition()) == false)
         {
-            //updated = false;
+            //uiUpdated = false;
             return false;
         }
 
@@ -112,9 +114,17 @@ public partial class EquipSlot : InventorySlot
                 //해당 지점에 아이템이 있다면 커서에 저장
                 if (onMouseItem != null)
                 {
-                    GD.PushWarning("Mouse button pressed : " + onMouseItem.storagePos);
-                    Vector2I itemSize = onMouseItem.item.status.size;
-                    SetCursor(onMouseItem, new(itemSize.X / 2, itemSize.Y / 2));
+                    //버리기 조작 중
+                    if (droppingKey)
+                    {
+                        Player.player.inventory.ThrowItem(onMouseItem.item);
+                    }
+                    //집으려고 시도
+                    else
+                    {
+                        Vector2I itemSize = onMouseItem.item.status.size;
+                        SetCursor(onMouseItem, new(itemSize.X / 2, itemSize.Y / 2));
+                    }
                 }
 
                 return true; //해당 코드에서 처리하기 성공
@@ -190,6 +200,12 @@ public partial class EquipSlot : InventorySlot
         if (@event is InputEventMouseMotion mouseMotionEvent)
         {
             //GD.Print("Mouse moved");
+        }
+
+        if (@event is InputEventKey keyEvent)
+        {
+            if (keyEvent.Keycode == Key.Capslock)
+                droppingKey = keyEvent.Pressed;
         }
 
         if (GetRect().HasPoint(GetLocalMousePosition()))

@@ -8,9 +8,9 @@ public partial class Interactable : RigidBody2D, IInteractable
         set => ((Label)this.FindByName("Label")).Text = value;
     }
 
-    float highlightValue = 0f;
-    float highlightDelay = 0.4f;
-    bool isHighlighted => Player.player == null ? false : (GlobalPosition - Player.player.GlobalPosition).Length() < interactableRange;
+    protected float highlightValue = 0f;
+    protected float highlightDelay = 0.4f;
+    protected bool isHighlighted => Player.player == null ? false : (GlobalPosition - Player.player.GlobalPosition).Length() < interactableRange;
     
     public override void _EnterTree()
     {

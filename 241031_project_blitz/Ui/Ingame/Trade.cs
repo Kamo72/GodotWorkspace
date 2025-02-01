@@ -94,7 +94,7 @@ public partial class Trade : Control, InventorySlotContainer
     {
         foreach (var slotListPair in slotListDic)
             foreach (var item in slotListPair.Value)
-                item.updated = false;
+                item.uiUpdated = false;
 
         foreach (var slotListPair in slotListDic)
             foreach (var item in slotListPair.Value)

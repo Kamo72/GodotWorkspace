@@ -16,9 +16,7 @@ scale = Vector2(3.18, 3.18)
 shape = SubResource("CircleShape2D_qixdo")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-rotation = -0.471239
-scale = Vector2(0.44, 0.44)
-skew = 0.471239
+scale = Vector2(0.6, 0.6)
 texture = ExtResource("2_f7luc")
 
 [node name="InteractionUI" type="Control" parent="."]

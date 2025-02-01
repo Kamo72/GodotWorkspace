@@ -81,6 +81,7 @@ public partial class InventoryPage : Page, InventorySlotContainer
         windowList = new() { };
 
         //OpenStorageWindow(((Backpack)Player.player.inventory.backpack.item).storage);
+
     }
 
     public override void _Process(double delta)
@@ -124,10 +125,10 @@ public partial class InventoryPage : Page, InventorySlotContainer
     public void UpdateAllUI()
     {
         foreach (var item in mySlotList)
-            item.updated = false;
+            item.uiUpdated = false;
 
         foreach (var item in otherSlotList)
-            item.updated = false;
+            item.uiUpdated = false;
 
         foreach (var item in mySlotList)
             item.RestructureStorage();

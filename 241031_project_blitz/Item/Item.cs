@@ -59,11 +59,13 @@ public abstract class Item
             return droppedItem;
         }
 
-        droppedItem = ResourceLoader.Load<PackedScene>("res://Prefab/droppedItem.tscn").Instantiate() as DroppedItem;
+        droppedItem = ResourceLoader.Load<PackedScene>("res://Prefab/Dynamic/droppedItem.tscn").Instantiate() as DroppedItem;
         droppedItem.GlobalPosition = pos;
         droppedItem.SetItem(this);
+        WorldManager wm = WorldManager.instance;
+        wm.AddChild(droppedItem);
 
-        return null;
+        return droppedItem;
     }
 
     public DroppedItem droppedItem = null;

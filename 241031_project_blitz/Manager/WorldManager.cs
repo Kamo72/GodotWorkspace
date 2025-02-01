@@ -14,6 +14,27 @@ public partial class WorldManager : Node2D
         base._Ready();
         SaveWorldChunks();
         instance = this;
+
+
+
+        DroppedItem droppedItem = ResourceLoader.Load<PackedScene>("res://Prefab/Dynamic/droppedItem.tscn").Instantiate() as DroppedItem;
+        droppedItem.GlobalPosition = GlobalPosition;
+        droppedItem.SetItem(new M4A1());
+        WorldManager wm = WorldManager.instance;
+        GD.PushWarning(wm);
+        wm.AddChild(droppedItem);
+
+        droppedItem = ResourceLoader.Load<PackedScene>("res://Prefab/Dynamic/droppedItem.tscn").Instantiate() as DroppedItem;
+        droppedItem.GlobalPosition = GlobalPosition;
+        droppedItem.SetItem(new M4A1());
+        GD.PushWarning(wm);
+        wm.AddChild(droppedItem);
+
+        droppedItem = ResourceLoader.Load<PackedScene>("res://Prefab/Dynamic/droppedItem.tscn").Instantiate() as DroppedItem;
+        droppedItem.GlobalPosition = GlobalPosition;
+        droppedItem.SetItem(new M4A1());
+        GD.PushWarning(wm);
+        wm.AddChild(droppedItem);
     }
 
     public override void _Process(double delta)
