@@ -208,7 +208,11 @@ public struct WeaponStatus
     public AttachData attachDt;
     public struct AttachData
     {
+        //2.5배율 하기 이전이 기준
         //internal List<AttachSocket> socketList;
+
+        public Vector2 magAttachPos;
+
     }
 
 }

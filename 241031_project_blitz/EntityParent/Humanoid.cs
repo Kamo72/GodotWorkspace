@@ -264,7 +264,7 @@ public partial class Humanoid : RigidBody2D
         {
             float ratio = MathF.Pow(1f - equipValue, 1f / 2f);
 
-            tPos = tPos.Lerp(Vector2.FromAngle(facingDir) * -handDistance / 2f * rotSider, ratio);
+            tPos = tPos.Lerp(Vector2.FromAngle(facingDir) * handDistance / 2f , ratio);
 
             tRot = Mathf.LerpAngle(tRot,
                 (realAimPoint - equippedWeapon.GlobalPosition).Angle() - 0.5f * 3.14f * rotSider,
@@ -276,7 +276,7 @@ public partial class Humanoid : RigidBody2D
         {
             float ratio = MathF.Pow(movement.sprintValue, 1f / 2f);
 
-            tPos = tPos.Lerp(Vector2.FromAngle(facingDir) * -handDistance / 2f * rotSider, ratio);
+            tPos = tPos.Lerp(Vector2.FromAngle(facingDir) * handDistance / 2f , ratio);
 
             tRot = Mathf.LerpAngle(tRot,
                 (realAimPoint - equippedWeapon.GlobalPosition).Angle() - 0.5f * 3.14f * rotSider,

@@ -27,7 +27,7 @@ public partial class ItemModel : Control
             Size = tRect.Size;
             size = Size;
             var label = new Label { 
-                Name="Label",
+                Name ="Label",
                 Text = item.status.name,
             };
             AddChild(label);
@@ -43,7 +43,7 @@ public partial class ItemModel : Control
             };
             AddChild(textureRect);
             textureRect.Size = tRect.Size;
-
+            textureRect.ZIndex = 10;
 
 
             if (item is WeaponItem weapon)
@@ -62,6 +62,36 @@ public partial class ItemModel : Control
                     VerticalAlignment = VerticalAlignment.Bottom,
                 };
                 AddChild(stackLabel);
+
+                //배율을 확인해볼까용
+                Vector2 textureSize = textureRect.Texture.GetSize();
+                Vector2 rectSize = Size;
+                float sizeRatio = Math.Min(rectSize.X / textureSize.X, rectSize.Y / textureSize.Y);
+                GD.PushWarning($"{item.status.name} - {sizeRatio}");
+
+                if (weapon.magazine is Magazine magazine)
+                {
+                    textureRect = new TextureRect
+                    {
+                        Name = "magazine",
+                        Texture = (Texture2D)ResourceLoader.Load(magazine.status.textureRoot),
+                        TextureFilter = TextureFilterEnum.Nearest,
+
+                        //ExpandMode = TextureRect.ExpandModeEnum.FitWidth,
+                        StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+                    };
+                    AddChild(textureRect);
+
+                    textureRect.Size = textureRect.Texture.GetSize();
+                    textureRect.Scale = Vector2.One * sizeRatio;
+                    textureRect.Position =
+                        weapon.weaponStatus.attachDt.magAttachPos * sizeRatio +
+                        tRect.Size / 2f
+                        - textureRect.Size/2f * sizeRatio
+                        ;
+                    //textureRect.Scale = textureRect.();
+                }
+
             }
 
         }

@@ -30,25 +30,26 @@ public partial class Weapon : Node2D
         status = WeaponLibrary.Get(code);
 
         var sprite = new Sprite2D();
-        sprite.Position = Vector2.Zero;
+        sprite.Name = "SpriteMag";
+        sprite.Scale = Vector2.One * 2.5f;
+        sprite.Texture = ResourceLoader.Load<Texture2D>(weaponItem.magazine.status.textureRoot);
+        sprite.TextureFilter = TextureFilterEnum.Nearest;
+        AddChild(sprite);
+        sprite.Position = status.attachDt.magAttachPos * 2.5f;
+
+        sprite = new Sprite2D();
         sprite.Scale = Vector2.One * 2.5f;
         sprite.Texture = ResourceLoader.Load<Texture2D>(weaponItem.status.textureRoot);
         sprite.TextureFilter = TextureFilterEnum.Nearest;
         AddChild(sprite);
-
-
-        sprite = new Sprite2D();
-        sprite.Name = "SpriteMag";
-        sprite.Texture = ResourceLoader.Load<Texture2D>(weaponItem.magazine.status.textureRoot);
-        sprite.TextureFilter = TextureFilterEnum.Nearest;
-        AddChild(sprite);
+        sprite.Position = Vector2.Zero;
 
         var light = new PointLight2D();
         light.Name = "PointLight2D";
         light.Position = new(status.detailDt.muzzleDistance, 0f);
         light.TextureScale = 4.0f;
         light.Energy = 2f;
-        light.Color = Colors.LightYellow;
+        light.Color = new Color(Colors.LightYellow, 0f);
         light.Texture = ResourceLoader.Load<Texture2D>("res://Asset/Particle/RadialAlphaGradient.png");
         light.TextureFilter = TextureFilterEnum.Nearest;
         light.ShadowEnabled = true;
@@ -63,6 +64,19 @@ public partial class Weapon : Node2D
             fireCooldown -= (float)delta;
 
         light2D.Color = new Color(light2D.Color, light2D.Color.A * 0.5f);
+
+
+        if (magPosIncreasing && magPosValue < 1f ||
+            !magPosIncreasing && magPosValue > 0f)
+        {
+            magPosValue += (magPosIncreasing ? +1 : -1) * (float)delta / magPosTime;
+            magPosTime -= (float)delta;
+            SetMagazinePos(magPosValue);
+        }
+        else
+        {
+            magPosValue = magPosIncreasing ? 1f : 0f;
+        }
     }
 
     /* Callable Actions */
@@ -168,6 +182,7 @@ public partial class Weapon : Node2D
                     InventoryPage.instance?.UpdateAllUI();
 
                     //[timeout] reloadTime - detach
+                    SetMagazineRoutine(false, status.timeDt.reloadTime.Item1);
                     Sound.Make(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipOut());
                     await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item1), "timeout"); // 재장전 시간 대기
                 }
@@ -192,6 +207,7 @@ public partial class Weapon : Node2D
         if (!isReloadDisrupt)
         {
             //[timeout] reloadTime - attach
+            SetMagazineRoutine(true, status.timeDt.reloadTime.Item3);
             await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item3), "timeout"); // 재장전 시간 대기
                 //새 탄창을 Storage에서 제거
                 bool res = foundMag.Value.storage.RemoveItem(foundMag.Value.node.item);
@@ -306,6 +322,33 @@ public partial class Weapon : Node2D
     {
         isRealeased = true;
     }
+
+    bool magPosIncreasing = true;
+    float magPosTime = 1f;
+    float magPosValue = 1f;
+    void SetMagazineRoutine(bool increasing, float time) 
+    {
+        magPosIncreasing = increasing;
+        magPosTime = time;
+    }
+    void SetMagazinePos(float reloadingRatio) 
+    {
+        reloadingRatio = Mathf.Pow(reloadingRatio - 0.5f, 3) * 4f + 0.5f;
+
+        spriteMag.Position =
+            ((status.attachDt.magAttachPos * 2.5f) * reloadingRatio +
+            -Position * Scale.Y * (1f - reloadingRatio) +
+            new Vector2(0f, 10f) * ((0.5f - Math.Abs(reloadingRatio - 0.5f)) * 2f));
+
+        spriteMag.Rotation =
+           (0f * reloadingRatio +
+            -45f * (1f - reloadingRatio) +
+            75f * ((0.5f - Math.Abs(reloadingRatio - 0.5f)) * 2f))
+            / 180f * (float)Math.PI;
+
+        spriteMag.Modulate = new Color(Colors.White, Math.Min(reloadingRatio * 5f, 1f));
+    }
+
 
     /* Comfort*/
     protected float randFloat => ((float)Random.Shared.NextDouble() - 0.5f) * 2f;

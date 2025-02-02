@@ -51,7 +51,7 @@ public class K2 : WeaponItem
                 muzzleDistance = 50f,
             }, new()
             {
-
+                magAttachPos = new Vector2(0f,-8f)
             }
             ));
     }
@@ -262,7 +262,7 @@ public class M4A1 : WeaponItem
             muzzleDistance = 50f,
         }, new()
         {
-
+            magAttachPos = new Vector2(0.5f, 3.5f)
         }
         ));
        

@@ -1,3 +1,4 @@
+Sprite2D
 VBoxContainer
 Control
 Label
@@ -7,9 +8,7 @@ Panel
 Node2D
 MenuButton
 Container
-Sprite2D
 AudioStreamPlayer2D
 NavigationObstacle2D
 NavigationRegion2D
 NavigationAgent2D
-AudioListener2D
