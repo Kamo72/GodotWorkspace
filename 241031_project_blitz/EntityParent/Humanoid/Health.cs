@@ -44,7 +44,7 @@ public partial class Humanoid
             var damage = projectile.ammoStatus.lethality.damage;
             hpNow -= damage;
 
-            Sound.Make(master, master.GlobalPosition, 400f, 0.1f, soundDamageFlesh, 2);
+            Sound.MakeSelf(master, master.GlobalPosition, 400f, 0.1f, soundDamageFlesh, 2);
 
             if (CameraManager.current.target == master)
                 CameraManager.current.ApplyRecoil(damage * 10f);

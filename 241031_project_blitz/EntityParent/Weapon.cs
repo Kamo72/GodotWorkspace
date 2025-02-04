@@ -129,8 +129,8 @@ public partial class Weapon : Node2D
         light2D.Color = new Color(light2D.Color, 1f);
 
         //소리 발생
-        Sound.Make(master, GlobalPosition, 2000f, 1f, GetSoundRscShot());
-        Sound.Make(master, GlobalPosition, 400f, 0.4f, GetSoundRscShell());
+        Sound.MakeSelf(master, GlobalPosition, 2000f, 1f, GetSoundRscShot());
+        Sound.MakeSelf(master, GlobalPosition, 400f, 0.4f, GetSoundRscShell());
 
 
         return true;
@@ -183,7 +183,7 @@ public partial class Weapon : Node2D
 
                     //[timeout] reloadTime - detach
                     SetMagazineRoutine(false, status.timeDt.reloadTime.Item1);
-                    Sound.Make(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipOut());
+                    Sound.MakeSelf(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipOut());
                     await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item1), "timeout"); // 재장전 시간 대기
                 }
                 else
@@ -196,7 +196,7 @@ public partial class Weapon : Node2D
         if (!isReloadDisrupt)
         {
             //[timeout] reloadTime - getMag
-            Sound.Make(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipIn());
+            Sound.MakeSelf(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipIn());
             await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item2), "timeout"); // 재장전 시간 대기
 
 
@@ -257,7 +257,7 @@ public partial class Weapon : Node2D
         if (!isReloadDisrupt)
         if (weaponItem.chamber == null) {
                 //[timeout] reloadTime - chamber load
-                Sound.Make(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipIn());
+                Sound.MakeSelf(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipIn());
                 await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item2), "timeout"); // 재장전 시간 대기
 
             ammo = GetAmmoOne();
@@ -274,7 +274,7 @@ public partial class Weapon : Node2D
             if (ammo == null) break;
 
             //[timeout] reloadTime - mag load
-            Sound.Make(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipOut());
+            Sound.MakeSelf(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipOut());
             await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item3), "timeout"); // 재장전 시간 대기
             {
                 bool res = weaponItem.magazine.AmmoPush(ammo);
@@ -301,7 +301,7 @@ public partial class Weapon : Node2D
         isCharging = true;
 
         //[timeout] bolt - rewind
-        Sound.Make(master, GlobalPosition, 200f, 0.1f, GetSoundRscArming());
+        Sound.MakeSelf(master, GlobalPosition, 200f, 0.1f, GetSoundRscArming());
         await ToSignal(GetTree().CreateTimer(status.timeDt.boltTime.Item2), "timeout"); // 재장전 시간 대기
         {
             weaponItem.FeedAmmo();

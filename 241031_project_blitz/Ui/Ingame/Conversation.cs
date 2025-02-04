@@ -154,8 +154,8 @@ public partial class Conversation : Control
                 button.ButtonDown += () =>
                 {
                     scriptNow = page;
-                    ApplyScript(script, page);
                     action();
+                    ApplyScript(script, page);
                     EndSelections();
                 };
             }

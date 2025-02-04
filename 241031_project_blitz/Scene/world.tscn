@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bn5vsnbludk3q"]
+[gd_scene load_steps=13 format=3 uid="uid://bn5vsnbludk3q"]
 
 [ext_resource type="PackedScene" uid="uid://pehgr0lw4xlt" path="res://Prefab/Static/Wall.tscn" id="2_2b81r"]
 [ext_resource type="Script" path="res://EntityImplement/Npc.cs" id="2_6kgyl"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://EntityParent/Interactable/Body.cs" id="5_u1mfq"]
 [ext_resource type="PackedScene" uid="uid://iv4em4gra0j6" path="res://Prefab/Static/Bush.tscn" id="6_rocji"]
 [ext_resource type="AudioStream" uid="uid://dd2uytvh4o4eb" path="res://Asset/SFX-Human/Footsteps-Essentials/Footsteps_Tile/Footsteps_Tile_Walk/Footsteps_Tile_Walk_01.wav" id="8_6v5ww"]
+[ext_resource type="Script" path="res://Npc/NpcStashManager.cs" id="10_bsqgh"]
+[ext_resource type="PackedScene" uid="uid://db88kioq35euf" path="res://Prefab/Dynamic/playerStash.tscn" id="10_x6ofd"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_wwdii"]
 outlines = Array[PackedVector2Array]([PackedVector2Array(83, -589, -85.613, -633.698, -392, -635, -504, -647, -708, -439, -651, -252, -469.395, -216.819, -267, -201, -25.5855, -208.44, 34.442, -297.472, -69.8681, -392.788, -256.839, -383.361, -405, -331, -535, -410, -442, -546, -324.739, -473.441, -71.8362, -445.16, 49, -484)])
@@ -179,3 +181,12 @@ scale = Vector2(4, 4)
 position = Vector2(-3025, 821)
 rotation = 1.57079
 scale = Vector2(4, 4)
+
+[node name="NpcStashManager" type="RigidBody2D" parent="."]
+position = Vector2(-600, -576)
+gravity_scale = 0.0
+freeze = true
+script = ExtResource("10_bsqgh")
+
+[node name="PlayerStash" parent="." instance=ExtResource("10_x6ofd")]
+position = Vector2(-708, -572)

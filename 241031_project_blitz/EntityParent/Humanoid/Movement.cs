@@ -76,7 +76,7 @@ public partial class Humanoid
             soundTime += master.LinearVelocity.Length() * delta / 100f;
             if (soundTime > soundMax)
             {
-                Sound.Make(master, master.GlobalPosition, 150f, 0.3f, GetSoundRsc());
+                Sound.MakeSelf(master, master.GlobalPosition, 150f, 0.3f, GetSoundRsc());
 
                 //GD.Print("Sound!");
                 soundTime -= soundMax;
@@ -84,7 +84,7 @@ public partial class Humanoid
 
             if (master.LinearVelocity.Length() < 20f && soundTime > 0.1f)
             {
-                Sound.Make(master, master.GlobalPosition, 150f, 0.3f, GetSoundRsc());
+                Sound.MakeSelf(master, master.GlobalPosition, 150f, 0.3f, GetSoundRsc());   
 
                 //GD.Print("Sound!");
                 soundTime = 0f;

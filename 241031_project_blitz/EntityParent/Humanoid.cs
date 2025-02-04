@@ -81,6 +81,8 @@ public partial class Humanoid : RigidBody2D
     protected float randFloat => ((float)Random.Shared.NextDouble() - 0.5f) * 2f;
 
 
+    protected string job = "";
+
     /* Initiate */
     public override void _Ready()
     {

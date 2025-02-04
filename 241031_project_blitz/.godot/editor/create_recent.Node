@@ -1,3 +1,4 @@
+RigidBody2D
 Sprite2D
 VBoxContainer
 Control
@@ -11,4 +12,3 @@ Container
 AudioStreamPlayer2D
 NavigationObstacle2D
 NavigationRegion2D
-NavigationAgent2D

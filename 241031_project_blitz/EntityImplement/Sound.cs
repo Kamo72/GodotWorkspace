@@ -26,6 +26,20 @@ public partial class Sound : AudioStreamPlayer2D
         sound.Play();
     }
 
+    public static void MakeSelf(Humanoid source, Vector2 pos, float distance, float danger, string rscPath, float volume = 1f)
+    {
+        var sound = new Sound()
+        {
+            VolumeDb = volume,
+            MaxDistance = distance,
+            danger = danger,
+            Stream = ResourceLoader.Load<AudioStream>(rscPath),
+        };
+        source.AddChild(sound);
+        sound.GlobalPosition = pos;
+        sound.Play();
+    }
+
     public override void _Process(double delta)
     {
         if (Stream != null && !Playing && danger != 0f)

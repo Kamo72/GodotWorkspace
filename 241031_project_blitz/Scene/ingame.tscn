@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://crp53kcjq6p2s" path="res://Prefab/UI/IngameUI.tscn" id="3_jsxcm"]
 [ext_resource type="Texture2D" uid="uid://e25tij3vihe6" path="res://Asset/Particle/RadialAlphaGradient.png" id="4_l3t1x"]
 [ext_resource type="PackedScene" uid="uid://pehgr0lw4xlt" path="res://Prefab/Static/Wall.tscn" id="6_46ai0"]
-[ext_resource type="Texture2D" uid="uid://2ftt6aueclnt" path="res://Asset/guns/M4A1.png" id="8_s1h41"]
-[ext_resource type="Texture2D" uid="uid://ckhgkkcfodotw" path="res://Asset/guns/AR15_STANAG30.png" id="9_g4f7r"]
+[ext_resource type="Texture2D" uid="uid://2ftt6aueclnt" path="res://Asset/IMG-Firearm/M4A1.png" id="8_s1h41"]
+[ext_resource type="Texture2D" uid="uid://ckhgkkcfodotw" path="res://Asset/IMG-Firearm/AR15_STANAG30.png" id="9_g4f7r"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -72,6 +72,7 @@ shadow_filter_smooth = 9.0
 texture = ExtResource("4_l3t1x")
 
 [node name="Sprite2D" type="Sprite2D" parent="World"]
+visible = false
 texture = ExtResource("8_s1h41")
 
 [node name="Sprite2D" type="Sprite2D" parent="World/Sprite2D"]

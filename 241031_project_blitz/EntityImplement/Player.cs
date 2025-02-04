@@ -48,6 +48,8 @@ public partial class Player : Humanoid
         inventory.TakeItem(new G12_Grizzly { stackNow = 20 });
         inventory.TakeItem(new G12_BuckShot_7p5 { stackNow = 20 });
 
+        Name = "김애자";
+        job = "세상을 먹는 자";
     }
 
     public bool isConversation => UiIngame.instance.conversation.isConversation;
