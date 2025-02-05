@@ -146,6 +146,36 @@ public static class ItemEx
         }
     }
 
+    public static int GetPrice(this Item item) 
+    {
+        int priceBasic = Mathf.CeilToInt(item.status.value);
+
+        if (item is IStackable iStackable)
+            priceBasic *= iStackable.stackNow == 0? 1 : iStackable.stackNow;
+
+        if (item is Magazine mag) 
+            priceBasic += mag.AmmoPrice;
+
+        if (item is WeaponItem wItem)
+        {
+            if (wItem.magazine != null)
+                priceBasic += wItem.magazine.GetPrice();
+            
+            //부착물 관련해서 추가할 듯
+        }
+
+        if (item is HasStorage hasStorage) 
+        {
+            List<Item> items = new();
+            hasStorage.storage.itemList.ForEach(n => items.Add(n.item));
+
+            items.ForEach(i => priceBasic += i.GetPrice());
+        }
+
+
+        return priceBasic;
+
+    }
 }
 
 

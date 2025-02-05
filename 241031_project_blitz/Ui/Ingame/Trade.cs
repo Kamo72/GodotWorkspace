@@ -26,6 +26,8 @@ public partial class Trade : Control, InventorySlotContainer
 
     Trader trader = null;
 
+    bool isSellingMode = true;
+
     public override void _EnterTree()
     {
         instance = this;
@@ -40,9 +42,15 @@ public partial class Trade : Control, InventorySlotContainer
         stashInventory = this.FindByName("StashInventory") as VBoxContainer;
 
         confirmButton = this.FindByName("ConfirmButton") as Button;
+        confirmButton.Pressed += () => { 
+            if (isSellingMode) DoSell(); else DoBuy();
+        };
+
         conversionButton = this.FindByName("ConversionButton") as Button;
+        conversionButton.Pressed += () => ToggleSellingMode();
+        
         closeButton = this.FindByName("CloseButton") as Button;
-        closeButton.Pressed += () => this.Visible = false;
+        closeButton.Pressed += () => CloseTrade();
 
         payMoneyLabel = this.FindByName("MoneyPayValue") as Label;
         myMoneyLabel = this.FindByName("MoneyMyValue") as Label;
@@ -244,7 +252,7 @@ public partial class Trade : Control, InventorySlotContainer
     //Trade UI 관련
     public void OpenTrade()
     {
-        OpenTrade(null);
+        OpenTrade(TraderManager.instance.traderLibrary["medic"]);
     }
     public void OpenTrade(Trader trader) 
     {
@@ -255,6 +263,52 @@ public partial class Trade : Control, InventorySlotContainer
     {
         this.Visible = false;
     }
+
+    void ToggleSellingMode() 
+    {
+        isSellingMode = !isSellingMode;
+        GD.Print("ToggleSellingMode" + isSellingMode);
+    }
+    List<Item> products { get {
+            PocketSlot pocketSlot = slotListDic[myInventory][0] as PocketSlot;
+            List<Storage.StorageNode> productNodes = pocketSlot.GetStorage().itemList;
+            List<Item> products = new();
+
+            foreach (var node in productNodes)
+                products.Add(node.item);
+
+            return products;
+        } }
+    void DoSell()
+    {
+        var products = this.products;
+        GD.Print("DoSell" + GetProductsPrice());
+
+
+        
+    }
+    void DoBuy()
+    {
+        var products = this.products;
+        GD.Print("DoSell" + GetProductsPrice());
+
+
+    }
+
+    int GetProductsPrice()
+    {
+        var products = this.products;
+
+        int totalPrice = 0;
+
+        foreach (var item in products)
+            totalPrice += item.GetPrice();
+
+        return totalPrice;
+    }
+
+
+
 
 
     //슬롯 객체 생성

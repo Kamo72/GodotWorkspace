@@ -46,7 +46,7 @@ public partial class PocketSlot : InventorySlot
     {
         this.storage = storage;
     }
-
+    public Storage GetStorage() => storage;
 
 
     /* Process */

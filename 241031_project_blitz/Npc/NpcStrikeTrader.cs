@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 
 //스태쉬 관리자
-public partial class NpcStashManager : Npc
+public partial class NpcStrikeTrader : Npc
 {
+    Trader trader;
     public override void _Ready()
     {
         base._Ready();
-        Name = "박서준";
-        job = "보급부 배급담당관";
+        Name = "유시온";
+        job = "화력팀 수석 무기기술자";
 
         //intelligence = new Intelligence();
     }
@@ -21,6 +22,7 @@ public partial class NpcStashManager : Npc
         base._EnterTree();
 
         inventory = new Inventory(this);
+        trader = TraderManager.instance.traderLibrary["medic"];
     }
 
 
@@ -37,21 +39,17 @@ public partial class NpcStashManager : Npc
             new Script.Node(){
                 name = Name,
                 job = job,
-                quote = "좋은 아침입니다. 배급 관련건이신가요?",
-                pos = 2,
-                sprite = Script.GetSprite("Player", "ttest"),
-                },
-            new Script.Node(){
-                name = Name,
-                job = job,
-                quote = "개인 창고는 오른쪽을 이용해주세요.",
+                quote = "안녕하세요. 무슨 볼일이신가요?",
                 pos = 2,
                 sprite = Script.GetSprite("Player", "ttest"),
                 selections = new()
                     {
-                        new ("당신은 어떤 일을 하시나요?",2,()=>{ }),
-                        new ("앙 기모찌",4,()=>{ }),
-                        new ("맞짱 까자",6,()=>{ }),
+                        new ("물건을 좀 보고싶어",1,()=>{
+                            Trade.instance.OpenTrade(trader);
+                            UiIngame.instance.conversation.EndScript();
+                        }),
+                        new ("요즘 좀 어때?",3,()=>{ }),
+                        new ("별일 아냐",1,()=>{ }),
                     },
                 },
 
@@ -60,14 +58,14 @@ public partial class NpcStashManager : Npc
             new Script.Node(){
                 name = Name,
                 job = job,
-                quote = "저는 배급담당관으로 일하고 있는 박서준입니다.",
+                quote = "네, 다른 용건이 있으시면 또 찾아주세요.",
                 pos = 2,
                 sprite = Script.GetSprite("Player", "ttest"),
                 },
             new Script.Node(){
                 name = Name,
                 job = job,
-                quote = "저는 배급담당관으로 일하고 있는 박서준입니다.",
+                quote = "네, 다른 용건이 있으시면 또 찾아주세요.",
                 pos = 2,
                 sprite = Script.GetSprite("Player", "ttest"),
                 action = ()=>UiIngame.instance.conversation.EndScript(),
@@ -77,33 +75,17 @@ public partial class NpcStashManager : Npc
             new Script.Node(){
                 name = Name,
                 job = job,
-                quote = "그게 갑자기 무슨 소리세요...",
+                quote = "평소와 별 다를건 없어요. 총 닦고, 조이고, 기름치죠.",
                 pos = 2,
                 sprite = Script.GetSprite("Player", "ttest"),
                 },
             new Script.Node(){
                 name = Name,
                 job = job,
-                quote = "그게 갑자기 무슨 소리세요...",
+                quote = "평소와 별 다를건 없어요. 총 닦고, 조이고, 기름치죠.",
                 pos = 2,
                 sprite = Script.GetSprite("Player", "ttest"),
                 action = ()=>UiIngame.instance.conversation.EndScript(),
-                },
-            //6
-            new Script.Node(){
-                name = Name,
-                job = job,
-                quote = "히익",
-                pos = 2,
-                sprite = Script.GetSprite("Player", "ttest"),
-                },
-            new Script.Node(){
-                name = Name,
-                job = job,
-                quote = "히익",
-                pos = 2,
-                sprite = Script.GetSprite("Player", "ttest"),
-                action = () => UiIngame.instance.conversation.EndScript(),
                 },
             },
         };

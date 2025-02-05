@@ -67,7 +67,7 @@ public partial class ItemModel : Control
                 Vector2 textureSize = textureRect.Texture.GetSize();
                 Vector2 rectSize = Size;
                 float sizeRatio = Math.Min(rectSize.X / textureSize.X, rectSize.Y / textureSize.Y);
-                GD.PushWarning($"{item.status.name} - {sizeRatio}");
+                //GD.PushWarning($"{item.status.name} - {sizeRatio}");
 
                 if (weapon.magazine is Magazine magazine)
                 {
@@ -118,7 +118,7 @@ public partial class ItemModel : Control
         };
         AddChild(label);
 
-        var textureRect = new TextureRect
+        var tRect = new TextureRect
         {
             Name = "TextureRect",
             Texture = (Texture2D)ResourceLoader.Load(item.status.textureRoot),
@@ -129,8 +129,10 @@ public partial class ItemModel : Control
             Rotation = isRotated ? Mathf.Pi * 0.5f : 0f,
             Position = isRotated? new Vector2(size.Y,0f) : Vector2.Zero,
         };
-        AddChild(textureRect);
-        textureRect.Size = size;
+        AddChild(tRect);
+        tRect.Size = size;
+        tRect.ZIndex = 10;
+
         storagePos = pos;
 
 
@@ -147,19 +149,19 @@ public partial class ItemModel : Control
             AddChild(stackLabel);
         }
 
-        if (item is Magazine magazine)
+        if (item is Magazine magg)
         {
             var stackLabel = new Label
             {
                 Name = "StackLabel",
-                Text = magazine.ammoCount + "/" + magazine.magStatus.ammoSize,
+                Text = magg.ammoCount + "/" + magg.magStatus.ammoSize,
                 Size = isRotated ? new Vector2(Size.Y, Size.X) : Size,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Bottom,
             };
             AddChild(stackLabel);
         }
-
+        
         if (item is WeaponItem weapon)
         {
             string text = "";
@@ -176,6 +178,38 @@ public partial class ItemModel : Control
                 VerticalAlignment = VerticalAlignment.Bottom,
             };
             AddChild(stackLabel);
+
+
+            //배율을 확인해볼까용
+            Vector2 textureSize = textureRect.Texture.GetSize();
+            Vector2 rectSize = Size;
+            float sizeRatio = Math.Min(rectSize.X / textureSize.X, rectSize.Y / textureSize.Y);
+            //GD.PushWarning($"{item.status.name} - {sizeRatio}");
+
+            if (weapon.magazine is Magazine magazine)
+            {
+                var textureRect = new TextureRect
+                {
+                    Name = "magazine",
+                    Texture = (Texture2D)ResourceLoader.Load(magazine.status.textureRoot),
+                    TextureFilter = TextureFilterEnum.Nearest,
+
+                    //ExpandMode = TextureRect.ExpandModeEnum.FitWidth,
+                    StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+                };
+                tRect.AddChild(textureRect);
+
+                textureRect.Size = textureRect.Texture.GetSize();
+                textureRect.Scale = Vector2.One * sizeRatio;
+                textureRect.Position =
+                    weapon.weaponStatus.attachDt.magAttachPos * sizeRatio +
+                    tRect.Size / 2f
+                    - textureRect.Size / 2f * sizeRatio
+                    ;
+                //textureRect.Rotation =tRect.Rotation;
+                //textureRect.Scale = textureRect.();
+            }
+
         }
 
         var onMouse = InventorySlot.inventoryContainer.ReleaseCursor();
