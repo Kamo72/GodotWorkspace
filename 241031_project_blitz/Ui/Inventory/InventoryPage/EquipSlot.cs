@@ -38,6 +38,8 @@ public partial class EquipSlot : InventorySlot
     //OnMouse 정보를 찾는 과정 + 각 슬롯과 소켓의 UI 하이라이팅
     public override void OnMouseProcess()
     {
+        if (!isActivated) return;
+
         ItemModel foundItem = null;
 
         //마우스가 있는 아이템 찾기
@@ -93,10 +95,11 @@ public partial class EquipSlot : InventorySlot
     }
 
     //_Input 호출부를 InventoryPage급으로 올리며네서 리팩토링된 코드
-
-    bool droppingKey = false;
     public override bool GetInput(InputEvent @event)
     {
+        base.GetInput(@event);
+        if (!isActivated) return false;
+
         Rect2 rect = GetRect();
         rect.Position = GlobalPosition;
 
@@ -202,11 +205,6 @@ public partial class EquipSlot : InventorySlot
             //GD.Print("Mouse moved");
         }
 
-        if (@event is InputEventKey keyEvent)
-        {
-            if (keyEvent.Keycode == Key.Capslock)
-                droppingKey = keyEvent.Pressed;
-        }
 
         if (GetRect().HasPoint(GetLocalMousePosition()))
         {

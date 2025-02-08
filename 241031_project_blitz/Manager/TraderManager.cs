@@ -15,12 +15,16 @@ public  class TraderManager
     {
     }
 
-    public static float fund = 0f;
+    public static int money = 0;
 
 
     public Dictionary<string, Trader> traderLibrary = new() {
         { "medic", new Trader(){
             code = "medic",
+            reputation = 0f,
+        } },
+        { "mechanic", new Trader(){
+            code = "mechanic",
             reputation = 0f,
         } }
     };
@@ -28,12 +32,25 @@ public  class TraderManager
     public Dictionary<string, TraderData> traderDataLibrary = new() {
         { "medic", new TraderData(){
             products = new List<Product>(){
+                new(typeof(TestItemSmall), 1.0f),
+                new(typeof(TestItem), 1.2f, 1),
+                new(typeof(G12_Grizzly), 1.1f, 0,
+                    () => TraderManager.instance.traderLibrary["mechanic"].reputation == 0),
+                new(typeof(G12_BuckShot_7p5), 1.1f, 0,
+                    () => TraderManager.instance.traderLibrary["medic"].reputation == 0),
+                },
+            reputationSeps = new(){0.12f, 0.27f, 0.45f, 0.62f }
+        } }, 
+        { "mechanic", new TraderData(){
+            products = new List<Product>(){
                 new(typeof(M855), 1.0f),
                 new(typeof(M855A1), 1.2f, 1),
                 new(typeof(G12_Grizzly), 1.1f, 0,
+                    () => TraderManager.instance.traderLibrary["mechanic"].reputation > 0),
+                new(typeof(G12_BuckShot_7p5), 1.1f, 0,
                     () => TraderManager.instance.traderLibrary["medic"].reputation > 0),
                 },
-            reputationSeps = new(){1,3,4,4.5f}
+            reputationSeps = new(){0.20f, 0.40f, 0.60f, 0.80f }
         } },
     };
 
@@ -53,9 +70,9 @@ public class Trader
 
 public struct TraderData
 {
-    //public TraderData(List<Product> products, float[] reputationSeps)
+    //public TraderData(List<Product> GetGoods, float[] reputationSeps)
     //{
-    //    this.products = products;
+    //    this.GetGoods = GetGoods;
     //    this.reputationSeps = reputationSeps;
     //}
 
@@ -94,6 +111,7 @@ public struct TraderData
 
         return list;
     }
+
 }
 
 public struct Product 

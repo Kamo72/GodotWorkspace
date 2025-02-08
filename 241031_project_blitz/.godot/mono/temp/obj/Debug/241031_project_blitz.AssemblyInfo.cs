@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("241031_project_blitz")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d25b2656869313ce1cfdef59776f22ed8c9e205")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d4ec8f813b7bb798028ffc279539eeeffb59d90c")]
 [assembly: System.Reflection.AssemblyProductAttribute("241031_project_blitz")]
 [assembly: System.Reflection.AssemblyTitleAttribute("241031_project_blitz")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

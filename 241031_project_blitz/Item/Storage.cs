@@ -180,6 +180,11 @@ public class Storage
         return false;
     }
 
+    public void RemoveAll() 
+    {
+        itemList = new List<StorageNode>();
+    }
+
     private bool IsOverlapped(StorageNode newNode)
     {
         Vector2I newOneSize = newNode.isRotated ? new Vector2I(newNode.item.status.size.Y, newNode.item.status.size.X) : newNode.item.status.size;

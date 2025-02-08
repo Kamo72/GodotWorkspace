@@ -79,6 +79,8 @@ public partial class StorageSlot : InventorySlot
     //OnMouse 정보를 찾는 과정 + 각 슬롯과 소켓의 UI 하이라이팅
     public override void OnMouseProcess()
     {
+        if (!isActivated) return;
+
         ItemModel foundItem = null;
         Vector2I? onMouseNow = null;
 
@@ -281,10 +283,11 @@ public partial class StorageSlot : InventorySlot
         }
     }
 
-    //InventoryPage로부터 입력에 대한 처리를 호출
-    bool droppingKey = false;
     public override bool GetInput(InputEvent @event)
     {
+        base.GetInput(@event);
+        if (!isActivated) return false;
+        
         Rect2 rect = GetRect();
         rect.Position = GlobalPosition;
 
@@ -453,11 +456,6 @@ public partial class StorageSlot : InventorySlot
             }
         }
 
-        if (@event is InputEventKey keyEvent) 
-        {
-            if (keyEvent.Keycode == Key.Capslock)
-                droppingKey = keyEvent.Pressed;
-        }
         if (@event is InputEventMouseMotion mouseMotionEvent)
         {
             //GD.Print("Mouse moved" + onMouse);

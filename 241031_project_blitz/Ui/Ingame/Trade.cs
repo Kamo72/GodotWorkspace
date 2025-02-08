@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ public partial class Trade : Control, InventorySlotContainer
 
     Trader trader = null;
 
-    bool isSellingMode = true;
+    bool isSellingMode = false;
 
     public override void _EnterTree()
     {
@@ -54,6 +55,8 @@ public partial class Trade : Control, InventorySlotContainer
 
         payMoneyLabel = this.FindByName("MoneyPayValue") as Label;
         myMoneyLabel = this.FindByName("MoneyMyValue") as Label;
+
+
 
         slotListDic = new() {
             {traderInventory, new List<InventorySlot>() },
@@ -100,6 +103,8 @@ public partial class Trade : Control, InventorySlotContainer
             RotateCursor();
 
         UpdateAllUI();
+        UpdateTradeUI();
+
     }
 
     //UI 초기화
@@ -250,6 +255,7 @@ public partial class Trade : Control, InventorySlotContainer
     }
 
     //Trade UI 관련
+    //Trade 열고 닫기
     public void OpenTrade()
     {
         OpenTrade(TraderManager.instance.traderLibrary["medic"]);
@@ -257,47 +263,138 @@ public partial class Trade : Control, InventorySlotContainer
     public void OpenTrade(Trader trader) 
     {
         this.Visible = true;
-    }
+        this.trader = trader;
 
+        ToggleSellingMode();
+        SetTraderInventory();
+        UpdateTradeUI();
+    }
     public void CloseTrade() 
     {
         this.Visible = false;
     }
 
+    //Trade 버튼 조작
     void ToggleSellingMode() 
     {
+        //적절한 UI 활성화 여부 변경
+        List<(VBoxContainer, bool)> pairs = new() { (stashInventory, !isSellingMode), (traderInventory, isSellingMode) };
+        foreach(var pair in pairs)
+            slotListDic[pair.Item1][0].SetActivate(pair.Item2);
+
+        //Products 내의 아이템들을 돌려놓기
+        var products = this.GetGoods();
+
+        if (products.Count != 0)    //없으면 굳이 이것저것 할 필요가 업써용
+        {
+            //돌려놓을 Storage 찾기
+            foreach (var item in products)
+                if (isSellingMode) //스태쉬에 저장
+                    for (int stashIdx = 0; stashIdx < TraderManager.instance.stashList.Count; stashIdx++)
+                    {
+                        //저장!
+                        var storage = TraderManager.instance.stashList[stashIdx];
+                        if (storage.IsAbleToInsert(item))
+                        {
+                            var node = storage.GetPosInsert(item).Value;
+                            storage.Insert(node);
+
+                            stashIdx += 100;
+                        }
+                    }
+                else //스태쉬에 저장
+                {
+                    //저장!
+                    var storage = ((PocketSlot)slotListDic[traderInventory][0]).GetStorage();
+                    if (storage.IsAbleToInsert(item))
+                    {
+                        var node = storage.GetPosInsert(item).Value;
+                        storage.Insert(node);
+                    }
+                    
+                }
+        }
+
         isSellingMode = !isSellingMode;
+
         GD.Print("ToggleSellingMode" + isSellingMode);
     }
-    List<Item> products { get {
-            PocketSlot pocketSlot = slotListDic[myInventory][0] as PocketSlot;
-            List<Storage.StorageNode> productNodes = pocketSlot.GetStorage().itemList;
-            List<Item> products = new();
 
-            foreach (var node in productNodes)
-                products.Add(node.item);
-
-            return products;
-        } }
     void DoSell()
     {
-        var products = this.products;
-        GD.Print("DoSell" + GetProductsPrice());
+        var goods = this.GetGoods();
+        //GD.Print("DoSell" + GetProductsPrice());
+        int price = GetProductsPrice();
 
+        foreach (var item in goods)
+        {
+            var storage = ((PocketSlot)slotListDic[traderInventory][0]).GetStorage();
 
-        
+            if (storage.IsAbleToInsert(item))
+            {
+                var node = storage.GetPosInsert(item).Value;
+                storage.Insert(node);
+
+            }
+        }
+
+        TraderManager.money += price;
     }
+
     void DoBuy()
     {
-        var products = this.products;
-        GD.Print("DoSell" + GetProductsPrice());
+        var goods = this.GetGoods();
+        //GD.Print("DoSell" + GetProductsPrice());
+        int price = GetProductsPrice();
+        bool isBuyable = price <= TraderManager.money;
 
+        if (isBuyable)
+        {
+            foreach (var item in goods)
+                for (int stashIdx = 0; stashIdx < TraderManager.instance.stashList.Count; stashIdx++)
+                {
+                    var storage = TraderManager.instance.stashList[stashIdx];
 
+                    if (storage.IsAbleToInsert(item))
+                    {
+                        var node = storage.GetPosInsert(item).Value;
+                        storage.Insert(node);
+
+                        stashIdx += 100;
+                    }
+                }
+            TraderManager.money -= price;
+        }
+        else
+        {
+            //구매 실패 알람
+        }
+    }
+
+    //Trade UI 최신화
+    void UpdateTradeUI()
+    {
+        SetTraderInventory();
+        payMoneyLabel.Text = "" + GetProductsPrice();
+        myMoneyLabel.Text = "" + TraderManager.money;
+    }
+
+    //Trade 데이터 정제
+    List<Item> GetGoods()
+    {
+        PocketSlot pocketSlot = slotListDic[myInventory][0] as PocketSlot;
+        List<Storage.StorageNode> productNodes = pocketSlot.GetStorage().itemList;
+        List<Item> products = new();
+
+        foreach (var node in productNodes)
+            products.Add(node.item);
+
+        return products;
     }
 
     int GetProductsPrice()
     {
-        var products = this.products;
+        var products = this.GetGoods();
 
         int totalPrice = 0;
 
@@ -307,9 +404,42 @@ public partial class Trade : Control, InventorySlotContainer
         return totalPrice;
     }
 
+    List<Product> GetValidProducts(Trader trader) => trader.traderData.GetValidProducts(trader.traderData.GetReputationLv(trader.reputation));
+    List<Item> GetItemFromProducts(List<Product> products)
+    {
+        List<Item> items = new List<Item>();
+        int repLv = trader.traderData.GetReputationLv(trader.reputation);
 
+        foreach (var product in products)
+        {
+            if (product.condition() == false) continue;
+            if (product.needReputationLv > repLv) continue;
 
+            Item item = Activator.CreateInstance(product.itemType) as Item;
 
+            if (item is IStackable iStackable)
+                iStackable.stackNow = iStackable.stackMax;
+
+            items.Add(item);
+        }
+
+        return items;
+    }
+    void SetTraderInventory() 
+    {
+        var items = GetItemFromProducts(GetValidProducts(trader));
+
+        traderStorage.RemoveAll();
+
+        foreach (Item item in items)
+        {
+            if (traderStorage.IsAbleToInsert(item))
+            { 
+                var node = traderStorage.GetPosInsert(item).Value;
+                traderStorage.Insert(node);
+            }
+        }
+    }
 
     //슬롯 객체 생성
     StorageSlot GetStorageSlot()
