@@ -52,6 +52,7 @@ public partial class Humanoid : RigidBody2D
 
     //조준 안정
     protected float aimStableTime = 0f;
+    float trembleTime = 0f;
 
     /* Hands */
     //장비한 Weapon 객체
@@ -287,13 +288,14 @@ public partial class Humanoid : RigidBody2D
 
         //무기 흔들림
         float tremblePower = (equipped == equippedWeapon? 10f : 150f);
-        float trembleSpeed = (equipped == equippedWeapon ? 10f : 150f) + recoilVec.Length() / 30f;
+        float trembleSpeed = (equipped == equippedWeapon ? 10f : 10f) + recoilVec.Length();
+        trembleTime += trembleSpeed * delta;
 
         Vector2 trembleVec = new Vector2(
-            noise.GetNoise2D(aimStableTime * trembleSpeed, 12435),
-            noise.GetNoise2D(aimStableTime * trembleSpeed, 6559)
+            noise.GetNoise2D(aimStableTime + trembleTime, 12435),
+            noise.GetNoise2D(aimStableTime + trembleTime, 6559)
             ) * tremblePower;
-        float trembleRot = noise.GetNoise2D(aimStableTime * trembleSpeed, 792) * tremblePower / 100f;
+        float trembleRot = noise.GetNoise2D(aimStableTime + trembleTime, 792) * tremblePower / 100f;
 
         //이동 기울임
         Vector2 moveVec = -LinearVelocity * 0.05f;
@@ -332,7 +334,7 @@ public partial class Humanoid : RigidBody2D
         virtualAimPoint = virtualAimPoint.Lerp(intelligence.vectorMap["AimPos"],
             equippedWeapon == null ? 0.3f : equippedWeapon.status.aimDt.traggingSpeed);
 
-        float recoilRecover = 0.1f; //반동 회복
+        float recoilRecover = equippedWeapon == null? 0.1f : equippedWeapon.status.aimDt.recovery; //반동 회복
         // 실제 반동 벡터 업데이트
         recoilVec += delayedRecoilVec * (1f - delayedRecoilRatio);
         recoilVec *= (1f - recoilRecover);

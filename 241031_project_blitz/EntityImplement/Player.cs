@@ -70,7 +70,7 @@ public partial class Player : Humanoid
             EquipMed(cat.GetMedAnimation());
         }
     }
-    PrivateFAK cat = new PrivateFAK();
+    IFAK cat = new IFAK();
     bool catPressed = false;
 
     public override void _Draw()

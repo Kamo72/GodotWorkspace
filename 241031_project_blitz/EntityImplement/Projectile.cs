@@ -7,7 +7,7 @@ public partial class Projectile : RayCast2D
     public AmmoStatus ammoStatus;
     public WeaponStatus weaponStatus;
     private float speed;
-    private Vector2 velocity;
+    public Vector2 velocity;
     public Vector2 startPos, aimPos;
     public float direction;
 

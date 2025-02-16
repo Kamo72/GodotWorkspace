@@ -17,18 +17,20 @@ public partial class Humanoid
             this.master = master;
         }
 
-        private float speed { get {
+        public float speed => 100f * speedValue * speedRatio;// 이동 속도 조절
+
+        public float speedRatio { get {
 
                 bool isWeaponEquipped = master.equippedWeapon != null;
                 Func<WeaponStatus.MovementData> getMoveDt = () => master.equippedWeapon.status.moveDt;
-                float speedRatio = isWeaponEquipped ?
+
+                return isWeaponEquipped?
                     Mathf.Lerp(getMoveDt().speed, 2.0f * getMoveDt().speedAdjust.sprint, sprintValue) :
                     Mathf.Lerp(1f, 2.0f, sprintValue);
+            } }
 
-                return 65f * speedRatio;
-            
-            } }  // 이동 속도 조절
-        private float inertia = 0.15f; // 관성 계수 조절
+        public float speedValue = 0.65f;
+        public float inertia = 0.15f; // 관성 계수 조절
         public float sprintValue = 0f;  // 질주 정도
         public bool sprintMaintain = false;
 

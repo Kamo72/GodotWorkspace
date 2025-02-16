@@ -24,7 +24,7 @@ public partial class Humanoid
 
         public float hpNow, hpMax;  //최대 체력
         public float spNow = 100, spMax = 100, spReg = 10, spRed = 20;  //스테미나
-        public float bleeding = 0, bleedingRatio;      //출혈
+        public float bleeding = 0, bleedingRatio = 0.03f, bleedingMin = 10f;      //출혈
         public float epNow = 200f, epMax = 200f, epRed = -0.05f;  //에너지
         public float wpNow = 100f, wpMax = 100f, wpRed = -0.05f;  //수분
         public float concussionTime = 0;    //뇌진탕
@@ -44,15 +44,46 @@ public partial class Humanoid
 
         public void GetDamage(Projectile projectile, HitPart hitPart)
         {
+            (float dmg, float bleed, float aimpunch) partRatio;
 
-            var damage = projectile.ammoStatus.lethality.damage;
+            switch (hitPart)
+            {
+                case HitPart.HEAD://머리
+                    partRatio = (2.5f, 0.5f, 1.5f);
+                    break;
+                case HitPart.THORAX://흉부
+                    partRatio = (1.0f, 1.5f, 1.0f);
+                    break;
+                case HitPart.LIMB://사지
+                    partRatio = (0.75f, 1.0f, 2.0f);
+                    break;
+                default:
+                    partRatio = (0f, 0f, 0f);
+                    break;
+            }
+
+            Vector2 collisionPoint = projectile.GetCollisionPoint();
+            float rangeReduction = GetRangeReduction(projectile, collisionPoint);
+
+            //피해 적용
+            var damage = projectile.ammoStatus.lethality.damage * partRatio.dmg * rangeReduction;
             hpNow -= damage;
 
+            //출혈 적용
+            var bleeding= projectile.ammoStatus.lethality.bleeding * partRatio.bleed * rangeReduction;
+            this.bleeding += bleeding;
+
+            //피격 소리 재생
             Sound.MakeSelf(master, master.GlobalPosition, 400f, 0.1f, soundDamageFlesh, 2);
 
+            //조준점 반동
+            var aimpunch = projectile.ammoStatus.lethality.suppress * partRatio.aimpunch * rangeReduction;
             if (CameraManager.current.target == master)
-                CameraManager.current.ApplyRecoil(damage * 10f);
+                CameraManager.current.ApplyRecoil(aimpunch * 10f);
+            Vector2 randVec = Vector2.FromAngle((float)Random.Shared.NextDouble() * 2f * Mathf.Pi);
+            master.recoilVec += randVec * aimpunch / 2f;
 
+            //체력 소진 시 사망처리
             if (hpNow <= 0f)
                 master.OnDead();
         }
@@ -193,6 +224,23 @@ public partial class Humanoid
 
         }
 
+        public float GetRangeReduction(Projectile projectile, Vector2 collisionPoint)
+        {
+            float muzzleVelocity = projectile.weaponStatus.detailDt.muzzleVelocity * projectile.ammoStatus.adjustment.speedRatio;
+            float hitVelocity = projectile.velocity.Length();
+
+            float velocityRatio = hitVelocity / muzzleVelocity;
+
+            float effectiveRange = projectile.weaponStatus.detailDt.effectiveRange;
+            float hitLength = (projectile.startPos - collisionPoint).Length();
+
+            float rangeRatio = hitLength < effectiveRange ?
+                (1f - hitLength / effectiveRange * 0.1f) :
+                Mathf.Max(0.3f, 1f - (hitLength - effectiveRange) / effectiveRange);
+
+            return velocityRatio * rangeRatio;
+        }
+
         void GetWoundEffect(Vector2 collisionPoint)
         {
             Vector2 rand = Vector2.FromAngle((float)Random.Shared.NextDouble() * 360f) * 10f * (float)Random.Shared.NextDouble();
@@ -205,7 +253,7 @@ public partial class Humanoid
             sprite2D.GlobalPosition = collisionPoint + rand;
         }
 
-            void DigestingProcess(float delta)
+        void DigestingProcess(float delta)
         {
             epNow = Math.Clamp(epNow + epRed * delta, 0f, epMax);
             wpNow = Math.Clamp(wpNow + wpRed * delta, 0f, wpMax);
@@ -218,20 +266,26 @@ public partial class Humanoid
         }
         void StaminaProcess(float delta)
         {
-            var diff = (master.movement.sprintValue > 0? -spRed : spReg);
+            var sprintRatio = (master.LinearVelocity.Length() * master.movement.inertia)/ master.movement.speed;
+            var sprintTrasition = master.movement.sprintValue;
+
+            var diff = (master.movement.sprintValue > 0? -spRed * sprintRatio * sprintTrasition : spReg);
             spNow = Math.Clamp(spNow + diff * delta, 0f, spMax);
             //GD.Print($"SP : {spNow} / {spMax} => {isSprintable}");
         }
         void BleedingProcess(float delta)
         {
-            float damage = bleeding * bleedingRatio * delta;
+            float damage = Mathf.Max(bleeding * bleedingRatio, bleedingMin) * delta;
+            
+            if(damage > bleeding) damage = bleeding;
+            
             GetDamage(damage);
+            
             bleeding -= damage;
         }
 
         void DoDead()
         {
-
             GD.Print($"{master.Name}가 사망했습니다.");
 
             //시체 생성

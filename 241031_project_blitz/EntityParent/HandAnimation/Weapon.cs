@@ -111,7 +111,7 @@ public partial class Weapon : HandAnimation
         for (int i = 0; i < ammoStatus.lethality.pellitCount; i++)
         {
             Vector2 targetPos = master.realAimPoint
-            + Vector2.FromAngle(randFloat /** 360 * MathF.PI*/) * status.aimDt.moa / 100f * randFloat;
+            + Vector2.FromAngle(randFloat * 2 * MathF.PI) * status.aimDt.moa * 10f * randFloat;
 
             //GD.Print("targetPos : " + targetPos);
             // Projectile 인스턴스 생성 및 설정

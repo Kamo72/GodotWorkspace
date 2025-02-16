@@ -29,14 +29,16 @@ public partial class Stats : Control
     }
     public override void _Process(double delta)
     {
-        UiProcess();
+        UiProcess((float)delta);
     }
 
 
     float bleedAlpha = 0f, bleedAlphaDelay = 2.0f;
-    float spAlpha = 0f, spAlphaDelay = 2.0f;
-    void UiProcess() 
+    float spAlpha = 0f, spAlphaDelay = 0.4f;
+    float stackTime = 0f;
+    void UiProcess(float delta) 
     {
+        stackTime += delta; 
         if(Player.player == null) return;
         Humanoid.Health health = Player.player.health;
 
@@ -45,7 +47,13 @@ public partial class Stats : Control
         hp.label.Text = $"{Mathf.CeilToInt(health.hpNow)}/{Mathf.CeilToInt(health.hpMax)}";
 
         float spRatio = health.spNow / health.spMax;
+
+        spAlpha += (health.spNow < health.spMax ? 1f : -1f) * (float)delta / spAlphaDelay;
+        spAlpha = Mathf.Clamp(spAlpha, 0f, 1f);
+        float spAlphaReal = !Player.player.movement.sprintMaintain? 0.5f * Mathf.Abs(Mathf.Sin(stackTime * 4f)) : 0.5f;
+
         spBar.Scale = new Vector2(spRatio, 1f);
+        spBar.Modulate = new Color(1f, 1f,1f, spAlpha * spAlphaReal);
 
         energyBar.MaxValue = health.epMax;
         energyBar.Value = health.epNow;
@@ -53,8 +61,10 @@ public partial class Stats : Control
         waterBar.MaxValue = health.wpMax;
         waterBar.Value = health.wpNow;
 
-
-        bleeding.label.Text = $"{health.bleeding}";
+        bleedAlpha += (health.bleeding > 0 ? 1f : -1f) * (float)delta/bleedAlphaDelay;
+        bleedAlpha = Mathf.Clamp(bleedAlpha, 0f, 1f);
+        bleeding.label.Text = $"{Mathf.CeilToInt(health.bleeding)}";
+        bleeding.sprite.Modulate = new Color(1f, 0f, 0f, bleedAlpha);
     }
 
 

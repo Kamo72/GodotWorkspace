@@ -11,6 +11,7 @@
     <EmbeddedResource Remove="Resource\**" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Dataframe\Armour\" />
     <Folder Include="Ui\Scene\" />
   </ItemGroup>
 </Project>

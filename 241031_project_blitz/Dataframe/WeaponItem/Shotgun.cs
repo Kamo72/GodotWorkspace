@@ -93,7 +93,7 @@ public class MP_155 : WeaponItem
         new()
         {
             moa = 8.50f,
-            recovery = 0.045f,
+            recovery = 0.0025f,
             stance = 70f,
             strength = 200f,
             traggingSpeed = 0.12f,

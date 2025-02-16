@@ -78,20 +78,32 @@ public abstract class Headgear : Equipable
     }
 }
 
-public abstract class Helmet : Equipable
+public abstract class Helmet : Equipable, IArmour
 {
     public Helmet()
     {
         status.category = Category.HELMET;
     }
+
+    public float armourLv { get; set; }
+    public float ergoRatio {get;set;}
+    public float durableNow {get;set;}
+    public float durableMax {get;set;}
+    public bool zeroToDestruct { get; set; }
 }
 
-public abstract class Plate : Equipable
+public abstract class Plate : Equipable, IArmour
 {
     public Plate()
     {
         status.category = Category.PLATE;
     }
+
+    public float armourLv { get; set; }
+    public float ergoRatio { get; set; }
+    public float durableNow { get; set; }
+    public float durableMax { get; set; }
+    public bool zeroToDestruct { get; set; }
 }
 
 public abstract class Rig : Equipable
@@ -308,4 +320,10 @@ public abstract class WeaponItem : Equipable, IUsable
 public interface HasStorage
 {
     public Storage storage { get; set; }
+}
+
+public interface IArmour : IDurable 
+{
+    public float armourLv {  get; set; }
+    public float ergoRatio { get; set; }
 }
