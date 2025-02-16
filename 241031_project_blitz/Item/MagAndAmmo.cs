@@ -54,7 +54,7 @@ public abstract class Magazine : Item
         if (ammoStack.Count >= magStatus.ammoSize) throw new Exception("Magazine - AmmoPush - 불가능한 작업 : " + "탄창이 가득 찼음");
         if (ammo.stackNow <= 0) throw new Exception("Magazine - AmmoPush - 불가능한 작업 : " + "탄약의 Stack값이 정상적이지 않음");
 
-        GD.Print("Ammo Push " + ammoPrice);
+        //GD.Print("Ammo Push " + ammoPrice);
         //처리
         ammo.stackNow--;
         Ammo splitted = Activator.CreateInstance(ammo.GetType()) as Ammo;
@@ -67,7 +67,7 @@ public abstract class Magazine : Item
     {
         if (ammoStack.Count <= 0) return null;
 
-        GD.Print("Ammo Pop " + ammoPrice);
+        //GD.Print("Ammo Pop " + ammoPrice);
         var ammo = ammoStack.Pop();
         ammoPrice -= ammo.GetPrice();
         return ammo;

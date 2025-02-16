@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://crp53kcjq6p2s"]
+[gd_scene load_steps=19 format=3 uid="uid://crp53kcjq6p2s"]
 
 [ext_resource type="Script" path="res://Ui/UiIngame.cs" id="1_fmpxf"]
 [ext_resource type="Script" path="res://Ui/Ingame/Stats.cs" id="2_gharf"]
 [ext_resource type="Script" path="res://Ui/Ingame/Conversation.cs" id="3_pow5m"]
+[ext_resource type="Texture2D" uid="uid://k8bne2kc4dfx" path="res://Asset/Particle/white_panel.png" id="3_xtr4a"]
 [ext_resource type="Script" path="res://Ui/Ingame/Trade.cs" id="4_5gwmv"]
 [ext_resource type="Texture2D" uid="uid://vyq7y3r32jfa" path="res://Asset/IMG-Firearm/ImageAR.png" id="4_cd5wd"]
 [ext_resource type="Texture2D" uid="uid://6wgvmktcwrdj" path="res://EntityImplement/cursor.png" id="5_j6jsd"]
@@ -10,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://brxmnxn5t55v3" path="res://Asset/IMG-Firearm/AK-74.png" id="8_pgm5r"]
 [ext_resource type="Texture2D" uid="uid://cg2i38g1k4j00" path="res://Asset/IMG-Firearm/MDR 7.62.png" id="9_dkmk1"]
 [ext_resource type="Texture2D" uid="uid://d35cj6fggupd2" path="res://Asset/IMG-Firearm/MP-155.png" id="10_07pjf"]
+[ext_resource type="Script" path="res://Ui/Ingame/Crosshair.cs" id="12_t82ur"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1ymof"]
 font_size = 32
@@ -42,6 +44,7 @@ mouse_filter = 2
 script = ExtResource("1_fmpxf")
 
 [node name="Stats" type="Control" parent="."]
+z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,6 +53,115 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2_gharf")
+
+[node name="LeftBottomIndicator" type="Control" parent="Stats"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="Hp" type="Control" parent="Stats/LeftBottomIndicator"]
+layout_mode = 1
+anchor_left = 0.8
+anchor_top = -1.35
+anchor_right = 9.55
+anchor_bottom = -0.725
+grow_vertical = 0
+
+[node name="HpBar" type="ProgressBar" parent="Stats/LeftBottomIndicator/Hp"]
+modulate = Color(0, 1, 0, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 100.0
+show_percentage = false
+
+[node name="HpLabel" type="Label" parent="Stats/LeftBottomIndicator/Hp"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "300/400
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Bleeding" type="Control" parent="Stats/LeftBottomIndicator"]
+layout_mode = 1
+anchor_left = 0.825
+anchor_top = -1.35
+anchor_right = 9.531
+anchor_bottom = -0.712
+offset_left = 377.0
+offset_top = 13.0
+offset_right = 28.76
+offset_bottom = -12.52
+
+[node name="BleedingSpr" type="Sprite2D" parent="Stats/LeftBottomIndicator/Bleeding"]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.705, 0.705)
+texture = ExtResource("3_xtr4a")
+
+[node name="BleedingLabel" type="Label" parent="Stats/LeftBottomIndicator/Bleeding"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.85
+grow_horizontal = 2
+grow_vertical = 2
+text = "25"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Nutrition" type="Control" parent="Stats/LeftBottomIndicator"]
+anchors_preset = 0
+offset_left = 34.0
+offset_top = -22.0
+offset_right = 384.0
+offset_bottom = 28.0
+
+[node name="EnergyBar" type="ProgressBar" parent="Stats/LeftBottomIndicator/Nutrition"]
+modulate = Color(1, 1, 0.341176, 1)
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 10.0
+value = 100.0
+show_percentage = false
+
+[node name="WaterBar" type="ProgressBar" parent="Stats/LeftBottomIndicator/Nutrition"]
+modulate = Color(0.636244, 0.652574, 1, 1)
+layout_mode = 0
+offset_top = 15.0
+offset_right = 350.0
+offset_bottom = 25.0
+value = 100.0
+show_percentage = false
+
+[node name="Sp" type="Control" parent="Stats"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = -207.0
+offset_right = 6.0
+offset_bottom = -207.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(12.54, 0.41)
+
+[node name="SpBar" type="Sprite2D" parent="Stats/Sp"]
+position = Vector2(-0.239234, 0)
+texture = ExtResource("3_xtr4a")
 
 [node name="Conversation" type="Control" parent="."]
 visible = false
@@ -208,6 +320,8 @@ offset_bottom = 210.985
 text = "번째 선택지"
 
 [node name="Trade" type="Panel" parent="."]
+visible = false
+z_index = 2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -588,3 +702,28 @@ text = "뒤로가기"
 label_settings = SubResource("LabelSettings_auins")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Crosshair" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("12_t82ur")
+
+[node name="DynamicDot" type="Control" parent="Crosshair"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Crosshair/DynamicDot"]
+scale = Vector2(0.14, 0.14)
+texture = ExtResource("3_xtr4a")
+
+[node name="StaticDot" type="Control" parent="Crosshair"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Crosshair/StaticDot"]
+scale = Vector2(0.14, 0.14)
+texture = ExtResource("3_xtr4a")

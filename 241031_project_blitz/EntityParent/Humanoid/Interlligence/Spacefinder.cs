@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,13 @@ public partial class Humanoid
             public Spacefinder(Intelligence intelligence)
             {
                 this.intelligence = intelligence;
+
+                //https://www.youtube.com/watch?v=pXmWjvEjkj4
+                navAgent = new NavigationAgent2D();
+                master.AddChild(navAgent);
+                
             }
+            NavigationAgent2D navAgent;
 
             public virtual void Process(float delta)
             {

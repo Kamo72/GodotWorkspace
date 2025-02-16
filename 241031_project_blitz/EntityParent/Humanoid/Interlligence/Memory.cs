@@ -41,7 +41,7 @@ public partial class Humanoid
                 squadList.Remove(humanoid);
             }
             #endregion
-
+            
             #region 적 정보
             //적에 대한 예측
             public struct Prediction 

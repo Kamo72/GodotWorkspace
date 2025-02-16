@@ -92,6 +92,8 @@ public abstract class Item
         AMMUNITION,
         QUEST,
         ETC,
+        MEDICINE,
+        THROWABLE,
     }
 
 }
@@ -193,12 +195,12 @@ public interface IDurable
     bool zeroToDestruct { get; set; }
 }
 
-public interface IHandable
+public interface IUsable
 {
-    float equipTime { get; }
-    float equipValue { get; }
+    //float equipTime { get; }
+    ////float equipValue { get; }
 
-    Dictionary<string, Action<Hands, bool>> commandsReact { get; set; }
+    //Dictionary<string, Action<Hands, bool>> commandsReact { get; set; }
 }
 
 public interface IClickable { }

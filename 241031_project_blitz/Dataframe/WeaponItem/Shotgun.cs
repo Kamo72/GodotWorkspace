@@ -13,7 +13,7 @@ public class MP_133 : WeaponItem
     {
         WeaponLibrary.Set("MP_133", new(
         new(
-            MechanismType.CLOSED_BOLT,
+            MechanismType.MANUAL_RELOAD,
             MagazineType.TUBE,
             BoltLockerType.ACTIVATE,
             new() { SelectorType.SEMI },
@@ -44,7 +44,7 @@ public class MP_133 : WeaponItem
         {
             roundPerMinute = 100,
             chamberSize = 1,
-            effectiveRange = 350f,
+            effectiveRange = 150f,
             loudness = 4400f,
             magazineWhiteList = new(){
                 "MP_133_8"
@@ -115,7 +115,7 @@ public class MP_155 : WeaponItem
         {
             roundPerMinute = 450,
             chamberSize = 1,
-            effectiveRange = 350f,
+            effectiveRange = 150f,
             loudness = 4400f,
             magazineWhiteList = new(){
                 "MP_133_8"

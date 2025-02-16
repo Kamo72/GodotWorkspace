@@ -42,7 +42,7 @@ public partial class Interactable : RigidBody2D, IInteractable
     protected float visibility = 0f;
     void VisibleProcess(float delta)
     {
-        const float getDelay = 0.3f, lossDelay = 0.7f;
+        const float getDelay = 0.1f, lossDelay = 5f;
 
         if (CheckLineOfSight() is Player)
             visibility += delta / getDelay;

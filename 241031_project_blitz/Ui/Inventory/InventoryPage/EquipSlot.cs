@@ -194,7 +194,26 @@ public partial class EquipSlot : InventorySlot
                             return equipTargetResult;
                         }
                     }
-                    
+                    //무기에 부착 또는 삽입 시도
+                    else if (onMouseItem.item is WeaponItem weapon)
+                    {
+                        if (weapon.magazine == null
+                            && draggingItem.item is Magazine mag
+                            && weapon.weaponStatus.detailDt.magazineWhiteList.Contains(mag.magazineCode))
+                        {
+
+                            //Player 객체가 손에 장착중인 무기의 재장전을 시도
+                            if (Player.player.nowEquip != null && Player.player.nowEquip.item == weapon)
+                                Player.player.equippedWeapon.Reload(mag);
+                            else
+                            {
+                                weapon.magazine = mag;
+                                mag.onStorage.RemoveItem(mag);
+                            }
+                        }
+
+                    }
+
                     onMouseItem = null;
                 }
             }

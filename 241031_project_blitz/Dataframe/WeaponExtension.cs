@@ -201,7 +201,6 @@ public struct WeaponStatus
         public float effectiveRange;    //유효 사거리
         public float muzzleDistance;      //총기 전장
         public float loudness;          //소음 크기 (거리로 ex 10000)
-
     }
 
     //부착물 정보
@@ -209,37 +208,37 @@ public struct WeaponStatus
     public struct AttachData
     {
         //2.5배율 하기 이전이 기준
-        //internal List<AttachSocket> socketList;
+        public List<AttachSocket> socketList;
 
         public Vector2 magAttachPos;
 
     }
 
 }
-//public static class WeaponStatusEx
-//{
-//    // internal static List<AttachSocket> CopyList(this AttachData attachDt) 
-//    // {
-//    //     List < AttachSocket >  list = new List<AttachSocket>(attachDt.socketList);
+public static class WeaponStatusEx
+{
+    internal static List<AttachSocket> CopyList(this WeaponStatus.AttachData attachDt)
+    {
+        List<AttachSocket> list = new List<AttachSocket>(attachDt.socketList);
 
-//    //     for (int i = 0; i < list.Count; i++) 
-//    //     {
-//    //         AttachSocket socket = list[i];
-//    //         if (socket.attachment != null) 
-//    //         {
-//    //             AttachSocket originSocket = attachDt.socketList[i];
-//    //             Type originType = originSocket.attachment.GetType();
-//    //             var newItem = Activator.CreateInstance(originType);
-//    //             socket.attachment = newItem as IAttachment;
-//    //         }
-//    //     }
+        for (int i = 0; i < list.Count; i++)
+        {
+            AttachSocket socket = list[i];
+            if (socket.attachment != null)
+            {
+                AttachSocket originSocket = attachDt.socketList[i];
+                Type originType = originSocket.attachment.GetType();
+                var newItem = Activator.CreateInstance(originType);
+                socket.attachment = newItem as Item;
+            }
+        }
 
-//    //     return list;
-//    // }
-//}
+        return list;
+    }
+}
 #endregion
 
-#region [총기 옵션 정보]
+#region [총기 부착물 정보]
 
 public enum WeaponAdjustType
 {
@@ -261,6 +260,30 @@ public struct WeaponAdjust
     public Func<WeaponStatus, WeaponStatus> adjustFun;
 }
 
+//부착물 소켓
+public struct AttachSocket 
+{
+    public enum AttachType{
+        MUZZLE,
+        BARREL,
+        RECIEVER,
+        STOCK,
+        PISTOL_GRIP,
+        CHARGING_HANDLE,
+        BARREL_COvER,
+        SIGHT,
+        TACTICAL_DEVICE,
+        FORE_GRIP
+    }
+
+    public Vector2 pos; //위상
+    public Item attachment;   //부착물
+    public bool isEssential;    //True이고, item == null이라면 총기 사용 불가
+    public AttachType attachType;   //부착물 유형
+    public List<Type> whiteList;    //부착 가능한 아이템들
+    public List<WeaponAdjust> weaponAdjusts;    //부착 시 효과
+}
+
 #endregion
 
 #region [총기 데이터셋 제공자]
@@ -280,6 +303,7 @@ internal static class WeaponLibrary
         new K2C1();
         new AKS_74U();
         new MP_133();
+        new MP_155();
         new M4A1();
     }
     public static WeaponStatus Get(string weaponName)

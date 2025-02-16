@@ -32,7 +32,7 @@ public partial class Trade : Control, InventorySlotContainer
     public override void _EnterTree()
     {
         instance = this;
-        Visible = true;
+        Visible = false;
 
         cursor = this.FindByName("Cursor") as Control;
         cursor.MouseFilter = MouseFilterEnum.Ignore;

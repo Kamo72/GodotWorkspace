@@ -328,7 +328,6 @@ public partial class PocketSlot : InventorySlot
                     //집으려고 시도
                     else if (onMouse.HasValue)
                     {
-
                         Vector2I dragPos = new Vector2I(
                             onMouse.Value.X - onMouseItem.storagePos.X,
                             onMouse.Value.Y - onMouseItem.storagePos.Y
@@ -359,7 +358,6 @@ public partial class PocketSlot : InventorySlot
 
                     if (onMouse.HasValue)
                     {
-
                         bool isStored;
 
                         //Item을 Storage 객체에 Store
@@ -398,12 +396,33 @@ public partial class PocketSlot : InventorySlot
                                             if (ammo.stackNow <= 0) break;
                                             if (magazine.AmmoPush(ammo) == false) break;
                                         }
+                                        if(ammo.stackNow == 0)
+                                            ammo.onStorage.RemoveItem(ammo);
                                     }
                                     catch (Exception e)
                                     {
                                         Console.WriteLine(e.Message + e.StackTrace);
                                     }
                                 }
+                            }
+                            //무기에 부착 또는 삽입 시도
+                            else if (onMouseItem.item is WeaponItem weapon)
+                            {
+                                if (weapon.magazine == null
+                                    && draggingItem.item is Magazine mag
+                                    && weapon.weaponStatus.detailDt.magazineWhiteList.Contains(mag.magazineCode))
+                                {
+
+                                    //Player 객체가 손에 장착중인 무기의 재장전을 시도
+                                    if (Player.player.nowEquip != null && Player.player.nowEquip.item == weapon)
+                                        Player.player.equippedWeapon.Reload(mag);
+                                    else
+                                    {
+                                        weapon.magazine = mag;
+                                        mag.onStorage.RemoveItem(mag);
+                                    }
+                                }
+
                             }
                         }
 

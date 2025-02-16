@@ -22,10 +22,10 @@ public partial class Humanoid
                 bool isWeaponEquipped = master.equippedWeapon != null;
                 Func<WeaponStatus.MovementData> getMoveDt = () => master.equippedWeapon.status.moveDt;
                 float speedRatio = isWeaponEquipped ?
-                    Mathf.Lerp(getMoveDt().speed, 1.5f * getMoveDt().speedAdjust.sprint, sprintValue) :
-                    Mathf.Lerp(1f, 1.5f, sprintValue);
+                    Mathf.Lerp(getMoveDt().speed, 2.0f * getMoveDt().speedAdjust.sprint, sprintValue) :
+                    Mathf.Lerp(1f, 2.0f, sprintValue);
 
-                return 100f * speedRatio;
+                return 65f * speedRatio;
             
             } }  // 이동 속도 조절
         private float inertia = 0.15f; // 관성 계수 조절

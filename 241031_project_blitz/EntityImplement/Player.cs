@@ -25,7 +25,7 @@ public partial class Player : Humanoid
         //오디오 리스너 설정
         var audiolistener = new AudioListener2D();
         AddChild(audiolistener);
-        audiolistener.Position = new(0,0);
+        audiolistener.Position = new(0, 0);
         audiolistener.MakeCurrent();
 
         //테스트용 아이템 획득
@@ -47,6 +47,7 @@ public partial class Player : Humanoid
         inventory.TakeItem(new AR15_StanagMag_30(typeof(M855)));
         inventory.TakeItem(new G12_Grizzly { stackNow = 20 });
         inventory.TakeItem(new G12_BuckShot_7p5 { stackNow = 20 });
+        inventory.TakeItem(cat);
 
         Name = "김애자";
         job = "세상을 먹는 자";
@@ -57,13 +58,20 @@ public partial class Player : Humanoid
     {
         base._Process(delta);
 
-        UiMain.instance.Visible = isInventory;
+        isInventory = UiMain.instance.Visible || Trade.instance.Visible;
 
         if (isConversation)
             if (Input.IsActionJustPressed("conversation_process"))
                 UiIngame.instance.conversation.ProcessScript();
 
+        if (Input.IsKeyPressed(Key.K) )//&& !catPressed)
+        {
+            catPressed = true;
+            EquipMed(cat.GetMedAnimation());
+        }
     }
+    PrivateFAK cat = new PrivateFAK();
+    bool catPressed = false;
 
     public override void _Draw()
     {

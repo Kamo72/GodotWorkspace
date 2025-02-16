@@ -125,7 +125,7 @@ public abstract class SecContainer : Equipable, HasStorage
     }
 }
 
-public abstract class WeaponItem : Equipable
+public abstract class WeaponItem : Equipable, IUsable
 {
     public WeaponItem() { }
 

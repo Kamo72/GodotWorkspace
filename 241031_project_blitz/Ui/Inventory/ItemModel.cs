@@ -149,6 +149,19 @@ public partial class ItemModel : Control
             AddChild(stackLabel);
         }
 
+        if (item is UsableMed usableMed && usableMed.hasHealPoint)
+        {
+            var stackLabel = new Label
+            {
+                Name = "StackLabel",
+                Text = $"{Mathf.CeilToInt(usableMed.healPoint.now)}/{Mathf.CeilToInt(usableMed.healPoint.max)}",
+                Size = isRotated ? new Vector2(Size.Y, Size.X) : Size,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Bottom,
+            };
+            AddChild(stackLabel);
+        }
+
         if (item is Magazine magg)
         {
             var stackLabel = new Label

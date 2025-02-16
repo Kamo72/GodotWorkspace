@@ -13,6 +13,30 @@ public partial class Npc : Humanoid, IInteractable
         health = new Health(this, 400);
         //inventory.firstWeapon.DoEquipItem(new MP_155());
         //inventory.TakeItem(new G12_BuckShot_7p5 { stackNow = 50 });
+
+
+        interUI = ResourceLoader.Load<PackedScene>("res://Prefab/UI/interactionUI.tscn").Instantiate() as Control;
+        this.AddChild(interUI);
+        interUI.Position = new Vector2(-28, -57);
+        ((Label)interUI.FindByName("Label")).Text = "대화하기";
+        interUI.Name = "InteractionUI";
+
+        talkLabel = new Label();
+        this.AddChild(talkLabel);
+        talkLabel.Size = new(500, 250);
+        talkLabel.Position = new(-250, -300);
+        talkLabel.Modulate = Colors.White;
+        talkLabel.HorizontalAlignment = HorizontalAlignment.Center;
+        talkLabel.VerticalAlignment = VerticalAlignment.Bottom;
+        talkLabel.AutowrapMode = TextServer.AutowrapMode.Word;
+        talkLabel.ZIndex = 10;
+        talkLabel.LabelSettings = new()
+        {
+            FontSize = 24,
+            ShadowColor = Colors.Black,
+            ShadowSize = 8,
+        };
+
     }
 
     Control interUI;
@@ -22,28 +46,6 @@ public partial class Npc : Humanoid, IInteractable
         base._EnterTree();
 
         WorldManager.interactables.Add(this);
-
-        interUI = ResourceLoader.Load<PackedScene>("res://Prefab/UI/interactionUI.tscn").Instantiate() as Control;
-        AddChild(interUI);
-        interUI.Position = new Vector2(-28, -57);
-        ((Label)interUI.FindByName("Label")).Text = "대화하기";
-        interUI.Name = "InteractionUI";
-
-        talkLabel = new Label();
-        AddChild(talkLabel);
-        talkLabel.Size = new(500, 250);
-        talkLabel.Position = new(-250, -300);
-        talkLabel.Modulate = Colors.White;
-        talkLabel.HorizontalAlignment = HorizontalAlignment.Center;
-        talkLabel.VerticalAlignment = VerticalAlignment.Bottom;
-        talkLabel.AutowrapMode = TextServer.AutowrapMode.Word;
-        talkLabel.ZIndex = 10;
-        talkLabel.LabelSettings = new() { 
-            FontSize = 24,
-            ShadowColor = Colors.Black,
-            ShadowSize = 8,
-        };
-
 
 
         inventory.firstWeapon.DoEquipItem(new M4A1());
@@ -96,7 +98,7 @@ public partial class Npc : Humanoid, IInteractable
     protected float visibility = 0f;
     void VisibleProcess(float delta)
     {
-        const float getDelay = 0.3f, lossDelay = 0.7f;
+        const float getDelay = 0.1f, lossDelay = 0.2f;
 
         if (CheckLineOfSight() is Player)
             visibility += delta / getDelay;
@@ -143,7 +145,6 @@ public partial class Npc : Humanoid, IInteractable
 
     public (bool isVisible, float visibility) CheckLineOfSight(Humanoid target)
     {
-
         if (target == null) return (false, 0f);
 
         Vector2 from = GlobalPosition;           // Enemy 위치
@@ -171,7 +172,6 @@ public partial class Npc : Humanoid, IInteractable
     }
     public bool CheckLineOfSight(IInteractable target)
     {
-
         if (target == null) return false;
         if (target is not Interactable) return false;
 
@@ -273,6 +273,9 @@ public partial class Npc : Humanoid, IInteractable
 
     void TalkAlphaProcess(float delta) 
     {
+        interUI.Visible = IsInteractable(Player.player);
+
+
         talkAlpha -= delta;
         float alpha = talkAlpha < 1f ? talkAlpha / 1f : 1f;
         talkLabel.Modulate = new Color(Colors.White, Mathf.Pow(alpha, 0.5f));

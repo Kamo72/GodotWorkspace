@@ -398,7 +398,6 @@ public partial class StorageSlot : InventorySlot
                                     else if (onMouseItem.item is Magazine magazine)
                                     {
                                         if (draggingItem.item is Ammo ammo)
-                                        {
                                             try
                                             {
                                                 while (true)
@@ -406,15 +405,33 @@ public partial class StorageSlot : InventorySlot
                                                     if (ammo.stackNow <= 0) break;
                                                     if (magazine.AmmoPush(ammo) == false) break;
                                                 }
+                                                if (ammo.stackNow == 0)
+                                                    ammo.onStorage.RemoveItem(ammo);
                                             }
                                             catch (Exception e)
                                             {
                                                 Console.WriteLine(e.Message + e.StackTrace);
                                             }
-
-                                        }
                                     }
+                                    //무기에 부착 또는 삽입 시도
+                                    else if (onMouseItem.item is WeaponItem weapon)
+                                    {
+                                        if (weapon.magazine == null
+                                            && draggingItem.item is Magazine mag
+                                            && weapon.weaponStatus.detailDt.magazineWhiteList.Contains(mag.magazineCode))
+                                        {
 
+                                            //Player 객체가 손에 장착중인 무기의 재장전을 시도
+                                            if (Player.player.nowEquip != null && Player.player.nowEquip.item == weapon)
+                                                Player.player.equippedWeapon.Reload(mag);
+                                            else
+                                            {
+                                                weapon.magazine = mag;
+                                                mag.onStorage.RemoveItem(mag);
+                                            }
+                                        }
+
+                                    }
                                 }
                             }
 

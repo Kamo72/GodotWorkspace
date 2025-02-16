@@ -230,11 +230,11 @@ public class M4A1 : WeaponItem
             ),
         new()
         {
-            moa = 2.5f,
-            recovery = 1f,
-            stance = 1f,
-            strength = 1f,
-            traggingSpeed = 1f,
+            moa = 2.50f,
+            recovery = 0.045f,
+            stance = 70f,
+            strength = 40f,
+            traggingSpeed = 0.12f,
         }, new()
         {
             adsTime = 0.65f,
@@ -253,7 +253,7 @@ public class M4A1 : WeaponItem
         {
             roundPerMinute = 825,
             chamberSize = 1,
-            effectiveRange = 375f,
+            effectiveRange = 500f,
             loudness = 3500f,
             magazineWhiteList = new(){
                 "STANAG_AR15_30"

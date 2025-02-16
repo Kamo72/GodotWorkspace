@@ -3,11 +3,9 @@ using Godot.NativeInterop;
 using System;
 using static AmmoStatus;
 
-public partial class Weapon : Node2D
+public partial class Weapon : HandAnimation
 {
     /* Reference*/
-    protected Humanoid master => GetParent<Humanoid>();
-    public Sprite2D sprite2D => this.FindByName("Sprite2D") as Sprite2D;
     public Sprite2D spriteMag => this.FindByName("SpriteMag") as Sprite2D;
     public PointLight2D light2D => this.FindByName("PointLight2D") as PointLight2D;
 
@@ -65,7 +63,7 @@ public partial class Weapon : Node2D
 
         light2D.Color = new Color(light2D.Color, light2D.Color.A * 0.5f);
 
-
+        //탄창 애니메이션
         if (magPosIncreasing && magPosValue < 1f ||
             !magPosIncreasing && magPosValue > 0f)
         {
@@ -97,30 +95,42 @@ public partial class Weapon : Node2D
 
             return false;
         }
-        weaponItem.FeedAmmo();
+
+        //GD.Print("status.typeDt.mechanismType : " + status.typeDt.mechanismType);
+
+        if (status.typeDt.mechanismType != MechanismType.MANUAL_RELOAD &&
+            status.typeDt.mechanismType != MechanismType.NONE)
+            weaponItem.FeedAmmo();
+        else
+            Charging();
 
         var ammoStatus = ammoStatusNullable.Value;
 
         //투사체 생성
+        Vector2 startPos = GlobalPosition + Vector2.FromAngle(GlobalRotation) * status.detailDt.muzzleDistance;
         for (int i = 0; i < ammoStatus.lethality.pellitCount; i++)
         {
+            Vector2 targetPos = master.realAimPoint
+            + Vector2.FromAngle(randFloat /** 360 * MathF.PI*/) * status.aimDt.moa / 100f * randFloat;
+
+            //GD.Print("targetPos : " + targetPos);
             // Projectile 인스턴스 생성 및 설정
             var projectile = new Projectile();
             projectile.Initialize(
+                status,
                 ammoStatus,
                 status.detailDt.muzzleVelocity * (1f + 10f/ 100f * randFloat),
-                GlobalPosition + Vector2.FromAngle(GlobalRotation) * status.detailDt.muzzleDistance,
-                GlobalRotation + status.aimDt.moa / 100f * randFloat
+                startPos,
+                targetPos
                 );
 
             GetParent().GetParent().AddChild(projectile);
         }
-        
+
         // 탄피 배출
-        var shell = new ShellEject(); // ShellEject 장면 인스턴스화
-        shell.Position = GlobalPosition;
-        shell.Rotation = GlobalRotation;
-        GetParent().GetParent().AddChild(shell);
+        if (status.typeDt.mechanismType != MechanismType.MANUAL_RELOAD &&
+            status.typeDt.mechanismType != MechanismType.NONE)
+            EffectShellEject();
 
         // 발사 후 fireCooldown 설정 (rpm을 기준으로 발사 간격 계산)
         fireCooldown = 60f / status.detailDt.roundPerMinute;
@@ -130,13 +140,11 @@ public partial class Weapon : Node2D
 
         //소리 발생
         Sound.MakeSelf(master, GlobalPosition, 2000f, 1f, GetSoundRscShot());
-        Sound.MakeSelf(master, GlobalPosition, 400f, 0.4f, GetSoundRscShell());
-
 
         return true;
     }
 
-    public void Reload()
+    public void Reload(Item item = null)
     {
         if (IsBusy()) return; // 이미 재장전 중인 경우
         isReloadDisrupt = false;
@@ -145,21 +153,23 @@ public partial class Weapon : Node2D
         switch (magazineType)
         {
             case MagazineType.MAGAZINE:
-                ReloadMagazine();
+                ReloadMagazine(item as Magazine);
                 break;
             case MagazineType.INTERNAL:
                 break;
             case MagazineType.TUBE:
-                ReloadTube();
+                ReloadTube(item as Ammo);
                 break;
             case MagazineType.SYLINDER:
                 break;
 
         }
     }
-    async void ReloadMagazine()
+    async void ReloadMagazine(Magazine magazine = null)
     {
+        
         var foundMag = weaponItem.FindMagazine(master.inventory);
+        if(magazine == null)
         {
             //적절한 탄창을 찾지 못한 경우
             if (foundMag.HasValue == false)
@@ -168,8 +178,10 @@ public partial class Weapon : Node2D
                 return;
             }
 
+            magazine = foundMag.Value.node.item as Magazine;
             isReloading = true;
         }
+
 
         //[timeout] Inspect - in
         await ToSignal(GetTree().CreateTimer(status.timeDt.inspectTime.Item1), "timeout");
@@ -201,7 +213,7 @@ public partial class Weapon : Node2D
 
 
             //탄창 장착
-            weaponItem.AttachMagazine(foundMag.Value.node.item as Magazine);
+            weaponItem.AttachMagazine(magazine as Magazine);
         }
 
         if (!isReloadDisrupt)
@@ -210,7 +222,7 @@ public partial class Weapon : Node2D
             SetMagazineRoutine(true, status.timeDt.reloadTime.Item3);
             await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item3), "timeout"); // 재장전 시간 대기
                 //새 탄창을 Storage에서 제거
-                bool res = foundMag.Value.storage.RemoveItem(foundMag.Value.node.item);
+                bool res = magazine.onStorage.RemoveItem(magazine);
                 if (res == false)
                     GD.PushError("새로 장착한 탄창이 Storage에서 제대로 제거되지 않았습니다!");
 
@@ -228,10 +240,11 @@ public partial class Weapon : Node2D
 
         GD.Print("재장전 종료.");
     }
-    async void ReloadTube()
+    async void ReloadTube(Ammo ammo = null)
     {
+        Ammo tempAmmo = null;
         var foundAmmo = weaponItem.FindAmmo(master.inventory);
-        Ammo ammo = null;
+        if (ammo == null)
         {
             //적절한 탄창을 찾지 못한 경우
             if (foundAmmo.HasValue == false)
@@ -239,7 +252,7 @@ public partial class Weapon : Node2D
                 GD.PushError("적절한 탄을 찾지 못했습니다!");
                 return;
             }
-
+            ammo = foundAmmo.Value.node.item as Ammo;
             isReloading = true;
         }
 
@@ -260,9 +273,9 @@ public partial class Weapon : Node2D
                 Sound.MakeSelf(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipIn());
                 await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item2), "timeout"); // 재장전 시간 대기
 
-            ammo = GetAmmoOne();
-            if (ammo == null) throw new Exception("ReloadTube - GetAmmoOne() returned null!!");
-            weaponItem.chamber = ammo;
+            tempAmmo = GetAmmoOne(ammo);
+            if (tempAmmo == null) throw new Exception("ReloadTube - GetAmmoOne() returned null!!");
+            weaponItem.chamber = tempAmmo;
 
             InventoryPage.instance?.UpdateAllUI();
         }
@@ -270,14 +283,25 @@ public partial class Weapon : Node2D
         while (weaponItem.magazine.ammoCount != weaponItem.magazine.magStatus.ammoSize)
         {
             if (isReloadDisrupt) break;
-            ammo = GetAmmoOne();
-            if (ammo == null) break;
+            try
+            {
+                tempAmmo = GetAmmoOne(ammo);
+                if (tempAmmo == null) throw new Exception("ReloadTube() tempAmmo == null");
+            }
+            catch (Exception ex)
+            {
+                var newFoundAmmo = weaponItem.FindAmmo(master.inventory);
+                if (!newFoundAmmo.HasValue) break;
+
+                ammo = newFoundAmmo.Value.node.item as Ammo;
+                tempAmmo = GetAmmoOne(ammo);
+            }
 
             //[timeout] reloadTime - mag load
             Sound.MakeSelf(master, GlobalPosition, 200f, 0.1f, GetSoundRscClipOut());
             await ToSignal(GetTree().CreateTimer(status.timeDt.reloadTime.Item3), "timeout"); // 재장전 시간 대기
             {
-                bool res = weaponItem.magazine.AmmoPush(ammo);
+                bool res = weaponItem.magazine.AmmoPush(tempAmmo);
                 if (!res) throw new Exception("ReloadTube - AmmoPush(ammo) failed, what happened!?");
 
 
@@ -301,14 +325,17 @@ public partial class Weapon : Node2D
         isCharging = true;
 
         //[timeout] bolt - rewind
-        Sound.MakeSelf(master, GlobalPosition, 200f, 0.1f, GetSoundRscArming());
         await ToSignal(GetTree().CreateTimer(status.timeDt.boltTime.Item2), "timeout"); // 재장전 시간 대기
         {
             weaponItem.FeedAmmo();
 
-
+            if (status.typeDt.mechanismType == MechanismType.MANUAL_RELOAD || 
+                status.typeDt.mechanismType == MechanismType.NONE)
+                EffectShellEject();
+            
             InventoryPage.instance?.UpdateAllUI();
         }
+        Sound.MakeSelf(master, GlobalPosition, 200f, 0.1f, GetSoundRscArming());
         isCharging = false;
     }
 
@@ -324,8 +351,7 @@ public partial class Weapon : Node2D
     }
 
     bool magPosIncreasing = true;
-    float magPosTime = 1f;
-    float magPosValue = 1f;
+    float magPosTime = 1f, magPosValue = 1f;
     void SetMagazineRoutine(bool increasing, float time) 
     {
         magPosIncreasing = increasing;
@@ -349,6 +375,14 @@ public partial class Weapon : Node2D
         spriteMag.Modulate = new Color(Colors.White, Math.Min(reloadingRatio * 5f, 1f));
     }
 
+    void EffectShellEject() 
+    {
+        var shell = new ShellEject(); // ShellEject 장면 인스턴스화
+        shell.Position = GlobalPosition;
+        shell.Rotation = GlobalRotation;
+        GetParent().GetParent().AddChild(shell);
+        Sound.MakeSelf(master, GlobalPosition, 400f, 0.4f, GetSoundRscShell());
+    }
 
     /* Comfort*/
     protected float randFloat => ((float)Random.Shared.NextDouble() - 0.5f) * 2f;
@@ -358,9 +392,10 @@ public partial class Weapon : Node2D
         return isReloading || !master.isEquiped || isCharging;
     }
 
-    Ammo GetAmmoOne()
+    Ammo GetAmmoOne(Ammo ammo = null)
     {
         var foundAmmo = weaponItem.FindAmmo(master.inventory);
+        if(ammo == null)
         {
             //적절한 탄을 찾지 못한 경우
             if (foundAmmo.HasValue == false)
@@ -368,11 +403,10 @@ public partial class Weapon : Node2D
                 GD.PushError("적절한 탄을 찾지 못했습니다!");
                 return null;
             }
-
+            ammo = foundAmmo.Value.node.item as Ammo;
             isReloading = true;
         }
 
-        Ammo ammo = foundAmmo.Value.node.item as Ammo;
 
         if (ammo.stackNow == 1)
         {

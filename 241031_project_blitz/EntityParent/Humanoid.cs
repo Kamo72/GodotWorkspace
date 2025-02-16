@@ -55,7 +55,9 @@ public partial class Humanoid : RigidBody2D
 
     /* Hands */
     //장비한 Weapon 객체
-    protected Weapon equippedWeapon;
+    public HandAnimation equipped = null;
+    public Weapon equippedWeapon => equipped as Weapon;
+    public MedAnimation medAnimation => equipped as MedAnimation;
 
     //장비한 Weapon 객체 위상
     protected Vector2 handPos;
@@ -163,18 +165,13 @@ public partial class Humanoid : RigidBody2D
 
     void WeaponEquipProcess(float delta)
     {
-
         bool isNotCorrectEquiped =
             (equippedWeapon != null && equippedWeapon.weaponItem != null &&
             nowEquip != null && nowEquip.item != null)
             &&
-            (targetEquip == null && equippedWeapon.weaponItem != nowEquip.item);
-
-        //GD.Print($"WeaponEquipProcess : {equipValue} isNotCorrectEquiped : {isNotCorrectEquiped}" +
-        //    $"\n{(equippedWeapon == null? "no Equipped" : equippedWeapon.weaponItem.status.shortName)}" +
-        //    $"\n{(nowEquip == null ? "null" : nowEquip.item == null ? "item is null!" : nowEquip.item.status.shortName)}" +
-        //    $"\n{(targetEquip == null ? "null" : targetEquip.item == null ? "item is null!" : targetEquip.item.status.shortName)}");
-
+            (targetEquip == null && equippedWeapon.weaponItem != nowEquip.item)
+            && equipped == null
+            && equipped is not MedAnimation;
 
         float equipDelay = 0.65f;
         bool isInvalidEquiped = nowEquip == null || equippedWeapon == null;
@@ -209,7 +206,7 @@ public partial class Humanoid : RigidBody2D
             {
                 equipValue = 0;
                 equippedWeapon?.QueueFree();
-                equippedWeapon = null;
+                equipped = null;
                 nowEquip = targetEquip;
 
                 if (targetEquip != null && targetEquip.item is WeaponItem wItem)
@@ -223,13 +220,13 @@ public partial class Humanoid : RigidBody2D
 
     void WeaponTransformProcess(float delta)
     {
-        if (equippedWeapon == null)
-            return;
+        if (equipped == null) return;
+        //if (equippedWeapon == equipped) return;
 
         const float handDistance = 80f;
         float realDistance = (realAimPoint - GlobalPosition).Length();
-        float allowedDistance = equippedWeapon.status.detailDt.muzzleDistance + handDistance + 20f;
-        float minDistance = equippedWeapon.status.detailDt.muzzleDistance + 20f;
+        float allowedDistance = handDistance + 20f + (equippedWeapon == null? 30f : equippedWeapon.status.detailDt.muzzleDistance);
+        float minDistance = (equippedWeapon == null ? 0f : equippedWeapon.status.detailDt.muzzleDistance) + 20f;
 
         Vector2 tPos = handPos;
         float tRot = handRot;
@@ -240,25 +237,25 @@ public partial class Humanoid : RigidBody2D
         {
             //최소한의 길이 보장 X 총구 꺾임
             tPos = Vector2.FromAngle(facingDir) * handDistance / 4f;
-            tRot = (realAimPoint - equippedWeapon.GlobalPosition).Angle() - 0.5f * 3.14f * rotSider;
+            tRot = (realAimPoint - equipped.GlobalPosition).Angle() - 0.5f * 3.14f * rotSider;
         }
-        else if (equippedWeapon.isReloading || isInventory)
+        else if (equippedWeapon != null && equippedWeapon.isReloading || isInventory)
         {
             //최소한의 길이 보장 X 총구 꺾임
             tPos = Vector2.FromAngle(facingDir) * handDistance / 2f;
-            tRot = (realAimPoint - equippedWeapon.GlobalPosition).Angle() - 0.25f * 3.14f * rotSider;
+            tRot = (realAimPoint - equipped.GlobalPosition).Angle() - 0.25f * 3.14f * rotSider;
         }
         else if (realDistance < allowedDistance)
         {
             //최소한의 길이 보장 X 총구 밀림
             tPos = Vector2.FromAngle(facingDir) * (handDistance - allowedDistance + realDistance);
-            tRot = (realAimPoint - equippedWeapon.GlobalPosition).Angle();
+            tRot = (realAimPoint - equipped.GlobalPosition).Angle();
         }
         else
         {
             //최소한의 길이 보장 O
             tPos = Vector2.FromAngle(facingDir) * handDistance;
-            tRot = (realAimPoint - equippedWeapon.GlobalPosition).Angle();
+            tRot = (realAimPoint - equipped.GlobalPosition).Angle();
         }
 
         //장비 진행에 따른 위상
@@ -269,7 +266,7 @@ public partial class Humanoid : RigidBody2D
             tPos = tPos.Lerp(Vector2.FromAngle(facingDir) * handDistance / 2f , ratio);
 
             tRot = Mathf.LerpAngle(tRot,
-                (realAimPoint - equippedWeapon.GlobalPosition).Angle() - 0.5f * 3.14f * rotSider,
+                (realAimPoint - equipped.GlobalPosition).Angle() - 0.5f * 3.14f * rotSider,
                 ratio);
         }
         
@@ -289,8 +286,8 @@ public partial class Humanoid : RigidBody2D
         handRot = Mathf.LerpAngle(handRot, tRot, 0.1f);
 
         //무기 흔들림
-        float tremblePower = 10f;
-        float trembleSpeed = 10f + recoilVec.Length() / 30f;
+        float tremblePower = (equipped == equippedWeapon? 10f : 150f);
+        float trembleSpeed = (equipped == equippedWeapon ? 10f : 150f) + recoilVec.Length() / 30f;
 
         Vector2 trembleVec = new Vector2(
             noise.GetNoise2D(aimStableTime * trembleSpeed, 12435),
@@ -302,9 +299,9 @@ public partial class Humanoid : RigidBody2D
         Vector2 moveVec = -LinearVelocity * 0.05f;
 
         //적용
-        equippedWeapon.Rotation = handRot + trembleRot;
-        equippedWeapon.Position = handPos + trembleVec + moveVec;
-        equippedWeapon.Scale = new(1f, rotSider);
+        equipped.Rotation = handRot + trembleRot;
+        equipped.Position = handPos + trembleVec + moveVec;
+        equipped.Scale = new(1f, rotSider);
     }
 
     bool noIntelligenceErrored = false;
@@ -356,8 +353,11 @@ public partial class Humanoid : RigidBody2D
             isInventory = !isInventory;
             InventoryPage.instance?.ResetOtherPanel();
 
-            Control mainUI = GetTree().Root.FindByName("MainUi") as Control;
-            mainUI.Visible = !mainUI.Visible;
+            if (this == Player.player)
+            {
+                Control mainUI = GetTree().Root.FindByName("MainUi") as Control;
+                mainUI.Visible = !mainUI.Visible;
+            }
         }
 
         if (intelligence.commandMap["Interact"])
@@ -401,16 +401,48 @@ public partial class Humanoid : RigidBody2D
     public void EquipWeapon(Weapon weapon)
     {
         // 무기를 장착하여 자식 노드에 추가
-        if (equippedWeapon != null)
-        {
-            RemoveChild(equippedWeapon);
-        }
+        if (equipped != null)
+            if(equipped.GetParent() != this)
+                RemoveChild(equipped);
 
-        equippedWeapon = weapon;
-        AddChild(equippedWeapon);
+        equipped = weapon;
+        AddChild(equipped);
+        equipValue = 0f;
 
         // Weapon 위치 및 초기 회전 설정
-        equippedWeapon.Position = Vector2.Zero;
+        equipped.Position = Vector2.Zero;
+    }
+
+    public async void EquipMed(MedAnimation med)
+    {
+        // 무기를 장착하여 자식 노드에 추가
+        if (equipped != null)
+        {
+            if (equipped is Weapon weapon)
+            {
+                targetEquip = null;
+                await ToSignal(GetTree().CreateTimer(weapon.status.timeDt.swapTime), "timeout");
+            }
+            RemoveChild(equipped);
+        }
+        equipped = med;
+        AddChild(equipped);
+
+        // Weapon 위치 및 초기 회전 설정
+        equipped.Position = Vector2.Zero;
+    }
+
+    public void UnEquip()
+    {
+        // 무기를 장착하여 자식 노드에 추가
+        if (equipped != null)
+        {
+            RemoveChild(equipped);
+            equipped = null;
+        }
+
+        if (targetEquip != null && targetEquip.item is WeaponItem wItem)
+            EquipWeapon(wItem.GetWeapon());
     }
 
     private void OnDead()
