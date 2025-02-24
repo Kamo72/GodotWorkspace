@@ -30,7 +30,6 @@ public partial class DroppedItem : Interactable
 
         if (!takable) return;
 
-
         humanoid.inventory.TakeItem(item);
         item.droppedItem = null;
         QueueFree();

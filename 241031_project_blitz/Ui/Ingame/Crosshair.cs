@@ -10,6 +10,11 @@ public partial class Crosshair : Control
     Control dynamicDot => this.FindByName("DynamicDot") as Control;
     Control staticDot => this.FindByName("StaticDot") as Control;
 
+    public override void _Ready()
+    {
+        Input.MouseMode = Input.MouseModeEnum.Hidden;
+    }
+
     public override void _Process(double delta)
     {
         Player player = Player.player;

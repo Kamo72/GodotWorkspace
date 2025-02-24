@@ -10,7 +10,7 @@ public partial class MedAnimation : HandAnimation
     public MedAnimation(UsableMed usableMed, string code) 
     {
         this.usableMed = usableMed;
-        medStatus = MedStatus.GetByCode(code);
+        medStatus = MedStatus.Get(code);
 
         var sprite = new Sprite2D();
         sprite.Scale = Vector2.One * 2.5f;
@@ -32,8 +32,6 @@ public partial class MedAnimation : HandAnimation
             if (isOnce == isOnceNode) 
                 action(hum, delta, value);
         };
-
-        GD.Print("usableMed : " + usableMed.ToString());
     }
 
     public MedStatus medStatus;
@@ -44,19 +42,19 @@ public partial class MedAnimation : HandAnimation
     float usingTime => medStatus.duration;
     float efficience = 0f;
 
+    Action<bool, Humanoid, float, (MedStatus.Effect, float)> procedure;
+    List<(MedStatus.Effect, float)> effects => medStatus.effects;
+
     public bool isCanceling = false;
 
     public void CancelUse() => isCanceling = true;
 
-    Action<bool, Humanoid, float, (MedStatus.Effect, float)> procedure;
-    List<(MedStatus.Effect, float)> effects => medStatus.effects;
- 
     public override void _Process(double delta) 
     {
         GD.Print($"{Name} / equipRatio : {equipRatio} / usingRatio : {usingRatio} / isCanceling : {isCanceling}");
 
         //캔슬 시 장비해제 애니메이션으로
-        float equipRatioDelta = (float)delta / medStatus.delay
+        float equipRatioDelta = (float)delta / equipTime
             * (!isCanceling ? 1f : -1f);
         equipRatio = Math.Clamp(equipRatio + equipRatioDelta, 0f, 1f);
 

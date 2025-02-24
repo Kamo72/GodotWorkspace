@@ -204,6 +204,7 @@ public class G12_BuckShot_7p5 : Ammo
                 accuracyRatio = 3.00f,
                 recoilRatio = 1.10f,
                 speedRatio = 0.45f,
+                airDrag = 0.25f,
             },
             caliber = CaliberType.g12,
             lethality = new()
@@ -251,6 +252,7 @@ public class G12_Grizzly : Ammo
                 accuracyRatio = 1.00f,
                 recoilRatio = 1.22f,
                 speedRatio = 1.0f,
+                airDrag = 0.18f,
             },
             caliber = CaliberType.g12,
             lethality = new()

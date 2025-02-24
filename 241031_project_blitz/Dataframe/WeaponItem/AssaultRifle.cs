@@ -342,6 +342,7 @@ public class M855 : Ammo
                 accuracyRatio = 1,
                 recoilRatio = 1,
                 speedRatio = 1,
+                airDrag = 0.1f,
             },
             caliber = CaliberType.mm5p56x45,
             lethality = new()
@@ -389,6 +390,7 @@ public class M855A1 : Ammo
                 accuracyRatio = 1.1f,
                 recoilRatio = 1.1f,
                 speedRatio = 1.1f,
+                airDrag = 0.08f,
             },
             caliber = CaliberType.mm5p56x45,
             lethality = new()

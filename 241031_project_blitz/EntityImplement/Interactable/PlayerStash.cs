@@ -23,9 +23,8 @@ public partial class PlayerStash : Interactable
     {
         humanoid.isInventory = true;
 
-        UiMain uiMain = UiMain.instance;
-        uiMain.Visible = true; 
-        uiMain.page = uiMain.SetPage(PageType.INVENTORY);
+        UiMain.instance.page = UiMain.instance.SetPage(PageType.INVENTORY);
+        UiMain.instance.Visible = true;
         InventoryPage.instance.SetOtherStash();
     }
 

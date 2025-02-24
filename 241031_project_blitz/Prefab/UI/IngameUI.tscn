@@ -713,6 +713,7 @@ script = ExtResource("12_t82ur")
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Crosshair/DynamicDot"]
 scale = Vector2(0.14, 0.14)
@@ -723,6 +724,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Crosshair/StaticDot"]
 scale = Vector2(0.14, 0.14)

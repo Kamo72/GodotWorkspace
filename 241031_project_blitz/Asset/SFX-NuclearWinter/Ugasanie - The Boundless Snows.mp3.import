@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b2qbm1eifc5ue"
+path="res://.godot/imported/Ugasanie - The Boundless Snows.mp3-c55933fbc303f6db62bfa59117d139bb.mp3str"
+
+[deps]
+
+source_file="res://Asset/SFX-NuclearWinter/Ugasanie - The Boundless Snows.mp3"
+dest_files=["res://.godot/imported/Ugasanie - The Boundless Snows.mp3-c55933fbc303f6db62bfa59117d139bb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

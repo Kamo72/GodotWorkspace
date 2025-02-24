@@ -193,7 +193,6 @@ public partial class IFAK : UsableMed
     }
 }
 
-
 public partial class AFAK : UsableMed
 {
     static AFAK()
@@ -225,7 +224,6 @@ public partial class AFAK : UsableMed
         };
     }
 }
-
 
 public partial class MFAK : UsableMed
 {

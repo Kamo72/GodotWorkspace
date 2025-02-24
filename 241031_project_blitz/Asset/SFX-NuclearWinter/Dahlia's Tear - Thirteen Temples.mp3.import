@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://i4p0tu82rig0"
+path="res://.godot/imported/Dahlia's Tear - Thirteen Temples.mp3-f845fb5d106a9eadf62b4e5a5367698b.mp3str"
+
+[deps]
+
+source_file="res://Asset/SFX-NuclearWinter/Dahlia's Tear - Thirteen Temples.mp3"
+dest_files=["res://.godot/imported/Dahlia's Tear - Thirteen Temples.mp3-f845fb5d106a9eadf62b4e5a5367698b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -41,6 +41,7 @@ public partial class Container : Interactable
         {
             player.isInventory = true;
             UiMain.instance.page = UiMain.instance.SetPage(PageType.INVENTORY);
+            UiMain.instance.Visible = true;
             InventoryPage.instance.SetOtherPanel(storage);
             InventoryPage.instance.UpdateAllUI();
         }

@@ -14,6 +14,8 @@ using System.Text.Json;
 #region [총기 기본 정보]
 public enum CaliberType
 {
+    fragment, //파편
+
     //권총탄
     p38, //.38 Special
     p45, //.45AVP

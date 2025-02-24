@@ -134,6 +134,7 @@ public struct AmmoStatus
         public float accuracyRatio; //정확도 배율
         public float recoilRatio;   //반동 배율
         public float speedRatio;    //탄속 배율
+        public float airDrag;       //공기저항 값
     }
     public Adjustment adjustment;
 

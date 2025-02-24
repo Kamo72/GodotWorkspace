@@ -45,18 +45,17 @@ public partial class ItemModel : Control
             textureRect.Size = tRect.Size;
             textureRect.ZIndex = 10;
 
-
             if (item is WeaponItem weapon)
             {
                 string text = "";
                 Magazine mag = weapon.magazine;
                 text += mag != null ? $"{mag.ammoCount}/{mag.magStatus.ammoSize}" : "0/0";
-                text += weapon.weaponStatus.detailDt.chamberSize == 0 ? "" :  weapon.chamber == null? "+0" : "+1";
+                text += weapon.weaponStatus.detailDt.chamberSize == 0 ? "" : weapon.chamber == null ? "+0" : "+1";
 
                 var stackLabel = new Label
                 {
                     Name = "StackLabel",
-                    Text = text, 
+                    Text = text,
                     Size = Size,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Bottom,
@@ -87,13 +86,28 @@ public partial class ItemModel : Control
                     textureRect.Position =
                         weapon.weaponStatus.attachDt.magAttachPos * sizeRatio +
                         tRect.Size / 2f
-                        - textureRect.Size/2f * sizeRatio
+                        - textureRect.Size / 2f * sizeRatio
                         ;
                     //textureRect.Scale = textureRect.();
                 }
 
             }
 
+            if (item is IArmour iArmour)
+            {
+                string text = "";
+                text += $"{Mathf.CeilToInt(iArmour.durableNow)}/{Mathf.CeilToInt(iArmour.durableMax)}";
+
+                var stackLabel = new Label
+                {
+                    Name = "StackLabel",
+                    Text = text,
+                    Size = Size,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                };
+                AddChild(stackLabel);
+            }
         }
 
         var onMouse = InventorySlot.inventoryContainer.ReleaseCursor();
@@ -103,9 +117,7 @@ public partial class ItemModel : Control
 
     public ItemModel(Item item, Vector2I pos, Vector2 size, bool isRotated)
     {
-        //GD.PushWarning("아이템 모델 살아나써!~");
         this.item = item;
-        //GD.PushError($"ItemModel() : {item.status.name} {pos} {size}");
         CustomMinimumSize = size;
         Size = size;
         this.size = size;
@@ -134,7 +146,6 @@ public partial class ItemModel : Control
         tRect.ZIndex = 10;
 
         storagePos = pos;
-
 
         if (item is IStackable iStackable)
         {
@@ -225,6 +236,24 @@ public partial class ItemModel : Control
 
         }
 
+
+        if (item is IArmour iArmour) 
+        {
+            string text = "";
+            text += $"{Mathf.CeilToInt(iArmour.durableNow)}/{Mathf.CeilToInt(iArmour.durableMax)}";
+
+            var stackLabel = new Label
+            {
+                Name = "StackLabel",
+                Text = text,
+                Size = Size,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Bottom,
+            };
+            AddChild(stackLabel);
+            
+        }
+
         var onMouse = InventorySlot.inventoryContainer.ReleaseCursor();
         if (onMouse.HasValue)
             textureRect.Modulate = new Color(1, 1, 1, onMouse.Value.Item1.item == this.item ? 0.4f : 1);
@@ -233,9 +262,6 @@ public partial class ItemModel : Control
     public void SetDragging(bool isDragging)
     {
         //if (textureRect != null)
-
-
-        
 
         try
         {

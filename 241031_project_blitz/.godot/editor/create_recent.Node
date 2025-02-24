@@ -1,3 +1,4 @@
+Node2D
 Sprite2D
 Control
 ProgressBar
@@ -7,7 +8,6 @@ RigidBody2D
 VBoxContainer
 Button
 HBoxContainer
-Node2D
 MenuButton
 Container
 AudioStreamPlayer2D

@@ -48,6 +48,8 @@ public partial class Player : Humanoid
         inventory.TakeItem(new G12_Grizzly { stackNow = 20 });
         inventory.TakeItem(new G12_BuckShot_7p5 { stackNow = 20 });
         inventory.TakeItem(cat);
+        inventory.TakeItem(new K2_Helmet());
+        inventory.TakeItem(new K2_Plate());
 
         Name = "김애자";
         job = "세상을 먹는 자";
@@ -123,6 +125,5 @@ public class PlayerController : Humanoid.Intelligence
         commandMap["FireReleased"] = Input.IsActionJustReleased("fire");
         commandMap["Sprint"] = Input.IsActionPressed("sprint");
         commandMap["SprintInit"] = Input.IsActionJustPressed("sprint");
-
     }
 }

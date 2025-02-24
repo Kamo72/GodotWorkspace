@@ -30,6 +30,7 @@ public partial class Body : Interactable
         {
             player.isInventory = true;
             UiMain.instance.page = UiMain.instance.SetPage(PageType.INVENTORY);
+            UiMain.instance.Visible = true;
             InventoryPage.instance.SetOtherPanel(inventory);
             InventoryPage.instance.UpdateAllUI();
         }

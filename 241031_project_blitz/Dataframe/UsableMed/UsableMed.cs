@@ -16,7 +16,7 @@ public partial class UsableMed : Item, IUsable
         SetValue();
     }
 
-    public MedStatus medStatus => MedStatus.GetByCode(code);
+    public MedStatus medStatus => MedStatus.Get(code);
 
     public MedAnimation GetMedAnimation() 
     {
@@ -57,7 +57,7 @@ public partial class UsableMed : Item, IUsable
 
 public struct MedStatus
 {
-    public static MedStatus GetByCode(string code) => medStatusDic[code];
+    public static MedStatus Get(string code) => medStatusDic[code];
     public static bool IsValidCode(string code) => medStatusDic.ContainsKey(code);
     public static void Set(string code, MedStatus medStatus) => medStatusDic[code] = medStatus;
 

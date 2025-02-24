@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://56g0mqmufwwk"]
+[gd_scene load_steps=11 format=3 uid="uid://56g0mqmufwwk"]
 
 [ext_resource type="Script" path="res://Manager/CameraManager.cs" id="1_mn1s0"]
 [ext_resource type="PackedScene" uid="uid://cxrn863chouys" path="res://Prefab/UI/MainUI.tscn" id="2_h8yga"]
@@ -9,8 +9,12 @@
 [ext_resource type="PackedScene" uid="uid://pehgr0lw4xlt" path="res://Prefab/Static/Wall.tscn" id="6_46ai0"]
 [ext_resource type="Texture2D" uid="uid://2ftt6aueclnt" path="res://Asset/IMG-Firearm/M4A1.png" id="8_s1h41"]
 [ext_resource type="Texture2D" uid="uid://ckhgkkcfodotw" path="res://Asset/IMG-Firearm/AR15_STANAG30.png" id="9_g4f7r"]
+[ext_resource type="Script" path="res://Manager/AmbientManager.cs" id="10_h2hbv"]
 
 [node name="Node2D" type="Node2D"]
+
+[node name="AmbientManager" type="Node2D" parent="."]
+script = ExtResource("10_h2hbv")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 light_mask = 3

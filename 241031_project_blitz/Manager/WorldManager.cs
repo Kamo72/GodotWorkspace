@@ -16,7 +16,7 @@ public partial class WorldManager : Node2D
         instance = this;
 
 
-
+        //debug
         DroppedItem droppedItem = ResourceLoader.Load<PackedScene>("res://Prefab/Dynamic/droppedItem.tscn").Instantiate() as DroppedItem;
         droppedItem.GlobalPosition = GlobalPosition;
         droppedItem.SetItem(new M4A1());
@@ -44,7 +44,7 @@ public partial class WorldManager : Node2D
 
 
     #region Entitys
-    public static List<Humanoid> humanoids = new ();
+    public static List<Humanoid> humanoids = new();
     public static List<Sound> sounds = new();
     public static List<IInteractable> interactables = new();
 
@@ -59,8 +59,9 @@ public partial class WorldManager : Node2D
 
     const float ChunkUpdatePeriod = 1f;
     float chunnkUpdateTime = 0f;
-    int chunkRange = 4;
-    
+    (int min, int max) chunkRange = (1, 2);
+    float chunkLength = 1024f;
+
     void ChunkProcess(float delta)
     {
         //Timer
@@ -71,25 +72,22 @@ public partial class WorldManager : Node2D
 
         //Get Variables
         Vector2 tPos = Player.player != null ? Player.player.GlobalPosition : CameraManager.current.Position;
-        Vector2I playerChunk = new(
-            Mathf.FloorToInt(tPos.X / 1024f),
-            Mathf.FloorToInt(tPos.Y / 1024f)
-            );
+        Vector2I playerChunk = GetChunkByPos(tPos);
 
         List<Vector2I> toUnloadList = new(), toLoadList = new();
 
         //find outranged chunks
         foreach (var pos in loadedChunks)
-            if ((playerChunk - pos).Length() > chunkRange)
+            if ((playerChunk - pos).Length() > chunkRange.max)
                 toUnloadList.Add(pos);
 
         //find inranged chunks
-        for (int x = (playerChunk.X - chunkRange); x <= (playerChunk.X + chunkRange); x++)
-            for (int y = (playerChunk.Y - chunkRange); y <= (playerChunk.Y + chunkRange); y++)
+        for (int x = (playerChunk.X - chunkRange.min); x <= (playerChunk.X + chunkRange.min); x++)
+            for (int y = (playerChunk.Y - chunkRange.min); y <= (playerChunk.Y + chunkRange.min); y++)
             {
                 Vector2I nowPos = new Vector2I(x, y);
 
-                if ((playerChunk - nowPos).Length() <= chunkRange)
+                if ((playerChunk - nowPos).Length() <= chunkRange.min)
                     if (!loadedChunks.Contains(nowPos))
                         toLoadList.Add(nowPos);
             }
@@ -107,6 +105,8 @@ public partial class WorldManager : Node2D
             LoadChunk(pos);
             loadedChunks.Add(pos);
         }
+
+        UnloadFarHumnanoids();
     }
 
     public void SaveWorldChunks()
@@ -219,8 +219,41 @@ public partial class WorldManager : Node2D
                 GD.Print($"Chunk ({chunkPos.X}, {chunkPos.Y}) unloaded.");
                 return;
             }
-        
     }
+
+    void UnloadFarHumnanoids()
+    {
+        List<Humanoid> toUnloads = new List<Humanoid>();
+
+        foreach (var hum in humanoids)
+            if (GetLenFromPlayerChunkByPos(hum.Position) > chunkRange.max)
+                toUnloads.Add(hum);
+
+
+        foreach (var toUnload in toUnloads) 
+        {
+            toUnload.QueueFree();
+            humanoids.Remove(toUnload);
+        }
+    }
+
+    Vector2I GetChunkByPos(Vector2 position) => new(
+        Mathf.FloorToInt(position.X / chunkLength),
+        Mathf.FloorToInt(position.Y / chunkLength)
+        );
+
+    Vector2I PlayerChunk() => GetChunkByPos(Player.player != null ? Player.player.GlobalPosition : CameraManager.current.Position);
+
+    int GetLenFromPlayerChunkByPos(Vector2 position)
+    {
+        var pChunk = PlayerChunk();
+        var tChunk = GetChunkByPos(position);
+
+        return Mathf.Abs(pChunk.X - tChunk.X) + Mathf.Abs(pChunk.Y - tChunk.Y);
+
+    }
+
     #endregion
+
 }
 

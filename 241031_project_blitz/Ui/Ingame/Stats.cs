@@ -47,11 +47,10 @@ public partial class Stats : Control
         hp.label.Text = $"{Mathf.CeilToInt(health.hpNow)}/{Mathf.CeilToInt(health.hpMax)}";
 
         float spRatio = health.spNow / health.spMax;
-
         spAlpha += (health.spNow < health.spMax ? 1f : -1f) * (float)delta / spAlphaDelay;
         spAlpha = Mathf.Clamp(spAlpha, 0f, 1f);
-        float spAlphaReal = !Player.player.movement.sprintMaintain? 0.5f * Mathf.Abs(Mathf.Sin(stackTime * 4f)) : 0.5f;
 
+        float spAlphaReal = !Player.player.movement.sprintMaintain? 0.5f * Mathf.Abs(Mathf.Sin(stackTime * 4f)) : 0.5f;
         spBar.Scale = new Vector2(spRatio, 1f);
         spBar.Modulate = new Color(1f, 1f,1f, spAlpha * spAlphaReal);
 
@@ -64,6 +63,7 @@ public partial class Stats : Control
         bleedAlpha += (health.bleeding > 0 ? 1f : -1f) * (float)delta/bleedAlphaDelay;
         bleedAlpha = Mathf.Clamp(bleedAlpha, 0f, 1f);
         bleeding.label.Text = $"{Mathf.CeilToInt(health.bleeding)}";
+        bleeding.label.Modulate = new Color(1f, 1f, 1f, bleedAlpha);
         bleeding.sprite.Modulate = new Color(1f, 0f, 0f, bleedAlpha);
     }
 

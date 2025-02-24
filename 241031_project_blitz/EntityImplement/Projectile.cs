@@ -1,5 +1,7 @@
 ﻿using Godot;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Reflection;
 
 public partial class Projectile : RayCast2D
@@ -10,6 +12,8 @@ public partial class Projectile : RayCast2D
     public Vector2 velocity;
     public Vector2 startPos, aimPos;
     public float direction;
+    public List<Humanoid> collidedList = new();
+    bool isOverpene = false;
 
     public void Initialize(WeaponStatus weaponStatus, AmmoStatus ammoStatus, float speed, Vector2 startPos, Vector2 aimPos)
     {
@@ -40,38 +44,60 @@ public partial class Projectile : RayCast2D
             var collider = GetCollider();
             if (collider is Humanoid humanoid)
             {
-                GD.Print($"{humanoid.Name}에게 {ammoStatus.lethality.damage}의 피해를 입혔습니다.");
-                //humanoid.health.GetDamage(ammoStatus.lethality.damage);
-
-                Humanoid.Health.HitPart hitPart = humanoid.health.GetHitPart(this, GetCollisionPoint());
-                
-                GD.Print("hitPart : " + hitPart);
-                
-                if (hitPart != Humanoid.Health.HitPart.NONE)
+                if (collidedList.Contains(humanoid))
                 {
-                    humanoid.health.GetDamage(this, hitPart);
-                    QueueFree(); // 충돌 시 Projectile 제거
+                    MoveAsVelocity(delta);
                 }
-                else
-                {
-                    Position += velocity * (float)delta;
+                else {
+
+                    GD.Print($"{humanoid.Name}에게 {ammoStatus.lethality.damage}의 피해를 입혔습니다.");
+                    //humanoid.health.GetDamage(ammoStatus.lethality.damage);
+
+                    Humanoid.Health.HitPart hitPart = isOverpene?
+                        Humanoid.Health.HitPart.LIMB :
+                        humanoid.health.GetHitPart(this, GetCollisionPoint());
+
+                    GD.Print("hitPart : " + hitPart);
+
+                    if (hitPart == Humanoid.Health.HitPart.NONE)
+                    {
+                        Position += velocity * (float)delta;
+                    }
+                    else
+                    {
+                        collidedList.Add(humanoid);
+                        GetWoundEffect(humanoid, GetCollisionPoint());
+
+                        bool overpene = humanoid.health.GetDamage(this, hitPart);
+                        if (overpene)
+                        {
+                            isOverpene = true;
+                            velocity *= 0.50f;
+                            MoveAsVelocity(delta);
+                        }
+                        else
+                            QueueFree(); // 충돌 시 Projectile 제거
+                    }
                 }
             }
             else if (collider is Wall wall)
             {
                 //GD.Print($"{wall.Name}에 적중됨.");
+
+                GetWoundEffect(wall, GetCollisionPoint());
                 QueueFree(); // 충돌 시 Projectile 제거
             }
             else if (collider is Glass glass)
             {
-                Position += velocity * (float)delta;
+                GetWoundEffect(glass, GetCollisionPoint());
+                MoveAsVelocity(delta);
                 //GD.Print($"{glass.Name}에 적중됨.");
-                velocity *= 0.9f;
+                velocity *= 0.75f;
             }
         }
         else
         {
-            Position += velocity * (float)delta;
+            MoveAsVelocity(delta);
             // Raycast 위치 업데이트 (투사체 이동 시뮬레이션)
         }
 
@@ -125,6 +151,28 @@ public partial class Projectile : RayCast2D
         }
         else
             return null;
+    }
+    void MoveAsVelocity(double delta) {
+
+        float airDrag = ammoStatus.adjustment.airDrag * (float)delta * 10f;
+        velocity *= 1f-airDrag;
+        Position += velocity * (float)delta;
+
+        if (velocity.Length() < 1000f) QueueFree();
+    }
+
+
+    void GetWoundEffect(Node2D target, Vector2 collisionPoint)
+    {
+        Vector2 rand = Vector2.FromAngle((float)Random.Shared.NextDouble() * 360f) * 10f * (float)Random.Shared.NextDouble();
+
+        Sprite2D sprite2D = new Sprite2D();
+        sprite2D.Texture = ResourceLoader.Load("res://Asset/Particle/RadialAlphaGradient.png") as Texture2D;
+
+        sprite2D.Modulate = Colors.Black;
+        target.AddChild(sprite2D);
+        sprite2D.GlobalPosition = collisionPoint + rand;
+        sprite2D.GlobalScale = Vector2.One * 0.02f;
     }
 
     public override void _Draw()

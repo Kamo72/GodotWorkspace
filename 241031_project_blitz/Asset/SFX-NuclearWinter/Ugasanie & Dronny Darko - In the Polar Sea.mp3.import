@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://blqbs7qc6gltq"
+path="res://.godot/imported/Ugasanie & Dronny Darko - In the Polar Sea.mp3-5c1d6656de136ada5968677b3cf37f47.mp3str"
+
+[deps]
+
+source_file="res://Asset/SFX-NuclearWinter/Ugasanie & Dronny Darko - In the Polar Sea.mp3"
+dest_files=["res://.godot/imported/Ugasanie & Dronny Darko - In the Polar Sea.mp3-5c1d6656de136ada5968677b3cf37f47.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

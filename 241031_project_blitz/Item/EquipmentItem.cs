@@ -80,22 +80,34 @@ public abstract class Headgear : Equipable
 
 public abstract class Helmet : Equipable, IArmour
 {
-    public Helmet()
+    public Helmet(float armourLv, float ergoRatio, float durable)
     {
+        this.armourLv = armourLv;
+        this.ergoRatio = ergoRatio;
+        this.durableMax = durable;
+        this.durableNow = durableMax;
+
+        zeroToDestruct = true;
         status.category = Category.HELMET;
     }
 
     public float armourLv { get; set; }
-    public float ergoRatio {get;set;}
-    public float durableNow {get;set;}
-    public float durableMax {get;set;}
+    public float ergoRatio { get; set; }
+    public float durableNow { get; set; }
+    public float durableMax { get; set; }
     public bool zeroToDestruct { get; set; }
 }
 
 public abstract class Plate : Equipable, IArmour
 {
-    public Plate()
+    public Plate(float armourLv, float ergoRatio, float durable)
     {
+        this.armourLv = armourLv;
+        this.ergoRatio = ergoRatio;
+        this.durableMax = durable;
+        this.durableNow = durableMax;
+
+        zeroToDestruct = true;
         status.category = Category.PLATE;
     }
 

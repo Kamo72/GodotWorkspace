@@ -41,8 +41,56 @@ public partial class Humanoid
             LIMB,
             NONE,
         }
+        public enum PeneType 
+        {
+            OVERPENE,
+            PENE,
+            BLOCKED,
+        }
 
-        public void GetDamage(Projectile projectile, HitPart hitPart)
+        //Process
+        public void Process(float delta)
+        {
+            DigestingProcess(delta);
+            StaminaProcess(delta);
+            BleedingProcess(delta);
+        }
+
+
+        void DigestingProcess(float delta)
+        {
+            epNow = Math.Clamp(epNow + epRed * delta, 0f, epMax);
+            wpNow = Math.Clamp(wpNow + wpRed * delta, 0f, wpMax);
+
+            if (isStarvation)
+                GetDamage(1f * delta);
+
+            if (isDehydration)
+                GetDamage(1f * delta);
+        }
+        void StaminaProcess(float delta)
+        {
+            var sprintRatio = (master.LinearVelocity.Length() * master.movement.inertia)/ master.movement.speed;
+            var sprintTrasition = master.movement.sprintValue;
+
+            var diff = (master.movement.sprintValue > 0? -spRed * sprintRatio * sprintTrasition : spReg);
+            spNow = Math.Clamp(spNow + diff * delta, 0f, spMax);
+            //GD.Print($"SP : {spNow} / {spMax} => {isSprintable}");
+        }
+        void BleedingProcess(float delta)
+        {
+            float damage = Mathf.Max(bleeding * bleedingRatio, bleedingMin) * delta;
+            
+            if(damage > bleeding) damage = bleeding;
+            
+            GetDamage(damage);
+            
+            bleeding -= damage;
+        }
+
+
+        //GetEffect
+        public bool GetDamage(Projectile projectile, HitPart hitPart)
         {
             (float dmg, float bleed, float aimpunch) partRatio;
 
@@ -70,7 +118,7 @@ public partial class Humanoid
             hpNow -= damage;
 
             //출혈 적용
-            var bleeding= projectile.ammoStatus.lethality.bleeding * partRatio.bleed * rangeReduction;
+            var bleeding = projectile.ammoStatus.lethality.bleeding * partRatio.bleed * rangeReduction;
             this.bleeding += bleeding;
 
             //피격 소리 재생
@@ -86,7 +134,11 @@ public partial class Humanoid
             //체력 소진 시 사망처리
             if (hpNow <= 0f)
                 master.OnDead();
+
+            //과관통 성공 여부
+            return true;
         }
+        
         public void GetDamage(float damage)
         {
             hpNow -= damage;
@@ -94,6 +146,7 @@ public partial class Humanoid
             if (hpNow <= 0f)
                 master.OnDead();
         }
+
         public void GetHemostasis(float hemostasis)
         {
             bleeding -= hemostasis;
@@ -110,14 +163,8 @@ public partial class Humanoid
                 hpNow = hpMax;
         }
 
-        public void Process(float delta) 
-        {
-            DigestingProcess(delta);
-            StaminaProcess(delta);
-            BleedingProcess(delta);
-        }
 
-
+        //GetData
         public HitPart GetHitPart(Projectile projectile, Vector2 collisionPoint)
         {
             AmmoStatus ammoStatus = projectile.ammoStatus;
@@ -127,7 +174,6 @@ public partial class Humanoid
             float headDistance = (projectile.aimPos - master.Position).Length();
             if (headDistance < collisionRadius)
             {
-                GetWoundEffect(collisionPoint);
                 return HitPart.HEAD;
             }
 
@@ -209,16 +255,12 @@ public partial class Humanoid
             HitPart result = HitPart.NONE;
 
             float hitDist = hitLength > aimLength ? errorDistance : errorDistance - 70;
-            float checkDist = hitLength > aimLength? judgeLen.outer : judgeLen.inner;
+            float checkDist = hitLength > aimLength ? judgeLen.outer : judgeLen.inner;
 
             if (hitDist < checkDist * 0.5f)
                 result = HitPart.THORAX;
             else if (hitDist < checkDist)
                 result = HitPart.LIMB;
-
-
-            if (result != HitPart.NONE)
-                GetWoundEffect(collisionPoint);
 
             return result;
 
@@ -241,48 +283,7 @@ public partial class Humanoid
             return velocityRatio * rangeRatio;
         }
 
-        void GetWoundEffect(Vector2 collisionPoint)
-        {
-            Vector2 rand = Vector2.FromAngle((float)Random.Shared.NextDouble() * 360f) * 10f * (float)Random.Shared.NextDouble();
 
-            Sprite2D sprite2D = new Sprite2D();
-            sprite2D.Texture = ResourceLoader.Load("res://Asset/Particle/RadialAlphaGradient.png") as Texture2D;
-            sprite2D.Scale = Vector2.One * 0.02f;
-            sprite2D.Modulate = Colors.DarkRed;
-            master.AddChild(sprite2D);
-            sprite2D.GlobalPosition = collisionPoint + rand;
-        }
-
-        void DigestingProcess(float delta)
-        {
-            epNow = Math.Clamp(epNow + epRed * delta, 0f, epMax);
-            wpNow = Math.Clamp(wpNow + wpRed * delta, 0f, wpMax);
-
-            if (isStarvation)
-                GetDamage(1f * delta);
-
-            if (isDehydration)
-                GetDamage(1f * delta);
-        }
-        void StaminaProcess(float delta)
-        {
-            var sprintRatio = (master.LinearVelocity.Length() * master.movement.inertia)/ master.movement.speed;
-            var sprintTrasition = master.movement.sprintValue;
-
-            var diff = (master.movement.sprintValue > 0? -spRed * sprintRatio * sprintTrasition : spReg);
-            spNow = Math.Clamp(spNow + diff * delta, 0f, spMax);
-            //GD.Print($"SP : {spNow} / {spMax} => {isSprintable}");
-        }
-        void BleedingProcess(float delta)
-        {
-            float damage = Mathf.Max(bleeding * bleedingRatio, bleedingMin) * delta;
-            
-            if(damage > bleeding) damage = bleeding;
-            
-            GetDamage(damage);
-            
-            bleeding -= damage;
-        }
 
         void DoDead()
         {
